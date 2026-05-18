@@ -5,10 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVGENII — Music</title>
     
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="./icon.png">
+    
+    <!-- PWA -->
     <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#0a0a0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="./icon.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
@@ -73,7 +81,7 @@
         .section-tag { font-family: 'JetBrains Mono', monospace; color: var(--neon-pink); font-size: 0.8rem; margin-bottom: 5px; }
         .section-title { font-size: 2rem; font-weight: 700; }
 
-        /* === TRACK CARDS (WITH COVER) === */
+        /* === TRACK CARDS === */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         
         .track-card {
@@ -103,7 +111,6 @@
         .track-info h3 { font-size: 1rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .track-info p { font-size: 0.8rem; color: var(--text-secondary); }
         
-        /* === PROGRESS BAR STYLES === */
         .progress-container {
             width: 100%;
             height: 4px;
@@ -122,8 +129,17 @@
         .track-card:hover .progress-bar { background: var(--neon-pink); }
 
         .track-duration { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--text-secondary); flex-shrink: 0; }
+        
+        .track-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--neon-blue);
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+        .track-card:hover .track-time { color: var(--neon-pink); }
 
-        /* === COMPACT LIST (WITHOUT COVER) === */
+        /* === COMPACT LIST === */
         .compact-list {
             display: flex;
             flex-direction: column;
@@ -157,7 +173,6 @@
         .compact-info h4 { font-size: 0.95rem; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .compact-info p { font-size: 0.75rem; color: var(--text-secondary); }
         
-        /* Progress bar for compact items */
         .compact-progress-bg {
             position: absolute;
             bottom: 0; left: 0;
@@ -176,8 +191,14 @@
         .compact-item:hover .compact-progress-fill { background: var(--neon-pink); }
 
         .compact-duration { font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--text-secondary); flex-shrink: 0; }
+        .compact-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--neon-blue);
+            margin-left: 8px;
+        }
+        .compact-item:hover .compact-time { color: var(--neon-pink); }
 
-        /* Кнопка "Показать все" */
         .show-all-btn {
             width: 100%;
             padding: 16px;
@@ -198,7 +219,6 @@
             color: var(--text-primary);
         }
 
-        /* Скрытый блок */
         .hidden-tracks {
             display: none;
             opacity: 0;
@@ -266,13 +286,8 @@
                 <div class="section-title">Все треки</div>
             </div>
             
-            <!-- Здесь будет первый трек архива (с обложкой) -->
             <div id="archivePreview"></div>
-
-            <!-- Кнопка раскрытия -->
             <button id="showAllBtn" class="show-all-btn" onclick="toggleArchive()">Показать все треки ▼</button>
-
-            <!-- Скрытый список остальных треков (без обложек) -->
             <div id="fullArchiveList" class="hidden-tracks compact-list"></div>
         </div>
     </section>
@@ -293,11 +308,7 @@
     <footer>© 2026 EVGENII. Human & AI.</footer>
 
     <script>
-        // ==========================================
-        // 🎵 СПИСОК ТРЕКОВ (ТВОЙ КОД - НЕ МЕНЯЛ)
-        // ==========================================
         const tracks = [
-            // НОВЫЕ РЕЛИЗЫ (isNew: true)
             {
                 id: 1,
                 title: "пуст",
@@ -316,8 +327,6 @@
                 cover: "cover/cover1.jpg",
                 isNew: true
             },
-            
-            // АРХИВ (isNew: false)
             {
                 id: 3,
                 title: "пуст",
@@ -347,9 +356,6 @@
             }
         ];
 
-        // ==========================================
-        // ЛОГИКА ПЛЕЕРА (ДОБАВЛЕН ПРОГРЕСС)
-        // ==========================================
         let currentAudio = null;
         let currentBtn = null;
         let archiveExpanded = false;
@@ -367,7 +373,6 @@
             }
         }
 
-        // Генерация HTML обложки
         function getCoverHTML(track) {
             if (track.cover) {
                 return `<div class="track-cover"><img src="${track.cover}" alt="${track.title}"></div>`;
@@ -378,7 +383,6 @@
             }
         }
 
-        // Рендер карточки с обложкой + ПРОГРЕСС-БАР
         function createFullCard(track) {
             const card = document.createElement('div');
             card.className = 'track-card';
@@ -391,18 +395,19 @@
                     <div class="track-info">
                         <h3>${track.title}</h3>
                         <p>${track.desc}</p>
-                        <!-- Прогресс-бар -->
                         <div class="progress-container" onclick="seekTrack(event, '${track.id}')">
                             <div class="progress-bar" id="prog-${track.id}"></div>
                         </div>
                     </div>
-                    <div class="track-duration">${track.duration}</div>
+                    <div style="display:flex;align-items:center;gap:4px;">
+                        <div class="track-duration">${track.duration}</div>
+                        <div class="track-time" id="time-${track.id}">0:00</div>
+                    </div>
                 </div>
             `;
             return card;
         }
 
-        // Рендер компактного трека + ПРОГРЕСС-БАР
         function createCompactItem(track) {
             const item = document.createElement('div');
             item.className = 'compact-item';
@@ -414,8 +419,10 @@
                     <h4>${track.title}</h4>
                     <p>${track.desc}</p>
                 </div>
-                <div class="compact-duration">${track.duration}</div>
-                <!-- Прогресс-бар снизу -->
+                <div style="display:flex;align-items:center;gap:4px;">
+                    <div class="compact-duration">${track.duration}</div>
+                    <div class="compact-time" id="time-${track.id}">0:00</div>
+                </div>
                 <div class="compact-progress-bg" onclick="seekTrack(event, '${track.id}')">
                     <div class="compact-progress-fill" id="prog-${track.id}"></div>
                 </div>
@@ -431,12 +438,10 @@
 
             const archiveTracks = tracks.filter(t => !t.isNew);
 
-            // 1. Рендер Новых Релизов
             tracks.filter(t => t.isNew).forEach(track => {
                 newContainer.appendChild(createFullCard(track));
             });
 
-            // 2. Рендер Архива
             if (archiveTracks.length > 0) {
                 archivePreview.appendChild(createFullCard(archiveTracks[0]));
                 archiveTracks.slice(1).forEach(track => {
@@ -455,7 +460,6 @@
             archiveExpanded = !archiveExpanded;
             const list = document.getElementById('fullArchiveList');
             const btn = document.getElementById('showAllBtn');
-
             if (archiveExpanded) {
                 list.classList.add('visible');
                 btn.innerHTML = 'Свернуть ▲';
@@ -469,7 +473,6 @@
             }
         }
 
-        // Перемотка по клику на прогресс-бар
         function seekTrack(event, trackId) {
             if (!currentAudio || currentAudio.dataset.trackId !== trackId) return;
             const bar = event.currentTarget;
@@ -478,7 +481,12 @@
             currentAudio.currentTime = percent * currentAudio.duration;
         }
 
-        // Логика Play/Pause с обновлением прогресса
+        function fmtTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s.toString().padStart(2, '0')}`;
+        }
+
         function togglePlay(file, btn, trackId) {
             const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
             const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
@@ -503,7 +511,6 @@
                     currentBtn.classList.remove('active');
                     currentBtn.innerHTML = playIcon;
                 }
-                // Сброс прогресса старого трека
                 const oldProg = document.getElementById(`prog-${currentAudio.dataset.trackId}`);
                 if(oldProg) oldProg.style.width = '0%';
             }
@@ -516,7 +523,14 @@
             btn.classList.add(isActiveClass);
             btn.innerHTML = pauseIcon;
 
-            // Обновление прогресс-бара
+            const updateTime = () => {
+                const timeEl = document.getElementById(`time-${trackId}`);
+                if (timeEl && currentAudio.duration) {
+                    timeEl.textContent = fmtTime(currentAudio.currentTime);
+                }
+            };
+            currentAudio.addEventListener('timeupdate', updateTime);
+
             currentAudio.addEventListener('timeupdate', () => {
                 const progBar = document.getElementById(`prog-${trackId}`);
                 if (progBar && currentAudio.duration) {
@@ -530,6 +544,8 @@
                 btn.innerHTML = playIcon;
                 const progBar = document.getElementById(`prog-${trackId}`);
                 if(progBar) progBar.style.width = '0%';
+                const timeEl = document.getElementById(`time-${trackId}`);
+                if(timeEl) timeEl.textContent = '0:00';
             };
         }
 
