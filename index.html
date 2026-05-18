@@ -99,10 +99,29 @@
         .play-btn.active { background: var(--neon-pink); color: white; }
         .play-btn.active svg { margin-left: 0; }
 
-        .track-info { flex: 1; }
-        .track-info h3 { font-size: 1rem; margin-bottom: 3px; }
+        .track-info { flex: 1; min-width: 0; }
+        .track-info h3 { font-size: 1rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .track-info p { font-size: 0.8rem; color: var(--text-secondary); }
-        .track-duration { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--text-secondary); }
+        
+        /* === PROGRESS BAR STYLES === */
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            margin-top: 8px;
+            border-radius: 2px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--neon-blue);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .track-card:hover .progress-bar { background: var(--neon-pink); }
+
+        .track-duration { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--text-secondary); flex-shrink: 0; }
 
         /* === COMPACT LIST (WITHOUT COVER) === */
         .compact-list {
@@ -121,6 +140,7 @@
             align-items: center;
             gap: 15px;
             transition: 0.2s;
+            position: relative;
         }
         .compact-item:hover { background: rgba(255,255,255,0.06); border-color: var(--neon-blue); }
 
@@ -133,10 +153,29 @@
         .compact-play-btn svg { width: 14px; fill: currentColor; margin-left: 1px; }
         .compact-play-btn.active svg { margin-left: 0; }
 
-        .compact-info { flex: 1; }
-        .compact-info h4 { font-size: 0.95rem; margin-bottom: 2px; }
+        .compact-info { flex: 1; min-width: 0; }
+        .compact-info h4 { font-size: 0.95rem; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .compact-info p { font-size: 0.75rem; color: var(--text-secondary); }
-        .compact-duration { font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--text-secondary); }
+        
+        /* Progress bar for compact items */
+        .compact-progress-bg {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 3px;
+            background: rgba(255,255,255,0.05);
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            cursor: pointer;
+        }
+        .compact-progress-fill {
+            height: 100%;
+            background: var(--neon-blue);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .compact-item:hover .compact-progress-fill { background: var(--neon-pink); }
+
+        .compact-duration { font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--text-secondary); flex-shrink: 0; }
 
         /* Кнопка "Показать все" */
         .show-all-btn {
@@ -255,7 +294,7 @@
 
     <script>
         // ==========================================
-        // 🎵 СПИСОК ТРЕКОВ (МЕНЯЙ ТОЛЬКО ЭТО)
+        // 🎵 СПИСОК ТРЕКОВ (ТВОЙ КОД - НЕ МЕНЯЛ)
         // ==========================================
         const tracks = [
             // НОВЫЕ РЕЛИЗЫ (isNew: true)
@@ -309,7 +348,7 @@
         ];
 
         // ==========================================
-        // ЛОГИКА ПЛЕЕРА И ОТОБРАЖЕНИЯ
+        // ЛОГИКА ПЛЕЕРА (ДОБАВЛЕН ПРОГРЕСС)
         // ==========================================
         let currentAudio = null;
         let currentBtn = null;
@@ -339,19 +378,23 @@
             }
         }
 
-        // Рендер карточки с обложкой (для Новых и первого трека Архива)
+        // Рендер карточки с обложкой + ПРОГРЕСС-БАР
         function createFullCard(track) {
             const card = document.createElement('div');
             card.className = 'track-card';
             card.innerHTML = `
                 ${getCoverHTML(track)}
                 <div class="track-player-row">
-                    <button class="play-btn" onclick="togglePlay('${track.file}', this)">
+                    <button class="play-btn" onclick="togglePlay('${track.file}', this, '${track.id}')">
                         <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
                     </button>
                     <div class="track-info">
                         <h3>${track.title}</h3>
                         <p>${track.desc}</p>
+                        <!-- Прогресс-бар -->
+                        <div class="progress-container" onclick="seekTrack(event, '${track.id}')">
+                            <div class="progress-bar" id="prog-${track.id}"></div>
+                        </div>
                     </div>
                     <div class="track-duration">${track.duration}</div>
                 </div>
@@ -359,12 +402,12 @@
             return card;
         }
 
-        // Рендер компактного трека (без обложки)
+        // Рендер компактного трека + ПРОГРЕСС-БАР
         function createCompactItem(track) {
             const item = document.createElement('div');
             item.className = 'compact-item';
             item.innerHTML = `
-                <button class="compact-play-btn" onclick="togglePlay('${track.file}', this)">
+                <button class="compact-play-btn" onclick="togglePlay('${track.file}', this, '${track.id}')">
                     <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
                 </button>
                 <div class="compact-info">
@@ -372,6 +415,10 @@
                     <p>${track.desc}</p>
                 </div>
                 <div class="compact-duration">${track.duration}</div>
+                <!-- Прогресс-бар снизу -->
+                <div class="compact-progress-bg" onclick="seekTrack(event, '${track.id}')">
+                    <div class="compact-progress-fill" id="prog-${track.id}"></div>
+                </div>
             `;
             return item;
         }
@@ -391,15 +438,10 @@
 
             // 2. Рендер Архива
             if (archiveTracks.length > 0) {
-                // Первый трек архива показываем сразу с обложкой
                 archivePreview.appendChild(createFullCard(archiveTracks[0]));
-
-                // Остальные треки архива скрываем в компактный список
                 archiveTracks.slice(1).forEach(track => {
                     fullArchiveList.appendChild(createCompactItem(track));
                 });
-
-                // Если в архиве всего 1 трек или нет треков, скрываем кнопку
                 if (archiveTracks.length <= 1) {
                     showAllBtn.style.display = 'none';
                 }
@@ -409,7 +451,6 @@
             }
         }
 
-        // Функция раскрытия/скрытия архива
         function toggleArchive() {
             archiveExpanded = !archiveExpanded;
             const list = document.getElementById('fullArchiveList');
@@ -428,12 +469,20 @@
             }
         }
 
-        // Логика Play/Pause (универсальная для обоих типов кнопок)
-        function togglePlay(file, btn) {
-            // Определяем класс кнопки для стилизации
-            const isActiveClass = btn.classList.contains('compact-play-btn') ? 'active' : 'active';
+        // Перемотка по клику на прогресс-бар
+        function seekTrack(event, trackId) {
+            if (!currentAudio || currentAudio.dataset.trackId !== trackId) return;
+            const bar = event.currentTarget;
+            const rect = bar.getBoundingClientRect();
+            const percent = (event.clientX - rect.left) / rect.width;
+            currentAudio.currentTime = percent * currentAudio.duration;
+        }
+
+        // Логика Play/Pause с обновлением прогресса
+        function togglePlay(file, btn, trackId) {
             const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
             const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+            const isActiveClass = btn.classList.contains('compact-play-btn') ? 'active' : 'active';
 
             if (currentBtn === btn) {
                 if (currentAudio.paused) {
@@ -451,22 +500,36 @@
             if (currentAudio) {
                 currentAudio.pause();
                 if(currentBtn) {
-                    // Удаляем активный класс у предыдущей кнопки (независимо от типа)
                     currentBtn.classList.remove('active');
                     currentBtn.innerHTML = playIcon;
                 }
+                // Сброс прогресса старого трека
+                const oldProg = document.getElementById(`prog-${currentAudio.dataset.trackId}`);
+                if(oldProg) oldProg.style.width = '0%';
             }
 
             currentAudio = new Audio(file);
+            currentAudio.dataset.trackId = trackId;
             currentBtn = btn;
             
             currentAudio.play();
             btn.classList.add(isActiveClass);
             btn.innerHTML = pauseIcon;
 
+            // Обновление прогресс-бара
+            currentAudio.addEventListener('timeupdate', () => {
+                const progBar = document.getElementById(`prog-${trackId}`);
+                if (progBar && currentAudio.duration) {
+                    const percent = (currentAudio.currentTime / currentAudio.duration) * 100;
+                    progBar.style.width = `${percent}%`;
+                }
+            });
+
             currentAudio.onended = () => {
                 btn.classList.remove(isActiveClass);
                 btn.innerHTML = playIcon;
+                const progBar = document.getElementById(`prog-${trackId}`);
+                if(progBar) progBar.style.width = '0%';
             };
         }
 
