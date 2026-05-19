@@ -346,15 +346,6 @@
                 isNew: false
             },
             {
-                id: 4,
-                title: "пуст",
-                desc: "пуст",
-                file: "tracks/song4.mp3",
-                duration: "0:00",
-                cover: "covers/cover4.jpg",
-                isNew: false
-            },
-            {
                 id: 5,
                 title: "пуст",
                 desc: "пуст",
@@ -496,6 +487,76 @@
             return `${m}:${s.toString().padStart(2, '0')}`;
         }
 
+        // === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
+        
+        // Остановка текущего трека
+        function stopCurrentTrack() {
+            if (currentAudio) {
+                currentAudio.pause();
+                if(currentBtn) {
+                    currentBtn.classList.remove('active');
+                    currentBtn.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
+                }
+                const oldProg = document.getElementById(`prog-${currentAudio.dataset.trackId}`);
+                if(oldProg) oldProg.style.width = '0%';
+            }
+        }
+
+        // Настройка слушателей для времени и прогресса
+        function setupAudioListeners(trackId) {
+            const updateTime = () => {
+                const timeEl = document.getElementById(`time-${trackId}`);
+                if (timeEl && currentAudio.duration) {
+                    timeEl.textContent = fmtTime(currentAudio.currentTime);
+                }
+            };
+            
+            const updateProgress = () => {
+                const progBar = document.getElementById(`prog-${trackId}`);
+                if (progBar && currentAudio.duration) {
+                    const percent = (currentAudio.currentTime / currentAudio.duration) * 100;
+                    progBar.style.width = `${percent}%`;
+                }
+            };
+
+            currentAudio.addEventListener('timeupdate', updateTime);
+            currentAudio.addEventListener('timeupdate', updateProgress);
+        }
+
+        // Сброс UI трека
+        function resetTrackUI(trackId) {
+            const progBar = document.getElementById(`prog-${trackId}`);
+            if(progBar) progBar.style.width = '0%';
+            const timeEl = document.getElementById(`time-${trackId}`);
+            if(timeEl) timeEl.textContent = '0:00';
+        }
+
+        // === АВТОПЕРЕХОД НА СЛЕДУЮЩИЙ ТРЕК ===
+        function playNextTrack(currentTrackId) {
+            const currentIndex = tracks.findIndex(t => t.id == currentTrackId);
+            
+            if (currentIndex !== -1 && currentIndex < tracks.length - 1) {
+                const nextTrack = tracks[currentIndex + 1];
+                
+                const allButtons = document.querySelectorAll('.play-btn, .compact-play-btn');
+                let nextBtn = null;
+                
+                for(let b of allButtons) {
+                    if(b.getAttribute('onclick').includes(`'${nextTrack.id}'`)) {
+                        nextBtn = b;
+                        break;
+                    }
+                }
+
+                if (nextBtn) {
+                    setTimeout(() => {
+                        nextBtn.click();
+                    }, 500);
+                }
+            }
+        }
+
+        // === ОБНОВЛЁННАЯ ФУНКЦИЯ TOGGLEPLAY ===
         function togglePlay(file, btn, trackId) {
             const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
             const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
@@ -514,15 +575,7 @@
                 return;
             }
 
-            if (currentAudio) {
-                currentAudio.pause();
-                if(currentBtn) {
-                    currentBtn.classList.remove('active');
-                    currentBtn.innerHTML = playIcon;
-                }
-                const oldProg = document.getElementById(`prog-${currentAudio.dataset.trackId}`);
-                if(oldProg) oldProg.style.width = '0%';
-            }
+            stopCurrentTrack();
 
             currentAudio = new Audio(file);
             currentAudio.dataset.trackId = trackId;
@@ -532,29 +585,11 @@
             btn.classList.add(isActiveClass);
             btn.innerHTML = pauseIcon;
 
-            const updateTime = () => {
-                const timeEl = document.getElementById(`time-${trackId}`);
-                if (timeEl && currentAudio.duration) {
-                    timeEl.textContent = fmtTime(currentAudio.currentTime);
-                }
-            };
-            currentAudio.addEventListener('timeupdate', updateTime);
-
-            currentAudio.addEventListener('timeupdate', () => {
-                const progBar = document.getElementById(`prog-${trackId}`);
-                if (progBar && currentAudio.duration) {
-                    const percent = (currentAudio.currentTime / currentAudio.duration) * 100;
-                    progBar.style.width = `${percent}%`;
-                }
-            });
-
+            setupAudioListeners(trackId);
+            
             currentAudio.onended = () => {
-                btn.classList.remove(isActiveClass);
-                btn.innerHTML = playIcon;
-                const progBar = document.getElementById(`prog-${trackId}`);
-                if(progBar) progBar.style.width = '0%';
-                const timeEl = document.getElementById(`time-${trackId}`);
-                if(timeEl) timeEl.textContent = '0:00';
+                resetTrackUI(trackId);
+                playNextTrack(trackId);
             };
         }
 
