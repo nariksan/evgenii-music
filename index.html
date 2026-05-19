@@ -62,19 +62,122 @@
         .gradient-text { background: linear-gradient(135deg, #fff, var(--neon-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero-description { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; line-height: 1.6; }
         
-        .action-zone { display: flex; gap: 30px; margin-top: 60px; flex-wrap: wrap; justify-content: center; }
+        .action-zone { display: flex; gap: 20px; margin-top: 40px; flex-wrap: wrap; justify-content: center; }
 
         .cyber-btn {
-            position: relative; padding: 18px 40px; font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 2px; color: var(--text-primary); text-decoration: none;
+            position: relative; padding: 16px 30px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px; color: var(--text-primary); text-decoration: none;
             background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
             clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; user-select: none;
         }
         .cyber-btn.primary { border-color: var(--neon-pink); box-shadow: 0 0 20px rgba(255, 45, 117, 0.1); }
         .cyber-btn.secondary { border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0, 212, 255, 0.1); }
+        .cyber-btn.outline { border-color: var(--neon-purple); color: var(--neon-purple); }
+        
         .cyber-btn:hover { transform: translateY(-3px) scale(1.02); background: rgba(255, 255, 255, 0.08); color: white; }
-        .cyber-btn.primary:hover { box-shadow: 0 0 30px rgba(255, 45, 117, 0.4); text-shadow: 0 0 8px rgba(255, 45, 117, 0.8); }
-        .cyber-btn.secondary:hover { box-shadow: 0 0 30px rgba(0, 212, 255, 0.4); text-shadow: 0 0 8px rgba(0, 212, 255, 0.8); }
+        .cyber-btn.primary:hover { box-shadow: 0 0 30px rgba(255, 45, 117, 0.4); text-shadow: 0 0 8px rgba(255, 45, 117, 0.8); border-color: var(--neon-pink); }
+        .cyber-btn.secondary:hover { box-shadow: 0 0 30px rgba(0, 212, 255, 0.4); text-shadow: 0 0 8px rgba(0, 212, 255, 0.8); border-color: var(--neon-blue); }
+        .cyber-btn.outline:hover { box-shadow: 0 0 30px rgba(181, 55, 242, 0.4); text-shadow: 0 0 8px rgba(181, 55, 242, 0.8); border-color: var(--neon-purple); color: white; }
+
+        /* === NEWS BLOCK STYLES === */
+        .news-section-wrapper {
+            max-width: 700px;
+            margin: 40px auto 0;
+            display: none;
+            animation: fadeInNews 0.5s ease;
+        }
+        .news-section-wrapper.visible {
+            display: block;
+        }
+        @keyframes fadeInNews { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .news-container {
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid rgba(255, 45, 117, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(255, 45, 117, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .news-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+        }
+        
+        .news-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+        
+        .news-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .live-indicator {
+            width: 8px; height: 8px;
+            background-color: #ff2d75;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff2d75;
+            animation: pulse-live 1.5s infinite;
+        }
+        
+        @keyframes pulse-live {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .news-list { list-style: none; padding: 0; margin: 0; text-align: left; }
+        
+        .news-item {
+            display: flex;
+            gap: 15px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+        
+        .news-item:last-child { border-bottom: none; }
+        
+        .news-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--neon-blue);
+            min-width: 60px;
+            flex-shrink: 0;
+        }
+        
+        .news-text {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+        
+        .news-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            padding: 1px 5px;
+            border-radius: 3px;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--neon-blue);
+            margin-right: 6px;
+            font-weight: 600;
+        }
 
         /* === SECTIONS === */
         .section-header { margin-bottom: 40px; border-left: 4px solid var(--neon-pink); padding-left: 20px; }
@@ -253,6 +356,7 @@
         </div>
     </nav>
 
+    <!-- HERO SECTION -->
     <section class="hero">
         <div class="container">
             <h1>
@@ -262,9 +366,50 @@
                 Мои тексты, озвученные искусственным разумом.<br>
                 Эксперимент на стыке человеческих эмоций и машинного голоса.
             </p>
+
+            <!-- Три кнопки -->
             <div class="action-zone">
-                <div class="cyber-btn primary" onclick="scrollToId('new')">Слушать Релизы</div>
-                <div class="cyber-btn secondary" onclick="scrollToId('archive')">Открыть Архив</div>
+                <div class="cyber-btn outline" onclick="toggleNews()">Лента Обновлений</div>
+                <div class="cyber-btn primary" onclick="scrollToId('new')">Новые Релизы</div>
+                <div class="cyber-btn secondary" onclick="scrollToId('archive')">Все Треки</div>
+            </div>
+
+            <!-- БЛОК НОВОСТЕЙ (Скрыт по умолчанию) -->
+            <div id="newsWrapper" class="news-section-wrapper">
+                <div class="news-container">
+                    <div class="news-header">
+                        <div class="news-title">
+                            <span class="live-indicator"></span>
+                            ПОСЛЕДНИЕ ОБНОВЛЕНИЯ
+                        </div>
+                    </div>
+                    
+                    <ul class="news-list">
+                        <li class="news-item">
+                            <div class="news-date">19 МАЯ</div>
+                            <div class="news-text">
+                                <span class="news-tag">NEW</span>
+                                Трек <strong>"Нейронный Дождь"</strong> уже в релизах!
+                            </div>
+                        </li>
+                        
+                        <li class="news-item">
+                            <div class="news-date">19 МАЯ</div>
+                            <div class="news-text">
+                                <span class="news-tag">SOON</span>
+                                Скоро появится возможность <strong>скачивать треки</strong> сайта.
+                            </div>
+                        </li>
+
+                        <li class="news-item">
+                            <div class="news-date">15 МАЯ</div>
+                            <div class="news-text">
+                                <span class="news-tag">SYS</span>
+                                Добавлен автопереход между треками.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -308,6 +453,20 @@
     <footer>© 2026 EVGENII. Human & AI.</footer>
 
     <script>
+        // === УПРАВЛЕНИЕ НОВОСТЯМИ ===
+        function toggleNews() {
+            const newsWrapper = document.getElementById('newsWrapper');
+            if (newsWrapper.classList.contains('visible')) {
+                newsWrapper.classList.remove('visible');
+            } else {
+                newsWrapper.classList.add('visible');
+                setTimeout(() => {
+                    newsWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+
+        // === СПИСОК ТРЕКОВ (ТВОЙ) ===
         const tracks = [
             {
                 id: 1,
@@ -489,7 +648,6 @@
 
         // === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
         
-        // Остановка текущего трека
         function stopCurrentTrack() {
             if (currentAudio) {
                 currentAudio.pause();
@@ -502,7 +660,6 @@
             }
         }
 
-        // Настройка слушателей для времени и прогресса
         function setupAudioListeners(trackId) {
             const updateTime = () => {
                 const timeEl = document.getElementById(`time-${trackId}`);
@@ -523,12 +680,38 @@
             currentAudio.addEventListener('timeupdate', updateProgress);
         }
 
-        // Сброс UI трека
         function resetTrackUI(trackId) {
             const progBar = document.getElementById(`prog-${trackId}`);
             if(progBar) progBar.style.width = '0%';
             const timeEl = document.getElementById(`time-${trackId}`);
             if(timeEl) timeEl.textContent = '0:00';
+        }
+
+        // === MEDIA SESSION API (ДЛЯ БЛОКИРОВКИ ЭКРАНА) ===
+        function setupMediaSession(track) {
+            if ('mediaSession' in navigator) {
+                let artworkSrc = './icon.png';
+                if (track.cover) artworkSrc = track.cover;
+
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: track.title,
+                    artist: 'EVGENII',
+                    album: 'AI Music Project',
+                    artwork: [
+                        { src: artworkSrc, sizes: '512x512', type: 'image/png' }
+                    ]
+                });
+
+                navigator.mediaSession.setActionHandler('play', () => {
+                    if(currentAudio && currentAudio.paused) currentAudio.play();
+                });
+                navigator.mediaSession.setActionHandler('pause', () => {
+                    if(currentAudio && !currentAudio.paused) currentAudio.pause();
+                });
+                navigator.mediaSession.setActionHandler('nexttrack', () => {
+                    playNextTrack(track.id);
+                });
+            }
         }
 
         // === АВТОПЕРЕХОД НА СЛЕДУЮЩИЙ ТРЕК ===
@@ -567,6 +750,8 @@
                     currentAudio.play();
                     btn.classList.add(isActiveClass);
                     btn.innerHTML = pauseIcon;
+                    const track = tracks.find(t => t.id == trackId);
+                    if(track) setupMediaSession(track);
                 } else {
                     currentAudio.pause();
                     btn.classList.remove(isActiveClass);
@@ -584,6 +769,9 @@
             currentAudio.play();
             btn.classList.add(isActiveClass);
             btn.innerHTML = pauseIcon;
+
+            const currentTrackObj = tracks.find(t => t.id == trackId);
+            if(currentTrackObj) setupMediaSession(currentTrackObj);
 
             setupAudioListeners(trackId);
             
