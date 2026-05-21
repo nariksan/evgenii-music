@@ -242,6 +242,41 @@
         }
         .track-card:hover .track-time { color: var(--neon-pink); }
 
+        /* === DOWNLOAD BUTTON === */
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+        .download-btn:hover {
+            background: var(--neon-blue);
+            border-color: var(--neon-blue);
+            color: white;
+            transform: scale(1.1);
+        }
+        .download-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+        .track-card:hover .download-btn {
+            border-color: var(--neon-pink);
+        }
+        .track-card:hover .download-btn:hover {
+            background: var(--neon-pink);
+            border-color: var(--neon-pink);
+        }
+
         /* === COMPACT LIST === */
         .compact-list {
             display: flex;
@@ -301,6 +336,17 @@
             margin-left: 8px;
         }
         .compact-item:hover .compact-time { color: var(--neon-pink); }
+        
+        /* Download button for compact items */
+        .compact-item .download-btn {
+            width: 28px;
+            height: 28px;
+            margin-left: 5px;
+        }
+        .compact-item .download-btn svg {
+            width: 12px;
+            height: 12px;
+        }
 
         .show-all-btn {
             width: 100%;
@@ -466,7 +512,7 @@
             }
         }
 
-        // === СПИСОК ТРЕКОВ (ТВОЙ) ===
+        // === СПИСОК ТРЕКОВ ===
         const tracks = [
             {
                 id: 1,
@@ -542,9 +588,15 @@
             }
         }
 
+        // Иконка скачивания (SVG)
+        const downloadIcon = `<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>`;
+
         function createFullCard(track) {
             const card = document.createElement('div');
             card.className = 'track-card';
+            // Генерируем имя файла для скачивания из названия трека
+            const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
+            
             card.innerHTML = `
                 ${getCoverHTML(track)}
                 <div class="track-player-row">
@@ -561,6 +613,10 @@
                     <div style="display:flex;align-items:center;gap:4px;">
                         <div class="track-duration">${track.duration}</div>
                         <div class="track-time" id="time-${track.id}">0:00</div>
+                        <!-- КНОПКА СКАЧИВАНИЯ -->
+                        <a href="${track.file}" download="${downloadName}" class="download-btn" title="Скачать трек">
+                            ${downloadIcon}
+                        </a>
                     </div>
                 </div>
             `;
@@ -570,6 +626,8 @@
         function createCompactItem(track) {
             const item = document.createElement('div');
             item.className = 'compact-item';
+            const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
+            
             item.innerHTML = `
                 <button class="compact-play-btn" onclick="togglePlay('${track.file}', this, '${track.id}')">
                     <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
@@ -581,6 +639,10 @@
                 <div style="display:flex;align-items:center;gap:4px;">
                     <div class="compact-duration">${track.duration}</div>
                     <div class="compact-time" id="time-${track.id}">0:00</div>
+                    <!-- КНОПКА СКАЧИВАНИЯ (компактная) -->
+                    <a href="${track.file}" download="${downloadName}" class="download-btn" title="Скачать трек">
+                        ${downloadIcon}
+                    </a>
                 </div>
                 <div class="compact-progress-bg" onclick="seekTrack(event, '${track.id}')">
                     <div class="compact-progress-fill" id="prog-${track.id}"></div>
