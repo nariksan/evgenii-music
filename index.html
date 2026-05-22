@@ -752,7 +752,7 @@
             <div class="action-zone">
                 <div class="cyber-btn outline" onclick="toggleNews()">📡 Лента Обновлений</div>
                 <div class="cyber-btn primary" onclick="scrollToId('new')">🎵 Новые Релизы</div>
-                <div class="cyber-btn secondary" onclick="scrollToId('archive')"> Все Треки</div>
+                <div class="cyber-btn secondary" onclick="scrollToId('archive')">📦 Все Треки</div>
             </div>
             <!-- БЛОК НОВОСТЕЙ -->
             <div id="newsWrapper" class="news-section-wrapper">
@@ -810,7 +810,7 @@
         <div class="chat-messages" id="chatMessages">
             <div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>
         </div>
-        <button class="chat-clear" id="chatClear">️ Очистить чат</button>
+        <button class="chat-clear" id="chatClear">🗑️ Очистить чат</button>
         <div class="chat-input">
             <input type="text" id="chatInput" placeholder="Введите сообщение..." maxlength="500">
             <button class="chat-send" id="chatSend">
@@ -856,16 +856,64 @@
             }
         }
 
-        // === TRACKS ===
+        // === СПИСОК ТРЕКОВ ===
         const tracks = [
-            { id: 1, title: "пуст", desc: "", file: "tracks/song6.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true },
-            { id: 2, title: "Нейронный Дождь", desc: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: true },
-            { id: 3, title: "А мне похуй", desc: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "cover/cover1.jpg", isNew: false },
-            { id: 4, title: "Сгоревший экран", desc: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover0.jpg", isNew: false },
-            { id: 4, title: "Сгоревший экран", desc: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover0.jpg", isNew: false },
-            { id: 5, title: "Тишина", desc: "", file: "tracks/song4.mp3", duration: "04:48", cover: "covers/cover0.jpg", isNew: false },
-            { id: 6, title: "Воздух Густеет", desc: "", file: "tracks/song1.mp3", duration: "03:23", cover: "covers/cover0.jpg", isNew: false }
+            {
+                id: 1,
+                title: "пуст",
+                desc: "",
+                file: "tracks/song6.mp3",
+                duration: "4:03",
+                cover: "cover/cover6.jpg",
+                isNew: true
+            },
+            {
+                id: 2,
+                title: "Нейронный Дождь",
+                desc: "О чём думает нейросеть?",
+                file: "tracks/song1.mp3",
+                duration: "4:03",
+                cover: "cover/cover2.jpg",
+                isNew: true
+            },
+            {
+                id: 3,
+                title: "А мне похуй",
+                desc: "Когда похуй",
+                file: "tracks/song.mp3",
+                duration: "3:11",
+                cover: "cover/cover1.jpg",
+                isNew: false
+            },
+            {
+                id: 4,
+                title: "Сгоревший экран",
+                desc: "",
+                file: "tracks/song2.mp3",
+                duration: "3:48",
+                cover: "cover/cover0.jpg",
+                isNew: false
+            },
+            {
+                id: 5,
+                title: "Тишина",
+                desc: "",
+                file: "tracks/song4.mp3",
+                duration: "04:48",
+                cover: "covers/cover0.jpg",
+                isNew: false
+            },
+            {
+                id: 6,
+                title: "Воздух Густеет",
+                desc: "",
+                file: "tracks/song1.mp3",
+                duration: "03:23",
+                cover: "covers/cover0.jpg",
+                isNew: false
+            }
         ];
+
         let currentAudio = null, currentBtn = null, archiveExpanded = false;
 
         function createParticles() {
@@ -1116,8 +1164,6 @@
 
         // === УБРАНА ПРИНУДИТЕЛЬНАЯ ПАУЗА ПРИ СВОРАЧИВАНИИ ===
         document.addEventListener('visibilitychange', () => {
-            // Раньше здесь было: if (document.hidden && currentAudio) currentAudio.pause();
-            // Теперь мы НЕ ставим паузу — браузер сам управляет через Media Session
             if (document.hidden) {
                 console.log('Tab hidden — audio continues via Media Session');
             }
@@ -1185,9 +1231,15 @@
             chatInput.value = '';
         }
 
+        // === ПАРОЛЬ ДЛЯ ОЧИСТКИ ЧАТА ===
         function clearChat() {
-            if (confirm('⚠️ Очистить чат для ВСЕХ пользователей? Это действие нельзя отменить.')) {
-                CHAT_REF.remove();
+            const password = prompt('🔐 Введите пароль администратора:');
+            if (password === '0770') {
+                if (confirm('⚠️ Очистить чат для ВСЕХ пользователей? Это действие нельзя отменить.')) {
+                    CHAT_REF.remove();
+                }
+            } else if (password !== null) {
+                alert('❌ Неверный пароль!');
             }
         }
 
