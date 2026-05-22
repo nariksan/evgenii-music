@@ -586,7 +586,7 @@
             .grid { grid-template-columns: 1fr; }
             .track-player-row { padding: 18px; gap: 12px; } .play-btn { width: 44px; height: 44px; }
             .nav-links a { padding: 6px 12px; font-size: 0.8rem; }
-            .cursor, .cursor-dot { display: none; }
+            .cursor, .cursor-dot { display: none !important; }
         }
 
         /* === SCROLLBAR === */
@@ -752,7 +752,7 @@
             <div class="action-zone">
                 <div class="cyber-btn outline" onclick="toggleNews()">📡 Лента Обновлений</div>
                 <div class="cyber-btn primary" onclick="scrollToId('new')">🎵 Новые Релизы</div>
-                <div class="cyber-btn secondary" onclick="scrollToId('archive')">📦 Все Треки</div>
+                <div class="cyber-btn secondary" onclick="scrollToId('archive')"> Все Треки</div>
             </div>
             <!-- БЛОК НОВОСТЕЙ -->
             <div id="newsWrapper" class="news-section-wrapper">
@@ -810,7 +810,7 @@
         <div class="chat-messages" id="chatMessages">
             <div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>
         </div>
-        <button class="chat-clear" id="chatClear">🗑️ Очистить чат</button>
+        <button class="chat-clear" id="chatClear">️ Очистить чат</button>
         <div class="chat-input">
             <input type="text" id="chatInput" placeholder="Введите сообщение..." maxlength="500">
             <button class="chat-send" id="chatSend">
@@ -820,17 +820,25 @@
     </div>
 
     <script>
-        // === CUSTOM CURSOR ===
+        // === CUSTOM CURSOR (отключается на мобильных) ===
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
-            cursorDot.style.left = e.clientX + 'px'; cursorDot.style.top = e.clientY + 'px';
-        });
-        document.querySelectorAll('a, button, .cyber-btn, .play-btn, .download-btn, .compact-play-btn, .nav-links a, .logo, .chat-toggle, .chat-send, .chat-close, .chat-clear').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
+        const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
+        
+        if (!isMobile) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+                cursorDot.style.left = e.clientX + 'px'; cursorDot.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, .cyber-btn, .play-btn, .download-btn, .compact-play-btn, .nav-links a, .logo, .chat-toggle, .chat-send, .chat-close, .chat-clear').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+        } else {
+            if(cursor) cursor.style.display = 'none';
+            if(cursorDot) cursorDot.style.display = 'none';
+        }
+
         document.querySelector('.news-container')?.addEventListener('mousemove', (e) => {
             const rect = e.currentTarget.getBoundingClientRect();
             e.currentTarget.style.setProperty('--x', `${e.clientX - rect.left}px`);
@@ -876,6 +884,7 @@
             return `<div class="track-cover">${track.emoji || '🎵'}</div>`;
         }
         const downloadIcon = `<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>`;
+        
         function createFullCard(track) {
             const card = document.createElement('div'); card.className = 'track-card';
             const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
@@ -947,66 +956,173 @@
             currentAudio.currentTime = percent * currentAudio.duration;
         }
         function fmtTime(sec) { if (!sec || isNaN(sec)) return '0:00'; const m = Math.floor(sec / 60), s = Math.floor(sec % 60); return `${m}:${s.toString().padStart(2, '0')}`; }
+        
         function stopCurrentTrack() {
             if (currentAudio) {
                 currentAudio.pause();
-                if (currentBtn) { currentBtn.classList.remove('active'); currentBtn.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>'; }
+                if (currentBtn) { 
+                    currentBtn.classList.remove('active'); 
+                    currentBtn.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>'; 
+                }
                 const oldProg = document.getElementById(`prog-${currentAudio.dataset.trackId}`);
                 if (oldProg) oldProg.style.width = '0%';
             }
         }
+
         function setupAudioListeners(trackId) {
-            const updateTime = () => { const el = document.getElementById(`time-${trackId}`); if (el && currentAudio.duration && !isNaN(currentAudio.duration)) el.textContent = fmtTime(currentAudio.currentTime); };
-            const updateProgress = () => { const bar = document.getElementById(`prog-${trackId}`); if (bar && currentAudio.duration && !isNaN(currentAudio.duration)) bar.style.width = `${(currentAudio.currentTime / currentAudio.duration) * 100}%`; };
-            currentAudio.addEventListener('timeupdate', updateTime); currentAudio.addEventListener('timeupdate', updateProgress);
+            const updateTime = () => { 
+                const el = document.getElementById(`time-${trackId}`); 
+                if (el && currentAudio.duration && !isNaN(currentAudio.duration)) el.textContent = fmtTime(currentAudio.currentTime); 
+            };
+            const updateProgress = () => { 
+                const bar = document.getElementById(`prog-${trackId}`); 
+                if (bar && currentAudio.duration && !isNaN(currentAudio.duration)) bar.style.width = `${(currentAudio.currentTime / currentAudio.duration) * 100}%`; 
+            };
+            currentAudio.addEventListener('timeupdate', updateTime); 
+            currentAudio.addEventListener('timeupdate', updateProgress);
         }
-        function resetTrackUI(trackId) { const bar = document.getElementById(`prog-${trackId}`); if (bar) bar.style.width = '0%'; const el = document.getElementById(`time-${trackId}`); if (el) el.textContent = '0:00'; }
+
+        function resetTrackUI(trackId) { 
+            const bar = document.getElementById(`prog-${trackId}`); if (bar) bar.style.width = '0%'; 
+            const el = document.getElementById(`time-${trackId}`); if (el) el.textContent = '0:00'; 
+        }
+
+        // === MEDIA SESSION API (ДЛЯ ФОНОВОГО ВОСПРОИЗВЕДЕНИЯ) ===
         function setupMediaSession(track) {
             if ('mediaSession' in navigator) {
-                let artworkSrc = './icon.png'; if (track.cover) artworkSrc = track.cover;
-                navigator.mediaSession.metadata = new MediaMetadata({ title: track.title, artist: 'EVGENII', album: 'AI Music Project', artwork: [{ src: artworkSrc, sizes: '512x512', type: 'image/png' }] });
-                navigator.mediaSession.setActionHandler('play', () => { if (currentAudio && currentAudio.paused) currentAudio.play(); });
-                navigator.mediaSession.setActionHandler('pause', () => { if (currentAudio && !currentAudio.paused) currentAudio.pause(); });
+                let artworkSrc = './icon.png'; 
+                if (track.cover) artworkSrc = track.cover;
+
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: track.title,
+                    artist: 'EVGENII',
+                    album: 'AI Music Project',
+                    artwork: [
+                        { src: artworkSrc, sizes: '512x512', type: 'image/png' }
+                    ]
+                });
+
+                navigator.mediaSession.setActionHandler('play', () => {
+                    if(currentAudio && currentAudio.paused) {
+                        currentAudio.play();
+                        updatePlayButtonState(true);
+                    }
+                });
+                navigator.mediaSession.setActionHandler('pause', () => {
+                    if(currentAudio && !currentAudio.paused) {
+                        currentAudio.pause();
+                        updatePlayButtonState(false);
+                    }
+                });
                 navigator.mediaSession.setActionHandler('nexttrack', () => playNextTrack(track.id));
+                navigator.mediaSession.setActionHandler('previoustrack', () => playPrevTrack(track.id));
             }
         }
+
+        function updatePlayButtonState(isPlaying) {
+            if (!currentBtn) return;
+            const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
+            const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+            
+            if (isPlaying) {
+                currentBtn.classList.add('active');
+                currentBtn.innerHTML = pauseIcon;
+            } else {
+                currentBtn.classList.remove('active');
+                currentBtn.innerHTML = playIcon;
+            }
+        }
+
         function playNextTrack(currentTrackId) {
             const idx = tracks.findIndex(t => t.id == currentTrackId);
             if (idx !== -1 && idx < tracks.length - 1) {
                 const next = tracks[idx + 1];
-                const btn = [...document.querySelectorAll('.play-btn, .compact-play-btn')].find(b => b.getAttribute('onclick')?.includes(`'${next.id}'`));
-                if (btn) setTimeout(() => btn.click(), 500);
+                const allBtns = document.querySelectorAll('.play-btn, .compact-play-btn');
+                for(let b of allBtns) {
+                    if(b.getAttribute('onclick')?.includes(`'${next.id}'`)) {
+                        b.click();
+                        break;
+                    }
+                }
             }
         }
+
+        function playPrevTrack(currentTrackId) {
+            const idx = tracks.findIndex(t => t.id == currentTrackId);
+            if (idx > 0) {
+                const prev = tracks[idx - 1];
+                const allBtns = document.querySelectorAll('.play-btn, .compact-play-btn');
+                for(let b of allBtns) {
+                    if(b.getAttribute('onclick')?.includes(`'${prev.id}'`)) {
+                        b.click();
+                        break;
+                    }
+                }
+            }
+        }
+
         function togglePlay(file, btn, trackId) {
-            const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>', pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+            const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
+            const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+
+            // Если нажали на ту же кнопку
             if (currentBtn === btn) {
-                if (currentAudio && !currentAudio.paused) { currentAudio.pause(); btn.classList.remove('active'); btn.innerHTML = playIcon; }
-                else { currentAudio?.play(); btn.classList.add('active'); btn.innerHTML = pauseIcon; const t = tracks.find(x => x.id == trackId); if (t) setupMediaSession(t); }
+                if (currentAudio && !currentAudio.paused) {
+                    currentAudio.pause();
+                    updatePlayButtonState(false);
+                } else {
+                    currentAudio.play().catch(e => console.log("Resume error:", e));
+                    updatePlayButtonState(true);
+                    const t = tracks.find(x => x.id == trackId);
+                    if(t) setupMediaSession(t);
+                }
                 return;
             }
+
+            // Если нажали на другую кнопку — останавливаем старую
             stopCurrentTrack();
-            currentAudio = new Audio(file); currentAudio.dataset.trackId = trackId; currentBtn = btn;
-            currentAudio.play().catch(e => { console.log('Autoplay prevented:', e); btn.classList.remove('active'); btn.innerHTML = playIcon; });
-            btn.classList.add('active'); btn.innerHTML = pauseIcon;
-            const t = tracks.find(x => x.id == trackId); if (t) setupMediaSession(t);
-            setupAudioListeners(trackId);
-            currentAudio.onended = () => { resetTrackUI(trackId); btn.classList.remove('active'); btn.innerHTML = playIcon; playNextTrack(trackId); };
+
+            // Запускаем новую
+            currentAudio = new Audio(file);
+            currentAudio.dataset.trackId = trackId;
+            currentBtn = btn;
+            currentAudio.volume = 1.0;
+
+            currentAudio.play().then(() => {
+                updatePlayButtonState(true);
+                const t = tracks.find(x => x.id == trackId);
+                if(t) setupMediaSession(t);
+                setupAudioListeners(trackId);
+            }).catch(e => {
+                console.log('Autoplay prevented:', e);
+                updatePlayButtonState(false);
+            });
+            
+            currentAudio.onended = () => {
+                resetTrackUI(trackId);
+                updatePlayButtonState(false);
+                playNextTrack(trackId);
+            };
         }
+
         function scrollToId(id) {
             const el = document.getElementById(id); if (!el) return;
             const navH = document.querySelector('nav').offsetHeight;
             window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - navH - 20, behavior: 'smooth' });
         }
+
         if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+
+        // === УБРАНА ПРИНУДИТЕЛЬНАЯ ПАУЗА ПРИ СВОРАЧИВАНИИ ===
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden && currentAudio && !currentAudio.paused) {
-                currentAudio.pause();
-                if (currentBtn) { currentBtn.classList.remove('active'); currentBtn.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>'; }
+            // Раньше здесь было: if (document.hidden && currentAudio) currentAudio.pause();
+            // Теперь мы НЕ ставим паузу — браузер сам управляет через Media Session
+            if (document.hidden) {
+                console.log('Tab hidden — audio continues via Media Session');
             }
         });
 
-        // === 🔥 FIREBASE CHAT (ИСПРАВЛЕННЫЙ — СПРАШИВАЕТ ИМЯ ПРИ ОТКРЫТИИ ЧАТА) 🔥
+        // === FIREBASE CHAT (СПРАШИВАЕТ ИМЯ ТОЛЬКО ПРИ ОТКРЫТИИ ЧАТА) ===
         const firebaseConfig = {
             apiKey: "AIzaSyC8fxnC_WVl7r8mGBsF2SCITvzvlwUF0f0",
             authDomain: "evgenii-6a5bb.firebaseapp.com",
@@ -1022,11 +1138,8 @@
         const db = firebase.database();
         const CHAT_REF = db.ref('evgenii_chat');
 
-        // ID пользователя (создаём сразу)
         const currentUserId = localStorage.getItem('evgenii_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
         localStorage.setItem('evgenii_user_id', currentUserId);
-
-        // Имя — пока null, спросим при открытии чата
         let currentUserName = localStorage.getItem('evgenii_user_name');
 
         const chatToggle = document.getElementById('chatToggle');
@@ -1077,26 +1190,21 @@
             }
         }
 
-        // === ИЗМЕНЁННАЯ ФУНКЦИЯ ОТКРЫТИЯ ЧАТА ===
         function toggleChat() {
-            // Если имя не сохранено — спрашиваем ПЕРЕД открытием чата
+            // Спрашиваем имя ТОЛЬКО при первом открытии чата
             if (!currentUserName) {
                 const name = prompt('👋 Привет! Введите ваше имя для чата:', 'Гость');
-                if (name === null) return; // Если нажал Cancel — не открываем чат
+                if (name === null) return;
                 currentUserName = name.trim() || 'Гость';
-                localStorage.setItem('evgenii_user_name', currentUserName); // сохраняем
+                localStorage.setItem('evgenii_user_name', currentUserName);
             }
             
-            // Теперь открываем чат
             const isVisible = chatWindow.classList.toggle('visible');
             chatToggle.classList.toggle('active', isVisible);
             chatToggle.textContent = isVisible ? '✕' : '💬';
-            if (isVisible) { 
-                setTimeout(() => chatInput.focus(), 100); 
-            }
+            if (isVisible) { setTimeout(() => chatInput.focus(), 100); }
         }
 
-        // Подключение к чату в реальном времени
         CHAT_REF.on('value', (snapshot) => {
             renderMessages(snapshot.val());
             chatStatus.textContent = '✅ Онлайн';
@@ -1107,7 +1215,6 @@
             console.error('Firebase error:', error);
         });
 
-        // Обработчики событий
         chatToggle.addEventListener('click', toggleChat);
         chatClose.addEventListener('click', () => {
             chatWindow.classList.remove('visible');
@@ -1118,7 +1225,6 @@
         chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addMessage(chatInput.value); });
         chatClear.addEventListener('click', clearChat);
 
-        // Закрытие чата при клике вне
         document.addEventListener('click', (e) => {
             if (chatWindow.classList.contains('visible') && !chatWindow.contains(e.target) && !chatToggle.contains(e.target)) {
                 chatWindow.classList.remove('visible');
@@ -1127,7 +1233,6 @@
             }
         });
 
-        // === INIT ===
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
             renderTracks();
