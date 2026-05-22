@@ -1006,7 +1006,7 @@
             }
         });
 
-        // === 🔥 FIREBASE CHAT (РАБОТАЕТ МЕЖДУ УСТРОЙСТВАМИ) 🔥
+        // === 🔥 FIREBASE CHAT (ИСПРАВЛЕННЫЙ — СПРАШИВАЕТ ИМЯ ПРИ ОТКРЫТИИ ЧАТА) 🔥
         const firebaseConfig = {
             apiKey: "AIzaSyC8fxnC_WVl7r8mGBsF2SCITvzvlwUF0f0",
             authDomain: "evgenii-6a5bb.firebaseapp.com",
@@ -1017,20 +1017,17 @@
             appId: "1:623681147476:web:893a12286d88af4eb313c1",
             measurementId: "G-H7TYB5E8PW"
         };
-        
-        // Инициализация Firebase
+
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         const CHAT_REF = db.ref('evgenii_chat');
 
-        // ID и имя пользователя
+        // ID пользователя (создаём сразу)
         const currentUserId = localStorage.getItem('evgenii_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
         localStorage.setItem('evgenii_user_id', currentUserId);
+
+        // Имя — пока null, спросим при открытии чата
         let currentUserName = localStorage.getItem('evgenii_user_name');
-        if (!currentUserName) {
-            currentUserName = prompt('Введите ваше имя для чата:', 'Гость') || 'Гость';
-            localStorage.setItem('evgenii_user_name', currentUserName);
-        }
 
         const chatToggle = document.getElementById('chatToggle');
         const chatWindow = document.getElementById('chatWindow');
@@ -1068,7 +1065,7 @@
             CHAT_REF.push({
                 text: text.trim(),
                 userId: currentUserId,
-                userName: currentUserName,
+                userName: currentUserName || 'Гость',
                 timestamp: Date.now()
             });
             chatInput.value = '';
@@ -1077,6 +1074,25 @@
         function clearChat() {
             if (confirm('⚠️ Очистить чат для ВСЕХ пользователей? Это действие нельзя отменить.')) {
                 CHAT_REF.remove();
+            }
+        }
+
+        // === ИЗМЕНЁННАЯ ФУНКЦИЯ ОТКРЫТИЯ ЧАТА ===
+        function toggleChat() {
+            // Если имя не сохранено — спрашиваем ПЕРЕД открытием чата
+            if (!currentUserName) {
+                const name = prompt('👋 Привет! Введите ваше имя для чата:', 'Гость');
+                if (name === null) return; // Если нажал Cancel — не открываем чат
+                currentUserName = name.trim() || 'Гость';
+                localStorage.setItem('evgenii_user_name', currentUserName); // сохраняем
+            }
+            
+            // Теперь открываем чат
+            const isVisible = chatWindow.classList.toggle('visible');
+            chatToggle.classList.toggle('active', isVisible);
+            chatToggle.textContent = isVisible ? '✕' : '💬';
+            if (isVisible) { 
+                setTimeout(() => chatInput.focus(), 100); 
             }
         }
 
@@ -1092,12 +1108,7 @@
         });
 
         // Обработчики событий
-        chatToggle.addEventListener('click', () => {
-            const isVisible = chatWindow.classList.toggle('visible');
-            chatToggle.classList.toggle('active', isVisible);
-            chatToggle.textContent = isVisible ? '✕' : '💬';
-            if (isVisible) { setTimeout(() => chatInput.focus(), 100); }
-        });
+        chatToggle.addEventListener('click', toggleChat);
         chatClose.addEventListener('click', () => {
             chatWindow.classList.remove('visible');
             chatToggle.classList.remove('active');
