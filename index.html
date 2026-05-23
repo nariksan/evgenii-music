@@ -722,87 +722,65 @@
             padding: 4px 0; background: rgba(0,212,255,0.1); border-radius: 4px; margin: 8px 16px 0;
         }
 
-        /* === LOGIN MODAL (STARTUP) === */
+        /* === STARTUP LOGIN MODAL === */
         .login-modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(15px);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
             z-index: 10000;
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.4s ease;
-        }
-        .login-modal-overlay.visible {
-            display: flex;
+            animation: fadeIn 0.3s ease;
         }
         .login-modal {
-            background: linear-gradient(145deg, rgba(15,15,25,0.98), rgba(25,25,40,0.98));
+            background: linear-gradient(145deg, rgba(15,15,25,0.95), rgba(25,25,40,0.95));
             border: 2px solid var(--neon-purple);
-            border-radius: 24px;
-            padding: 50px 40px;
-            max-width: 480px;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 450px;
             width: 90%;
-            box-shadow: var(--glow-purple), 0 30px 80px rgba(0,0,0,0.6);
-            animation: slideUp 0.5s ease;
+            box-shadow: var(--glow-purple), 0 20px 60px rgba(0,0,0,0.5);
+            animation: slideUp 0.4s ease;
             position: relative;
             text-align: center;
         }
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .login-modal::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
+            top: 0; left: 0; right: 0;
+            height: 3px;
             background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-purple), var(--neon-cyan));
             animation: gradientFlow 3s linear infinite;
             background-size: 400% 100%;
-            border-radius: 24px 24px 0 0;
+            border-radius: 20px 20px 0 0;
         }
-        .login-modal-header {
-            margin-bottom: 35px;
-        }
-        .login-modal-welcome {
+        .login-modal-header { margin-bottom: 30px; }
+        .login-modal-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple), var(--neon-blue));
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
-            text-shadow: 0 0 30px rgba(181, 55, 242, 0.4);
+            margin-bottom: 10px;
         }
         .login-modal-subtitle {
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 0.95rem;
             line-height: 1.5;
         }
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
+        .login-form { display: flex; flex-direction: column; gap: 20px; }
         .login-divider {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin: 10px 0;
+            display: flex; align-items: center; gap: 12px; margin: 10px 0;
         }
-        .login-divider::before,
-        .login-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: rgba(255,255,255,0.15);
+        .login-divider::before, .login-divider::after {
+            content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.15);
         }
         .login-divider-text {
             color: var(--text-secondary);
@@ -811,10 +789,10 @@
         }
         .google-login-btn {
             width: 100%;
-            padding: 16px 20px;
+            padding: 14px;
             background: white;
             border: none;
-            border-radius: 14px;
+            border-radius: 12px;
             color: #1a1a2e;
             font-family: 'Montserrat', sans-serif;
             font-size: 1rem;
@@ -823,55 +801,38 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 14px;
+            gap: 12px;
             transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(255,255,255,0.2);
         }
         .google-login-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 35px rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,255,255,0.3);
         }
-        .google-login-btn svg {
-            width: 24px;
-            height: 24px;
-        }
+        .google-login-btn svg { width: 24px; height: 24px; }
         .login-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
+            top: 16px; right: 16px;
+            background: none; border: none;
             color: var(--text-secondary);
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: color 0.3s;
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
             border-radius: 50%;
         }
-        .login-close:hover {
-            color: var(--neon-pink);
-            background: rgba(255,255,255,0.08);
-            transform: rotate(90deg);
-        }
+        .login-close:hover { color: var(--neon-pink); background: rgba(255,255,255,0.05); }
         .login-error {
             background: rgba(255, 45, 117, 0.15);
             border: 1px solid var(--neon-pink);
             color: var(--neon-pink);
-            padding: 14px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 8px;
             font-size: 0.9rem;
             display: none;
             text-align: center;
-            margin-bottom: 16px;
         }
-        .login-error.visible {
-            display: block;
-            animation: shake 0.5s ease;
-        }
+        .login-error.visible { display: block; animation: shake 0.5s ease; }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-10px); }
@@ -879,33 +840,27 @@
         }
         .login-loading {
             display: none;
-            align-items: center;
-            justify-content: center;
+            align-items: center; justify-content: center;
             gap: 10px;
             color: var(--neon-cyan);
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.9rem;
         }
-        .login-loading.visible {
-            display: flex;
-        }
+        .login-loading.visible { display: flex; }
         .login-loading::after {
             content: '';
-            width: 16px;
-            height: 16px;
+            width: 16px; height: 16px;
             border: 2px solid var(--neon-cyan);
             border-top-color: transparent;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Блокировка контента при показе модалки */
+        /* Блокировка контента */
         body.modal-open {
             overflow: hidden;
-            filter: blur(8px);
+            filter: blur(5px);
             pointer-events: none;
             user-select: none;
         }
@@ -928,26 +883,22 @@
     <div class="particles" id="particles"></div>
     <div class="grid-overlay"></div>
 
-    <!-- LOGIN MODAL (STARTUP) -->
+    <!-- STARTUP LOGIN MODAL -->
     <div class="login-modal-overlay" id="startupLoginModal">
         <div class="login-modal">
             <button class="login-close" onclick="closeStartupLoginModal()">×</button>
-            
             <div class="login-modal-header">
-                <h1 class="login-modal-welcome">👋 Привет!</h1>
+                <h1 class="login-modal-title">👋 Привет!</h1>
                 <p class="login-modal-subtitle">
-                    Добро пожаловать в мир музыки и искусственного интеллекта.<br>
-                    Авторизуйтесь, чтобы получить полный доступ.
+                    Добро пожаловать в мир музыки и ИИ.<br>
+                    Авторизуйтесь для полного доступа.
                 </p>
             </div>
-            
             <div class="login-error" id="startupLoginError"></div>
-            
             <div class="login-form">
                 <div class="login-divider">
                     <span class="login-divider-text">Войти через</span>
                 </div>
-                
                 <button class="google-login-btn" onclick="startupSignInWithGoogle()" id="startupGoogleBtn">
                     <svg viewBox="0 0 24 24">
                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -957,10 +908,7 @@
                     </svg>
                     Google
                 </button>
-                
-                <div class="login-loading" id="startupLoginLoading">
-                    Вход в систему...
-                </div>
+                <div class="login-loading" id="startupLoginLoading">Вход...</div>
             </div>
         </div>
     </div>
@@ -986,7 +934,6 @@
                 <div class="cyber-btn primary" onclick="scrollToId('new')">🎵 Новые Релизы</div>
                 <div class="cyber-btn secondary" onclick="scrollToId('archive')">📦 Все Треки</div>
             </div>
-            <!-- БЛОК НОВОСТЕЙ -->
             <div id="newsWrapper" class="news-section-wrapper">
                 <div class="news-container">
                     <div class="news-header">
@@ -995,7 +942,7 @@
                     <ul class="news-list">
                         <li class="news-item"><div class="news-date">22 МАЯ</div><div class="news-text"><span class="news-tag">NEW</span>Добавлен <strong>внутренний чат💬</strong></div></li>
                         <li class="news-item"><div class="news-date">22 МАЯ</div><div class="news-text"><span class="news-tag">SYS</span>Обновлен <strong>дизайн сайта 🎨✨</strong></div></li>
-                       <li class="news-item"><div class="news-date">21 МАЯ</div><div class="news-text"><span class="news-tag NEW">NEW</span>Трек <strong>"Братья"</strong> уже в релизах! 🎧</div></li>
+                        <li class="news-item"><div class="news-date">21 МАЯ</div><div class="news-text"><span class="news-tag NEW">NEW</span>Трек <strong>"Братья"</strong> уже в релизах! 🎧</div></li>
                     </ul>
                 </div>
             </div>
@@ -1029,7 +976,7 @@
 
     <footer>© 2026 EVGENII • Создано Human & AI •  🔥</footer>
 
-    <!-- CHAT TOGGLE BUTTON -->
+    <!-- CHAT TOGGLE -->
     <div class="chat-toggle" id="chatToggle" title="Открыть чат">💬</div>
 
     <!-- CHAT WINDOW -->
@@ -1088,7 +1035,7 @@
             }
         }
 
-        // === TRACKS LIST ===
+        // === TRACKS ===
         const tracks = [
             { id: 1, title: "пуст", desc: "", file: "tracks/song6.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true },
             { id: 2, title: "Нейронный Дождь", desc: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: true },
@@ -1290,10 +1237,9 @@
         }
 
         if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-
         document.addEventListener('visibilitychange', () => { if (document.hidden) console.log('Tab hidden — audio continues via Media Session'); });
 
-        // === FIREBASE CONFIG & AUTH ===
+        // === FIREBASE ===
         const firebaseConfig = {
             apiKey: "AIzaSyC8fxnC_WVl7r8mGBsF2SCITvzvlwUF0f0",
             authDomain: "evgenii-6a5bb.firebaseapp.com",
@@ -1309,63 +1255,65 @@
         const auth = firebase.auth();
         const CHAT_REF = db.ref('evgenii_chat');
 
-        // === STARTUP LOGIN MODAL ===
+        // === STARTUP LOGIN ===
         const startupModal = document.getElementById('startupLoginModal');
         const startupError = document.getElementById('startupLoginError');
         const startupLoading = document.getElementById('startupLoginLoading');
         const startupGoogleBtn = document.getElementById('startupGoogleBtn');
 
         function showStartupLoginModal() {
-            // Показываем модальное окно только если пользователь не авторизован
-            if (!auth.currentUser) {
+            if (startupModal) {
                 startupModal.classList.add('visible');
                 document.body.classList.add('modal-open');
-                startupError.classList.remove('visible');
+                if(startupError) startupError.classList.remove('visible');
             }
         }
 
         function closeStartupLoginModal() {
-            startupModal.classList.remove('visible');
+            if(startupModal) startupModal.classList.remove('visible');
             document.body.classList.remove('modal-open');
         }
 
         function startupSignInWithGoogle() {
-            // Показываем лоадер, скрываем кнопку
-            startupGoogleBtn.style.display = 'none';
-            startupLoading.classList.add('visible');
-            startupError.classList.remove('visible');
+            if(startupGoogleBtn) startupGoogleBtn.style.display = 'none';
+            if(startupLoading) startupLoading.classList.add('visible');
+            if(startupError) startupError.classList.remove('visible');
             
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider)
                 .then((result) => {
-                    console.log('Logged in:', result.user.displayName);
+                    console.log('✓ Logged in:', result.user.displayName);
                     closeStartupLoginModal();
                 })
                 .catch((error) => {
-                    console.error('Login Error:', error);
-                    startupError.textContent = 'Ошибка: ' + error.message;
-                    startupError.classList.add('visible');
-                    startupGoogleBtn.style.display = 'flex';
-                    startupLoading.classList.remove('visible');
+                    console.error('✗ Login Error:', error);
+                    if(startupError) {
+                        startupError.textContent = 'Ошибка: ' + error.message;
+                        startupError.classList.add('visible');
+                    }
+                    if(startupGoogleBtn) startupGoogleBtn.style.display = 'flex';
+                    if(startupLoading) startupLoading.classList.remove('visible');
                 });
         }
 
-        // Закрываем модальное окно при клике вне его
-        startupModal.addEventListener('click', (e) => {
-            if (e.target === startupModal) {
-                closeStartupLoginModal();
-            }
-        });
+        if(startupModal) {
+            startupModal.addEventListener('click', (e) => {
+                if (e.target === startupModal) closeStartupLoginModal();
+            });
+        }
 
-        // Слушатель состояния авторизации
+        // Слушатель авторизации — ГЛАВНОЕ
         auth.onAuthStateChanged((user) => {
             if (user) {
-                // Пользователь авторизован - закрываем модальное окно если открыто
+                console.log('✓ User:', user.email);
                 closeStartupLoginModal();
+            } else {
+                console.log('✗ No user — showing login');
+                setTimeout(() => showStartupLoginModal(), 300);
             }
         });
 
-        // === CHAT LOGIC ===
+        // === CHAT ===
         let currentUserId = localStorage.getItem('evgenii_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
         let currentUserName = localStorage.getItem('evgenii_user_name');
 
@@ -1412,13 +1360,11 @@
         chatClear.addEventListener('click', clearChat);
         document.addEventListener('click', (e) => { if (chatWindow.classList.contains('visible') && !chatWindow.contains(e.target) && !chatToggle.contains(e.target)) { chatWindow.classList.remove('visible'); chatToggle.classList.remove('active'); chatToggle.textContent = '💬'; } });
 
+        // === INIT ===
         document.addEventListener('DOMContentLoaded', () => { 
             createParticles(); 
             renderTracks(); 
             window.dispatchEvent(new Event('scroll'));
-            
-            // Показываем модальное окно входа при загрузке
-            showStartupLoginModal();
         });
     </script>
 </body>
