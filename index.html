@@ -190,7 +190,7 @@
         .nav-links a:hover { color: white; transform: translateY(-2px); }
         .nav-links a:hover::before { opacity: 1; }
 
-        /* Profile Button in Nav */
+        /* Profile Button in Nav - ALWAYS VISIBLE */
         .profile-btn {
             margin-left: 12px;
             padding: 8px 18px !important;
@@ -203,9 +203,9 @@
             box-shadow: 0 0 10px rgba(181, 55, 242, 0.2);
             clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
             text-decoration: none !important;
-            display: none;
+            cursor: pointer;
+            display: inline-block !important; /* Всегда видна */
         }
-        .profile-btn.visible { display: inline-block !important; }
         .profile-btn:hover {
             background: var(--neon-purple) !important;
             color: white !important;
@@ -258,14 +258,14 @@
         }
         .logout-btn:hover { color: var(--neon-pink); }
 
-        /* Profile Button in Social */
+        /* Profile Button in Social - ALWAYS VISIBLE */
         .profile-social {
             background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
             box-shadow: var(--glow-purple);
             border: 2px solid rgba(255,255,255,0.2);
-            display: none;
+            cursor: pointer;
+            display: flex; /* Всегда видна */
         }
-        .profile-social.visible { display: flex; }
         .profile-social::before {
             content: ''; position: absolute; inset: 0;
             background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
@@ -845,7 +845,8 @@
                 <span class="logout-btn" id="logoutBtn">Выйти</span>
             </div>
 
-            <a href="https://nariksan.github.io/evgenii/" target="_blank" id="profileLinkNav" class="profile-btn">👤 Мой профиль</a>
+            <!-- Profile Button in Nav - ALWAYS VISIBLE -->
+            <a href="#" id="profileLinkNav" class="profile-btn" onclick="handleProfileClick(event)">👤 Мой профиль</a>
         </div>
     </nav>
 
@@ -904,7 +905,8 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     Instagram
                 </a>
-                <a href="https://nariksan.github.io/evgenii/" target="_blank" id="profileLinkSocial" class="s-btn profile-social">
+                <!-- Profile Button in Social - ALWAYS VISIBLE -->
+                <a href="#" id="profileLinkSocial" class="s-btn profile-social" onclick="handleProfileClick(event)">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                     Мой профиль
                 </a>
@@ -1203,13 +1205,44 @@
         const profileLinkNav = document.getElementById('profileLinkNav');
         const profileLinkSocial = document.getElementById('profileLinkSocial');
 
+        // Ссылка на профиль
+        const PROFILE_URL = "https://nariksan.github.io/evgenii/";
+
+        // Функция обработки клика на кнопку профиля
+        function handleProfileClick(event) {
+            event.preventDefault(); // Отменяем стандартное поведение ссылки
+            
+            const currentUser = auth.currentUser;
+            
+            if (currentUser) {
+                // Пользователь вошел - открываем профиль
+                window.open(PROFILE_URL, '_blank');
+            } else {
+                // Пользователь не вошел - предлагаем войти
+                if (confirm('Для доступа к профилю необходимо войти в систему.\n\nВойти через Google?')) {
+                    signInWithGoogle();
+                }
+            }
+        }
+
+        // Функция входа через Google
+        function signInWithGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    console.log('Logged in:', result.user.displayName);
+                })
+                .catch((error) => {
+                    console.error('Login Error:', error);
+                    alert('Ошибка входа: ' + error.message);
+                });
+        }
+
         // Update UI on Auth State Change
         function updateAuthUI(user) {
             if (user) {
                 loginBtn.style.display = 'none';
                 userInfo.classList.add('visible');
-                profileLinkNav.classList.add('visible');
-                profileLinkSocial.classList.add('visible');
                 
                 userAvatar.src = user.photoURL || './icon.png';
                 userName.textContent = user.displayName || 'User';
@@ -1219,8 +1252,6 @@
             } else {
                 loginBtn.style.display = 'inline-block';
                 userInfo.classList.remove('visible');
-                profileLinkNav.classList.remove('visible');
-                profileLinkSocial.classList.remove('visible');
                 
                 const tempId = 'user_' + Math.random().toString(36).substr(2, 9);
                 localStorage.setItem('evgenii_user_id', tempId);
@@ -1231,18 +1262,8 @@
             updateAuthUI(user);
         });
 
-        // Login with Google
-        loginBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    console.log('Logged in:', result.user.displayName);
-                })
-                .catch((error) => {
-                    console.error('Login Error:', error);
-                    alert('Ошибка входа: ' + error.message);
-                });
-        });
+        // Login with Google (кнопка "Войти")
+        loginBtn.addEventListener('click', signInWithGoogle);
 
         // Logout
         logoutBtn.addEventListener('click', () => {
