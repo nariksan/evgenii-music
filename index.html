@@ -5,33 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVGENII — Music</title>
     
-    <!-- Favicon -->
+    <!-- Favicon & Icons -->
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="./icon.png">
     
     <!-- PWA -->
     <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#0a0a0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
 
         :root {
-            --neon-pink: #ff2d75;
-            --neon-blue: #00d4ff;
-            --neon-purple: #b537f2;
-            --neon-cyan: #00f5d4;
-            --dark-bg: #0a0a0f;
-            --card-bg: rgba(20, 20, 30, 0.6);
-            --text-primary: #e8e8f0;
-            --text-secondary: #8888aa;
+            --neon-pink: #ff2d75; --neon-blue: #00d4ff; --neon-purple: #b537f2; --neon-cyan: #00f5d4;
+            --dark-bg: #0a0a0f; --card-bg: rgba(20, 20, 30, 0.6);
+            --text-primary: #e8e8f0; --text-secondary: #8888aa;
             --glow-pink: 0 0 20px rgba(255, 45, 117, 0.6), 0 0 40px rgba(255, 45, 117, 0.3);
             --glow-blue: 0 0 20px rgba(0, 212, 255, 0.6), 0 0 40px rgba(0, 212, 255, 0.3);
             --glow-purple: 0 0 20px rgba(181, 55, 242, 0.6), 0 0 40px rgba(181, 55, 242, 0.3);
@@ -47,7 +44,7 @@
             cursor: default;
         }
 
-        /* Custom Cursor */
+        /* === CUSTOM CURSOR === */
         .cursor {
             position: fixed; width: 20px; height: 20px;
             border: 2px solid var(--neon-blue); border-radius: 50%;
@@ -67,7 +64,7 @@
             transform: translate(-50%, -50%);
         }
 
-        /* Background Animation */
+        /* === ANIMATED BACKGROUND === */
         .bg-animation { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             z-index: 0; pointer-events: none; overflow: hidden; 
@@ -145,7 +142,7 @@
         }
         section { padding: 120px 0; scroll-margin-top: 90px; position: relative; }
 
-        /* Navigation */
+        /* === NAV === */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; z-index: 100; 
             padding: 16px 24px; display: flex; justify-content: space-between; 
@@ -175,8 +172,7 @@
             animation: pulse 2s infinite;
         }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
-        
-        .nav-links { display: flex; gap: 8px; align-items: center; }
+        .nav-links { display: flex; gap: 8px; }
         .nav-links a { 
             color: var(--text-secondary); text-decoration: none; 
             padding: 8px 16px; font-size: 0.85rem; font-weight: 500;
@@ -190,95 +186,7 @@
         .nav-links a:hover { color: white; transform: translateY(-2px); }
         .nav-links a:hover::before { opacity: 1; }
 
-        /* Profile Button in Nav - ALWAYS VISIBLE */
-        .profile-btn {
-            margin-left: 12px;
-            padding: 8px 18px !important;
-            border: 1px solid var(--neon-purple) !important;
-            color: var(--neon-purple) !important;
-            font-family: 'JetBrains Mono', monospace !important;
-            font-weight: 700 !important;
-            letter-spacing: 1px;
-            background: rgba(181, 55, 242, 0.05);
-            box-shadow: 0 0 10px rgba(181, 55, 242, 0.2);
-            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-            text-decoration: none !important;
-            cursor: pointer;
-            display: inline-block !important; /* Всегда видна */
-        }
-        .profile-btn:hover {
-            background: var(--neon-purple) !important;
-            color: white !important;
-            box-shadow: var(--glow-purple);
-            text-shadow: 0 0 8px rgba(255,255,255,0.8);
-        }
-        .profile-btn::before { display: none; }
-
-        /* Auth Button */
-        .auth-btn {
-            margin-left: 12px;
-            padding: 8px 18px !important;
-            border: 1px solid var(--neon-cyan) !important;
-            color: var(--neon-cyan) !important;
-            font-family: 'JetBrains Mono', monospace !important;
-            font-weight: 700 !important;
-            letter-spacing: 1px;
-            background: rgba(0, 245, 212, 0.05);
-            box-shadow: 0 0 10px rgba(0, 245, 212, 0.2);
-            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .auth-btn:hover {
-            background: var(--neon-cyan) !important;
-            color: var(--dark-bg) !important;
-            box-shadow: 0 0 20px rgba(0, 245, 212, 0.6);
-        }
-
-        /* User Info */
-        .user-info {
-            display: none;
-            align-items: center;
-            gap: 10px;
-            margin-left: 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--text-primary);
-        }
-        .user-info.visible { display: flex; }
-        .user-avatar {
-            width: 32px; height: 32px; border-radius: 50%;
-            border: 2px solid var(--neon-purple);
-            object-fit: cover;
-        }
-        .logout-btn {
-            font-size: 0.7rem; color: var(--text-secondary);
-            cursor: pointer; text-decoration: underline;
-            margin-left: 8px;
-        }
-        .logout-btn:hover { color: var(--neon-pink); }
-
-        /* Profile Button in Social - ALWAYS VISIBLE */
-        .profile-social {
-            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
-            box-shadow: var(--glow-purple);
-            border: 2px solid rgba(255,255,255,0.2);
-            cursor: pointer;
-            display: flex; /* Всегда видна */
-        }
-        .profile-social::before {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .profile-social:hover {
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 12px 35px rgba(181, 55, 242, 0.6), 0 12px 35px rgba(255, 45, 117, 0.4);
-            z-index: 3;
-        }
-        .profile-social:hover::before { opacity: 1; }
-
-        /* Hero Section */
+        /* === HERO === */
         .hero { 
             min-height: 100vh; display: flex; flex-direction: column; 
             align-items: center; justify-content: center; text-align: center; 
@@ -319,7 +227,7 @@
         .hero-description strong { color: var(--neon-cyan); font-weight: 600; }
         .action-zone { display: flex; gap: 16px; margin-top: 48px; flex-wrap: wrap; justify-content: center; }
 
-        /* Cyber Buttons */
+        /* === CYBER BUTTONS === */
         .cyber-btn {
             position: relative; padding: 18px 34px; 
             font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 700;
@@ -356,7 +264,7 @@
             text-shadow: 0 0 12px rgba(181, 55, 242, 0.9); border-color: #d474ff; color: white; 
         }
 
-        /* News Block */
+        /* === NEWS BLOCK === */
         .news-section-wrapper {
             max-width: 720px; margin: 48px auto 0; display: none;
             animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -433,7 +341,7 @@
         .news-tag.NEW { background: linear-gradient(135deg, rgba(255, 45, 117, 0.25), rgba(255, 100, 150, 0.25)); color: var(--neon-pink); border-color: rgba(255, 45, 117, 0.4); }
         .news-tag.SYS { background: linear-gradient(135deg, rgba(181, 55, 242, 0.25), rgba(140, 80, 200, 0.25)); color: var(--neon-purple); border-color: rgba(181, 55, 242, 0.4); }
 
-        /* Sections */
+        /* === SECTIONS === */
         .section-header { margin-bottom: 48px; padding-left: 24px; position: relative; }
         .section-header::before {
             content: ''; position: absolute; left: 0; top: 4px; bottom: 4px;
@@ -451,7 +359,7 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        /* Track Cards */
+        /* === TRACK CARDS === */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
         .track-card {
             background: var(--card-bg); border: 1px solid rgba(255,255,255,0.08); 
@@ -634,7 +542,7 @@
         .hidden-tracks { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
         .hidden-tracks.visible { display: flex; opacity: 1; transform: translateY(0); }
 
-        /* Social Section */
+        /* === SOCIAL === */
         .social-section { text-align: center; padding: 100px 0; position: relative; }
         .social-section::before {
             content: ''; position: absolute; top: 0; left: 50%;
@@ -659,7 +567,6 @@
         .s-btn:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 12px 35px rgba(0,0,0,0.4); z-index: 3; }
         .tg:hover { box-shadow: 0 12px 35px rgba(36, 161, 222, 0.6); }
         .insta:hover { box-shadow: 0 12px 35px rgba(188, 24, 136, 0.6); }
-        
         footer { 
             text-align: center; padding: 48px 24px 60px; color: var(--text-secondary); 
             font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative;
@@ -670,7 +577,7 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
         }
 
-        /* Responsive */
+        /* === RESPONSIVE === */
         @media (max-width: 768px) {
             .container { padding: 0 20px; } section { padding: 90px 0; }
             .hero h1 { font-size: clamp(2.2rem, 8vw, 4rem); }
@@ -680,11 +587,9 @@
             .track-player-row { padding: 18px; gap: 12px; } .play-btn { width: 44px; height: 44px; }
             .nav-links a { padding: 6px 12px; font-size: 0.8rem; }
             .cursor, .cursor-dot { display: none !important; }
-            .profile-btn { padding: 6px 12px !important; font-size: 0.75rem !important; margin-left: 8px; }
-            .profile-social { padding: 14px 24px; font-size: 0.9rem; }
         }
 
-        /* Scrollbar */
+        /* === SCROLLBAR === */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
         ::-webkit-scrollbar-thumb { 
@@ -694,14 +599,14 @@
             background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
         }
 
-        /* Loading Animation */
+        /* === LOADING ANIMATION === */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .track-card, .compact-item { animation: fadeIn 0.5s ease forwards; opacity: 0; }
         .track-card:nth-child(1) { animation-delay: 0.1s; opacity: 1; }
         .track-card:nth-child(2) { animation-delay: 0.2s; opacity: 1; }
         .compact-item:nth-child(n) { animation-delay: calc(0.1s * var(--i, 1)); opacity: 1; }
 
-        /* Chat Styles */
+        /* === CHAT STYLES === */
         .chat-toggle {
             position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px;
             border-radius: 50%; background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
@@ -822,35 +727,21 @@
     <div class="cursor"></div>
     <div class="cursor-dot"></div>
 
-    <!-- Background -->
     <div class="bg-animation">
         <div class="orb"></div><div class="orb"></div><div class="orb"></div>
     </div>
     <div class="particles" id="particles"></div>
     <div class="grid-overlay"></div>
 
-    <!-- Navigation -->
     <nav id="navbar">
         <div class="logo" onclick="window.scrollTo(0,0)">EVGENII<span>.</span></div>
         <div class="nav-links">
             <a onclick="scrollToId('new')">Релизы</a>
             <a onclick="scrollToId('archive')">Архив</a>
-            
-            <!-- Auth Buttons -->
-            <button id="loginBtn" class="auth-btn">🔑 Войти</button>
-            
-            <div id="userInfo" class="user-info">
-                <img id="userAvatar" src="" alt="User" class="user-avatar">
-                <span id="userName">User</span>
-                <span class="logout-btn" id="logoutBtn">Выйти</span>
-            </div>
-
-            <!-- Profile Button in Nav - ALWAYS VISIBLE -->
-            <a href="#" id="profileLinkNav" class="profile-btn" onclick="handleProfileClick(event)">👤 Мой профиль</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- HERO SECTION -->
     <section class="hero">
         <div class="container">
             <h1><span class="gradient-text">Где заканчиваюсь я —<br>и начинается ИИ.</span></h1>
@@ -863,30 +754,25 @@
                 <div class="cyber-btn primary" onclick="scrollToId('new')">🎵 Новые Релизы</div>
                 <div class="cyber-btn secondary" onclick="scrollToId('archive')">📦 Все Треки</div>
             </div>
-            
-            <!-- News Block -->
+            <!-- БЛОК НОВОСТЕЙ -->
             <div id="newsWrapper" class="news-section-wrapper">
                 <div class="news-container">
                     <div class="news-header">
                         <div class="news-title"><span class="live-indicator"></span>ПОСЛЕДНИЕ ОБНОВЛЕНИЯ</div>
                     </div>
                     <ul class="news-list">
-                        <li class="news-item"><div class="news-date">21 МАЯ</div><div class="news-text"><span class="news-tag NEW">NEW</span>Трек <strong>"Братья"</strong> уже в релизах! 🎧</div></li>
-                        <li class="news-item"><div class="news-date">21 МАЯ</div><div class="news-text"><span class="news-tag">SOON</span>Появилась возможность <strong>скачивать треки</strong> с сайта. ⬇️</div></li>
-                        <li class="news-item"><div class="news-date">15 МАЯ</div><div class="news-text"><span class="news-tag SYS">SYS</span>Добавлен автопереход между треками. 🔄</div></li>
+                        <li class="news-item"><div class="news-date">22 МАЯ</div><div class="news-text"><span class="news-tag">NEW</span>Добавлен <strong>внутренний чат💬</strong></div></li>
+                        <li class="news-item"><div class="news-date">22 МАЯ</div><div class="news-text"><span class="news-tag">SYS</span>Обновлен <strong>дизайн сайта 🎨✨</strong></div></li>
+                       <li class="news-item"><div class="news-date">21 МАЯ</div><div class="news-text"><span class="news-tag NEW">NEW</span>Трек <strong>"Братья"</strong> уже в релизах! 🎧</div></li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- New Releases -->
     <section id="new"><div class="container"><div class="section-header"><div class="section-tag">// NEW</div><div class="section-title">Новые релизы</div></div><div class="grid" id="releasesList"></div></div></section>
-    
-    <!-- Archive -->
     <section id="archive"><div class="container"><div class="section-header"><div class="section-tag">// ARCHIVE</div><div class="section-title">Все треки</div></div><div id="archivePreview"></div><button id="showAllBtn" class="show-all-btn" onclick="toggleArchive()">Показать все треки <span style="transition: transform 0.3s;" id="arrowIcon">▼</span></button><div id="fullArchiveList" class="hidden-tracks compact-list"></div></div></section>
 
-    <!-- Social Section -->
     <section class="social-section">
         <div class="container">
             <div class="section-header" style="border-left-color: #24A1DE;">
@@ -894,7 +780,7 @@
                 <div class="section-title">Связь</div>
             </div>
             <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto 30px; line-height: 1.6;">
-                Подписывайся, чтобы не пропустить новые релизы и эксклюзивный контент 🔥
+                Подписывайся, чтобы не пропустить новые релизы  🔥
             </p>
             <div class="social-btns">
                 <a href="https://t.me/+zo3YoDDckwoyOGYy" target="_blank" class="s-btn tg">
@@ -905,21 +791,16 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     Instagram
                 </a>
-                <!-- Profile Button in Social - ALWAYS VISIBLE -->
-                <a href="#" id="profileLinkSocial" class="s-btn profile-social" onclick="handleProfileClick(event)">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                    Мой профиль
-                </a>
             </div>
         </div>
     </section>
 
-    <footer>© 2026 EVGENII • Human & AI • Создано с 🔥 и нейросетями</footer>
+    <footer>© 2026 EVGENII • Создано Human & AI •  🔥</footer>
 
-    <!-- Chat Toggle -->
+    <!-- CHAT TOGGLE BUTTON -->
     <div class="chat-toggle" id="chatToggle" title="Открыть чат">💬</div>
 
-    <!-- Chat Window -->
+    <!-- CHAT WINDOW -->
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
             <div class="chat-title">ЧАТ • ONLINE</div>
@@ -939,7 +820,7 @@
     </div>
 
     <script>
-        // === CUSTOM CURSOR ===
+        // === CUSTOM CURSOR (отключается на мобильных) ===
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
         const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
@@ -949,7 +830,7 @@
                 cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
                 cursorDot.style.left = e.clientX + 'px'; cursorDot.style.top = e.clientY + 'px';
             });
-            document.querySelectorAll('a, button, .cyber-btn, .play-btn, .download-btn, .compact-play-btn, .nav-links a, .logo, .chat-toggle, .chat-send, .chat-close, .chat-clear, .profile-btn, .profile-social, .auth-btn, .logout-btn').forEach(el => {
+            document.querySelectorAll('a, button, .cyber-btn, .play-btn, .download-btn, .compact-play-btn, .nav-links a, .logo, .chat-toggle, .chat-send, .chat-close, .chat-clear').forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
                 el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
             });
@@ -975,14 +856,62 @@
             }
         }
 
-        // === TRACKS LIST ===
+        // === СПИСОК ТРЕКОВ ===
         const tracks = [
-            { id: 1, title: "пуст", desc: "", file: "tracks/song6.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true },
-            { id: 2, title: "Нейронный Дождь", desc: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: true },
-            { id: 3, title: "А мне похуй", desc: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "cover/cover1.jpg", isNew: false },
-            { id: 4, title: "Сгоревший экран", desc: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover0.jpg", isNew: false },
-            { id: 5, title: "Тишина", desc: "", file: "tracks/song4.mp3", duration: "04:48", cover: "covers/cover0.jpg", isNew: false },
-            { id: 6, title: "Воздух Густеет", desc: "", file: "tracks/song1.mp3", duration: "03:23", cover: "covers/cover0.jpg", isNew: false }
+            {
+                id: 1,
+                title: "пуст",
+                desc: "",
+                file: "tracks/song6.mp3",
+                duration: "4:03",
+                cover: "cover/cover6.jpg",
+                isNew: true
+            },
+            {
+                id: 2,
+                title: "Нейронный Дождь",
+                desc: "О чём думает нейросеть?",
+                file: "tracks/song1.mp3",
+                duration: "4:03",
+                cover: "cover/cover2.jpg",
+                isNew: true
+            },
+            {
+                id: 3,
+                title: "А мне похуй",
+                desc: "Когда похуй",
+                file: "tracks/song.mp3",
+                duration: "3:11",
+                cover: "cover/cover1.jpg",
+                isNew: false
+            },
+            {
+                id: 4,
+                title: "Сгоревший экран",
+                desc: "",
+                file: "tracks/song2.mp3",
+                duration: "3:48",
+                cover: "cover/cover0.jpg",
+                isNew: false
+            },
+            {
+                id: 5,
+                title: "Тишина",
+                desc: "",
+                file: "tracks/song4.mp3",
+                duration: "04:48",
+                cover: "covers/cover0.jpg",
+                isNew: false
+            },
+            {
+                id: 6,
+                title: "Воздух Густеет",
+                desc: "",
+                file: "tracks/song1.mp3",
+                duration: "03:23",
+                cover: "covers/cover0.jpg",
+                isNew: false
+            }
         ];
 
         let currentAudio = null, currentBtn = null, archiveExpanded = false;
@@ -1107,16 +1036,33 @@
             const el = document.getElementById(`time-${trackId}`); if (el) el.textContent = '0:00'; 
         }
 
+        // === MEDIA SESSION API (ДЛЯ ФОНОВОГО ВОСПРОИЗВЕДЕНИЯ) ===
         function setupMediaSession(track) {
             if ('mediaSession' in navigator) {
                 let artworkSrc = './icon.png'; 
                 if (track.cover) artworkSrc = track.cover;
+
                 navigator.mediaSession.metadata = new MediaMetadata({
-                    title: track.title, artist: 'EVGENII', album: 'AI Music Project',
-                    artwork: [{ src: artworkSrc, sizes: '512x512', type: 'image/png' }]
+                    title: track.title,
+                    artist: 'EVGENII',
+                    album: 'AI Music Project',
+                    artwork: [
+                        { src: artworkSrc, sizes: '512x512', type: 'image/png' }
+                    ]
                 });
-                navigator.mediaSession.setActionHandler('play', () => { if(currentAudio && currentAudio.paused) { currentAudio.play(); updatePlayButtonState(true); } });
-                navigator.mediaSession.setActionHandler('pause', () => { if(currentAudio && !currentAudio.paused) { currentAudio.pause(); updatePlayButtonState(false); } });
+
+                navigator.mediaSession.setActionHandler('play', () => {
+                    if(currentAudio && currentAudio.paused) {
+                        currentAudio.play();
+                        updatePlayButtonState(true);
+                    }
+                });
+                navigator.mediaSession.setActionHandler('pause', () => {
+                    if(currentAudio && !currentAudio.paused) {
+                        currentAudio.pause();
+                        updatePlayButtonState(false);
+                    }
+                });
                 navigator.mediaSession.setActionHandler('nexttrack', () => playNextTrack(track.id));
                 navigator.mediaSession.setActionHandler('previoustrack', () => playPrevTrack(track.id));
             }
@@ -1126,8 +1072,14 @@
             if (!currentBtn) return;
             const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
             const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-            if (isPlaying) { currentBtn.classList.add('active'); currentBtn.innerHTML = pauseIcon; }
-            else { currentBtn.classList.remove('active'); currentBtn.innerHTML = playIcon; }
+            
+            if (isPlaying) {
+                currentBtn.classList.add('active');
+                currentBtn.innerHTML = pauseIcon;
+            } else {
+                currentBtn.classList.remove('active');
+                currentBtn.innerHTML = playIcon;
+            }
         }
 
         function playNextTrack(currentTrackId) {
@@ -1135,7 +1087,12 @@
             if (idx !== -1 && idx < tracks.length - 1) {
                 const next = tracks[idx + 1];
                 const allBtns = document.querySelectorAll('.play-btn, .compact-play-btn');
-                for(let b of allBtns) { if(b.getAttribute('onclick')?.includes(`'${next.id}'`)) { b.click(); break; } }
+                for(let b of allBtns) {
+                    if(b.getAttribute('onclick')?.includes(`'${next.id}'`)) {
+                        b.click();
+                        break;
+                    }
+                }
             }
         }
 
@@ -1144,30 +1101,57 @@
             if (idx > 0) {
                 const prev = tracks[idx - 1];
                 const allBtns = document.querySelectorAll('.play-btn, .compact-play-btn');
-                for(let b of allBtns) { if(b.getAttribute('onclick')?.includes(`'${prev.id}'`)) { b.click(); break; } }
+                for(let b of allBtns) {
+                    if(b.getAttribute('onclick')?.includes(`'${prev.id}'`)) {
+                        b.click();
+                        break;
+                    }
+                }
             }
         }
 
         function togglePlay(file, btn, trackId) {
             const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
             const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+
+            // Если нажали на ту же кнопку
             if (currentBtn === btn) {
-                if (currentAudio && !currentAudio.paused) { currentAudio.pause(); updatePlayButtonState(false); }
-                else { currentAudio.play().catch(e => console.log("Resume error:", e)); updatePlayButtonState(true); const t = tracks.find(x => x.id == trackId); if(t) setupMediaSession(t); }
+                if (currentAudio && !currentAudio.paused) {
+                    currentAudio.pause();
+                    updatePlayButtonState(false);
+                } else {
+                    currentAudio.play().catch(e => console.log("Resume error:", e));
+                    updatePlayButtonState(true);
+                    const t = tracks.find(x => x.id == trackId);
+                    if(t) setupMediaSession(t);
+                }
                 return;
             }
+
+            // Если нажали на другую кнопку — останавливаем старую
             stopCurrentTrack();
+
+            // Запускаем новую
             currentAudio = new Audio(file);
             currentAudio.dataset.trackId = trackId;
             currentBtn = btn;
             currentAudio.volume = 1.0;
+
             currentAudio.play().then(() => {
                 updatePlayButtonState(true);
                 const t = tracks.find(x => x.id == trackId);
                 if(t) setupMediaSession(t);
                 setupAudioListeners(trackId);
-            }).catch(e => { console.log('Autoplay prevented:', e); updatePlayButtonState(false); });
-            currentAudio.onended = () => { resetTrackUI(trackId); updatePlayButtonState(false); playNextTrack(trackId); };
+            }).catch(e => {
+                console.log('Autoplay prevented:', e);
+                updatePlayButtonState(false);
+            });
+            
+            currentAudio.onended = () => {
+                resetTrackUI(trackId);
+                updatePlayButtonState(false);
+                playNextTrack(trackId);
+            };
         }
 
         function scrollToId(id) {
@@ -1178,9 +1162,14 @@
 
         if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 
-        document.addEventListener('visibilitychange', () => { if (document.hidden) console.log('Tab hidden — audio continues via Media Session'); });
+        // === УБРАНА ПРИНУДИТЕЛЬНАЯ ПАУЗА ПРИ СВОРАЧИВАНИИ ===
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                console.log('Tab hidden — audio continues via Media Session');
+            }
+        });
 
-        // === FIREBASE CONFIG & AUTH ===
+        // === FIREBASE CHAT (СПРАШИВАЕТ ИМЯ ТОЛЬКО ПРИ ОТКРЫТИИ ЧАТА) ===
         const firebaseConfig = {
             apiKey: "AIzaSyC8fxnC_WVl7r8mGBsF2SCITvzvlwUF0f0",
             authDomain: "evgenii-6a5bb.firebaseapp.com",
@@ -1191,87 +1180,13 @@
             appId: "1:623681147476:web:893a12286d88af4eb313c1",
             measurementId: "G-H7TYB5E8PW"
         };
+
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-        const auth = firebase.auth();
         const CHAT_REF = db.ref('evgenii_chat');
 
-        // Auth UI Elements
-        const loginBtn = document.getElementById('loginBtn');
-        const userInfo = document.getElementById('userInfo');
-        const userAvatar = document.getElementById('userAvatar');
-        const userName = document.getElementById('userName');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const profileLinkNav = document.getElementById('profileLinkNav');
-        const profileLinkSocial = document.getElementById('profileLinkSocial');
-
-        // Ссылка на профиль
-        const PROFILE_URL = "https://nariksan.github.io/evgenii/";
-
-        // Функция обработки клика на кнопку профиля
-        function handleProfileClick(event) {
-            event.preventDefault(); // Отменяем стандартное поведение ссылки
-            
-            const currentUser = auth.currentUser;
-            
-            if (currentUser) {
-                // Пользователь вошел - открываем профиль
-                window.open(PROFILE_URL, '_blank');
-            } else {
-                // Пользователь не вошел - предлагаем войти
-                if (confirm('Для доступа к профилю необходимо войти в систему.\n\nВойти через Google?')) {
-                    signInWithGoogle();
-                }
-            }
-        }
-
-        // Функция входа через Google
-        function signInWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    console.log('Logged in:', result.user.displayName);
-                })
-                .catch((error) => {
-                    console.error('Login Error:', error);
-                    alert('Ошибка входа: ' + error.message);
-                });
-        }
-
-        // Update UI on Auth State Change
-        function updateAuthUI(user) {
-            if (user) {
-                loginBtn.style.display = 'none';
-                userInfo.classList.add('visible');
-                
-                userAvatar.src = user.photoURL || './icon.png';
-                userName.textContent = user.displayName || 'User';
-                
-                localStorage.setItem('evgenii_user_id', user.uid);
-                if(user.displayName) localStorage.setItem('evgenii_user_name', user.displayName);
-            } else {
-                loginBtn.style.display = 'inline-block';
-                userInfo.classList.remove('visible');
-                
-                const tempId = 'user_' + Math.random().toString(36).substr(2, 9);
-                localStorage.setItem('evgenii_user_id', tempId);
-            }
-        }
-
-        auth.onAuthStateChanged((user) => {
-            updateAuthUI(user);
-        });
-
-        // Login with Google (кнопка "Войти")
-        loginBtn.addEventListener('click', signInWithGoogle);
-
-        // Logout
-        logoutBtn.addEventListener('click', () => {
-            auth.signOut();
-        });
-
-        // === CHAT LOGIC ===
-        let currentUserId = localStorage.getItem('evgenii_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
+        const currentUserId = localStorage.getItem('evgenii_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('evgenii_user_id', currentUserId);
         let currentUserName = localStorage.getItem('evgenii_user_name');
 
         const chatToggle = document.getElementById('chatToggle');
@@ -1286,38 +1201,96 @@
         function formatTime(date) { return new Date(date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); }
 
         function renderMessages(messages) {
-            if (!messages || Object.keys(messages).length === 0) { chatMessages.innerHTML = '<div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>'; return; }
+            if (!messages || Object.keys(messages).length === 0) {
+                chatMessages.innerHTML = '<div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>';
+                return;
+            }
             chatMessages.innerHTML = '';
             Object.values(messages).forEach(msg => {
                 const div = document.createElement('div');
                 const isMe = msg.userId === currentUserId;
                 div.className = `message ${isMe ? 'outgoing' : 'incoming'}`;
-                div.innerHTML = `${msg.text.replace(/[<>]/g, '')}<div class="message-time">${formatTime(msg.timestamp)}</div><div class="message-avatar">${isMe ? 'Я' : (msg.userName || 'Гость')}</div>`;
+                div.innerHTML = `
+                    ${msg.text.replace(/[<>]/g, '')}
+                    <div class="message-time">${formatTime(msg.timestamp)}</div>
+                    <div class="message-avatar">${isMe ? 'Я' : (msg.userName || 'Гость')}</div>
+                `;
                 chatMessages.appendChild(div);
             });
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        function addMessage(text) { if (!text.trim()) return; CHAT_REF.push({ text: text.trim(), userId: currentUserId, userName: currentUserName || 'Гость', timestamp: Date.now() }); chatInput.value = ''; }
-        function clearChat() { const password = prompt('🔐 Введите пароль администратора:'); if (password === '0770') { if (confirm('⚠️ Очистить чат для ВСЕХ пользователей?')) CHAT_REF.remove(); } else if (password !== null) alert('❌ Неверный пароль!'); }
+        function addMessage(text) {
+            if (!text.trim()) return;
+            CHAT_REF.push({
+                text: text.trim(),
+                userId: currentUserId,
+                userName: currentUserName || 'Гость',
+                timestamp: Date.now()
+            });
+            chatInput.value = '';
+        }
+
+        // === ПАРОЛЬ ДЛЯ ОЧИСТКИ ЧАТА ===
+        function clearChat() {
+            const password = prompt('🔐 Введите пароль администратора:');
+            if (password === '0770') {
+                if (confirm('⚠️ Очистить чат для ВСЕХ пользователей? Это действие нельзя отменить.')) {
+                    CHAT_REF.remove();
+                }
+            } else if (password !== null) {
+                alert('❌ Неверный пароль!');
+            }
+        }
+
         function toggleChat() {
-            if (!currentUserName) { const name = prompt('👋 Привет! Введите ваше имя для чата:', 'Гость'); if (name === null) return; currentUserName = name.trim() || 'Гость'; localStorage.setItem('evgenii_user_name', currentUserName); }
+            // Спрашиваем имя ТОЛЬКО при первом открытии чата
+            if (!currentUserName) {
+                const name = prompt('👋 Привет! Введите ваше имя для чата:', 'Гость');
+                if (name === null) return;
+                currentUserName = name.trim() || 'Гость';
+                localStorage.setItem('evgenii_user_name', currentUserName);
+            }
+            
             const isVisible = chatWindow.classList.toggle('visible');
             chatToggle.classList.toggle('active', isVisible);
             chatToggle.textContent = isVisible ? '✕' : '💬';
-            if (isVisible) setTimeout(() => chatInput.focus(), 100);
+            if (isVisible) { setTimeout(() => chatInput.focus(), 100); }
         }
 
-        CHAT_REF.on('value', (snapshot) => { renderMessages(snapshot.val()); chatStatus.textContent = '✅ Онлайн'; chatStatus.style.color = 'var(--neon-cyan)'; }, (error) => { chatStatus.textContent = '❌ Ошибка подключения'; chatStatus.style.color = 'var(--neon-pink)'; console.error('Firebase error:', error); });
+        CHAT_REF.on('value', (snapshot) => {
+            renderMessages(snapshot.val());
+            chatStatus.textContent = '✅ Онлайн';
+            chatStatus.style.color = 'var(--neon-cyan)';
+        }, (error) => {
+            chatStatus.textContent = '❌ Ошибка подключения';
+            chatStatus.style.color = 'var(--neon-pink)';
+            console.error('Firebase error:', error);
+        });
 
         chatToggle.addEventListener('click', toggleChat);
-        chatClose.addEventListener('click', () => { chatWindow.classList.remove('visible'); chatToggle.classList.remove('active'); chatToggle.textContent = '💬'; });
+        chatClose.addEventListener('click', () => {
+            chatWindow.classList.remove('visible');
+            chatToggle.classList.remove('active');
+            chatToggle.textContent = '💬';
+        });
         chatSend.addEventListener('click', () => addMessage(chatInput.value));
         chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addMessage(chatInput.value); });
         chatClear.addEventListener('click', clearChat);
-        document.addEventListener('click', (e) => { if (chatWindow.classList.contains('visible') && !chatWindow.contains(e.target) && !chatToggle.contains(e.target)) { chatWindow.classList.remove('visible'); chatToggle.classList.remove('active'); chatToggle.textContent = '💬'; } });
 
-        document.addEventListener('DOMContentLoaded', () => { createParticles(); renderTracks(); window.dispatchEvent(new Event('scroll')); });
+        document.addEventListener('click', (e) => {
+            if (chatWindow.classList.contains('visible') && !chatWindow.contains(e.target) && !chatToggle.contains(e.target)) {
+                chatWindow.classList.remove('visible');
+                chatToggle.classList.remove('active');
+                chatToggle.textContent = '💬';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            renderTracks();
+            window.dispatchEvent(new Event('scroll'));
+        });
     </script>
 </body>
 </html>
