@@ -21,6 +21,7 @@
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
@@ -720,6 +721,200 @@
             font-size: 0.7rem; color: var(--neon-cyan); text-align: center;
             padding: 4px 0; background: rgba(0,212,255,0.1); border-radius: 4px; margin: 8px 16px 0;
         }
+
+        /* === LOGIN MODAL (STARTUP) === */
+        .login-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.4s ease;
+        }
+        .login-modal-overlay.visible {
+            display: flex;
+        }
+        .login-modal {
+            background: linear-gradient(145deg, rgba(15,15,25,0.98), rgba(25,25,40,0.98));
+            border: 2px solid var(--neon-purple);
+            border-radius: 24px;
+            padding: 50px 40px;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: var(--glow-purple), 0 30px 80px rgba(0,0,0,0.6);
+            animation: slideUp 0.5s ease;
+            position: relative;
+            text-align: center;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .login-modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-purple), var(--neon-cyan));
+            animation: gradientFlow 3s linear infinite;
+            background-size: 400% 100%;
+            border-radius: 24px 24px 0 0;
+        }
+        .login-modal-header {
+            margin-bottom: 35px;
+        }
+        .login-modal-welcome {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            text-shadow: 0 0 30px rgba(181, 55, 242, 0.4);
+        }
+        .login-modal-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .login-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 10px 0;
+        }
+        .login-divider::before,
+        .login-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.15);
+        }
+        .login-divider-text {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .google-login-btn {
+            width: 100%;
+            padding: 16px 20px;
+            background: white;
+            border: none;
+            border-radius: 14px;
+            color: #1a1a2e;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(255,255,255,0.2);
+        }
+        .google-login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(255,255,255,0.4);
+        }
+        .google-login-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+        .login-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .login-close:hover {
+            color: var(--neon-pink);
+            background: rgba(255,255,255,0.08);
+            transform: rotate(90deg);
+        }
+        .login-error {
+            background: rgba(255, 45, 117, 0.15);
+            border: 1px solid var(--neon-pink);
+            color: var(--neon-pink);
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            display: none;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .login-error.visible {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        .login-loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--neon-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+        .login-loading.visible {
+            display: flex;
+        }
+        .login-loading::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--neon-cyan);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Блокировка контента при показе модалки */
+        body.modal-open {
+            overflow: hidden;
+            filter: blur(8px);
+            pointer-events: none;
+            user-select: none;
+        }
+        body.modal-open nav,
+        body.modal-open .chat-toggle,
+        body.modal-open .chat-window {
+            pointer-events: none;
+            opacity: 0.3;
+        }
     </style>
 </head>
 <body>
@@ -732,6 +927,43 @@
     </div>
     <div class="particles" id="particles"></div>
     <div class="grid-overlay"></div>
+
+    <!-- LOGIN MODAL (STARTUP) -->
+    <div class="login-modal-overlay" id="startupLoginModal">
+        <div class="login-modal">
+            <button class="login-close" onclick="closeStartupLoginModal()">×</button>
+            
+            <div class="login-modal-header">
+                <h1 class="login-modal-welcome">👋 Привет!</h1>
+                <p class="login-modal-subtitle">
+                    Добро пожаловать в мир музыки и искусственного интеллекта.<br>
+                    Авторизуйтесь, чтобы получить полный доступ.
+                </p>
+            </div>
+            
+            <div class="login-error" id="startupLoginError"></div>
+            
+            <div class="login-form">
+                <div class="login-divider">
+                    <span class="login-divider-text">Войти через</span>
+                </div>
+                
+                <button class="google-login-btn" onclick="startupSignInWithGoogle()" id="startupGoogleBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Google
+                </button>
+                
+                <div class="login-loading" id="startupLoginLoading">
+                    Вход в систему...
+                </div>
+            </div>
+        </div>
+    </div>
 
     <nav id="navbar">
         <div class="logo" onclick="window.scrollTo(0,0)">EVGENII<span>.</span></div>
@@ -820,7 +1052,7 @@
     </div>
 
     <script>
-        // === CUSTOM CURSOR (отключается на мобильных) ===
+        // === CUSTOM CURSOR ===
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
         const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
@@ -830,7 +1062,7 @@
                 cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
                 cursorDot.style.left = e.clientX + 'px'; cursorDot.style.top = e.clientY + 'px';
             });
-            document.querySelectorAll('a, button, .cyber-btn, .play-btn, .download-btn, .compact-play-btn, .nav-links a, .logo, .chat-toggle, .chat-send, .chat-close, .chat-clear').forEach(el => {
+            document.querySelectorAll('a, button, .cyber-btn, .play-btn, .download-btn, .compact-play-btn, .nav-links a, .logo, .chat-toggle, .chat-send, .chat-close, .chat-clear, .google-login-btn, .login-close').forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
                 el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
             });
@@ -856,62 +1088,14 @@
             }
         }
 
-        // === СПИСОК ТРЕКОВ ===
+        // === TRACKS LIST ===
         const tracks = [
-            {
-                id: 1,
-                title: "пуст",
-                desc: "",
-                file: "tracks/song6.mp3",
-                duration: "4:03",
-                cover: "cover/cover6.jpg",
-                isNew: true
-            },
-            {
-                id: 2,
-                title: "Нейронный Дождь",
-                desc: "О чём думает нейросеть?",
-                file: "tracks/song1.mp3",
-                duration: "4:03",
-                cover: "cover/cover2.jpg",
-                isNew: true
-            },
-            {
-                id: 3,
-                title: "А мне похуй",
-                desc: "Когда похуй",
-                file: "tracks/song.mp3",
-                duration: "3:11",
-                cover: "cover/cover1.jpg",
-                isNew: false
-            },
-            {
-                id: 4,
-                title: "Сгоревший экран",
-                desc: "",
-                file: "tracks/song2.mp3",
-                duration: "3:48",
-                cover: "cover/cover0.jpg",
-                isNew: false
-            },
-            {
-                id: 5,
-                title: "Тишина",
-                desc: "",
-                file: "tracks/song4.mp3",
-                duration: "04:48",
-                cover: "covers/cover0.jpg",
-                isNew: false
-            },
-            {
-                id: 6,
-                title: "Воздух Густеет",
-                desc: "",
-                file: "tracks/song1.mp3",
-                duration: "03:23",
-                cover: "covers/cover0.jpg",
-                isNew: false
-            }
+            { id: 1, title: "пуст", desc: "", file: "tracks/song6.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true },
+            { id: 2, title: "Нейронный Дождь", desc: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: true },
+            { id: 3, title: "А мне похуй", desc: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "cover/cover1.jpg", isNew: false },
+            { id: 4, title: "Сгоревший экран", desc: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover0.jpg", isNew: false },
+            { id: 5, title: "Тишина", desc: "", file: "tracks/song4.mp3", duration: "04:48", cover: "covers/cover0.jpg", isNew: false },
+            { id: 6, title: "Воздух Густеет", desc: "", file: "tracks/song1.mp3", duration: "03:23", cover: "covers/cover0.jpg", isNew: false }
         ];
 
         let currentAudio = null, currentBtn = null, archiveExpanded = false;
@@ -1036,33 +1220,16 @@
             const el = document.getElementById(`time-${trackId}`); if (el) el.textContent = '0:00'; 
         }
 
-        // === MEDIA SESSION API (ДЛЯ ФОНОВОГО ВОСПРОИЗВЕДЕНИЯ) ===
         function setupMediaSession(track) {
             if ('mediaSession' in navigator) {
                 let artworkSrc = './icon.png'; 
                 if (track.cover) artworkSrc = track.cover;
-
                 navigator.mediaSession.metadata = new MediaMetadata({
-                    title: track.title,
-                    artist: 'EVGENII',
-                    album: 'AI Music Project',
-                    artwork: [
-                        { src: artworkSrc, sizes: '512x512', type: 'image/png' }
-                    ]
+                    title: track.title, artist: 'EVGENII', album: 'AI Music Project',
+                    artwork: [{ src: artworkSrc, sizes: '512x512', type: 'image/png' }]
                 });
-
-                navigator.mediaSession.setActionHandler('play', () => {
-                    if(currentAudio && currentAudio.paused) {
-                        currentAudio.play();
-                        updatePlayButtonState(true);
-                    }
-                });
-                navigator.mediaSession.setActionHandler('pause', () => {
-                    if(currentAudio && !currentAudio.paused) {
-                        currentAudio.pause();
-                        updatePlayButtonState(false);
-                    }
-                });
+                navigator.mediaSession.setActionHandler('play', () => { if(currentAudio && currentAudio.paused) { currentAudio.play(); updatePlayButtonState(true); } });
+                navigator.mediaSession.setActionHandler('pause', () => { if(currentAudio && !currentAudio.paused) { currentAudio.pause(); updatePlayButtonState(false); } });
                 navigator.mediaSession.setActionHandler('nexttrack', () => playNextTrack(track.id));
                 navigator.mediaSession.setActionHandler('previoustrack', () => playPrevTrack(track.id));
             }
@@ -1072,14 +1239,8 @@
             if (!currentBtn) return;
             const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
             const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-            
-            if (isPlaying) {
-                currentBtn.classList.add('active');
-                currentBtn.innerHTML = pauseIcon;
-            } else {
-                currentBtn.classList.remove('active');
-                currentBtn.innerHTML = playIcon;
-            }
+            if (isPlaying) { currentBtn.classList.add('active'); currentBtn.innerHTML = pauseIcon; }
+            else { currentBtn.classList.remove('active'); currentBtn.innerHTML = playIcon; }
         }
 
         function playNextTrack(currentTrackId) {
@@ -1087,12 +1248,7 @@
             if (idx !== -1 && idx < tracks.length - 1) {
                 const next = tracks[idx + 1];
                 const allBtns = document.querySelectorAll('.play-btn, .compact-play-btn');
-                for(let b of allBtns) {
-                    if(b.getAttribute('onclick')?.includes(`'${next.id}'`)) {
-                        b.click();
-                        break;
-                    }
-                }
+                for(let b of allBtns) { if(b.getAttribute('onclick')?.includes(`'${next.id}'`)) { b.click(); break; } }
             }
         }
 
@@ -1101,57 +1257,30 @@
             if (idx > 0) {
                 const prev = tracks[idx - 1];
                 const allBtns = document.querySelectorAll('.play-btn, .compact-play-btn');
-                for(let b of allBtns) {
-                    if(b.getAttribute('onclick')?.includes(`'${prev.id}'`)) {
-                        b.click();
-                        break;
-                    }
-                }
+                for(let b of allBtns) { if(b.getAttribute('onclick')?.includes(`'${prev.id}'`)) { b.click(); break; } }
             }
         }
 
         function togglePlay(file, btn, trackId) {
             const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
             const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-
-            // Если нажали на ту же кнопку
             if (currentBtn === btn) {
-                if (currentAudio && !currentAudio.paused) {
-                    currentAudio.pause();
-                    updatePlayButtonState(false);
-                } else {
-                    currentAudio.play().catch(e => console.log("Resume error:", e));
-                    updatePlayButtonState(true);
-                    const t = tracks.find(x => x.id == trackId);
-                    if(t) setupMediaSession(t);
-                }
+                if (currentAudio && !currentAudio.paused) { currentAudio.pause(); updatePlayButtonState(false); }
+                else { currentAudio.play().catch(e => console.log("Resume error:", e)); updatePlayButtonState(true); const t = tracks.find(x => x.id == trackId); if(t) setupMediaSession(t); }
                 return;
             }
-
-            // Если нажали на другую кнопку — останавливаем старую
             stopCurrentTrack();
-
-            // Запускаем новую
             currentAudio = new Audio(file);
             currentAudio.dataset.trackId = trackId;
             currentBtn = btn;
             currentAudio.volume = 1.0;
-
             currentAudio.play().then(() => {
                 updatePlayButtonState(true);
                 const t = tracks.find(x => x.id == trackId);
                 if(t) setupMediaSession(t);
                 setupAudioListeners(trackId);
-            }).catch(e => {
-                console.log('Autoplay prevented:', e);
-                updatePlayButtonState(false);
-            });
-            
-            currentAudio.onended = () => {
-                resetTrackUI(trackId);
-                updatePlayButtonState(false);
-                playNextTrack(trackId);
-            };
+            }).catch(e => { console.log('Autoplay prevented:', e); updatePlayButtonState(false); });
+            currentAudio.onended = () => { resetTrackUI(trackId); updatePlayButtonState(false); playNextTrack(trackId); };
         }
 
         function scrollToId(id) {
@@ -1162,14 +1291,9 @@
 
         if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 
-        // === УБРАНА ПРИНУДИТЕЛЬНАЯ ПАУЗА ПРИ СВОРАЧИВАНИИ ===
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                console.log('Tab hidden — audio continues via Media Session');
-            }
-        });
+        document.addEventListener('visibilitychange', () => { if (document.hidden) console.log('Tab hidden — audio continues via Media Session'); });
 
-        // === FIREBASE CHAT (СПРАШИВАЕТ ИМЯ ТОЛЬКО ПРИ ОТКРЫТИИ ЧАТА) ===
+        // === FIREBASE CONFIG & AUTH ===
         const firebaseConfig = {
             apiKey: "AIzaSyC8fxnC_WVl7r8mGBsF2SCITvzvlwUF0f0",
             authDomain: "evgenii-6a5bb.firebaseapp.com",
@@ -1180,13 +1304,69 @@
             appId: "1:623681147476:web:893a12286d88af4eb313c1",
             measurementId: "G-H7TYB5E8PW"
         };
-
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
+        const auth = firebase.auth();
         const CHAT_REF = db.ref('evgenii_chat');
 
-        const currentUserId = localStorage.getItem('evgenii_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('evgenii_user_id', currentUserId);
+        // === STARTUP LOGIN MODAL ===
+        const startupModal = document.getElementById('startupLoginModal');
+        const startupError = document.getElementById('startupLoginError');
+        const startupLoading = document.getElementById('startupLoginLoading');
+        const startupGoogleBtn = document.getElementById('startupGoogleBtn');
+
+        function showStartupLoginModal() {
+            // Показываем модальное окно только если пользователь не авторизован
+            if (!auth.currentUser) {
+                startupModal.classList.add('visible');
+                document.body.classList.add('modal-open');
+                startupError.classList.remove('visible');
+            }
+        }
+
+        function closeStartupLoginModal() {
+            startupModal.classList.remove('visible');
+            document.body.classList.remove('modal-open');
+        }
+
+        function startupSignInWithGoogle() {
+            // Показываем лоадер, скрываем кнопку
+            startupGoogleBtn.style.display = 'none';
+            startupLoading.classList.add('visible');
+            startupError.classList.remove('visible');
+            
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    console.log('Logged in:', result.user.displayName);
+                    closeStartupLoginModal();
+                })
+                .catch((error) => {
+                    console.error('Login Error:', error);
+                    startupError.textContent = 'Ошибка: ' + error.message;
+                    startupError.classList.add('visible');
+                    startupGoogleBtn.style.display = 'flex';
+                    startupLoading.classList.remove('visible');
+                });
+        }
+
+        // Закрываем модальное окно при клике вне его
+        startupModal.addEventListener('click', (e) => {
+            if (e.target === startupModal) {
+                closeStartupLoginModal();
+            }
+        });
+
+        // Слушатель состояния авторизации
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // Пользователь авторизован - закрываем модальное окно если открыто
+                closeStartupLoginModal();
+            }
+        });
+
+        // === CHAT LOGIC ===
+        let currentUserId = localStorage.getItem('evgenii_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
         let currentUserName = localStorage.getItem('evgenii_user_name');
 
         const chatToggle = document.getElementById('chatToggle');
@@ -1201,95 +1381,44 @@
         function formatTime(date) { return new Date(date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); }
 
         function renderMessages(messages) {
-            if (!messages || Object.keys(messages).length === 0) {
-                chatMessages.innerHTML = '<div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>';
-                return;
-            }
+            if (!messages || Object.keys(messages).length === 0) { chatMessages.innerHTML = '<div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>'; return; }
             chatMessages.innerHTML = '';
             Object.values(messages).forEach(msg => {
                 const div = document.createElement('div');
                 const isMe = msg.userId === currentUserId;
                 div.className = `message ${isMe ? 'outgoing' : 'incoming'}`;
-                div.innerHTML = `
-                    ${msg.text.replace(/[<>]/g, '')}
-                    <div class="message-time">${formatTime(msg.timestamp)}</div>
-                    <div class="message-avatar">${isMe ? 'Я' : (msg.userName || 'Гость')}</div>
-                `;
+                div.innerHTML = `${msg.text.replace(/[<>]/g, '')}<div class="message-time">${formatTime(msg.timestamp)}</div><div class="message-avatar">${isMe ? 'Я' : (msg.userName || 'Гость')}</div>`;
                 chatMessages.appendChild(div);
             });
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        function addMessage(text) {
-            if (!text.trim()) return;
-            CHAT_REF.push({
-                text: text.trim(),
-                userId: currentUserId,
-                userName: currentUserName || 'Гость',
-                timestamp: Date.now()
-            });
-            chatInput.value = '';
-        }
-
-        // === ПАРОЛЬ ДЛЯ ОЧИСТКИ ЧАТА ===
-        function clearChat() {
-            const password = prompt('🔐 Введите пароль администратора:');
-            if (password === '0770') {
-                if (confirm('⚠️ Очистить чат для ВСЕХ пользователей? Это действие нельзя отменить.')) {
-                    CHAT_REF.remove();
-                }
-            } else if (password !== null) {
-                alert('❌ Неверный пароль!');
-            }
-        }
-
+        function addMessage(text) { if (!text.trim()) return; CHAT_REF.push({ text: text.trim(), userId: currentUserId, userName: currentUserName || 'Гость', timestamp: Date.now() }); chatInput.value = ''; }
+        function clearChat() { const password = prompt('🔐 Введите пароль администратора:'); if (password === '0770') { if (confirm('⚠️ Очистить чат для ВСЕХ пользователей?')) CHAT_REF.remove(); } else if (password !== null) alert('❌ Неверный пароль!'); }
         function toggleChat() {
-            // Спрашиваем имя ТОЛЬКО при первом открытии чата
-            if (!currentUserName) {
-                const name = prompt('👋 Привет! Введите ваше имя для чата:', 'Гость');
-                if (name === null) return;
-                currentUserName = name.trim() || 'Гость';
-                localStorage.setItem('evgenii_user_name', currentUserName);
-            }
-            
+            if (!currentUserName) { const name = prompt('👋 Привет! Введите ваше имя для чата:', 'Гость'); if (name === null) return; currentUserName = name.trim() || 'Гость'; localStorage.setItem('evgenii_user_name', currentUserName); }
             const isVisible = chatWindow.classList.toggle('visible');
             chatToggle.classList.toggle('active', isVisible);
             chatToggle.textContent = isVisible ? '✕' : '💬';
-            if (isVisible) { setTimeout(() => chatInput.focus(), 100); }
+            if (isVisible) setTimeout(() => chatInput.focus(), 100);
         }
 
-        CHAT_REF.on('value', (snapshot) => {
-            renderMessages(snapshot.val());
-            chatStatus.textContent = '✅ Онлайн';
-            chatStatus.style.color = 'var(--neon-cyan)';
-        }, (error) => {
-            chatStatus.textContent = '❌ Ошибка подключения';
-            chatStatus.style.color = 'var(--neon-pink)';
-            console.error('Firebase error:', error);
-        });
+        CHAT_REF.on('value', (snapshot) => { renderMessages(snapshot.val()); chatStatus.textContent = '✅ Онлайн'; chatStatus.style.color = 'var(--neon-cyan)'; }, (error) => { chatStatus.textContent = '❌ Ошибка подключения'; chatStatus.style.color = 'var(--neon-pink)'; console.error('Firebase error:', error); });
 
         chatToggle.addEventListener('click', toggleChat);
-        chatClose.addEventListener('click', () => {
-            chatWindow.classList.remove('visible');
-            chatToggle.classList.remove('active');
-            chatToggle.textContent = '💬';
-        });
+        chatClose.addEventListener('click', () => { chatWindow.classList.remove('visible'); chatToggle.classList.remove('active'); chatToggle.textContent = '💬'; });
         chatSend.addEventListener('click', () => addMessage(chatInput.value));
         chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addMessage(chatInput.value); });
         chatClear.addEventListener('click', clearChat);
+        document.addEventListener('click', (e) => { if (chatWindow.classList.contains('visible') && !chatWindow.contains(e.target) && !chatToggle.contains(e.target)) { chatWindow.classList.remove('visible'); chatToggle.classList.remove('active'); chatToggle.textContent = '💬'; } });
 
-        document.addEventListener('click', (e) => {
-            if (chatWindow.classList.contains('visible') && !chatWindow.contains(e.target) && !chatToggle.contains(e.target)) {
-                chatWindow.classList.remove('visible');
-                chatToggle.classList.remove('active');
-                chatToggle.textContent = '💬';
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            renderTracks();
+        document.addEventListener('DOMContentLoaded', () => { 
+            createParticles(); 
+            renderTracks(); 
             window.dispatchEvent(new Event('scroll'));
+            
+            // Показываем модальное окно входа при загрузке
+            showStartupLoginModal();
         });
     </script>
 </body>
