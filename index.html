@@ -44,6 +44,153 @@
             cursor: default;
         }
 
+        /* === WELCOME SCREEN === */
+        #welcomeScreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 70%, #000 100%);
+            z-index: 10000; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; overflow: hidden;
+        }
+        #welcomeScreen.hidden { display: none !important; }
+        
+        /* Анимированный фон приветствия */
+        .welcome-bg {
+            position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+        }
+        .welcome-bg::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(181,55,242,0.15) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 20%, rgba(0,212,255,0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(255,45,117,0.1) 0%, transparent 55%);
+            animation: welcomePulse 8s ease-in-out infinite;
+        }
+        @keyframes welcomePulse {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.1) rotate(2deg); opacity: 0.9; }
+        }
+        .welcome-particles {
+            position: absolute; inset: 0;
+        }
+        .welcome-particle {
+            position: absolute; width: 4px; height: 4px;
+            background: var(--neon-cyan); border-radius: 50%;
+            box-shadow: 0 0 12px var(--neon-cyan), 0 0 24px rgba(0,212,255,0.5);
+            animation: floatParticle linear infinite;
+            opacity: 0.8;
+        }
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) scale(1); opacity: 0; }
+        }
+        
+        .welcome-grid {
+            position: absolute; inset: 0;
+            background-image: 
+                linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,45,117,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridScroll 25s linear infinite;
+            opacity: 0.6;
+        }
+        @keyframes gridScroll {
+            0% { transform: perspective(600px) rotateX(55deg) translateY(0); }
+            100% { transform: perspective(600px) rotateX(55deg) translateY(60px); }
+        }
+
+        .welcome-content {
+            position: relative; z-index: 10; text-align: center; 
+            padding: 50px 30px; max-width: 650px;
+            animation: welcomeSlideUp 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        @keyframes welcomeSlideUp {
+            from { opacity: 0; transform: translateY(50px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .welcome-logo {
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; 
+            letter-spacing: 5px; margin-bottom: 32px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .welcome-logo span { 
+            color: var(--neon-pink); 
+            text-shadow: var(--glow-pink);
+            animation: logoPulse 2s ease-in-out infinite;
+        }
+        @keyframes logoPulse {
+            0%, 100% { opacity: 1; text-shadow: var(--glow-pink); }
+            50% { opacity: 0.85; text-shadow: 0 0 30px rgba(255,45,117,0.8); }
+        }
+        
+        .welcome-title {
+            font-size: clamp(1.6rem, 4.5vw, 2.5rem); 
+            font-weight: 700; margin-bottom: 20px; line-height: 1.3;
+            background: linear-gradient(135deg, #fff 0%, var(--neon-blue) 35%, var(--neon-pink) 70%, var(--neon-purple) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; background-size: 300% 300%;
+            animation: gradientFlow 6s ease infinite;
+            text-shadow: 0 0 30px rgba(0,212,255,0.2);
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .welcome-desc {
+            color: var(--text-secondary); font-size: clamp(1rem, 2.5vw, 1.15rem); 
+            line-height: 1.8; margin-bottom: 48px; opacity: 0.95;
+            max-width: 520px; margin-left: auto; margin-right: auto;
+        }
+        .welcome-desc strong { 
+            color: var(--neon-cyan); font-weight: 600; 
+            text-shadow: 0 0 12px rgba(0,245,212,0.4);
+        }
+        
+        .welcome-btn {
+            padding: 20px 56px; font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2.5px; color: white; background: transparent;
+            border: 2px solid var(--neon-pink); border-radius: 14px;
+            cursor: pointer; transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            position: relative; overflow: hidden; box-shadow: var(--glow-pink);
+            display: inline-flex; align-items: center; gap: 10px;
+        }
+        .welcome-btn::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple), var(--neon-blue));
+            opacity: 0; transition: opacity 0.3s; z-index: -1;
+        }
+        .welcome-btn::after {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        .welcome-btn:hover::before { opacity: 1; }
+        .welcome-btn:hover::after { left: 100%; }
+        .welcome-btn:hover { 
+            transform: translateY(-4px) scale(1.02); 
+            box-shadow: 0 0 50px rgba(255,45,117,0.8), 0 0 90px rgba(181,55,242,0.5);
+            border-color: #ff5a96;
+        }
+        .welcome-btn:active { transform: translateY(-1px) scale(0.99); }
+        .welcome-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        
+        .welcome-hint {
+            margin-top: 32px; font-size: 0.8rem; color: var(--text-secondary);
+            opacity: 0.7; font-family: 'JetBrains Mono', monospace;
+            animation: hintPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes hintPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 0.9; }
+        }
+
         /* === CUSTOM CURSOR === */
         .cursor {
             position: fixed; width: 20px; height: 20px;
@@ -64,7 +211,7 @@
             transform: translate(-50%, -50%);
         }
 
-        /* === ANIMATED BACKGROUND === */
+        /* === ANIMATED BACKGROUND (основной сайт) === */
         .bg-animation { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             z-index: 0; pointer-events: none; overflow: hidden; 
@@ -214,11 +361,6 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text; background-size: 300% 300%;
             animation: gradientFlow 8s ease infinite;
-        }
-        @keyframes gradientFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
         .hero-description { 
             font-size: 1.25rem; color: var(--text-secondary); 
@@ -587,6 +729,8 @@
             .track-player-row { padding: 18px; gap: 12px; } .play-btn { width: 44px; height: 44px; }
             .nav-links a { padding: 6px 12px; font-size: 0.8rem; }
             .cursor, .cursor-dot { display: none !important; }
+            .welcome-btn { padding: 18px 48px; font-size: 0.9rem; }
+            .welcome-content { padding: 40px 24px; }
         }
 
         /* === SCROLLBAR === */
@@ -723,6 +867,27 @@
     </style>
 </head>
 <body>
+    <!-- === WELCOME SCREEN (показывается при КАЖДОМ входе) === -->
+    <div id="welcomeScreen">
+        <div class="welcome-bg"></div>
+        <div class="welcome-grid"></div>
+        <div class="welcome-particles" id="welcomeParticles"></div>
+        
+        <div class="welcome-content">
+            <div class="welcome-logo">EVGENII<span>.</span></div>
+            <h2 class="welcome-title">Где заканчиваюсь я —<br>и начинается ИИ</h2>
+            <p class="welcome-desc">
+                Мои тексты, озвученные <strong>искусственным разумом</strong>.<br>
+                Эксперимент на стыке человеческих эмоций и машинного голоса.
+            </p>
+            <button class="welcome-btn" id="enterBtn">
+                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                Войти
+            </button>
+            <p class="welcome-hint">Нажми Enter или Esc для быстрого входа</p>
+        </div>
+    </div>
+
     <!-- Custom Cursor -->
     <div class="cursor"></div>
     <div class="cursor-dot"></div>
@@ -820,7 +985,57 @@
     </div>
 
     <script>
-        // === CUSTOM CURSOR (отключается на мобильных) ===
+        // === WELCOME SCREEN — ПОКАЗЫВАТЬ ПРИ КАЖДОМ ВХОДЕ ===
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const enterBtn = document.getElementById('enterBtn');
+        const welcomeParticles = document.getElementById('welcomeParticles');
+        
+        // Создаём частицы для приветствия
+        function createWelcomeParticles() {
+            for (let i = 0; i < 40; i++) {
+                const p = document.createElement('div');
+                p.className = 'welcome-particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (Math.random() * 5 + 4) + 's';
+                p.style.animationDelay = (Math.random() * 3) + 's';
+                p.style.width = p.style.height = (Math.random() * 3 + 2) + 'px';
+                p.style.background = [ '--neon-cyan', '--neon-pink', '--neon-blue', '--neon-purple' ][Math.floor(Math.random() * 4)];
+                p.style.boxShadow = `0 0 12px var(${p.style.background}), 0 0 24px rgba(0,0,0,0.3)`;
+                welcomeParticles.appendChild(p);
+            }
+        }
+        createWelcomeParticles();
+        
+        // Блокируем прокрутку пока показан приветственный экран
+        document.body.style.overflow = 'hidden';
+        
+        // Функция входа на сайт
+        function enterSite() {
+            welcomeScreen.style.animation = 'fadeIn 0.35s ease reverse';
+            setTimeout(() => {
+                welcomeScreen.classList.add('hidden');
+                document.body.style.overflow = ''; // Разблокируем прокрутку
+                initSite(); // Инициализируем основной сайт
+            }, 350);
+        }
+        
+        enterBtn.addEventListener('click', enterSite);
+        
+        // Быстрый вход по клавишам Enter / Escape
+        document.addEventListener('keydown', (e) => {
+            if (!welcomeScreen.classList.contains('hidden') && (e.key === 'Enter' || e.key === 'Escape')) {
+                e.preventDefault();
+                enterSite();
+            }
+        });
+        
+        function initSite() {
+            createParticles();
+            renderTracks();
+            window.dispatchEvent(new Event('scroll'));
+        }
+
+        // === CUSTOM CURSOR ===
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
         const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
@@ -858,60 +1073,12 @@
 
         // === СПИСОК ТРЕКОВ ===
         const tracks = [
-            {
-                id: 1,
-                title: "пуст",
-                desc: "",
-                file: "tracks/song6.mp3",
-                duration: "4:03",
-                cover: "cover/cover6.jpg",
-                isNew: true
-            },
-            {
-                id: 2,
-                title: "Нейронный Дождь",
-                desc: "О чём думает нейросеть?",
-                file: "tracks/song1.mp3",
-                duration: "4:03",
-                cover: "cover/cover2.jpg",
-                isNew: true
-            },
-            {
-                id: 3,
-                title: "А мне похуй",
-                desc: "Когда похуй",
-                file: "tracks/song.mp3",
-                duration: "3:11",
-                cover: "cover/cover1.jpg",
-                isNew: false
-            },
-            {
-                id: 4,
-                title: "Сгоревший экран",
-                desc: "",
-                file: "tracks/song2.mp3",
-                duration: "3:48",
-                cover: "cover/cover0.jpg",
-                isNew: false
-            },
-            {
-                id: 5,
-                title: "Тишина",
-                desc: "",
-                file: "tracks/song4.mp3",
-                duration: "04:48",
-                cover: "covers/cover0.jpg",
-                isNew: false
-            },
-            {
-                id: 6,
-                title: "Воздух Густеет",
-                desc: "",
-                file: "tracks/song1.mp3",
-                duration: "03:23",
-                cover: "covers/cover0.jpg",
-                isNew: false
-            }
+            { id: 1, title: "пуст", desc: "", file: "tracks/song6.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true },
+            { id: 2, title: "Нейронный Дождь", desc: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: true },
+            { id: 3, title: "А мне похуй", desc: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "cover/cover1.jpg", isNew: false },
+            { id: 4, title: "Сгоревший экран", desc: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover0.jpg", isNew: false },
+            { id: 5, title: "Тишина", desc: "", file: "tracks/song4.mp3", duration: "04:48", cover: "covers/cover0.jpg", isNew: false },
+            { id: 6, title: "Воздух Густеет", desc: "", file: "tracks/song1.mp3", duration: "03:23", cover: "covers/cover0.jpg", isNew: false }
         ];
 
         let currentAudio = null, currentBtn = null, archiveExpanded = false;
@@ -987,7 +1154,7 @@
         }
         function toggleArchive() {
             archiveExpanded = !archiveExpanded;
-            const list = document.getElementById('fullArchiveList'), btn = document.getElementById('showAllBtn'), arrow = document.getElementById('arrowIcon');
+            const list = document.getElementById('fullArchiveList'), btn = document.getElementById('showAllBtn');
             if (archiveExpanded) {
                 list.classList.add('visible');
                 btn.innerHTML = 'Свернуть <span id="arrowIcon" style="transition: transform 0.3s; display: inline-block; transform: rotate(180deg);">▼</span>';
@@ -1017,280 +1184,101 @@
                 if (oldProg) oldProg.style.width = '0%';
             }
         }
-
         function setupAudioListeners(trackId) {
-            const updateTime = () => { 
-                const el = document.getElementById(`time-${trackId}`); 
-                if (el && currentAudio.duration && !isNaN(currentAudio.duration)) el.textContent = fmtTime(currentAudio.currentTime); 
-            };
-            const updateProgress = () => { 
-                const bar = document.getElementById(`prog-${trackId}`); 
-                if (bar && currentAudio.duration && !isNaN(currentAudio.duration)) bar.style.width = `${(currentAudio.currentTime / currentAudio.duration) * 100}%`; 
-            };
+            const updateTime = () => { const el = document.getElementById(`time-${trackId}`); if (el && currentAudio.duration && !isNaN(currentAudio.duration)) el.textContent = fmtTime(currentAudio.currentTime); };
+            const updateProgress = () => { const bar = document.getElementById(`prog-${trackId}`); if (bar && currentAudio.duration && !isNaN(currentAudio.duration)) bar.style.width = `${(currentAudio.currentTime / currentAudio.duration) * 100}%`; };
             currentAudio.addEventListener('timeupdate', updateTime); 
             currentAudio.addEventListener('timeupdate', updateProgress);
         }
-
         function resetTrackUI(trackId) { 
             const bar = document.getElementById(`prog-${trackId}`); if (bar) bar.style.width = '0%'; 
             const el = document.getElementById(`time-${trackId}`); if (el) el.textContent = '0:00'; 
         }
 
-        // === MEDIA SESSION API (ДЛЯ ФОНОВОГО ВОСПРОИЗВЕДЕНИЯ) ===
+        // === MEDIA SESSION API ===
         function setupMediaSession(track) {
             if ('mediaSession' in navigator) {
                 let artworkSrc = './icon.png'; 
                 if (track.cover) artworkSrc = track.cover;
-
                 navigator.mediaSession.metadata = new MediaMetadata({
-                    title: track.title,
-                    artist: 'EVGENII',
-                    album: 'AI Music Project',
-                    artwork: [
-                        { src: artworkSrc, sizes: '512x512', type: 'image/png' }
-                    ]
+                    title: track.title, artist: 'EVGENII', album: 'AI Music Project',
+                    artwork: [{ src: artworkSrc, sizes: '512x512', type: 'image/png' }]
                 });
-
-                navigator.mediaSession.setActionHandler('play', () => {
-                    if(currentAudio && currentAudio.paused) {
-                        currentAudio.play();
-                        updatePlayButtonState(true);
-                    }
-                });
-                navigator.mediaSession.setActionHandler('pause', () => {
-                    if(currentAudio && !currentAudio.paused) {
-                        currentAudio.pause();
-                        updatePlayButtonState(false);
-                    }
-                });
+                navigator.mediaSession.setActionHandler('play', () => { if(currentAudio && currentAudio.paused) { currentAudio.play(); updatePlayButtonState(true); } });
+                navigator.mediaSession.setActionHandler('pause', () => { if(currentAudio && !currentAudio.paused) { currentAudio.pause(); updatePlayButtonState(false); } });
                 navigator.mediaSession.setActionHandler('nexttrack', () => playNextTrack(track.id));
                 navigator.mediaSession.setActionHandler('previoustrack', () => playPrevTrack(track.id));
             }
         }
-
         function updatePlayButtonState(isPlaying) {
             if (!currentBtn) return;
             const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
             const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-            
-            if (isPlaying) {
-                currentBtn.classList.add('active');
-                currentBtn.innerHTML = pauseIcon;
-            } else {
-                currentBtn.classList.remove('active');
-                currentBtn.innerHTML = playIcon;
-            }
+            if (isPlaying) { currentBtn.classList.add('active'); currentBtn.innerHTML = pauseIcon; }
+            else { currentBtn.classList.remove('active'); currentBtn.innerHTML = playIcon; }
         }
-
         function playNextTrack(currentTrackId) {
             const idx = tracks.findIndex(t => t.id == currentTrackId);
             if (idx !== -1 && idx < tracks.length - 1) {
                 const next = tracks[idx + 1];
                 const allBtns = document.querySelectorAll('.play-btn, .compact-play-btn');
-                for(let b of allBtns) {
-                    if(b.getAttribute('onclick')?.includes(`'${next.id}'`)) {
-                        b.click();
-                        break;
-                    }
-                }
+                for(let b of allBtns) { if(b.getAttribute('onclick')?.includes(`'${next.id}'`)) { b.click(); break; } }
             }
         }
-
         function playPrevTrack(currentTrackId) {
             const idx = tracks.findIndex(t => t.id == currentTrackId);
             if (idx > 0) {
                 const prev = tracks[idx - 1];
                 const allBtns = document.querySelectorAll('.play-btn, .compact-play-btn');
-                for(let b of allBtns) {
-                    if(b.getAttribute('onclick')?.includes(`'${prev.id}'`)) {
-                        b.click();
-                        break;
-                    }
-                }
+                for(let b of allBtns) { if(b.getAttribute('onclick')?.includes(`'${prev.id}'`)) { b.click(); break; } }
             }
         }
-
         function togglePlay(file, btn, trackId) {
             const playIcon = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>';
             const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-
-            // Если нажали на ту же кнопку
             if (currentBtn === btn) {
-                if (currentAudio && !currentAudio.paused) {
-                    currentAudio.pause();
-                    updatePlayButtonState(false);
-                } else {
-                    currentAudio.play().catch(e => console.log("Resume error:", e));
-                    updatePlayButtonState(true);
-                    const t = tracks.find(x => x.id == trackId);
-                    if(t) setupMediaSession(t);
-                }
+                if (currentAudio && !currentAudio.paused) { currentAudio.pause(); updatePlayButtonState(false); }
+                else { currentAudio.play().catch(e => console.log("Resume error:", e)); updatePlayButtonState(true); const t = tracks.find(x => x.id == trackId); if(t) setupMediaSession(t); }
                 return;
             }
-
-            // Если нажали на другую кнопку — останавливаем старую
             stopCurrentTrack();
-
-            // Запускаем новую
-            currentAudio = new Audio(file);
-            currentAudio.dataset.trackId = trackId;
-            currentBtn = btn;
-            currentAudio.volume = 1.0;
-
-            currentAudio.play().then(() => {
-                updatePlayButtonState(true);
-                const t = tracks.find(x => x.id == trackId);
-                if(t) setupMediaSession(t);
-                setupAudioListeners(trackId);
-            }).catch(e => {
-                console.log('Autoplay prevented:', e);
-                updatePlayButtonState(false);
-            });
-            
-            currentAudio.onended = () => {
-                resetTrackUI(trackId);
-                updatePlayButtonState(false);
-                playNextTrack(trackId);
-            };
+            currentAudio = new Audio(file); currentAudio.dataset.trackId = trackId; currentBtn = btn; currentAudio.volume = 1.0;
+            currentAudio.play().then(() => { updatePlayButtonState(true); const t = tracks.find(x => x.id == trackId); if(t) setupMediaSession(t); setupAudioListeners(trackId); })
+            .catch(e => { console.log('Autoplay prevented:', e); updatePlayButtonState(false); });
+            currentAudio.onended = () => { resetTrackUI(trackId); updatePlayButtonState(false); playNextTrack(trackId); };
         }
-
-        function scrollToId(id) {
-            const el = document.getElementById(id); if (!el) return;
-            const navH = document.querySelector('nav').offsetHeight;
-            window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - navH - 20, behavior: 'smooth' });
-        }
-
+        function scrollToId(id) { const el = document.getElementById(id); if (!el) return; const navH = document.querySelector('nav').offsetHeight; window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - navH - 20, behavior: 'smooth' }); }
         if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+        document.addEventListener('visibilitychange', () => { if (document.hidden) console.log('Tab hidden — audio continues via Media Session'); });
 
-        // === УБРАНА ПРИНУДИТЕЛЬНАЯ ПАУЗА ПРИ СВОРАЧИВАНИИ ===
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                console.log('Tab hidden — audio continues via Media Session');
-            }
-        });
-
-        // === FIREBASE CHAT (СПРАШИВАЕТ ИМЯ ТОЛЬКО ПРИ ОТКРЫТИИ ЧАТА) ===
-        const firebaseConfig = {
-            apiKey: "AIzaSyC8fxnC_WVl7r8mGBsF2SCITvzvlwUF0f0",
-            authDomain: "evgenii-6a5bb.firebaseapp.com",
-            databaseURL: "https://evgenii-6a5bb-default-rtdb.firebaseio.com",
-            projectId: "evgenii-6a5bb",
-            storageBucket: "evgenii-6a5bb.firebasestorage.app",
-            messagingSenderId: "623681147476",
-            appId: "1:623681147476:web:893a12286d88af4eb313c1",
-            measurementId: "G-H7TYB5E8PW"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const CHAT_REF = db.ref('evgenii_chat');
-
-        const currentUserId = localStorage.getItem('evgenii_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('evgenii_user_id', currentUserId);
+        // === FIREBASE CHAT ===
+        const firebaseConfig = { apiKey: "AIzaSyC8fxnC_WVl7r8mGBsF2SCITvzvlwUF0f0", authDomain: "evgenii-6a5bb.firebaseapp.com", databaseURL: "https://evgenii-6a5bb-default-rtdb.firebaseio.com", projectId: "evgenii-6a5bb", storageBucket: "evgenii-6a5bb.firebasestorage.app", messagingSenderId: "623681147476", appId: "1:623681147476:web:893a12286d88af4eb313c1", measurementId: "G-H7TYB5E8PW" };
+        firebase.initializeApp(firebaseConfig); const db = firebase.database(); const CHAT_REF = db.ref('evgenii_chat');
+        const currentUserId = localStorage.getItem('evgenii_user_id') || 'user_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('evgenii_user_id', currentUserId);
         let currentUserName = localStorage.getItem('evgenii_user_name');
-
-        const chatToggle = document.getElementById('chatToggle');
-        const chatWindow = document.getElementById('chatWindow');
-        const chatClose = document.getElementById('chatClose');
-        const chatInput = document.getElementById('chatInput');
-        const chatSend = document.getElementById('chatSend');
-        const chatMessages = document.getElementById('chatMessages');
-        const chatClear = document.getElementById('chatClear');
-        const chatStatus = document.getElementById('chatStatus');
-
+        const chatToggle = document.getElementById('chatToggle'), chatWindow = document.getElementById('chatWindow'), chatClose = document.getElementById('chatClose'), chatInput = document.getElementById('chatInput'), chatSend = document.getElementById('chatSend'), chatMessages = document.getElementById('chatMessages'), chatClear = document.getElementById('chatClear'), chatStatus = document.getElementById('chatStatus');
         function formatTime(date) { return new Date(date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); }
-
         function renderMessages(messages) {
-            if (!messages || Object.keys(messages).length === 0) {
-                chatMessages.innerHTML = '<div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>';
-                return;
-            }
+            if (!messages || Object.keys(messages).length === 0) { chatMessages.innerHTML = '<div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>'; return; }
             chatMessages.innerHTML = '';
             Object.values(messages).forEach(msg => {
-                const div = document.createElement('div');
-                const isMe = msg.userId === currentUserId;
+                const div = document.createElement('div'), isMe = msg.userId === currentUserId;
                 div.className = `message ${isMe ? 'outgoing' : 'incoming'}`;
-                div.innerHTML = `
-                    ${msg.text.replace(/[<>]/g, '')}
-                    <div class="message-time">${formatTime(msg.timestamp)}</div>
-                    <div class="message-avatar">${isMe ? 'Я' : (msg.userName || 'Гость')}</div>
-                `;
+                div.innerHTML = `${msg.text.replace(/[<>]/g, '')}<div class="message-time">${formatTime(msg.timestamp)}</div><div class="message-avatar">${isMe ? 'Я' : (msg.userName || 'Гость')}</div>`;
                 chatMessages.appendChild(div);
             });
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
-
-        function addMessage(text) {
-            if (!text.trim()) return;
-            CHAT_REF.push({
-                text: text.trim(),
-                userId: currentUserId,
-                userName: currentUserName || 'Гость',
-                timestamp: Date.now()
-            });
-            chatInput.value = '';
-        }
-
-        // === ПАРОЛЬ ДЛЯ ОЧИСТКИ ЧАТА ===
-        function clearChat() {
-            const password = prompt('🔐 Введите пароль администратора:');
-            if (password === '0770') {
-                if (confirm('⚠️ Очистить чат для ВСЕХ пользователей? Это действие нельзя отменить.')) {
-                    CHAT_REF.remove();
-                }
-            } else if (password !== null) {
-                alert('❌ Неверный пароль!');
-            }
-        }
-
+        function addMessage(text) { if (!text.trim()) return; CHAT_REF.push({ text: text.trim(), userId: currentUserId, userName: currentUserName || 'Гость', timestamp: Date.now() }); chatInput.value = ''; }
+        function clearChat() { const password = prompt('🔐 Введите пароль администратора:'); if (password === '0770') { if (confirm('⚠️ Очистить чат для ВСЕХ пользователей?')) CHAT_REF.remove(); } else if (password !== null) alert('❌ Неверный пароль!'); }
         function toggleChat() {
-            // Спрашиваем имя ТОЛЬКО при первом открытии чата
-            if (!currentUserName) {
-                const name = prompt('👋 Привет! Введите ваше имя для чата:', 'Гость');
-                if (name === null) return;
-                currentUserName = name.trim() || 'Гость';
-                localStorage.setItem('evgenii_user_name', currentUserName);
-            }
-            
-            const isVisible = chatWindow.classList.toggle('visible');
-            chatToggle.classList.toggle('active', isVisible);
-            chatToggle.textContent = isVisible ? '✕' : '💬';
-            if (isVisible) { setTimeout(() => chatInput.focus(), 100); }
+            if (!currentUserName) { const name = prompt('👋 Привет! Введите ваше имя для чата:', 'Гость'); if (name === null) return; currentUserName = name.trim() || 'Гость'; localStorage.setItem('evgenii_user_name', currentUserName); }
+            const isVisible = chatWindow.classList.toggle('visible'); chatToggle.classList.toggle('active', isVisible); chatToggle.textContent = isVisible ? '✕' : '💬'; if (isVisible) setTimeout(() => chatInput.focus(), 100);
         }
-
-        CHAT_REF.on('value', (snapshot) => {
-            renderMessages(snapshot.val());
-            chatStatus.textContent = '✅ Онлайн';
-            chatStatus.style.color = 'var(--neon-cyan)';
-        }, (error) => {
-            chatStatus.textContent = '❌ Ошибка подключения';
-            chatStatus.style.color = 'var(--neon-pink)';
-            console.error('Firebase error:', error);
-        });
-
-        chatToggle.addEventListener('click', toggleChat);
-        chatClose.addEventListener('click', () => {
-            chatWindow.classList.remove('visible');
-            chatToggle.classList.remove('active');
-            chatToggle.textContent = '💬';
-        });
-        chatSend.addEventListener('click', () => addMessage(chatInput.value));
-        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addMessage(chatInput.value); });
-        chatClear.addEventListener('click', clearChat);
-
-        document.addEventListener('click', (e) => {
-            if (chatWindow.classList.contains('visible') && !chatWindow.contains(e.target) && !chatToggle.contains(e.target)) {
-                chatWindow.classList.remove('visible');
-                chatToggle.classList.remove('active');
-                chatToggle.textContent = '💬';
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            renderTracks();
-            window.dispatchEvent(new Event('scroll'));
-        });
+        CHAT_REF.on('value', (snapshot) => { renderMessages(snapshot.val()); chatStatus.textContent = '✅ Онлайн'; chatStatus.style.color = 'var(--neon-cyan)'; }, (error) => { chatStatus.textContent = '❌ Ошибка подключения'; chatStatus.style.color = 'var(--neon-pink)'; console.error('Firebase error:', error); });
+        chatToggle.addEventListener('click', toggleChat); chatClose.addEventListener('click', () => { chatWindow.classList.remove('visible'); chatToggle.classList.remove('active'); chatToggle.textContent = '💬'; });
+        chatSend.addEventListener('click', () => addMessage(chatInput.value)); chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addMessage(chatInput.value); }); chatClear.addEventListener('click', clearChat);
+        document.addEventListener('click', (e) => { if (chatWindow.classList.contains('visible') && !chatWindow.contains(e.target) && !chatToggle.contains(e.target)) { chatWindow.classList.remove('visible'); chatToggle.classList.remove('active'); chatToggle.textContent = '💬'; } });
     </script>
 </body>
 </html>
