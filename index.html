@@ -154,8 +154,14 @@
         .bio a { color: var(--neon-cyan); text-decoration: none; transition: 0.3s; }
         .bio a:hover { text-shadow: 0 0 10px var(--neon-cyan); }
 
-        /* Кнопки входа */
-        .action-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+        /* СЕТКА КНОПОК - АДАПТИВНАЯ */
+        .action-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 16px;
+            width: 100%;
+        }
         .cyber-btn {
             position: relative; padding: 14px 32px; 
             font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 700;
@@ -165,7 +171,7 @@
             clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); 
             transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             cursor: pointer; user-select: none; overflow: hidden;
-            display: inline-flex; align-items: center; gap: 8px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
         }
         .cyber-btn::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
@@ -180,6 +186,11 @@
         .cyber-btn.primary:hover { box-shadow: 0 0 35px rgba(0, 212, 255, 0.7); border-color: #4de4ff; }
         .cyber-btn.secondary:hover { box-shadow: 0 0 35px rgba(255, 45, 117, 0.7); border-color: #ff5a96; }
         .cyber-btn.outline:hover { box-shadow: 0 0 35px rgba(181, 55, 242, 0.7); border-color: #d474ff; color: white; }
+        
+        /* Кнопка Войти на всю ширину второго ряда */
+        .cyber-btn.full-width {
+            grid-column: 1 / -1;
+        }
 
         /* === ОСНОВНОЙ САЙТ (скрыт изначально) === */
         #mainSite { opacity: 0; transition: opacity 0.5s; pointer-events: none; }
@@ -327,7 +338,6 @@
             .avatar-wrapper { margin-bottom: 20px; }
             .username-row { justify-content: center; }
             .stats { justify-content: center; width: 100%; }
-            .action-btns { justify-content: center; }
         }
         @media (max-width: 768px) {
             .container { padding: 0 20px; } section { padding: 90px 0; }
@@ -393,8 +403,12 @@
         <div class="profile-card">
             <div class="avatar-wrapper">
                 <div class="avatar-ring"></div>
-                <!-- Аватарка парня -->
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4&top=shortHair&clothing=blazerAndShirt" alt="Avatar" class="avatar-img">
+                <!-- Аватарка парня с fallback -->
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4&top=shortHair&clothing=blazerAndShirt" 
+                     alt="Avatar" 
+                     class="avatar-img"
+                     loading="eager"
+                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:138px;height:138px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#0f0f1a);display:flex;align-items:center;justify-content:center;font-size:48px;border:3px solid rgba(255,255,255,0.15);box-shadow:0 0 25px rgba(181,55,242,0.4);\'>🎧</div>';">
             </div>
 
             <div class="info-wrapper">
@@ -414,6 +428,7 @@
                     Эксперимент на стыке эмоций и кода.
                 </div>
 
+                <!-- СЕТКА КНОПОК -->
                 <div class="action-btns">
                     <button class="cyber-btn outline" onclick="window.open('https://www.instagram.com/zhenyaa0?igsh=ZHV4ZHE1MGQwd3N5&utm_source=qr', '_blank')">
                         <i class="fab fa-instagram"></i> Instagram
@@ -421,32 +436,10 @@
                     <button class="cyber-btn secondary" onclick="window.open('https://t.me/+zo3YoDDckwoyOGYy', '_blank')">
                         <i class="fab fa-telegram-plane"></i> Telegram
                     </button>
-                    <button class="cyber-btn outline" id="welcomeChatBtn">
-                        <i class="fas fa-comments"></i> Чат
-                    </button>
-                    <button class="cyber-btn primary" id="enterBtn">
+                    <button class="cyber-btn primary full-width" id="enterBtn">
                         <i class="fas fa-sign-in-alt"></i> Войти
                     </button>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Чат на экране приветствия -->
-        <div class="chat-window" id="welcomeChatWindow" style="bottom: 200px; right: 24px; z-index: 9999;">
-            <div class="chat-header">
-                <div class="chat-title">ЧАТ • ONLINE</div>
-                <button class="chat-close" id="welcomeChatClose">×</button>
-            </div>
-            <div class="chat-status" id="welcomeChatStatus">🔄 Подключение...</div>
-            <div class="chat-messages" id="welcomeChatMessages">
-                <div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>
-            </div>
-            <button class="chat-clear" id="welcomeChatClear">🗑️ Очистить чат</button>
-            <div class="chat-input">
-                <input type="text" id="welcomeChatInput" placeholder="Введите сообщение..." maxlength="500">
-                <button class="chat-send" id="welcomeChatSend">
-                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                </button>
             </div>
         </div>
     </div>
@@ -555,7 +548,6 @@
         const welcomeScreen = document.getElementById('welcomeScreen');
         const mainSite = document.getElementById('mainSite');
         const enterBtn = document.getElementById('enterBtn');
-        const welcomeChatBtn = document.getElementById('welcomeChatBtn');
         const trackCountEl = document.getElementById('trackCount');
         
         // Список треков
@@ -594,39 +586,6 @@
         }
         
         enterBtn.addEventListener('click', enterSite);
-        
-        // Кнопка чата на экране приветствия - открывает чат там же
-        const welcomeChatWindow = document.getElementById('welcomeChatWindow');
-        const welcomeChatClose = document.getElementById('welcomeChatClose');
-        const welcomeChatInput = document.getElementById('welcomeChatInput');
-        const welcomeChatSend = document.getElementById('welcomeChatSend');
-        const welcomeChatMessages = document.getElementById('welcomeChatMessages');
-        const welcomeChatClear = document.getElementById('welcomeChatClear');
-        const welcomeChatStatus = document.getElementById('welcomeChatStatus');
-        
-        welcomeChatBtn.addEventListener('click', () => {
-            welcomeChatWindow.classList.add('visible');
-            setTimeout(() => welcomeChatInput.focus(), 100);
-        });
-        
-        welcomeChatClose.addEventListener('click', () => {
-            welcomeChatWindow.classList.remove('visible');
-        });
-        
-        // Функция отправки сообщения в чате на welcome экране
-        function sendWelcomeMessage(text) {
-            if (!text.trim()) return;
-            const div = document.createElement('div');
-            div.className = 'message outgoing';
-            div.innerHTML = `${text.replace(/[<>]/g, '')}<div class="message-time">${new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'})}</div><div class="message-avatar">Я</div>`;
-            welcomeChatMessages.appendChild(div);
-            welcomeChatMessages.scrollTop = welcomeChatMessages.scrollHeight;
-            welcomeChatInput.value = '';
-        }
-        
-        welcomeChatSend.addEventListener('click', () => sendWelcomeMessage(welcomeChatInput.value));
-        welcomeChatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendWelcomeMessage(welcomeChatInput.value); });
-        welcomeChatClear.addEventListener('click', () => { welcomeChatMessages.innerHTML = '<div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>'; });
         
         // Быстрый вход по клавишам Enter / Escape
         document.addEventListener('keydown', (e) => {
