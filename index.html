@@ -22,7 +22,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
-    <!-- Font Awesome для иконок -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -47,7 +47,7 @@
             cursor: default;
         }
 
-        /* === WELCOME SCREEN (STYLE: NEON_USER) === */
+        /* === WELCOME SCREEN === */
         #welcomeScreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 70%, #000 100%);
@@ -56,10 +56,7 @@
         }
         #welcomeScreen.hidden { display: none !important; }
         
-        /* Фон приветствия (орбы и частицы) */
-        .welcome-bg-orbs {
-            position: absolute; inset: 0; pointer-events: none; z-index: 0;
-        }
+        .welcome-bg-orbs { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
         .welcome-orb {
             position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3;
             animation: floatOrb 20s ease-in-out infinite;
@@ -77,7 +74,6 @@
             opacity: 0.5;
         }
 
-        /* Карточка профиля (основа дизайна) */
         .profile-card {
             position: relative; z-index: 10;
             width: 90%; max-width: 800px;
@@ -100,18 +96,15 @@
         @keyframes gradientFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes floatOrb { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(20px, -20px); } }
 
-        /* Аватар с кольцом */
         .avatar-wrapper {
             position: relative; width: 150px; height: 150px; flex-shrink: 0;
             display: flex; justify-content: center; align-items: center;
         }
-        /* Вращающееся кольцо 1 */
         .avatar-ring {
             position: absolute; width: 100%; height: 100%; border-radius: 50%;
             border: 3px solid transparent; border-top-color: var(--neon-blue); border-bottom-color: var(--neon-pink);
             animation: spin 4s linear infinite; box-shadow: var(--glow-purple); z-index: 1;
         }
-        /* Вращающееся кольцо 2 */
         .avatar-ring::before {
             content: ''; position: absolute; inset: -4px; border-radius: 50%;
             border: 2px solid transparent; border-top-color: var(--neon-cyan); border-bottom-color: var(--neon-purple);
@@ -124,22 +117,18 @@
             background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
             object-fit: cover; border: 3px solid rgba(255,255,255,0.15);
             box-shadow: 0 0 25px rgba(181, 55, 242, 0.4);
-            z-index: 2; /* Картинка выше колец */
+            z-index: 2;
         }
-        
-        /* Фолбэк для аватарки (если картинка не грузится) */
         .avatar-fallback {
             position: absolute; width: 138px; height: 138px; border-radius: 50%;
             background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
             display: flex; align-items: center; justify-content: center;
             font-size: 48px; border: 3px solid rgba(255,255,255,0.15);
             box-shadow: 0 0 25px rgba(181, 55, 242, 0.4);
-            z-index: 2; display: none; /* Скрыт по умолчанию */
+            z-index: 2; display: none;
         }
 
-        /* Инфо блок */
         .info-wrapper { flex: 1; min-width: 280px; display: flex; flex-direction: column; justify-content: center; }
-        
         .username-row { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
         .username {
             font-family: 'JetBrains Mono', monospace; font-size: clamp(1.8rem, 4vw, 2.4rem);
@@ -167,7 +156,6 @@
         .bio a { color: var(--neon-cyan); text-decoration: none; transition: 0.3s; }
         .bio a:hover { text-shadow: 0 0 10px var(--neon-cyan); }
 
-        /* СЕТКА КНОПОК - АДАПТИВНАЯ */
         .action-btns {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -199,22 +187,16 @@
         .cyber-btn.primary:hover { box-shadow: 0 0 35px rgba(0, 212, 255, 0.7); border-color: #4de4ff; }
         .cyber-btn.secondary:hover { box-shadow: 0 0 35px rgba(255, 45, 117, 0.7); border-color: #ff5a96; }
         .cyber-btn.outline:hover { box-shadow: 0 0 35px rgba(181, 55, 242, 0.7); border-color: #d474ff; color: white; }
-        
-        /* Кнопка Войти на всю ширину второго ряда */
-        .cyber-btn.full-width {
-            grid-column: 1 / -1;
-        }
+        .cyber-btn.full-width { grid-column: 1 / -1; }
 
-        /* === ОСНОВНОЙ САЙТ (скрыт изначально) === */
+        /* === MAIN SITE === */
         #mainSite { opacity: 0; transition: opacity 0.5s; pointer-events: none; }
         #mainSite.visible { opacity: 1; pointer-events: auto; }
 
-        /* Custom Cursor */
         .cursor { position: fixed; width: 20px; height: 20px; border: 2px solid var(--neon-blue); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.1s; mix-blend-mode: difference; }
         .cursor.hover { transform: translate(-50%, -50%) scale(1.5); background: rgba(0, 212, 255, 0.2); border-color: var(--neon-pink); }
         .cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--neon-pink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); }
 
-        /* Background Animation (Main Site) */
         .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: hidden; }
         .bg-animation::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 80%, rgba(255, 45, 117, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(0, 212, 255, 0.15) 0%, transparent 50%); animation: gradientShift 15s ease-in-out infinite; }
         @keyframes gradientShift { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
@@ -250,10 +232,6 @@
         .hero-description strong { color: var(--neon-cyan); font-weight: 600; }
         .action-zone { display: flex; gap: 16px; margin-top: 48px; flex-wrap: wrap; justify-content: center; }
         
-        /* Cyber Buttons (Main Site) */
-        .cyber-btn.outline { border-color: var(--neon-purple); color: var(--neon-purple); }
-        .cyber-btn.outline:hover { box-shadow: 0 0 40px rgba(181, 55, 242, 0.7); border-color: #d474ff; color: white; }
-
         /* News Block */
         .news-section-wrapper { max-width: 720px; margin: 48px auto 0; display: none; animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .news-section-wrapper.visible { display: block; }
@@ -274,64 +252,274 @@
         .news-tag.NEW { background: linear-gradient(135deg, rgba(255, 45, 117, 0.25), rgba(255, 100, 150, 0.25)); color: var(--neon-pink); border-color: rgba(255, 45, 117, 0.4); }
         .news-tag.SYS { background: linear-gradient(135deg, rgba(181, 55, 242, 0.25), rgba(140, 80, 200, 0.25)); color: var(--neon-purple); border-color: rgba(181, 55, 242, 0.4); }
 
-        /* Sections & Tracks */
+        /* === TRACKS SECTIONS === */
         .section-header { margin-bottom: 48px; padding-left: 24px; position: relative; }
         .section-header::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 4px; background: linear-gradient(180deg, var(--neon-pink), var(--neon-blue)); border-radius: 2px; box-shadow: 0 0 15px rgba(255, 45, 117, 0.5); }
         .section-tag { font-family: 'JetBrains Mono', monospace; color: var(--neon-pink); font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 45, 117, 0.5); }
         .section-title { font-size: 2.2rem; font-weight: 700; background: linear-gradient(135deg, var(--text-primary), var(--neon-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
-        .track-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 0; overflow: hidden; transition: 0.4s; position: relative; backdrop-filter: blur(10px); }
-        .track-card:hover { border-color: var(--neon-blue); transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), var(--glow-blue); z-index: 5; }
-        .track-cover { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, #1a1a2e, #0f0f1a, #1a1a2e); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; overflow: hidden; position: relative; }
-        .track-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
-        .track-card:hover .track-cover img { transform: scale(1.05); }
-        .track-player-row { padding: 22px; display: flex; align-items: center; gap: 16px; position: relative; z-index: 2; }
-        .play-btn { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--text-primary), #fff); color: var(--dark-bg); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: 0.25s; box-shadow: 0 4px 20px rgba(0,0,0,0.3); position: relative; overflow: hidden; }
-        .play-btn::after { content: ''; position: absolute; inset: 2px; background: var(--dark-bg); border-radius: 50%; z-index: -1; }
+        
+        /* === 🎨 НЕОНОВЫЕ КАРТОЧКИ НОВЫХ РЕЛИЗОВ === */
+        .track-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(10px);
+            /* Неоновая рамка через box-shadow + outline */
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            box-shadow: 
+                0 0 0 2px rgba(0, 212, 255, 0.3),
+                0 0 20px rgba(0, 212, 255, 0.2),
+                inset 0 0 30px rgba(181, 55, 242, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        /* Анимированная неоновая обводка */
+        .track-card::before {
+            content: ''; position: absolute; inset: -2px; border-radius: 22px;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-purple), var(--neon-cyan), var(--neon-pink));
+            background-size: 400% 400%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            animation: neonFlow 3s linear infinite;
+            opacity: 0.8; pointer-events: none;
+            z-index: -1;
+        }
+        @keyframes neonFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .track-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 
+                0 0 0 2px var(--neon-blue),
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(0, 212, 255, 0.4),
+                inset 0 0 40px rgba(181, 55, 242, 0.2);
+            z-index: 5;
+        }
+        .track-card:hover::before {
+            opacity: 1;
+            filter: drop-shadow(0 0 10px var(--neon-blue));
+        }
+        
+        .track-cover {
+            width: 100%; aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #1a1a2e, #0f0f1a, #1a1a2e);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3.5rem; overflow: hidden; position: relative;
+        }
+        .track-cover::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.7));
+            opacity: 0; transition: opacity 0.3s; z-index: 1; pointer-events: none;
+        }
+        .track-card:hover .track-cover::before { opacity: 1; }
+        .track-cover img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s;
+        }
+        .track-card:hover .track-cover img {
+            transform: scale(1.08) rotate(0.5deg);
+            filter: brightness(1.1) saturate(1.2);
+        }
+        
+        .track-player-row {
+            padding: 22px; display: flex; align-items: center; gap: 16px;
+            position: relative; z-index: 2;
+        }
+        
+        .play-btn {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            color: var(--text-primary); border: 1px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; flex-shrink: 0; transition: 0.25s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative; overflow: visible;
+        }
+        .play-btn::before {
+            content: ''; position: absolute; inset: -2px; border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--neon-blue), var(--neon-pink), var(--neon-purple), var(--neon-blue));
+            animation: spin 3s linear infinite; opacity: 0; transition: opacity 0.3s; z-index: -1;
+        }
+        .play-btn:hover::before { opacity: 1; }
         .play-btn:hover { transform: scale(1.1); box-shadow: 0 6px 25px rgba(0, 212, 255, 0.4); }
         .play-btn svg { width: 20px; fill: currentColor; margin-left: 2px; transition: margin 0.2s; }
-        .play-btn.active { background: linear-gradient(135deg, var(--neon-pink), #ff6b9d); color: white; box-shadow: var(--glow-pink); animation: pulse 1.5s infinite; }
+        .play-btn.active {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            color: white; box-shadow: var(--glow-pink), 0 0 60px rgba(255,45,117,0.4);
+            animation: pulse 1.5s infinite;
+        }
         .play-btn.active svg { margin-left: 0; }
+        
         .track-info { flex: 1; min-width: 0; }
         .track-info h3 { font-size: 1.1rem; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
         .track-info p { font-size: 0.85rem; color: var(--text-secondary); opacity: 0.85; }
-        .progress-container { width: 100%; height: 5px; background: rgba(255,255,255,0.12); margin-top: 12px; border-radius: 3px; overflow: hidden; cursor: pointer; position: relative; }
-        .progress-bar { height: 100%; background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan)); width: 0%; transition: width 0.1s linear; position: relative; }
+        
+        .progress-container {
+            width: 100%; height: 5px; background: rgba(255,255,255,0.08);
+            margin-top: 12px; border-radius: 3px; overflow: hidden;
+            cursor: pointer; position: relative;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .progress-bar {
+            height: 100%; background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan));
+            width: 0%; transition: width 0.1s linear; position: relative;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+        .progress-bar::after {
+            content: ''; position: absolute; right: 0; top: 50%;
+            transform: translateY(-50%); width: 8px; height: 8px;
+            background: white; border-radius: 50%;
+            box-shadow: 0 0 12px white; opacity: 0; transition: opacity 0.2s;
+        }
+        .progress-container:hover .progress-bar::after { opacity: 1; }
+        
         .track-duration { font-family: 'JetBrains Mono'; font-size: 0.85rem; color: var(--text-secondary); flex-shrink: 0; opacity: 0.8; }
         .track-time { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--neon-blue); margin-left: 10px; flex-shrink: 0; font-weight: 600; }
-        .sound-wave { display: none; align-items: center; gap: 2px; height: 24px; margin-left: 8px; }
+        
+        .sound-wave { display: none; align-items: center; gap: 3px; height: 24px; margin-left: 8px; }
         .play-btn.active + .sound-wave { display: flex; }
-        .wave-bar { width: 3px; background: var(--neon-pink); border-radius: 2px; animation: wave 0.5s ease-in-out infinite alternate; }
-        .wave-bar:nth-child(1) { height: 8px; animation-delay: 0s; } .wave-bar:nth-child(2) { height: 16px; animation-delay: 0.1s; } .wave-bar:nth-child(3) { height: 12px; animation-delay: 0.2s; } .wave-bar:nth-child(4) { height: 20px; animation-delay: 0.3s; } .wave-bar:nth-child(5) { height: 10px; animation-delay: 0.4s; }
-        @keyframes wave { from { transform: scaleY(0.3); opacity: 0.6; } to { transform: scaleY(1); opacity: 1; } }
-        .download-btn { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--text-secondary); text-decoration: none; transition: 0.25s; margin-left: 6px; flex-shrink: 0; position: relative; overflow: hidden; }
-        .download-btn:hover { border-color: var(--neon-blue); color: white; transform: scale(1.1); box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3); }
+        .wave-bar {
+            width: 3px; background: linear-gradient(180deg, var(--neon-pink), var(--neon-purple));
+            border-radius: 2px; animation: wave 0.5s ease-in-out infinite alternate;
+            box-shadow: 0 0 8px rgba(255,45,117,0.6);
+        }
+        .wave-bar:nth-child(1) { height: 8px; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 16px; animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { height: 12px; animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { height: 20px; animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { height: 10px; animation-delay: 0.4s; }
+        @keyframes wave { from { transform: scaleY(0.4); opacity: 0.5; } to { transform: scaleY(1); opacity: 1; } }
+        
+        .download-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px; border-radius: 10px;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+            color: var(--text-secondary); text-decoration: none; transition: 0.25s;
+            margin-left: 6px; flex-shrink: 0; position: relative; overflow: hidden;
+        }
+        .download-btn:hover {
+            border-color: var(--neon-blue); color: white; transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
         .download-btn svg { width: 16px; height: 16px; fill: currentColor; position: relative; z-index: 2; }
         
-        .compact-list { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
-        .compact-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; transition: 0.3s; position: relative; backdrop-filter: blur(8px); }
-        .compact-item:hover { background: rgba(255,255,255,0.08); border-color: var(--neon-blue); transform: translateX(4px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); }
-        .compact-play-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.12); color: var(--text-primary); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: 0.25s; }
+        /* === 📋 КОМПАКТНЫЙ СПИСОК "ВСЕ ТРЕКИ" === */
+        .compact-list {
+            display: grid; grid-template-columns: 1fr; gap: 12px;
+            margin-top: 24px;
+        }
+        .compact-item {
+            background: linear-gradient(145deg, rgba(20,20,30,0.7), rgba(15,15,25,0.9));
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px; padding: 14px 18px;
+            display: flex; align-items: center; gap: 14px;
+            transition: all 0.3s ease; position: relative;
+            backdrop-filter: blur(12px);
+        }
+        .compact-item:hover {
+            border-color: var(--neon-cyan);
+            transform: translateX(6px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        
+        /* 🖼️ Мини-обложка 48×48 */
+        .compact-cover {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
+            overflow: hidden; flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; position: relative;
+        }
+        .compact-cover img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .compact-item:hover .compact-cover img { transform: scale(1.1); }
+        .compact-cover::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 70%, rgba(0,0,0,0.5));
+            pointer-events: none;
+        }
+        
+        .compact-play-btn {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(255,255,255,0.12); color: var(--text-primary);
+            border: none; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; flex-shrink: 0; transition: 0.25s;
+        }
         .compact-play-btn:hover { background: var(--neon-blue); color: white; transform: scale(1.1); }
-        .compact-play-btn.active { background: var(--neon-pink); color: white; box-shadow: var(--glow-pink); animation: pulse 1.5s infinite; }
+        .compact-play-btn.active {
+            background: var(--neon-pink); color: white;
+            box-shadow: var(--glow-pink); animation: pulse 1.5s infinite;
+        }
         .compact-play-btn svg { width: 16px; fill: currentColor; margin-left: 1px; }
         .compact-play-btn.active svg { margin-left: 0; }
+        
         .compact-info { flex: 1; min-width: 0; }
         .compact-info h4 { font-size: 1rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
         .compact-info p { font-size: 0.8rem; color: var(--text-secondary); opacity: 0.8; }
-        .compact-progress-bg { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: rgba(255,255,255,0.08); border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; cursor: pointer; }
-        .compact-progress-fill { height: 100%; background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan)); width: 0%; transition: width 0.1s linear; }
-        .compact-item:hover .compact-progress-fill { background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple)); box-shadow: 0 0 10px rgba(255, 45, 117, 0.4); }
+        
+        .compact-progress-bg {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 3px;
+            background: rgba(255,255,255,0.08);
+            border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;
+            cursor: pointer; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .compact-progress-fill {
+            height: 100%; background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan));
+            width: 0%; transition: width 0.1s linear;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+        .compact-progress-fill::after {
+            content: ''; position: absolute; right: 0; top: 50%;
+            transform: translateY(-50%); width: 6px; height: 6px;
+            background: white; border-radius: 50%;
+            box-shadow: 0 0 10px white; opacity: 0; transition: opacity 0.2s;
+        }
+        .compact-item:hover .compact-progress-fill::after { opacity: 1; }
+        .compact-item:hover .compact-progress-fill {
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+            box-shadow: 0 0 10px rgba(255, 45, 117, 0.4);
+        }
+        
         .compact-duration { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--text-secondary); flex-shrink: 0; opacity: 0.8; }
         .compact-time { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--neon-blue); margin-left: 10px; font-weight: 600; }
         .compact-item:hover .compact-time { color: var(--neon-pink); text-shadow: 0 0 8px rgba(255, 45, 117, 0.6); }
         .compact-item .download-btn { width: 32px; height: 32px; margin-left: 4px; }
         .compact-item .download-btn svg { width: 14px; height: 14px; }
-        .show-all-btn { width: 100%; padding: 18px 24px; margin-top: 28px; background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.18); border-radius: 14px; color: var(--text-secondary); font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.35s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .show-all-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--neon-blue); color: var(--text-primary); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2); }
-        .hidden-tracks { display: none; opacity: 0; transform: translateY(10px); transition: 0.4s; }
-        .hidden-tracks.visible { display: flex; opacity: 1; transform: translateY(0); }
+        
+        .show-all-btn {
+            width: 100%; padding: 18px 24px; margin-top: 28px;
+            background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.18);
+            border-radius: 14px; color: var(--text-secondary);
+            font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; transition: 0.35s; display: flex; align-items: center;
+            justify-content: center; gap: 8px;
+        }
+        .show-all-btn:hover {
+            background: rgba(255,255,255,0.1); border-color: var(--neon-blue);
+            color: var(--text-primary); transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2);
+        }
+        
+        .hidden-tracks {
+            display: grid; grid-template-columns: 1fr; gap: 12px;
+            opacity: 0; transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+        .hidden-tracks.visible {
+            opacity: 1; transform: translateY(0); pointer-events: all;
+        }
 
         /* Social */
         .social-section { text-align: center; padding: 100px 0; position: relative; }
@@ -360,6 +548,8 @@
             .track-player-row { padding: 18px; gap: 12px; } .play-btn { width: 44px; height: 44px; }
             .nav-links a { padding: 6px 12px; font-size: 0.8rem; }
             .cursor, .cursor-dot { display: none !important; }
+            .compact-item { flex-wrap: wrap; }
+            .compact-cover { width: 40px; height: 40px; }
         }
 
         /* Scrollbar */
@@ -368,7 +558,7 @@
         ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--neon-pink), var(--neon-blue)); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple)); }
 
-        /* Chat Styles (Same as before) */
+        /* Chat Styles */
         .chat-toggle { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); border: 2px solid rgba(255,255,255,0.2); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; box-shadow: var(--glow-purple); transition: 0.3s; font-size: 1.5rem; }
         .chat-toggle:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 30px rgba(181, 55, 242, 0.8), 0 0 60px rgba(255, 45, 117, 0.5); }
         .chat-toggle.active { background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan)); box-shadow: var(--glow-blue); }
@@ -406,7 +596,7 @@
     </style>
 </head>
 <body>
-    <!-- === WELCOME SCREEN (PROFILE STYLE) === -->
+    <!-- === WELCOME SCREEN === -->
     <div id="welcomeScreen">
         <div class="welcome-bg-orbs">
             <div class="welcome-orb"></div><div class="welcome-orb"></div>
@@ -415,17 +605,12 @@
         
         <div class="profile-card">
             <div class="avatar-wrapper">
-                <!-- Неоновые кольца всегда здесь -->
                 <div class="avatar-ring"></div>
-                
-                <!-- Картинка -->
                 <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4&top=shortHair&clothing=blazerAndShirt" 
                      alt="Avatar" 
                      class="avatar-img"
                      loading="eager"
                      onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';">
-                
-                <!-- Запасной вариант (Emoji) -->
                 <div id="avatarFallback" class="avatar-fallback">🎧</div>
             </div>
 
@@ -446,7 +631,6 @@
                     Эксперимент на стыке эмоций и кода.
                 </div>
 
-                <!-- СЕТКА КНОПОК -->
                 <div class="action-btns">
                     <button class="cyber-btn outline" onclick="window.open('https://www.instagram.com/zhenyaa0?igsh=ZHV4ZHE1MGQwd3N5&utm_source=qr', '_blank')">
                         <i class="fab fa-instagram"></i> Instagram
@@ -462,9 +646,8 @@
         </div>
     </div>
 
-    <!-- === MAIN SITE CONTENT === -->
+    <!-- === MAIN SITE === -->
     <div id="mainSite">
-        <!-- Custom Cursor -->
         <div class="cursor"></div>
         <div class="cursor-dot"></div>
 
@@ -482,7 +665,7 @@
             </div>
         </nav>
 
-        <!-- HERO SECTION -->
+        <!-- HERO -->
         <section class="hero">
             <div class="container">
                 <h1><span class="gradient-text">Где заканчиваюсь я —<br>и начинается ИИ.</span></h1>
@@ -495,7 +678,6 @@
                     <div class="cyber-btn primary" onclick="scrollToId('new')">🎵 Новые Релизы</div>
                     <div class="cyber-btn secondary" onclick="scrollToId('archive')">📦 Все Треки</div>
                 </div>
-                <!-- БЛОК НОВОСТЕЙ -->
                 <div id="newsWrapper" class="news-section-wrapper">
                     <div class="news-container">
                         <div class="news-header">
@@ -511,8 +693,32 @@
             </div>
         </section>
 
-        <section id="new"><div class="container"><div class="section-header"><div class="section-tag">// NEW</div><div class="section-title">Новые релизы</div></div><div class="grid" id="releasesList"></div></div></section>
-        <section id="archive"><div class="container"><div class="section-header"><div class="section-tag">// ARCHIVE</div><div class="section-title">Все треки</div></div><div id="archivePreview"></div><button id="showAllBtn" class="show-all-btn" onclick="toggleArchive()">Показать все треки <span style="transition: transform 0.3s;" id="arrowIcon">▼</span></button><div id="fullArchiveList" class="hidden-tracks compact-list"></div></div></section>
+        <!-- 🎵 НОВЫЕ РЕЛИЗЫ - карточки с неоновой рамкой -->
+        <section id="new">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">// NEW</div>
+                    <div class="section-title">Новые релизы</div>
+                </div>
+                <div class="grid" id="releasesList"></div>
+            </div>
+        </section>
+
+        <!-- 📦 ВСЕ ТРЕКИ - только компактный список, 1 видно, остальные за кнопкой -->
+        <section id="archive">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">// ARCHIVE</div>
+                    <div class="section-title">Все треки</div>
+                </div>
+                <!-- Только список, без большой карточки -->
+                <div id="archiveList" class="compact-list"></div>
+                <button id="showAllBtn" class="show-all-btn" onclick="toggleArchive()">
+                    Показать все треки <span style="transition: transform 0.3s;" id="arrowIcon">▼</span>
+                </button>
+                <div id="hiddenTracks" class="hidden-tracks"></div>
+            </div>
+        </section>
 
         <section class="social-section">
             <div class="container">
@@ -538,10 +744,8 @@
 
         <footer>© 2026 EVGENII • Создано Human & AI •  🔥</footer>
 
-        <!-- CHAT TOGGLE BUTTON -->
+        <!-- CHAT -->
         <div class="chat-toggle" id="chatToggle" title="Открыть чат">💬</div>
-
-        <!-- CHAT WINDOW -->
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
                 <div class="chat-title">ЧАТ • ONLINE</div>
@@ -562,13 +766,12 @@
     </div>
 
     <script>
-        // === WELCOME SCREEN LOGIC ===
+        // === WELCOME SCREEN ===
         const welcomeScreen = document.getElementById('welcomeScreen');
         const mainSite = document.getElementById('mainSite');
         const enterBtn = document.getElementById('enterBtn');
         const trackCountEl = document.getElementById('trackCount');
         
-        // Список треков
         const tracks = [
             { id: 1, title: "пуст", desc: "", file: "tracks/song6.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true },
             { id: 2, title: "Нейронный Дождь", desc: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: true },
@@ -578,52 +781,33 @@
             { id: 6, title: "Воздух Густеет", desc: "", file: "tracks/song1.mp3", duration: "03:23", cover: "covers/cover0.jpg", isNew: false }
         ];
         
-        // Обновляем счётчик треков
-        function updateTrackCount() {
-            trackCountEl.textContent = tracks.length;
-        }
-        updateTrackCount(); // Вызываем при загрузке
-        
-        // Блокируем прокрутку пока показан приветственный экран
+        function updateTrackCount() { trackCountEl.textContent = tracks.length; }
+        updateTrackCount();
         document.body.style.overflow = 'hidden';
         
         function enterSite() {
             welcomeScreen.style.opacity = '0';
             welcomeScreen.style.transition = 'opacity 0.5s ease';
-            
             setTimeout(() => {
                 welcomeScreen.classList.add('hidden');
-                document.body.style.overflow = ''; // Разблокируем прокрутку
-                
-                // Показываем основной сайт
+                document.body.style.overflow = '';
                 mainSite.classList.add('visible');
-                
-                // Инициализируем скрипты сайта
                 initSite();
             }, 500);
         }
-        
         enterBtn.addEventListener('click', enterSite);
-        
-        // Быстрый вход по клавишам Enter / Escape
         document.addEventListener('keydown', (e) => {
             if (!welcomeScreen.classList.contains('hidden') && (e.key === 'Enter' || e.key === 'Escape')) {
-                e.preventDefault();
-                enterSite();
+                e.preventDefault(); enterSite();
             }
         });
         
-        function initSite() {
-            createParticles();
-            renderTracks();
-            window.dispatchEvent(new Event('scroll'));
-        }
+        function initSite() { createParticles(); renderTracks(); window.dispatchEvent(new Event('scroll')); }
 
-        // === CUSTOM CURSOR ===
+        // === CURSOR ===
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
         const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
-        
         if (!isMobile) {
             document.addEventListener('mousemove', (e) => {
                 cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
@@ -633,10 +817,7 @@
                 el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
                 el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
             });
-        } else {
-            if(cursor) cursor.style.display = 'none';
-            if(cursorDot) cursorDot.style.display = 'none';
-        }
+        } else { if(cursor) cursor.style.display = 'none'; if(cursorDot) cursorDot.style.display = 'none'; }
 
         document.querySelector('.news-container')?.addEventListener('mousemove', (e) => {
             const rect = e.currentTarget.getBoundingClientRect();
@@ -675,6 +856,7 @@
         }
         const downloadIcon = `<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>`;
         
+        // 🎨 Полная карточка для новых релизов (с неоновой рамкой)
         function createFullCard(track) {
             const card = document.createElement('div'); card.className = 'track-card';
             const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
@@ -695,40 +877,77 @@
                 </div>`;
             return card;
         }
+        
+        // 📋 Компактный элемент для списка "Все треки" (с мини-обложкой)
         function createCompactItem(track) {
-            const item = document.createElement('div'); item.className = 'compact-item'; item.style.setProperty('--i', track.id);
+            const item = document.createElement('div'); 
+            item.className = 'compact-item'; 
+            item.style.setProperty('--i', track.id);
             const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
+            
+            // Мини-обложка 48×48 с фолбэком
+            const coverHTML = track.cover 
+                ? `<div class="compact-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>`
+                : `<div class="compact-cover">🎵</div>`;
+            
             item.innerHTML = `
+                ${coverHTML}
                 <button class="compact-play-btn" onclick="togglePlay('${track.file}', this, '${track.id}')">
                     <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
                 </button>
-                <div class="compact-info"><h4>${track.title}</h4><p>${track.desc || 'Без описания'}</p></div>
+                <div class="compact-info">
+                    <h4>${track.title}</h4>
+                    <p>${track.desc || 'Без описания'}</p>
+                </div>
                 <div style="display:flex;align-items:center;gap:4px;">
-                    <div class="compact-duration">${track.duration}</div><div class="compact-time" id="time-${track.id}">0:00</div>
+                    <div class="compact-duration">${track.duration}</div>
+                    <div class="compact-time" id="time-${track.id}">0:00</div>
                     <a href="${track.file}" download="${downloadName}" class="download-btn" title="Скачать трек">${downloadIcon}</a>
                 </div>
-                <div class="compact-progress-bg" onclick="seekTrack(event, '${track.id}')"><div class="compact-progress-fill" id="prog-${track.id}"></div></div>`;
+                <div class="compact-progress-bg" onclick="seekTrack(event, '${track.id}')">
+                    <div class="compact-progress-fill" id="prog-${track.id}"></div>
+                </div>`;
             return item;
         }
+        
+        // === 🎵 РЕНДЕР: Новые релизы - полные карточки с неоновой рамкой ===
+        // === 📦 РЕНДЕР: Все треки - компактный список, 1 видно, остальные за кнопкой ===
         function renderTracks() {
             const newContainer = document.getElementById('releasesList');
-            const archivePreview = document.getElementById('archivePreview');
-            const fullArchiveList = document.getElementById('fullArchiveList');
+            const archiveList = document.getElementById('archiveList');
+            const hiddenTracks = document.getElementById('hiddenTracks');
             const showAllBtn = document.getElementById('showAllBtn');
+            
             const archiveTracks = tracks.filter(t => !t.isNew);
-            tracks.filter(t => t.isNew).forEach(track => newContainer.appendChild(createFullCard(track)));
+            
+            // 🎵 Новые релизы - полные карточки с неоновой рамкой
+            tracks.filter(t => t.isNew).forEach(track => {
+                newContainer.appendChild(createFullCard(track));
+            });
+            
+            // 📦 Все треки - компактный список с мини-обложками
             if (archiveTracks.length > 0) {
-                archivePreview.appendChild(createFullCard(archiveTracks[0]));
-                archiveTracks.slice(1).forEach(track => fullArchiveList.appendChild(createCompactItem(track)));
-                if (archiveTracks.length <= 1) showAllBtn.style.display = 'none';
+                // Первый трек - видим сразу
+                archiveList.appendChild(createCompactItem(archiveTracks[0]));
+                
+                // Остальные - скрыты, показываются по кнопке
+                archiveTracks.slice(1).forEach(track => {
+                    hiddenTracks.appendChild(createCompactItem(track));
+                });
+                
+                // Скрываем кнопку, если треков <= 1
+                if (archiveTracks.length <= 1) {
+                    showAllBtn.style.display = 'none';
+                }
             } else {
-                archivePreview.innerHTML = '<p style="color:var(--text-secondary); text-align:center; padding: 30px;">В архиве пока пусто. Скоро будет 🔥</p>';
+                archiveList.innerHTML = '<p style="color:var(--text-secondary); text-align:center; padding: 30px;">В архиве пока пусто. Скоро будет 🔥</p>';
                 showAllBtn.style.display = 'none';
             }
         }
+        
         function toggleArchive() {
             archiveExpanded = !archiveExpanded;
-            const list = document.getElementById('fullArchiveList'), btn = document.getElementById('showAllBtn');
+            const list = document.getElementById('hiddenTracks'), btn = document.getElementById('showAllBtn');
             if (archiveExpanded) {
                 list.classList.add('visible');
                 btn.innerHTML = 'Свернуть <span id="arrowIcon" style="transition: transform 0.3s; display: inline-block; transform: rotate(180deg);">▼</span>';
@@ -739,6 +958,7 @@
                 btn.style.borderColor = 'rgba(255,255,255,0.18)'; btn.style.color = 'var(--text-secondary)'; btn.style.background = 'rgba(255,255,255,0.04)';
             }
         }
+        
         function seekTrack(event, trackId) {
             if (!currentAudio || currentAudio.dataset.trackId !== trackId) return;
             const bar = event.currentTarget, rect = bar.getBoundingClientRect();
@@ -769,7 +989,7 @@
             const el = document.getElementById(`time-${trackId}`); if (el) el.textContent = '0:00'; 
         }
 
-        // === MEDIA SESSION API ===
+        // === MEDIA SESSION ===
         function setupMediaSession(track) {
             if ('mediaSession' in navigator) {
                 let artworkSrc = './icon.png'; 
