@@ -393,8 +393,8 @@
         <div class="profile-card">
             <div class="avatar-wrapper">
                 <div class="avatar-ring"></div>
-                <!-- Замените src на свою аватарку -->
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?backgroundColor=b6e3f4" alt="Avatar" class="avatar-img">
+                <!-- Аватарка парня -->
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4&top=shortHair&clothing=blazerAndShirt" alt="Avatar" class="avatar-img">
             </div>
 
             <div class="info-wrapper">
@@ -415,19 +415,38 @@
                 </div>
 
                 <div class="action-btns">
-                    <button class="cyber-btn primary" id="enterBtn">
-                        <i class="fas fa-sign-in-alt"></i> Войти
+                    <button class="cyber-btn outline" onclick="window.open('https://www.instagram.com/zhenyaa0?igsh=ZHV4ZHE1MGQwd3N5&utm_source=qr', '_blank')">
+                        <i class="fab fa-instagram"></i> Instagram
                     </button>
                     <button class="cyber-btn secondary" onclick="window.open('https://t.me/+zo3YoDDckwoyOGYy', '_blank')">
                         <i class="fab fa-telegram-plane"></i> Telegram
                     </button>
-                    <button class="cyber-btn outline" onclick="window.open('https://www.instagram.com/zhenyaa0?igsh=ZHV4ZHE1MGQwd3N5&utm_source=qr', '_blank')">
-                        <i class="fab fa-instagram"></i> Instagram
-                    </button>
                     <button class="cyber-btn outline" id="welcomeChatBtn">
                         <i class="fas fa-comments"></i> Чат
                     </button>
+                    <button class="cyber-btn primary" id="enterBtn">
+                        <i class="fas fa-sign-in-alt"></i> Войти
+                    </button>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Чат на экране приветствия -->
+        <div class="chat-window" id="welcomeChatWindow" style="bottom: 200px; right: 24px; z-index: 9999;">
+            <div class="chat-header">
+                <div class="chat-title">ЧАТ • ONLINE</div>
+                <button class="chat-close" id="welcomeChatClose">×</button>
+            </div>
+            <div class="chat-status" id="welcomeChatStatus">🔄 Подключение...</div>
+            <div class="chat-messages" id="welcomeChatMessages">
+                <div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>
+            </div>
+            <button class="chat-clear" id="welcomeChatClear">🗑️ Очистить чат</button>
+            <div class="chat-input">
+                <input type="text" id="welcomeChatInput" placeholder="Введите сообщение..." maxlength="500">
+                <button class="chat-send" id="welcomeChatSend">
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
             </div>
         </div>
     </div>
@@ -576,13 +595,38 @@
         
         enterBtn.addEventListener('click', enterSite);
         
-        // Кнопка чата на экране приветствия
+        // Кнопка чата на экране приветствия - открывает чат там же
+        const welcomeChatWindow = document.getElementById('welcomeChatWindow');
+        const welcomeChatClose = document.getElementById('welcomeChatClose');
+        const welcomeChatInput = document.getElementById('welcomeChatInput');
+        const welcomeChatSend = document.getElementById('welcomeChatSend');
+        const welcomeChatMessages = document.getElementById('welcomeChatMessages');
+        const welcomeChatClear = document.getElementById('welcomeChatClear');
+        const welcomeChatStatus = document.getElementById('welcomeChatStatus');
+        
         welcomeChatBtn.addEventListener('click', () => {
-            enterSite();
-            setTimeout(() => {
-                toggleChat();
-            }, 600);
+            welcomeChatWindow.classList.add('visible');
+            setTimeout(() => welcomeChatInput.focus(), 100);
         });
+        
+        welcomeChatClose.addEventListener('click', () => {
+            welcomeChatWindow.classList.remove('visible');
+        });
+        
+        // Функция отправки сообщения в чате на welcome экране
+        function sendWelcomeMessage(text) {
+            if (!text.trim()) return;
+            const div = document.createElement('div');
+            div.className = 'message outgoing';
+            div.innerHTML = `${text.replace(/[<>]/g, '')}<div class="message-time">${new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'})}</div><div class="message-avatar">Я</div>`;
+            welcomeChatMessages.appendChild(div);
+            welcomeChatMessages.scrollTop = welcomeChatMessages.scrollHeight;
+            welcomeChatInput.value = '';
+        }
+        
+        welcomeChatSend.addEventListener('click', () => sendWelcomeMessage(welcomeChatInput.value));
+        welcomeChatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendWelcomeMessage(welcomeChatInput.value); });
+        welcomeChatClear.addEventListener('click', () => { welcomeChatMessages.innerHTML = '<div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>'; });
         
         // Быстрый вход по клавишам Enter / Escape
         document.addEventListener('keydown', (e) => {
