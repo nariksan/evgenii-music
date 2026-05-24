@@ -268,7 +268,6 @@
             overflow: hidden;
             position: relative;
             backdrop-filter: blur(10px);
-            /* Неоновая рамка через box-shadow + outline */
             border: 2px solid transparent;
             background-clip: padding-box;
             box-shadow: 
@@ -277,7 +276,6 @@
                 inset 0 0 30px rgba(181, 55, 242, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        /* Анимированная неоновая обводка */
         .track-card::before {
             content: ''; position: absolute; inset: -2px; border-radius: 22px;
             padding: 2px;
@@ -334,6 +332,7 @@
             position: relative; z-index: 2;
         }
         
+        /* === КНОПКА PLAY (ОБЩАЯ) === */
         .play-btn {
             width: 50px; height: 50px; border-radius: 50%;
             background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
@@ -418,17 +417,30 @@
         }
         .compact-item {
             background: linear-gradient(145deg, rgba(20,20,30,0.7), rgba(15,15,25,0.9));
-            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 16px; padding: 14px 18px;
             display: flex; align-items: center; gap: 14px;
             transition: all 0.3s ease; position: relative;
             backdrop-filter: blur(12px);
+            
+            /* Неоновая рамка для списка */
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.05);
+        }
+        .compact-item::before {
+            content: ''; position: absolute; inset: -1px; border-radius: 17px;
+            padding: 1px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-purple), transparent);
+            background-size: 200% 200%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            opacity: 0.5; pointer-events: none; transition: opacity 0.3s;
         }
         .compact-item:hover {
             border-color: var(--neon-cyan);
             transform: translateX(6px);
             box-shadow: 0 8px 30px rgba(0, 212, 255, 0.15), inset 0 1px 0 rgba(255,255,255,0.1);
         }
+        .compact-item:hover::before { opacity: 1; }
         
         /* 🖼️ Мини-обложка 48×48 */
         .compact-cover {
@@ -449,20 +461,6 @@
             background: linear-gradient(180deg, transparent 70%, rgba(0,0,0,0.5));
             pointer-events: none;
         }
-        
-        .compact-play-btn {
-            width: 40px; height: 40px; border-radius: 50%;
-            background: rgba(255,255,255,0.12); color: var(--text-primary);
-            border: none; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; flex-shrink: 0; transition: 0.25s;
-        }
-        .compact-play-btn:hover { background: var(--neon-blue); color: white; transform: scale(1.1); }
-        .compact-play-btn.active {
-            background: var(--neon-pink); color: white;
-            box-shadow: var(--glow-pink); animation: pulse 1.5s infinite;
-        }
-        .compact-play-btn svg { width: 16px; fill: currentColor; margin-left: 1px; }
-        .compact-play-btn.active svg { margin-left: 0; }
         
         .compact-info { flex: 1; min-width: 0; }
         .compact-info h4 { font-size: 1rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
@@ -497,8 +495,9 @@
         .compact-item .download-btn { width: 32px; height: 32px; margin-left: 4px; }
         .compact-item .download-btn svg { width: 14px; height: 14px; }
         
+        /* === КНОПКА ПОКАЗАТЬ ВСЕ (ВНУТРИ СПИСКА) === */
         .show-all-btn {
-            width: 100%; padding: 18px 24px; margin-top: 28px;
+            width: 100%; padding: 18px 24px; margin-top: 12px;
             background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.18);
             border-radius: 14px; color: var(--text-secondary);
             font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 600;
@@ -511,14 +510,22 @@
             box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2);
         }
         
+        /* Скрытые треки */
         .hidden-tracks {
             display: grid; grid-template-columns: 1fr; gap: 12px;
-            opacity: 0; transform: translateY(10px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 12px;
+            opacity: 0; 
+            max-height: 0;
+            overflow: hidden;
+            transform: translateY(-10px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none;
         }
         .hidden-tracks.visible {
-            opacity: 1; transform: translateY(0); pointer-events: all;
+            opacity: 1; 
+            max-height: 1000px; /* Достаточно большое значение */
+            transform: translateY(0); 
+            pointer-events: all;
         }
 
         /* Social */
@@ -704,18 +711,23 @@
             </div>
         </section>
 
-        <!-- 📦 ВСЕ ТРЕКИ - только компактный список, 1 видно, остальные за кнопкой -->
+        <!-- 📦 ВСЕ ТРЕКИ - список с неоновыми рамками -->
         <section id="archive">
             <div class="container">
                 <div class="section-header">
                     <div class="section-tag">// ARCHIVE</div>
                     <div class="section-title">Все треки</div>
                 </div>
-                <!-- Только список, без большой карточки -->
+                
+                <!-- Основной список (видны первые 4) -->
                 <div id="archiveList" class="compact-list"></div>
-                <button id="showAllBtn" class="show-all-btn" onclick="toggleArchive()">
+                
+                <!-- Кнопка "Показать все" (вставляется JS-ом после 4-го трека) -->
+                <button id="showAllBtn" class="show-all-btn" onclick="toggleArchive()" style="display:none;">
                     Показать все треки <span style="transition: transform 0.3s;" id="arrowIcon">▼</span>
                 </button>
+
+                <!-- Скрытый список (остальные треки) -->
                 <div id="hiddenTracks" class="hidden-tracks"></div>
             </div>
         </section>
@@ -772,13 +784,24 @@
         const enterBtn = document.getElementById('enterBtn');
         const trackCountEl = document.getElementById('trackCount');
         
+        // === СПИСОК ТРЕКОВ ===
         const tracks = [
+            // 🎵 Новые релизы
             { id: 1, title: "пуст", desc: "", file: "tracks/song6.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true },
             { id: 2, title: "Нейронный Дождь", desc: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: true },
+            
+            // 📦 Архив (первые 4 будут видны сразу)
             { id: 3, title: "А мне похуй", desc: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "cover/cover1.jpg", isNew: false },
             { id: 4, title: "Сгоревший экран", desc: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover0.jpg", isNew: false },
             { id: 5, title: "Тишина", desc: "", file: "tracks/song4.mp3", duration: "04:48", cover: "covers/cover0.jpg", isNew: false },
-            { id: 6, title: "Воздух Густеет", desc: "", file: "tracks/song1.mp3", duration: "03:23", cover: "covers/cover0.jpg", isNew: false }
+            { id: 6, title: "Воздух Густеет", desc: "", file: "tracks/song1.mp3", duration: "03:23", cover: "covers/cover0.jpg", isNew: false },
+            
+            // 🔒 Заглушки (скрыты за кнопкой)
+            { id: 7, title: "Placeholder I", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false },
+            { id: 8, title: "Placeholder II", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false },
+            { id: 9, title: "Placeholder III", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false },
+            { id: 10, title: "Placeholder IV", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false },
+            { id: 11, title: "Placeholder V", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false }
         ];
         
         function updateTrackCount() { trackCountEl.textContent = tracks.length; }
@@ -878,7 +901,7 @@
             return card;
         }
         
-        // 📋 Компактный элемент для списка "Все треки" (с мини-обложкой)
+        // 📋 Компактный элемент для списка "Все треки" (с неоновой рамкой и мини-обложкой)
         function createCompactItem(track) {
             const item = document.createElement('div'); 
             item.className = 'compact-item'; 
@@ -892,7 +915,7 @@
             
             item.innerHTML = `
                 ${coverHTML}
-                <button class="compact-play-btn" onclick="togglePlay('${track.file}', this, '${track.id}')">
+                <button class="play-btn compact-play-btn" onclick="togglePlay('${track.file}', this, '${track.id}')">
                     <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
                 </button>
                 <div class="compact-info">
@@ -910,8 +933,8 @@
             return item;
         }
         
-        // === 🎵 РЕНДЕР: Новые релизы - полные карточки с неоновой рамкой ===
-        // === 📦 РЕНДЕР: Все треки - компактный список, 1 видно, остальные за кнопкой ===
+        // === 🎵 РЕНДЕР: Новые релизы - полные карточки ===
+        // === 📦 РЕНДЕР: Все треки - список, 4 видно, остальные за кнопкой ===
         function renderTracks() {
             const newContainer = document.getElementById('releasesList');
             const archiveList = document.getElementById('archiveList');
@@ -920,23 +943,27 @@
             
             const archiveTracks = tracks.filter(t => !t.isNew);
             
-            // 🎵 Новые релизы - полные карточки с неоновой рамкой
+            // 🎵 Новые релизы
             tracks.filter(t => t.isNew).forEach(track => {
                 newContainer.appendChild(createFullCard(track));
             });
             
-            // 📦 Все треки - компактный список с мини-обложками
+            // 📦 Все треки
             if (archiveTracks.length > 0) {
-                // Первый трек - видим сразу
-                archiveList.appendChild(createCompactItem(archiveTracks[0]));
+                // Первые 4 трека видны сразу
+                archiveTracks.slice(0, 4).forEach(track => {
+                    archiveList.appendChild(createCompactItem(track));
+                });
                 
-                // Остальные - скрыты, показываются по кнопке
-                archiveTracks.slice(1).forEach(track => {
+                // Остальные (начиная с 5-го) скрыты
+                archiveTracks.slice(4).forEach(track => {
                     hiddenTracks.appendChild(createCompactItem(track));
                 });
                 
-                // Скрываем кнопку, если треков <= 1
-                if (archiveTracks.length <= 1) {
+                // Если треков > 4, показываем кнопку
+                if (archiveTracks.length > 4) {
+                    showAllBtn.style.display = 'flex';
+                } else {
                     showAllBtn.style.display = 'none';
                 }
             } else {
