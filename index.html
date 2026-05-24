@@ -175,9 +175,11 @@
         .cyber-btn:hover::before { left: 100%; }
         .cyber-btn.primary { border-color: var(--neon-blue); box-shadow: var(--glow-blue); }
         .cyber-btn.secondary { border-color: var(--neon-pink); box-shadow: var(--glow-pink); }
+        .cyber-btn.outline { border-color: var(--neon-purple); color: var(--neon-purple); }
         .cyber-btn:hover { transform: translateY(-3px) scale(1.02); background: rgba(255, 255, 255, 0.1); z-index: 2; }
         .cyber-btn.primary:hover { box-shadow: 0 0 35px rgba(0, 212, 255, 0.7); border-color: #4de4ff; }
         .cyber-btn.secondary:hover { box-shadow: 0 0 35px rgba(255, 45, 117, 0.7); border-color: #ff5a96; }
+        .cyber-btn.outline:hover { box-shadow: 0 0 35px rgba(181, 55, 242, 0.7); border-color: #d474ff; color: white; }
 
         /* === ОСНОВНОЙ САЙТ (скрыт изначально) === */
         #mainSite { opacity: 0; transition: opacity 0.5s; pointer-events: none; }
@@ -402,16 +404,14 @@
                 </div>
 
                 <ul class="stats">
-                    <li><strong>6</strong><span>треков</span></li>
+                    <li><strong id="trackCount">0</strong><span>треков</span></li>
                     <li><strong>AI</strong><span>voice</span></li>
                     <li><strong>∞</strong><span>вайб</span></li>
                 </ul>
 
                 <div class="bio">
-                    <strong>Music Producer</strong> 🎧<br>
                     Где заканчиваюсь я — и начинается ИИ.<br>
-                    Эксперимент на стыке эмоций и кода.<br>
-                    <a href="#"><i class="fas fa-link"></i> evgenii-music.sys</a>
+                    Эксперимент на стыке эмоций и кода.
                 </div>
 
                 <div class="action-btns">
@@ -420,6 +420,12 @@
                     </button>
                     <button class="cyber-btn secondary" onclick="window.open('https://t.me/+zo3YoDDckwoyOGYy', '_blank')">
                         <i class="fab fa-telegram-plane"></i> Telegram
+                    </button>
+                    <button class="cyber-btn outline" onclick="window.open('https://www.instagram.com/zhenyaa0?igsh=ZHV4ZHE1MGQwd3N5&utm_source=qr', '_blank')">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </button>
+                    <button class="cyber-btn outline" id="welcomeChatBtn">
+                        <i class="fas fa-comments"></i> Чат
                     </button>
                 </div>
             </div>
@@ -530,6 +536,24 @@
         const welcomeScreen = document.getElementById('welcomeScreen');
         const mainSite = document.getElementById('mainSite');
         const enterBtn = document.getElementById('enterBtn');
+        const welcomeChatBtn = document.getElementById('welcomeChatBtn');
+        const trackCountEl = document.getElementById('trackCount');
+        
+        // Список треков
+        const tracks = [
+            { id: 1, title: "пуст", desc: "", file: "tracks/song6.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true },
+            { id: 2, title: "Нейронный Дождь", desc: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: true },
+            { id: 3, title: "А мне похуй", desc: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "cover/cover1.jpg", isNew: false },
+            { id: 4, title: "Сгоревший экран", desc: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover0.jpg", isNew: false },
+            { id: 5, title: "Тишина", desc: "", file: "tracks/song4.mp3", duration: "04:48", cover: "covers/cover0.jpg", isNew: false },
+            { id: 6, title: "Воздух Густеет", desc: "", file: "tracks/song1.mp3", duration: "03:23", cover: "covers/cover0.jpg", isNew: false }
+        ];
+        
+        // Обновляем счётчик треков
+        function updateTrackCount() {
+            trackCountEl.textContent = tracks.length;
+        }
+        updateTrackCount(); // Вызываем при загрузке
         
         // Блокируем прокрутку пока показан приветственный экран
         document.body.style.overflow = 'hidden';
@@ -551,6 +575,14 @@
         }
         
         enterBtn.addEventListener('click', enterSite);
+        
+        // Кнопка чата на экране приветствия
+        welcomeChatBtn.addEventListener('click', () => {
+            enterSite();
+            setTimeout(() => {
+                toggleChat();
+            }, 600);
+        });
         
         // Быстрый вход по клавишам Enter / Escape
         document.addEventListener('keydown', (e) => {
@@ -601,16 +633,6 @@
                 setTimeout(() => newsWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
             }
         }
-
-        // === СПИСОК ТРЕКОВ ===
-        const tracks = [
-            { id: 1, title: "пуст", desc: "", file: "tracks/song6.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true },
-            { id: 2, title: "Нейронный Дождь", desc: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: true },
-            { id: 3, title: "А мне похуй", desc: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "cover/cover1.jpg", isNew: false },
-            { id: 4, title: "Сгоревший экран", desc: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover0.jpg", isNew: false },
-            { id: 5, title: "Тишина", desc: "", file: "tracks/song4.mp3", duration: "04:48", cover: "covers/cover0.jpg", isNew: false },
-            { id: 6, title: "Воздух Густеет", desc: "", file: "tracks/song1.mp3", duration: "03:23", cover: "covers/cover0.jpg", isNew: false }
-        ];
 
         let currentAudio = null, currentBtn = null, archiveExpanded = false;
 
