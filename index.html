@@ -105,11 +105,13 @@
             position: relative; width: 150px; height: 150px; flex-shrink: 0;
             display: flex; justify-content: center; align-items: center;
         }
+        /* Вращающееся кольцо 1 */
         .avatar-ring {
             position: absolute; width: 100%; height: 100%; border-radius: 50%;
             border: 3px solid transparent; border-top-color: var(--neon-blue); border-bottom-color: var(--neon-pink);
-            animation: spin 4s linear infinite; box-shadow: var(--glow-purple);
+            animation: spin 4s linear infinite; box-shadow: var(--glow-purple); z-index: 1;
         }
+        /* Вращающееся кольцо 2 */
         .avatar-ring::before {
             content: ''; position: absolute; inset: -4px; border-radius: 50%;
             border: 2px solid transparent; border-top-color: var(--neon-cyan); border-bottom-color: var(--neon-purple);
@@ -122,6 +124,17 @@
             background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
             object-fit: cover; border: 3px solid rgba(255,255,255,0.15);
             box-shadow: 0 0 25px rgba(181, 55, 242, 0.4);
+            z-index: 2; /* Картинка выше колец */
+        }
+        
+        /* Фолбэк для аватарки (если картинка не грузится) */
+        .avatar-fallback {
+            position: absolute; width: 138px; height: 138px; border-radius: 50%;
+            background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 48px; border: 3px solid rgba(255,255,255,0.15);
+            box-shadow: 0 0 25px rgba(181, 55, 242, 0.4);
+            z-index: 2; display: none; /* Скрыт по умолчанию */
         }
 
         /* Инфо блок */
@@ -402,13 +415,18 @@
         
         <div class="profile-card">
             <div class="avatar-wrapper">
+                <!-- Неоновые кольца всегда здесь -->
                 <div class="avatar-ring"></div>
-                <!-- Аватарка парня с fallback -->
+                
+                <!-- Картинка -->
                 <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4&top=shortHair&clothing=blazerAndShirt" 
                      alt="Avatar" 
                      class="avatar-img"
                      loading="eager"
-                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:138px;height:138px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#0f0f1a);display:flex;align-items:center;justify-content:center;font-size:48px;border:3px solid rgba(255,255,255,0.15);box-shadow:0 0 25px rgba(181,55,242,0.4);\'>🎧</div>';">
+                     onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';">
+                
+                <!-- Запасной вариант (Emoji) -->
+                <div id="avatarFallback" class="avatar-fallback">🎧</div>
             </div>
 
             <div class="info-wrapper">
