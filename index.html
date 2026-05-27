@@ -35,6 +35,7 @@
             --glow-pink: 0 0 20px rgba(255, 45, 117, 0.6), 0 0 40px rgba(255, 45, 117, 0.3);
             --glow-blue: 0 0 20px rgba(0, 212, 255, 0.6), 0 0 40px rgba(0, 212, 255, 0.3);
             --glow-purple: 0 0 20px rgba(181, 55, 242, 0.6), 0 0 40px rgba(181, 55, 242, 0.3);
+            --glow-cyan: 0 0 20px rgba(0, 245, 212, 0.6), 0 0 40px rgba(0, 245, 212, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -148,7 +149,13 @@
             padding: 16px 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08);
         }
         .stats li { display: flex; flex-direction: column; align-items: center; font-family: 'JetBrains Mono', monospace; }
-        .stats strong { color: var(--neon-purple); font-size: 1.3rem; font-weight: 700; text-shadow: var(--glow-purple); }
+        .stats strong { 
+            color: var(--neon-purple); 
+            font-size: 1.3rem; 
+            font-weight: 700; 
+            text-shadow: var(--glow-purple);
+            transition: all 0.3s ease;
+        }
         .stats span { color: var(--text-secondary); font-size: 0.8rem; margin-top: 4px; }
 
         .bio { line-height: 1.6; color: var(--text-secondary); font-size: 1rem; margin-bottom: 32px; }
@@ -159,7 +166,7 @@
         .action-btns {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto;
+            grid-template-rows: auto auto auto;
             gap: 16px;
             width: 100%;
         }
@@ -183,11 +190,211 @@
         .cyber-btn.primary { border-color: var(--neon-blue); box-shadow: var(--glow-blue); }
         .cyber-btn.secondary { border-color: var(--neon-pink); box-shadow: var(--glow-pink); }
         .cyber-btn.outline { border-color: var(--neon-purple); color: var(--neon-purple); }
+        
+        /* === КНОПКА ПОДПИСАТЬСЯ С НЕОНОВОЙ ПОДСВЕТКОЙ === */
+        .cyber-btn.subscribe-btn {
+            grid-column: 1 / -1;
+            order: -1;
+            border-color: var(--neon-cyan);
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.15), rgba(0, 212, 255, 0.1));
+            box-shadow: 
+                0 0 20px rgba(0, 245, 212, 0.4),
+                0 0 40px rgba(0, 245, 212, 0.2),
+                inset 0 0 20px rgba(0, 245, 212, 0.1);
+            animation: subscribePulse 2s ease-in-out infinite;
+            position: relative;
+        }
+
+        .cyber-btn.subscribe-btn::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-blue), var(--neon-purple), var(--neon-cyan));
+            background-size: 300% 300%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+            filter: blur(8px);
+            animation: gradientGlow 4s ease infinite;
+        }
+
+        .cyber-btn.subscribe-btn:hover::after {
+            opacity: 0.6;
+        }
+
+        .cyber-btn.subscribe-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 0 30px rgba(0, 245, 212, 0.7),
+                0 0 60px rgba(0, 245, 212, 0.4),
+                inset 0 0 30px rgba(0, 245, 212, 0.2);
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .cyber-btn.subscribe-btn.subscribed {
+            opacity: 0.6;
+            cursor: default;
+            animation: none;
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.3), rgba(0, 212, 255, 0.2));
+        }
+
+        .cyber-btn.subscribe-btn.subscribed:hover {
+            transform: none;
+            box-shadow: 
+                0 0 20px rgba(0, 245, 212, 0.4),
+                0 0 40px rgba(0, 245, 212, 0.2);
+        }
+
+        @keyframes subscribePulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 20px rgba(0, 245, 212, 0.4),
+                    0 0 40px rgba(0, 245, 212, 0.2),
+                    inset 0 0 20px rgba(0, 245, 212, 0.1);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 35px rgba(0, 245, 212, 0.6),
+                    0 0 70px rgba(0, 245, 212, 0.3),
+                    inset 0 0 30px rgba(0, 245, 212, 0.15);
+            }
+        }
+
+        @keyframes gradientGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .cyber-btn:hover { transform: translateY(-3px) scale(1.02); background: rgba(255, 255, 255, 0.1); z-index: 2; }
         .cyber-btn.primary:hover { box-shadow: 0 0 35px rgba(0, 212, 255, 0.7); border-color: #4de4ff; }
         .cyber-btn.secondary:hover { box-shadow: 0 0 35px rgba(255, 45, 117, 0.7); border-color: #ff5a96; }
         .cyber-btn.outline:hover { box-shadow: 0 0 35px rgba(181, 55, 242, 0.7); border-color: #d474ff; color: white; }
         .cyber-btn.full-width { grid-column: 1 / -1; }
+
+        /* === SUBSCRIBE MODAL === */
+        .subscribe-modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            z-index: 20000; display: none; align-items: center; justify-content: center; 
+            opacity: 0; transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+        .subscribe-modal-overlay.active { display: flex; opacity: 1; }
+
+        .subscribe-modal {
+            width: 100%; max-width: 450px; padding: 40px 30px;
+            background: linear-gradient(145deg, rgba(20,20,30,0.95), rgba(15,15,25,0.95));
+            border: 2px solid var(--neon-cyan); border-radius: 24px;
+            box-shadow: 
+                0 0 40px rgba(0, 245, 212, 0.3),
+                0 0 80px rgba(0, 245, 212, 0.1),
+                inset 0 0 40px rgba(0, 245, 212, 0.05);
+            text-align: center; position: relative; 
+            transform: scale(0.9) translateY(20px); 
+            transition: transform 0.3s ease;
+            animation: modalGlow 3s ease infinite;
+        }
+
+        @keyframes modalGlow {
+            0%, 100% { box-shadow: 0 0 40px rgba(0, 245, 212, 0.3), 0 0 80px rgba(0, 245, 212, 0.1), inset 0 0 40px rgba(0, 245, 212, 0.05); }
+            50% { box-shadow: 0 0 60px rgba(0, 245, 212, 0.5), 0 0 100px rgba(0, 245, 212, 0.2), inset 0 0 60px rgba(0, 245, 212, 0.1); }
+        }
+
+        .subscribe-modal-overlay.active .subscribe-modal { transform: scale(1) translateY(0); }
+
+        .sub-close {
+            position: absolute; top: 15px; right: 20px; font-size: 1.8rem; 
+            color: var(--text-secondary); cursor: pointer; transition: 0.3s; 
+            background: none; border: none; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+        }
+        .sub-close:hover { 
+            color: var(--neon-pink); 
+            transform: rotate(90deg) scale(1.1);
+            background: rgba(255, 45, 117, 0.1);
+        }
+
+        .sub-icon {
+            font-size: 3rem; margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: bellShake 2s ease-in-out infinite;
+        }
+
+        @keyframes bellShake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        .sub-title { 
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem; margin-bottom: 12px; color: white;
+            text-shadow: 0 0 20px rgba(0, 245, 212, 0.5);
+        }
+        .sub-desc { 
+            color: var(--text-secondary); margin-bottom: 30px; 
+            font-size: 1rem; line-height: 1.6; 
+        }
+
+        .sub-input-group { position: relative; margin-bottom: 24px; }
+        .sub-input {
+            width: 100%; padding: 16px 20px; 
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(0, 245, 212, 0.3); 
+            border-radius: 12px;
+            color: white; font-family: 'Montserrat', sans-serif; 
+            font-size: 1rem; outline: none; transition: 0.3s;
+        }
+        .sub-input:focus { 
+            border-color: var(--neon-cyan); 
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.3);
+            background: rgba(255,255,255,0.08);
+        }
+        .sub-input::placeholder { color: var(--text-secondary); opacity: 0.7; }
+
+        .sub-btn-action {
+            width: 100%; padding: 16px; border: none; border-radius: 12px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+            color: var(--dark-bg); font-weight: 800; font-family: 'JetBrains Mono', monospace; 
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; 
+            transition: 0.3s; font-size: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 245, 212, 0.4);
+        }
+        .sub-btn-action:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 30px rgba(0, 245, 212, 0.6);
+            filter: brightness(1.1);
+        }
+        .sub-btn-action:active { transform: translateY(0); }
+        .sub-btn-action:disabled { 
+            opacity: 0.6; cursor: not-allowed; 
+            background: linear-gradient(135deg, #666, #888);
+            box-shadow: none;
+        }
+
+        .sub-status { 
+            margin-top: 20px; font-size: 0.9rem; min-height: 24px; 
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .sub-status.success { 
+            color: var(--neon-cyan); 
+            text-shadow: 0 0 15px rgba(0, 245, 212, 0.6);
+            animation: successPulse 0.5s ease;
+        }
+        .sub-status.error { 
+            color: var(--neon-pink);
+            text-shadow: 0 0 15px rgba(255, 45, 117, 0.6);
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
         /* === MAIN SITE === */
         #mainSite { opacity: 0; transition: opacity 0.5s; pointer-events: none; }
@@ -557,6 +764,8 @@
             .cursor, .cursor-dot { display: none !important; }
             .compact-item { flex-wrap: wrap; }
             .compact-cover { width: 40px; height: 40px; }
+            .subscribe-modal { padding: 30px 20px; }
+            .sub-title { font-size: 1.5rem; }
         }
 
         /* Scrollbar */
@@ -630,7 +839,7 @@
                 <ul class="stats">
                     <li><strong id="trackCount">0</strong><span>треков</span></li>
                     <li><strong>AI</strong><span>voice</span></li>
-                    <li><strong>∞</strong><span>вайб</span></li>
+                    <li><strong id="subscriberCount">0</strong><span>подписчиков</span></li>
                 </ul>
 
                 <div class="bio">
@@ -639,6 +848,11 @@
                 </div>
 
                 <div class="action-btns">
+                    <!-- КНОПКА ПОДПИСАТЬСЯ -->
+                    <button class="cyber-btn subscribe-btn" id="subscribeBtn" onclick="openSubscribeModal()">
+                        <i class="fas fa-bell"></i> Подписаться
+                    </button>
+                    
                     <button class="cyber-btn outline" onclick="window.open('https://www.instagram.com/zhenyaa0?igsh=ZHV4ZHE1MGQwd3N5&utm_source=qr', '_blank')">
                         <i class="fab fa-instagram"></i> Instagram
                     </button>
@@ -650,6 +864,26 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- === SUBSCRIBE MODAL === -->
+    <div class="subscribe-modal-overlay" id="subscribeModal">
+        <div class="subscribe-modal">
+            <button class="sub-close" onclick="closeSubscribeModal()">×</button>
+            <div class="sub-icon">🔔</div>
+            <h2 class="sub-title">Подписаться на релизы</h2>
+            <p class="sub-desc">Получай уведомления о новых треках и закрытых дропах. Никакого спама, только музыка 🔥</p>
+            
+            <div class="sub-input-group">
+                <input type="email" id="subEmail" class="sub-input" placeholder="your@email.com" required>
+            </div>
+            
+            <button class="sub-btn-action" id="subActionBtn" onclick="handleSubscribe()">
+                Подписаться
+            </button>
+            
+            <div class="sub-status" id="subStatus"></div>
         </div>
     </div>
 
@@ -700,7 +934,7 @@
             </div>
         </section>
 
-        <!-- 🎵 НОВЫЕ РЕЛИЗЫ - карточки с неоновой рамкой -->
+        <!--  НОВЫЕ РЕЛИЗЫ - карточки с неоновой рамкой -->
         <section id="new">
             <div class="container">
                 <div class="section-header">
@@ -711,7 +945,7 @@
             </div>
         </section>
 
-        <!-- 📦 ВСЕ ТРЕКИ - список с неоновыми рамками -->
+        <!--  ВСЕ ТРЕКИ - список с неоновыми рамками -->
         <section id="archive">
             <div class="container">
                 <div class="section-header">
@@ -778,25 +1012,41 @@
     </div>
 
     <script>
+        // === FIREBASE INIT ===
+        const firebaseConfig = { 
+            apiKey: "AIzaSyC8fxnC_WVl7r8mGBsF2SCITvzvlwUF0f0", 
+            authDomain: "evgenii-6a5bb.firebaseapp.com", 
+            databaseURL: "https://evgenii-6a5bb-default-rtdb.firebaseio.com", 
+            projectId: "evgenii-6a5bb", 
+            storageBucket: "evgenii-6a5bb.firebasestorage.app", 
+            messagingSenderId: "623681147476", 
+            appId: "1:623681147476:web:893a12286d88af4eb313c1", 
+            measurementId: "G-H7TYB5E8PW" 
+        };
+
+        let db;
+        try {
+            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+            db = firebase.database();
+            console.log("✅ Firebase подключен");
+        } catch (e) {
+            console.error("❌ Ошибка инициализации Firebase:", e);
+        }
+
         // === WELCOME SCREEN ===
         const welcomeScreen = document.getElementById('welcomeScreen');
         const mainSite = document.getElementById('mainSite');
         const enterBtn = document.getElementById('enterBtn');
         const trackCountEl = document.getElementById('trackCount');
+        const subscriberCountEl = document.getElementById('subscriberCount');
         
-        // === СПИСОК ТРЕКОВ ===
         const tracks = [
-            // 🎵 Новые релизы
             { id: 1, title: "пуст", desc: "", file: "tracks/song6.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true },
             { id: 2, title: "Нейронный Дождь", desc: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: true },
-            
-            // 📦 Архив (первые 4 будут видны сразу)
             { id: 3, title: "А мне похуй", desc: "Когда похуй", file: "tracks/song.mp3", duration: "3:11", cover: "cover/cover1.jpg", isNew: false },
             { id: 4, title: "Сгоревший экран", desc: "", file: "tracks/song2.mp3", duration: "3:48", cover: "cover/cover0.jpg", isNew: false },
             { id: 5, title: "Тишина", desc: "", file: "tracks/song4.mp3", duration: "04:48", cover: "covers/cover0.jpg", isNew: false },
             { id: 6, title: "Воздух Густеет", desc: "", file: "tracks/song1.mp3", duration: "03:23", cover: "covers/cover0.jpg", isNew: false },
-            
-            // 🔒 Заглушки (скрыты за кнопкой)
             { id: 7, title: "Placeholder I", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false },
             { id: 8, title: "Placeholder II", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false },
             { id: 9, title: "Placeholder III", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false },
@@ -825,9 +1075,13 @@
             }
         });
         
-        function initSite() { createParticles(); renderTracks(); window.dispatchEvent(new Event('scroll')); }
+        function initSite() { 
+            createParticles(); 
+            renderTracks(); 
+            window.dispatchEvent(new Event('scroll')); 
+        }
 
-        // === CURSOR ===
+        // === CURSOR & PARTICLES ===
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
         const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
@@ -873,13 +1127,14 @@
                 container.appendChild(p);
             }
         }
+
+        // === TRACKS RENDERING ===
         function getCoverHTML(track) {
             if (track.cover) return `<div class="track-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>`;
             return `<div class="track-cover">${track.emoji || '🎵'}</div>`;
         }
         const downloadIcon = `<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>`;
         
-        // 🎨 Полная карточка для новых релизов (с неоновой рамкой)
         function createFullCard(track) {
             const card = document.createElement('div'); card.className = 'track-card';
             const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
@@ -901,14 +1156,11 @@
             return card;
         }
         
-        // 📋 Компактный элемент для списка "Все треки" (с неоновой рамкой и мини-обложкой)
         function createCompactItem(track) {
             const item = document.createElement('div'); 
             item.className = 'compact-item'; 
             item.style.setProperty('--i', track.id);
             const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
-            
-            // Мини-обложка 48×48 с фолбэком
             const coverHTML = track.cover 
                 ? `<div class="compact-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>`
                 : `<div class="compact-cover">🎵</div>`;
@@ -933,8 +1185,6 @@
             return item;
         }
         
-        // === 🎵 РЕНДЕР: Новые релизы - полные карточки ===
-        // === 📦 РЕНДЕР: Все треки - список, 4 видно, остальные за кнопкой ===
         function renderTracks() {
             const newContainer = document.getElementById('releasesList');
             const archiveList = document.getElementById('archiveList');
@@ -942,32 +1192,14 @@
             const showAllBtn = document.getElementById('showAllBtn');
             
             const archiveTracks = tracks.filter(t => !t.isNew);
+            tracks.filter(t => t.isNew).forEach(track => newContainer.appendChild(createFullCard(track)));
             
-            // 🎵 Новые релизы
-            tracks.filter(t => t.isNew).forEach(track => {
-                newContainer.appendChild(createFullCard(track));
-            });
-            
-            // 📦 Все треки
             if (archiveTracks.length > 0) {
-                // Первые 4 трека видны сразу
-                archiveTracks.slice(0, 4).forEach(track => {
-                    archiveList.appendChild(createCompactItem(track));
-                });
-                
-                // Остальные (начиная с 5-го) скрыты
-                archiveTracks.slice(4).forEach(track => {
-                    hiddenTracks.appendChild(createCompactItem(track));
-                });
-                
-                // Если треков > 4, показываем кнопку
-                if (archiveTracks.length > 4) {
-                    showAllBtn.style.display = 'flex';
-                } else {
-                    showAllBtn.style.display = 'none';
-                }
+                archiveTracks.slice(0, 4).forEach(track => archiveList.appendChild(createCompactItem(track)));
+                archiveTracks.slice(4).forEach(track => hiddenTracks.appendChild(createCompactItem(track)));
+                if (archiveTracks.length > 4) showAllBtn.style.display = 'flex'; else showAllBtn.style.display = 'none';
             } else {
-                archiveList.innerHTML = '<p style="color:var(--text-secondary); text-align:center; padding: 30px;">В архиве пока пусто. Скоро будет 🔥</p>';
+                archiveList.innerHTML = '<p style="color:var(--text-secondary); text-align:center; padding: 30px;">В архиве пока пусто. Скоро будет </p>';
                 showAllBtn.style.display = 'none';
             }
         }
@@ -986,6 +1218,7 @@
             }
         }
         
+        // === AUDIO PLAYER ===
         function seekTrack(event, trackId) {
             if (!currentAudio || currentAudio.dataset.trackId !== trackId) return;
             const bar = event.currentTarget, rect = bar.getBoundingClientRect();
@@ -1016,7 +1249,6 @@
             const el = document.getElementById(`time-${trackId}`); if (el) el.textContent = '0:00'; 
         }
 
-        // === MEDIA SESSION ===
         function setupMediaSession(track) {
             if ('mediaSession' in navigator) {
                 let artworkSrc = './icon.png'; 
@@ -1070,14 +1302,22 @@
         }
         function scrollToId(id) { const el = document.getElementById(id); if (!el) return; const navH = document.querySelector('nav').offsetHeight; window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - navH - 20, behavior: 'smooth' }); }
         if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-        document.addEventListener('visibilitychange', () => { if (document.hidden) console.log('Tab hidden — audio continues via Media Session'); });
 
-        // === FIREBASE CHAT ===
-        const firebaseConfig = { apiKey: "AIzaSyC8fxnC_WVl7r8mGBsF2SCITvzvlwUF0f0", authDomain: "evgenii-6a5bb.firebaseapp.com", databaseURL: "https://evgenii-6a5bb-default-rtdb.firebaseio.com", projectId: "evgenii-6a5bb", storageBucket: "evgenii-6a5bb.firebasestorage.app", messagingSenderId: "623681147476", appId: "1:623681147476:web:893a12286d88af4eb313c1", measurementId: "G-H7TYB5E8PW" };
-        firebase.initializeApp(firebaseConfig); const db = firebase.database(); const CHAT_REF = db.ref('evgenii_chat');
-        const currentUserId = localStorage.getItem('evgenii_user_id') || 'user_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('evgenii_user_id', currentUserId);
+        // === CHAT SYSTEM ===
+        const CHAT_REF = db ? db.ref('evgenii_chat') : null;
+        const currentUserId = localStorage.getItem('evgenii_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('evgenii_user_id', currentUserId);
         let currentUserName = localStorage.getItem('evgenii_user_name');
-        const chatToggle = document.getElementById('chatToggle'), chatWindow = document.getElementById('chatWindow'), chatClose = document.getElementById('chatClose'), chatInput = document.getElementById('chatInput'), chatSend = document.getElementById('chatSend'), chatMessages = document.getElementById('chatMessages'), chatClear = document.getElementById('chatClear'), chatStatus = document.getElementById('chatStatus');
+        
+        const chatToggle = document.getElementById('chatToggle'), 
+              chatWindow = document.getElementById('chatWindow'), 
+              chatClose = document.getElementById('chatClose'), 
+              chatInput = document.getElementById('chatInput'), 
+              chatSend = document.getElementById('chatSend'), 
+              chatMessages = document.getElementById('chatMessages'), 
+              chatClear = document.getElementById('chatClear'), 
+              chatStatus = document.getElementById('chatStatus');
+
         function formatTime(date) { return new Date(date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); }
         function renderMessages(messages) {
             if (!messages || Object.keys(messages).length === 0) { chatMessages.innerHTML = '<div class="empty-chat">Сообщений пока нет.<br>Напиши первое!</div>'; return; }
@@ -1090,16 +1330,140 @@
             });
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
-        function addMessage(text) { if (!text.trim()) return; CHAT_REF.push({ text: text.trim(), userId: currentUserId, userName: currentUserName || 'Гость', timestamp: Date.now() }); chatInput.value = ''; }
-        function clearChat() { const password = prompt('🔐 Введите пароль администратора:'); if (password === '0770') { if (confirm('⚠️ Очистить чат для ВСЕХ пользователей?')) CHAT_REF.remove(); } else if (password !== null) alert('❌ Неверный пароль!'); }
+        function addMessage(text) { if (!text.trim() || !CHAT_REF) return; CHAT_REF.push({ text: text.trim(), userId: currentUserId, userName: currentUserName || 'Гость', timestamp: Date.now() }); chatInput.value = ''; }
+        function clearChat() { const password = prompt(' Пароль администратора:'); if (password === '0770' && CHAT_REF) { if (confirm('️ Очистить чат?')) CHAT_REF.remove(); } else if (password !== null) alert('❌ Неверный пароль!'); }
         function toggleChat() {
-            if (!currentUserName) { const name = prompt('👋 Привет! Введите ваше имя для чата:', 'Гость'); if (name === null) return; currentUserName = name.trim() || 'Гость'; localStorage.setItem('evgenii_user_name', currentUserName); }
+            if (!currentUserName) { const name = prompt('👋 Ваше имя для чата:', 'Гость'); if (name === null) return; currentUserName = name.trim() || 'Гость'; localStorage.setItem('evgenii_user_name', currentUserName); }
             const isVisible = chatWindow.classList.toggle('visible'); chatToggle.classList.toggle('active', isVisible); chatToggle.textContent = isVisible ? '✕' : '💬'; if (isVisible) setTimeout(() => chatInput.focus(), 100);
         }
-        CHAT_REF.on('value', (snapshot) => { renderMessages(snapshot.val()); chatStatus.textContent = '✅ Онлайн'; chatStatus.style.color = 'var(--neon-cyan)'; }, (error) => { chatStatus.textContent = '❌ Ошибка подключения'; chatStatus.style.color = 'var(--neon-pink)'; console.error('Firebase error:', error); });
-        chatToggle.addEventListener('click', toggleChat); chatClose.addEventListener('click', () => { chatWindow.classList.remove('visible'); chatToggle.classList.remove('active'); chatToggle.textContent = '💬'; });
-        chatSend.addEventListener('click', () => addMessage(chatInput.value)); chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addMessage(chatInput.value); }); chatClear.addEventListener('click', clearChat);
+        if(CHAT_REF) {
+            CHAT_REF.on('value', (snapshot) => { renderMessages(snapshot.val()); chatStatus.textContent = '✅ Онлайн'; chatStatus.style.color = 'var(--neon-cyan)'; }, 
+            (error) => { chatStatus.textContent = ' Ошибка'; chatStatus.style.color = 'var(--neon-pink)'; console.error('Chat DB Error:', error); });
+        }
+        chatToggle.addEventListener('click', toggleChat); 
+        chatClose.addEventListener('click', () => { chatWindow.classList.remove('visible'); chatToggle.classList.remove('active'); chatToggle.textContent = '💬'; });
+        chatSend.addEventListener('click', () => addMessage(chatInput.value)); 
+        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addMessage(chatInput.value); }); 
+        chatClear.addEventListener('click', clearChat);
         document.addEventListener('click', (e) => { if (chatWindow.classList.contains('visible') && !chatWindow.contains(e.target) && !chatToggle.contains(e.target)) { chatWindow.classList.remove('visible'); chatToggle.classList.remove('active'); chatToggle.textContent = '💬'; } });
+
+        // === SUBSCRIBE SYSTEM (ИСПРАВЛЕННАЯ И НАДЁЖНАЯ) ===
+        const subscribeModal = document.getElementById('subscribeModal');
+        const subEmailInput = document.getElementById('subEmail');
+        const subStatus = document.getElementById('subStatus');
+        const subActionBtn = document.getElementById('subActionBtn');
+        const subscribeBtn = document.getElementById('subscribeBtn');
+
+        // 1. Счётчик подписчиков (обновляется в реальном времени)
+        function updateSubscriberCount() {
+            if (!db) { subscriberCountEl.textContent = "—"; return; }
+            const subRef = db.ref('subscribers');
+            subRef.on('value', (snapshot) => {
+                const count = snapshot.exists() ? snapshot.numChildren() : 0;
+                subscriberCountEl.textContent = count;
+                // Анимация обновления
+                subscriberCountEl.style.transform = 'scale(1.4)';
+                subscriberCountEl.style.color = 'var(--neon-cyan)';
+                setTimeout(() => {
+                    subscriberCountEl.style.transform = 'scale(1)';
+                    subscriberCountEl.style.color = 'var(--neon-purple)';
+                }, 300);
+            }, (error) => {
+                console.error("Ошибка чтения подписчиков:", error);
+                subscriberCountEl.textContent = "—";
+            });
+        }
+        // Запускаем сразу
+        updateSubscriberCount();
+
+        // 2. Проверка статуса при загрузке
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('evgenii_subscribed')) {
+                markAsSubscribed();
+            }
+        });
+
+        // 3. Управление модальным окном
+        function openSubscribeModal() {
+            if (localStorage.getItem('evgenii_subscribed')) {
+                alert(' Вы уже подписаны! Чтобы протестировать заново, очистите localStorage в консоли: localStorage.removeItem("evgenii_subscribed"); location.reload();');
+                return;
+            }
+            subscribeModal.classList.add('active');
+            setTimeout(() => subEmailInput.focus(), 100);
+        }
+
+        function closeSubscribeModal() {
+            subscribeModal.classList.remove('active');
+            subStatus.textContent = '';
+            subEmailInput.value = '';
+        }
+
+        subscribeModal.addEventListener('click', (e) => {
+            if (e.target === subscribeModal) closeSubscribeModal();
+        });
+
+        function markAsSubscribed() {
+            subscribeBtn.classList.add('subscribed');
+            subscribeBtn.innerHTML = '<i class="fas fa-check"></i> Вы подписаны';
+            subscribeBtn.onclick = null;
+        }
+
+        // 4. Отправка в Firebase
+        async function handleSubscribe() {
+            if (!db) {
+                showSubStatus('❌ База данных не загружена. Проверьте интернет.', 'error');
+                return;
+            }
+
+            const email = subEmailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!email || !emailRegex.test(email)) {
+                showSubStatus('❌ Введите корректный email (пример: name@mail.ru)', 'error');
+                return;
+            }
+
+            subActionBtn.disabled = true;
+            subActionBtn.textContent = 'Сохранение...';
+            showSubStatus('', '');
+
+            try {
+                await db.ref('subscribers').push({
+                    email: email,
+                    timestamp: Date.now(),
+                    date: new Date().toISOString(),
+                    source: 'welcome_screen'
+                });
+
+                localStorage.setItem('evgenii_subscribed', email);
+                showSubStatus('✅ Готово! Вы в списке подписчиков 🎉', 'success');
+                subActionBtn.textContent = 'Успешно!';
+                
+                setTimeout(() => {
+                    closeSubscribeModal();
+                    markAsSubscribed();
+                }, 1500);
+
+            } catch (error) {
+                console.error("🔥 Firebase Error:", error);
+                let errMsg = '️ Ошибка сохранения';
+                if (error.code === 'PERMISSION_DENIED') errMsg = ' Доступ запрещён. Проверьте Rules в Firebase Console!';
+                showSubStatus(errMsg, 'error');
+                subActionBtn.disabled = false;
+                subActionBtn.textContent = 'Подписаться';
+            }
+        }
+
+        function showSubStatus(message, type) {
+            subStatus.textContent = message;
+            subStatus.className = 'sub-status ' + type;
+        }
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && subscribeModal.classList.contains('active')) closeSubscribeModal();
+        });
     </script>
 </body>
 </html>
