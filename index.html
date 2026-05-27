@@ -478,7 +478,6 @@
             color: var(--text-primary); font-size: 1rem; line-height: 1.6; margin-bottom: 16px;
         }
 
-        /* Стиль как текст, без тегов */
         .release-style-text {
             color: var(--text-secondary); 
             font-size: 0.95rem; 
@@ -1092,7 +1091,7 @@
         </div>
     </div>
 
-       <!-- === MODAL: СОЗДАНИЕ РЕЛИЗА === -->
+    <!-- === MODAL: СОЗДАНИЕ РЕЛИЗА (ПРОСТОЙ ТЕКСТ) === -->
     <div class="release-modal-overlay" id="releaseModal">
         <div class="release-modal">
             <button class="release-close" onclick="closeReleaseModal()">×</button>
@@ -1101,17 +1100,15 @@
             
             <div class="release-content">
                 <h4>Краткое содержание</h4>
-                <!-- МЕНЯЙТЕ ТЕКСТ НИЖЕ -->
-                <p class="release-desc" id="releaseDescription">
-                    ......... 
-                    ......... 
-                    ........"
+                <!-- ✏️ МЕНЯЙТЕ ТЕКСТ ОПИСАНИЯ ЗДЕСЬ -->
+                <p class="release-desc">
+                    Здесь ваш текст. Просто замените эти слова на своё описание нового трека.
                 </p>
                 
                 <h4>Стиль</h4>
-                <!-- МЕНЯЙТЕ СТИЛЬ НИЖЕ -->
-                <p class="release-style-text" id="releaseStyle">
-                   ..... • ..... • .....
+                <!-- ✏️ МЕНЯЙТЕ СТИЛЬ ЗДЕСЬ -->
+                <p class="release-style-text">
+                    Dark Synth • AI Voice • Melancholy • Cyberpunk
                 </p>
             </div>
             
@@ -1714,31 +1711,24 @@
             if (e.key === 'Escape' && subscribeModal.classList.contains('active')) closeSubscribeModal();
         });
 
-        // === MODAL: СОЗДАНИЕ РЕЛИЗА ===
+        // === MODAL: СОЗДАНИЕ РЕЛИЗА (ПРОСТАЯ ЛОГИКА) ===
         const releaseModal = document.getElementById('releaseModal');
 
         function openReleaseModal() {
-            const newTrack = tracks.find(t => t.isNew && t.title === "Поезд на юг");
-            if (newTrack) {
-                document.getElementById('releaseDescription').textContent = 
-                    newTrack.desc || "Экспериментальный трек на стыке эмоций и алгоритмов. " +
-                    "Голос ИИ передаёт атмосферу цифрового одиночества в мегаполисе.";
-                document.getElementById('releaseStyle').textContent = "Dark Synth • AI Voice • Melancholy • Cyberpunk";
-            }
+            // Просто открываем модальное окно. Текст не меняется скриптом.
             releaseModal.classList.add('active');
-            setTimeout(() => {
-                document.querySelector('.release-modal').style.animation = 'none';
-            }, 300);
         }
 
         function closeReleaseModal() {
             releaseModal.classList.remove('active');
         }
 
+        // Закрытие по клику вне окна
         releaseModal?.addEventListener('click', (e) => {
             if (e.target === releaseModal) closeReleaseModal();
         });
 
+        // Закрытие по Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && releaseModal?.classList.contains('active')) {
                 closeReleaseModal();
