@@ -658,48 +658,80 @@
         document.addEventListener('keydown', (e) => { if (!welcomeScreen.classList.contains('hidden') && (e.key === 'Enter' || e.key === 'Escape')) { e.preventDefault(); enterSite(); } });
         
         // === REACTIONS (LIKES/DISLIKES) WITH FIREBASE ===
+        const reactionRefs = {};
+
         function initReactions() {
-            if (!db) return;
+            if (!db) {
+                console.warn('Firebase DB not available');
+                return;
+            }
+
             tracks.forEach(track => {
                 const ref = db.ref(`reactions/${track.id}`);
+                reactionRefs[track.id] = ref;
+
+                // Слушаем изменения в реальном времени
                 ref.on('value', (snapshot) => {
-                    const data = snapshot.val() || { likes: 0, dislikes: 0 };
-                    document.querySelectorAll(`#count-like-${track.id}`).forEach(el => el.textContent = data.likes || 0);
-                    document.querySelectorAll(`#count-dislike-${track.id}`).forEach(el => el.textContent = data.dislikes || 0);
-                });
-                const userVote = localStorage.getItem(`vote_${track.id}`);
-                if (userVote) {
+                    const data = snapshot.val();
+                    const likes = (data && typeof data.likes === 'number') ? data.likes : 0;
+                    const dislikes = (data && typeof data.dislikes === 'number') ? data.dislikes : 0;
+
+                    // Безопасно обновляем DOM
+                    const likeEl = document.getElementById(`count-like-${track.id}`);
+                    const dislikeEl = document.getElementById(`count-dislike-${track.id}`);
+                    if (likeEl) likeEl.textContent = likes;
+                    if (dislikeEl) dislikeEl.textContent = dislikes;
+
+                    // Восстанавливаем визуальное состояние кнопок
+                    const userVote = localStorage.getItem(`vote_${track.id}`);
                     document.querySelectorAll(`.track-card[data-id="${track.id}"] .like-btn, .compact-item[data-id="${track.id}"] .like-btn`)
-                        .forEach(btn => { if(userVote === 'like') btn.classList.add('active'); else btn.classList.remove('active'); });
+                        .forEach(btn => btn.classList.toggle('active', userVote === 'like'));
                     document.querySelectorAll(`.track-card[data-id="${track.id}"] .dislike-btn, .compact-item[data-id="${track.id}"] .dislike-btn`)
-                        .forEach(btn => { if(userVote === 'dislike') btn.classList.add('active'); else btn.classList.remove('active'); });
-                }
+                        .forEach(btn => btn.classList.toggle('active', userVote === 'dislike'));
+                });
             });
         }
 
         window.toggleReaction = function(trackId, type, btn) {
             if (!db) { alert('База данных недоступна'); return; }
-            const ref = db.ref(`reactions/${trackId}`);
+            
+            const ref = reactionRefs[trackId] || db.ref(`reactions/${trackId}`);
             const storageKey = `vote_${trackId}`;
             const currentVote = localStorage.getItem(storageKey);
             const card = btn.closest('.track-card, .compact-item');
             const likeBtn = card.querySelector('.like-btn');
             const dislikeBtn = card.querySelector('.dislike-btn');
 
-            let newLikeCountChange = 0, newDislikeCountChange = 0, newVoteState = null;
+            let deltaLikes = 0, deltaDislikes = 0, newVote = null;
 
             if (type === 'like') {
-                if (currentVote === 'like') { newLikeCountChange = -1; newVoteState = null; likeBtn.classList.remove('active'); }
-                else { newLikeCountChange = 1; if (currentVote === 'dislike') newDislikeCountChange = -1; newVoteState = 'like'; likeBtn.classList.add('active'); dislikeBtn.classList.remove('active'); }
+                if (currentVote === 'like') {
+                    deltaLikes = -1; newVote = null; likeBtn.classList.remove('active');
+                } else {
+                    deltaLikes = 1;
+                    if (currentVote === 'dislike') { deltaDislikes = -1; dislikeBtn.classList.remove('active'); }
+                    newVote = 'like'; likeBtn.classList.add('active');
+                }
             } else {
-                if (currentVote === 'dislike') { newDislikeCountChange = -1; newVoteState = null; dislikeBtn.classList.remove('active'); }
-                else { newDislikeCountChange = 1; if (currentVote === 'like') newLikeCountChange = -1; newVoteState = 'dislike'; dislikeBtn.classList.add('active'); likeBtn.classList.remove('active'); }
+                if (currentVote === 'dislike') {
+                    deltaDislikes = -1; newVote = null; dislikeBtn.classList.remove('active');
+                } else {
+                    deltaDislikes = 1;
+                    if (currentVote === 'like') { deltaLikes = -1; likeBtn.classList.remove('active'); }
+                    newVote = 'dislike'; dislikeBtn.classList.add('active');
+                }
             }
-            if (newVoteState) localStorage.setItem(storageKey, newVoteState); else localStorage.removeItem(storageKey);
 
+            if (newVote) localStorage.setItem(storageKey, newVote);
+            else localStorage.removeItem(storageKey);
+
+            // Атомарное обновление через транзакцию Firebase
             ref.transaction((currentData) => {
-                if (currentData === null) return { likes: 0, dislikes: 0 };
-                return { likes: (currentData.likes || 0) + newLikeCountChange, dislikes: (currentData.dislikes || 0) + newDislikeCountChange };
+                const d = currentData || { likes: 0, dislikes: 0 };
+                return {
+                    likes: Math.max(0, (d.likes || 0) + deltaLikes),
+                    dislikes: Math.max(0, (d.dislikes || 0) + deltaDislikes)
+                };
             });
         };
 
