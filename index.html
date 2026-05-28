@@ -397,7 +397,7 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* === MODAL: СОЗДАНИЕ РЕЛИЗА === */
+        /* === MODAL: О РЕЛИЗЕ (ОБЩИЙ СТИЛЬ ДЛЯ ВСЕХ ОКОН) === */
         .release-modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
             z-index: 20000; display: none; align-items: center; justify-content: center; 
@@ -505,6 +505,22 @@
             background: rgba(0, 212, 255, 0.1);
         }
 
+        /* === КНОПКА "О РЕЛИЗЕ" ПОД КАРТОЧКОЙ === */
+        .release-info-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 10px 16px; margin-top: 16px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(181, 55, 242, 0.3);
+            border-radius: 12px; color: var(--neon-purple);
+            font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .release-info-btn:hover {
+            background: rgba(181, 55, 242, 0.15); border-color: var(--neon-purple);
+            color: #fff; box-shadow: 0 0 20px rgba(181, 55, 242, 0.3);
+            transform: translateY(-2px);
+        }
+
         /* === MAIN SITE === */
         #mainSite { opacity: 0; transition: opacity 0.5s; pointer-events: none; }
         #mainSite.visible { opacity: 1; pointer-events: auto; }
@@ -547,7 +563,7 @@
         .hero-description { font-size: 1.25rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 32px; line-height: 1.7; }
         .hero-description strong { color: var(--neon-cyan); font-weight: 600; }
         
-        /* НОВАЯ ЗОНА КНОПОК */
+        /* НОВАЯ ЗОНА КНОПОК В HERO */
         .action-zone { 
             display: flex; 
             flex-direction: column; 
@@ -556,86 +572,13 @@
             margin-top: 48px; 
             width: 100%;
         }
-
-        /* === МАЛЕНЬКИЕ КНОПКИ (ВЕРХНИЕ) === */
-        .cyber-btn.small-btn {
-            padding: 10px 28px;
-            font-size: 0.75rem;
-            letter-spacing: 0.8px;
-            max-width: 320px;
-            width: 100%;
-        }
-
-        /* Кнопка "Создание релиза" - маленькая */
-        .cyber-btn.create-release-btn {
-            justify-content: center;
-            border-color: var(--neon-purple);
-            background: linear-gradient(135deg, rgba(181, 55, 242, 0.15), rgba(140, 80, 200, 0.1));
-            box-shadow: 
-                0 0 20px rgba(181, 55, 242, 0.4),
-                0 0 40px rgba(181, 55, 242, 0.2),
-                inset 0 0 20px rgba(181, 55, 242, 0.1);
-            animation: createReleasePulse 2.5s ease-in-out infinite;
-            position: relative;
-        }
-
-        .cyber-btn.create-release-btn::after {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: inherit;
-            background: linear-gradient(45deg, var(--neon-purple), var(--neon-pink), var(--neon-blue), var(--neon-purple));
-            background-size: 300% 300%;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s;
-            filter: blur(8px);
-            animation: gradientGlow 4s ease infinite;
-        }
-
-        .cyber-btn.create-release-btn:hover::after {
-            opacity: 0.6;
-        }
-
-        .cyber-btn.create-release-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 
-                0 0 30px rgba(181, 55, 242, 0.7),
-                0 0 60px rgba(181, 55, 242, 0.4),
-                inset 0 0 30px rgba(181, 55, 242, 0.2);
-            border-color: #fff;
-            color: #fff;
-        }
-
-        @keyframes createReleasePulse {
-            0%, 100% { 
-                box-shadow: 
-                    0 0 20px rgba(181, 55, 242, 0.4),
-                    0 0 40px rgba(181, 55, 242, 0.2),
-                    inset 0 0 20px rgba(181, 55, 242, 0.1);
-            }
-            50% { 
-                box-shadow: 
-                    0 0 35px rgba(181, 55, 242, 0.6),
-                    0 0 70px rgba(181, 55, 242, 0.3),
-                    inset 0 0 30px rgba(181, 55, 242, 0.15);
-            }
-        }
-
-        /* Ряд кнопок: Новые релизы + Все треки */
-        .action-row {
+        .hero-btn-row {
             display: flex;
             gap: 12px;
             width: 100%;
             max-width: 400px;
             justify-content: center;
-        }
-
-        /* === БОЛЬШИЕ КНОПКИ (НИЖНИЕ) === */
-        .cyber-btn.big-btn {
-            padding: 16px 28px;
-            font-size: 0.9rem;
-            letter-spacing: 1.5px;
+            flex-wrap: wrap;
         }
         
         /* News Block */
@@ -827,8 +770,6 @@
             display: flex; align-items: center; gap: 14px;
             transition: all 0.3s ease; position: relative;
             backdrop-filter: blur(12px);
-            
-            /* Неоновая рамка для списка */
             border: 1px solid rgba(0, 212, 255, 0.2);
             box-shadow: 0 0 10px rgba(0, 212, 255, 0.05);
         }
@@ -848,7 +789,6 @@
         }
         .compact-item:hover::before { opacity: 1; }
         
-        /* 🖼️ Мини-обложка 48×48 */
         .compact-cover {
             width: 48px; height: 48px; border-radius: 12px;
             background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
@@ -901,7 +841,6 @@
         .compact-item .download-btn { width: 32px; height: 32px; margin-left: 4px; }
         .compact-item .download-btn svg { width: 14px; height: 14px; }
         
-        /* === КНОПКА ПОКАЗАТЬ ВСЕ (ВНУТРИ СПИСКА) === */
         .show-all-btn {
             width: 100%; padding: 18px 24px; margin-top: 12px;
             background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.18);
@@ -916,7 +855,6 @@
             box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2);
         }
         
-        /* Скрытые треки */
         .hidden-tracks {
             display: grid; grid-template-columns: 1fr; gap: 12px;
             margin-top: 12px;
@@ -957,9 +895,7 @@
             .container { padding: 0 20px; } section { padding: 90px 0; }
             .hero h1 { font-size: clamp(2.2rem, 8vw, 4rem); }
             .action-zone { gap: 12px; } .cyber-btn { padding: 15px 20px; font-size: 0.75rem; }
-            .cyber-btn.small-btn { padding: 8px 20px; font-size: 0.7rem; }
-            .cyber-btn.big-btn { padding: 14px 20px; font-size: 0.85rem; }
-            .action-row { flex-wrap: wrap; }
+            .hero-btn-row { flex-wrap: wrap; }
             .grid { grid-template-columns: 1fr; }
             .track-player-row { padding: 18px; gap: 12px; } .play-btn { width: 44px; height: 44px; }
             .nav-links a { padding: 6px 12px; font-size: 0.8rem; }
@@ -1016,7 +952,7 @@
     </style>
 </head>
 <body>
-    <!-- === WELCOME SCREEN (НЕ ИЗМЕНЕН) === -->
+    <!-- === WELCOME SCREEN === -->
     <div id="welcomeScreen">
         <div class="welcome-bg-orbs">
             <div class="welcome-orb"></div><div class="welcome-orb"></div>
@@ -1091,35 +1027,58 @@
         </div>
     </div>
 
-    <!-- === MODAL: СОЗДАНИЕ РЕЛИЗА (ПРОСТОЙ ТЕКСТ) === -->
-    <div class="release-modal-overlay" id="releaseModal">
+    <!-- === МОДАЛЬНОЕ ОКНО 1: ДЛЯ РЕЛИЗА 1 (Поезд на юг) === -->
+    <div class="release-modal-overlay" id="modalTrack1">
         <div class="release-modal">
-            <button class="release-close" onclick="closeReleaseModal()">×</button>
-            <div class="release-icon">🎬</div>
-            <h3 class="release-title">Новый релиз</h3>
+            <button class="release-close" onclick="closeReleaseModal('modalTrack1')">×</button>
+            <div class="release-icon">🚂</div>
+            <h3 class="release-title">О релизе: "Поезд на юг"</h3>
             
             <div class="release-content">
                 <h4>Краткое содержание</h4>
-                <!-- ✏️ МЕНЯЙТЕ ТЕКСТ ОПИСАНИЯ ЗДЕСЬ -->
+                <!-- ✏️ МЕНЯЙТЕ ТЕКСТ ОПИСАНИЯ ДЛЯ 1-ГО ТРЕКА ЗДЕСЬ -->
                 <p class="release-desc">
-                    Герой совершает напряжённое путешествие на поезде, который мчится на юг.
-                    Атмосфера окутана туманом, тишиной и надвигающимися сумерками, 
-                    но вагон полон угрозы: за спиной слышны шаги, а вокруг бродят «ходячие мертвецы» и тени. 
-                    Вооружившись сталью, герой полон решимости выжить. Несмотря на страх, 
-                    боль и ощущение замкнутого круга испытаний, его воля не сломлена. 
-                    В финале тревога сменяется твёрдой уверенностью:
-                    он непременно доберётся до цели живым, преодолев все преграды «до конца».
+                    История о путешествии, которое меняет всё. Звук поезда сливается с голосом ИИ.
                 </p>
                 
                 <h4>Стиль</h4>
-                <!-- ✏️ МЕНЯЙТЕ СТИЛЬ ЗДЕСЬ -->
+                <!-- ✏️ МЕНЯЙТЕ СТИЛЬ ДЛЯ 1-ГО ТРЕКА ЗДЕСЬ -->
                 <p class="release-style-text">
-                   ......• ... • ... • ....
+                    Cinematic Synth • Dark Wave
                 </p>
             </div>
             
             <div class="release-footer">
-                <button class="release-btn outline" onclick="closeReleaseModal()">
+                <button class="release-btn outline" onclick="closeReleaseModal('modalTrack1')">
+                    <i class="fas fa-times"></i> Закрыть
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- === МОДАЛЬНОЕ ОКНО 2: ДЛЯ РЕЛИЗА 2 (Братья) === -->
+    <div class="release-modal-overlay" id="modalTrack2">
+        <div class="release-modal">
+            <button class="release-close" onclick="closeReleaseModal('modalTrack2')">×</button>
+            <div class="release-icon">🤜🏻</div>
+            <h3 class="release-title">О релизе: "Братья"</h3>
+            
+            <div class="release-content">
+                <h4>Краткое содержание</h4>
+                <!-- ✏️ МЕНЯЙТЕ ТЕКСТ ОПИСАНИЯ ДЛЯ 2-ГО ТРЕКА ЗДЕСЬ -->
+                <p class="release-desc">
+                    Трек о верности и связи, которая сильнее времени. Мощный бас и глубокий смысл.
+                </p>
+                
+                <h4>Стиль</h4>
+                <!-- ✏️ МЕНЯЙТЕ СТИЛЬ ДЛЯ 2-ГО ТРЕКА ЗДЕСЬ -->
+                <p class="release-style-text">
+                    Heavy AI Hip-Hop • Melancholic
+                </p>
+            </div>
+            
+            <div class="release-footer">
+                <button class="release-btn outline" onclick="closeReleaseModal('modalTrack2')">
                     <i class="fas fa-times"></i> Закрыть
                 </button>
             </div>
@@ -1154,30 +1113,22 @@
                     Эксперимент на стыке человеческих эмоций и машинного голоса.
                 </p>
                 
-                <!-- НОВАЯ ЗОНА КНОПОК (НОВЫЙ ПОРЯДОК) -->
+                <!-- КНОПКИ В HERO -->
                 <div class="action-zone">
-                    <!-- 1. Лента обновлений (сверху, маленькая) -->
-                    <button class="cyber-btn outline small-btn" onclick="toggleNews()">
+                    <button class="cyber-btn outline" onclick="toggleNews()" style="width: 100%; max-width: 400px;">
                         <i class="fas fa-rss"></i> Лента обновлений
                     </button>
-
-                    <!-- 2. Создание релиза (середина, маленькая) -->
-                    <button class="cyber-btn create-release-btn small-btn" onclick="openReleaseModal()">
-                        <i class="fas fa-plus-circle"></i> Создание релиза
-                    </button>
-                    
-                    <!-- 3. Новые релизы + Все треки (снизу, большие) -->
-                    <div class="action-row">
-                        <button class="cyber-btn primary big-btn" onclick="scrollToId('new')">
+                    <div class="hero-btn-row">
+                        <button class="cyber-btn primary" onclick="scrollToId('new')">
                             <i class="fas fa-music"></i> Новые релизы
                         </button>
-                        <button class="cyber-btn secondary big-btn" onclick="scrollToId('archive')">
+                        <button class="cyber-btn secondary" onclick="scrollToId('archive')">
                             <i class="fas fa-box"></i> Все треки
                         </button>
                     </div>
                 </div>
 
-                <!-- Блок новостей (появляется по клику) -->
+                <!-- Блок новостей -->
                 <div id="newsWrapper" class="news-section-wrapper">
                     <div class="news-container">
                         <div class="news-header">
@@ -1193,7 +1144,7 @@
             </div>
         </section>
 
-        <!--  НОВЫЕ РЕЛИЗЫ - карточки с неоновой рамкой -->
+        <!--  НОВЫЕ РЕЛИЗЫ -->
         <section id="new">
             <div class="container">
                 <div class="section-header">
@@ -1204,7 +1155,7 @@
             </div>
         </section>
 
-        <!--  ВСЕ ТРЕКИ - список с неоновыми рамками -->
+        <!--  ВСЕ ТРЕКИ -->
         <section id="archive">
             <div class="container">
                 <div class="section-header">
@@ -1212,15 +1163,12 @@
                     <div class="section-title">Все треки</div>
                 </div>
                 
-                <!-- Основной список (видны первые 4) -->
                 <div id="archiveList" class="compact-list"></div>
                 
-                <!-- Кнопка "Показать все" (вставляется JS-ом после 4-го трека) -->
                 <button id="showAllBtn" class="show-all-btn" onclick="toggleArchive()" style="display:none;">
                     Показать все треки <span style="transition: transform 0.3s;" id="arrowIcon">▼</span>
                 </button>
 
-                <!-- Скрытый список (остальные треки) -->
                 <div id="hiddenTracks" class="hidden-tracks"></div>
             </div>
         </section>
@@ -1349,7 +1297,7 @@
                 cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
                 cursorDot.style.left = e.clientX + 'px'; cursorDot.style.top = e.clientY + 'px';
             });
-            document.querySelectorAll('a, button, .cyber-btn, .play-btn, .download-btn, .compact-play-btn, .nav-links a, .logo, .chat-toggle, .chat-send, .chat-close, .chat-clear').forEach(el => {
+            document.querySelectorAll('a, button, .cyber-btn, .play-btn, .download-btn, .compact-play-btn, .nav-links a, .logo, .chat-toggle, .chat-send, .chat-close, .chat-clear, .release-info-btn').forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
                 el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
             });
@@ -1397,6 +1345,10 @@
         function createFullCard(track) {
             const card = document.createElement('div'); card.className = 'track-card';
             const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
+            
+            // Определяем ID модального окна: если трек ID 1, то modalTrack1, если 2, то modalTrack2
+            const modalId = track.id === 1 ? 'modalTrack1' : (track.id === 2 ? 'modalTrack2' : 'modalTrack1');
+
             card.innerHTML = `
                 ${getCoverHTML(track)}
                 <div class="track-player-row">
@@ -1411,7 +1363,11 @@
                         <div class="track-duration">${track.duration}</div><div class="track-time" id="time-${track.id}">0:00</div>
                         <a href="${track.file}" download="${downloadName}" class="download-btn" title="Скачать трек">${downloadIcon}</a>
                     </div>
-                </div>`;
+                </div>
+                <!-- КНОПКА "О РЕЛИЗЕ" ОТКРЫВАЕТ СВОЁ ОКНО -->
+                <button class="release-info-btn" onclick="openReleaseModal('${modalId}')">
+                    <i class="fas fa-info-circle"></i> О релизе
+                </button>`;
             return card;
         }
         
@@ -1717,27 +1673,31 @@
             if (e.key === 'Escape' && subscribeModal.classList.contains('active')) closeSubscribeModal();
         });
 
-        // === MODAL: СОЗДАНИЕ РЕЛИЗА (ПРОСТАЯ ЛОГИКА) ===
-        const releaseModal = document.getElementById('releaseModal');
-
-        function openReleaseModal() {
-            // Просто открываем модальное окно. Текст не меняется скриптом.
-            releaseModal.classList.add('active');
+        // === УНИВЕРСАЛЬНАЯ ФУНКЦИЯ ОТКРЫТИЯ МОДАЛЬНЫХ ОКОН ===
+        function openReleaseModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.add('active');
         }
 
-        function closeReleaseModal() {
-            releaseModal.classList.remove('active');
+        function closeReleaseModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.remove('active');
         }
 
-        // Закрытие по клику вне окна
-        releaseModal?.addEventListener('click', (e) => {
-            if (e.target === releaseModal) closeReleaseModal();
+        // Закрытие по клику вне любого окна
+        document.querySelectorAll('.release-modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
         });
 
-        // Закрытие по Escape
+        // Закрытие по Escape (для всех окон)
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && releaseModal?.classList.contains('active')) {
-                closeReleaseModal();
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.release-modal-overlay.active').forEach(modal => modal.classList.remove('active'));
+                if (subscribeModal.classList.contains('active')) closeSubscribeModal();
             }
         });
     </script>
