@@ -657,36 +657,50 @@
         enterBtn.addEventListener('click', enterSite);
         document.addEventListener('keydown', (e) => { if (!welcomeScreen.classList.contains('hidden') && (e.key === 'Enter' || e.key === 'Escape')) { e.preventDefault(); enterSite(); } });
         
-        // === REACTIONS (LIKES/DISLIKES) WITH LOCALSTORAGE ===
-        function getReactionData(trackId) {
-            return {
-                user: localStorage.getItem(`reaction_${trackId}`) || null,
-                likes: parseInt(localStorage.getItem(`likes_${trackId}`)) || 0,
-                dislikes: parseInt(localStorage.getItem(`dislikes_${trackId}`)) || 0
-            };
+        // === REACTIONS (LIKES/DISLIKES) WITH FIREBASE ===
+        function initReactions() {
+            if (!db) return;
+            tracks.forEach(track => {
+                const ref = db.ref(`reactions/${track.id}`);
+                ref.on('value', (snapshot) => {
+                    const data = snapshot.val() || { likes: 0, dislikes: 0 };
+                    document.querySelectorAll(`#count-like-${track.id}`).forEach(el => el.textContent = data.likes || 0);
+                    document.querySelectorAll(`#count-dislike-${track.id}`).forEach(el => el.textContent = data.dislikes || 0);
+                });
+                const userVote = localStorage.getItem(`vote_${track.id}`);
+                if (userVote) {
+                    document.querySelectorAll(`.track-card[data-id="${track.id}"] .like-btn, .compact-item[data-id="${track.id}"] .like-btn`)
+                        .forEach(btn => { if(userVote === 'like') btn.classList.add('active'); else btn.classList.remove('active'); });
+                    document.querySelectorAll(`.track-card[data-id="${track.id}"] .dislike-btn, .compact-item[data-id="${track.id}"] .dislike-btn`)
+                        .forEach(btn => { if(userVote === 'dislike') btn.classList.add('active'); else btn.classList.remove('active'); });
+                }
+            });
         }
-        function saveReactionData(trackId, data) {
-            localStorage.setItem(`reaction_${trackId}`, data.user || '');
-            localStorage.setItem(`likes_${trackId}`, data.likes);
-            localStorage.setItem(`dislikes_${trackId}`, data.dislikes);
-        }
+
         window.toggleReaction = function(trackId, type, btn) {
-            const data = getReactionData(trackId);
-            const likeBtn = btn.classList.contains('like-btn') ? btn : btn.parentElement.querySelector('.like-btn');
-            const dislikeBtn = btn.classList.contains('dislike-btn') ? btn : btn.parentElement.querySelector('.dislike-btn');
-            const likeCountEl = document.getElementById(`count-like-${trackId}`);
-            const dislikeCountEl = document.getElementById(`count-dislike-${trackId}`);
+            if (!db) { alert('База данных недоступна'); return; }
+            const ref = db.ref(`reactions/${trackId}`);
+            const storageKey = `vote_${trackId}`;
+            const currentVote = localStorage.getItem(storageKey);
+            const card = btn.closest('.track-card, .compact-item');
+            const likeBtn = card.querySelector('.like-btn');
+            const dislikeBtn = card.querySelector('.dislike-btn');
+
+            let newLikeCountChange = 0, newDislikeCountChange = 0, newVoteState = null;
 
             if (type === 'like') {
-                if (data.user === 'like') { data.likes--; data.user = null; likeBtn.classList.remove('active'); }
-                else { if (data.user === 'dislike') { data.dislikes--; dislikeBtn.classList.remove('active'); } data.likes++; data.user = 'like'; likeBtn.classList.add('active'); }
+                if (currentVote === 'like') { newLikeCountChange = -1; newVoteState = null; likeBtn.classList.remove('active'); }
+                else { newLikeCountChange = 1; if (currentVote === 'dislike') newDislikeCountChange = -1; newVoteState = 'like'; likeBtn.classList.add('active'); dislikeBtn.classList.remove('active'); }
             } else {
-                if (data.user === 'dislike') { data.dislikes--; data.user = null; dislikeBtn.classList.remove('active'); }
-                else { if (data.user === 'like') { data.likes--; likeBtn.classList.remove('active'); } data.dislikes++; data.user = 'dislike'; dislikeBtn.classList.add('active'); }
+                if (currentVote === 'dislike') { newDislikeCountChange = -1; newVoteState = null; dislikeBtn.classList.remove('active'); }
+                else { newDislikeCountChange = 1; if (currentVote === 'like') newLikeCountChange = -1; newVoteState = 'dislike'; dislikeBtn.classList.add('active'); likeBtn.classList.remove('active'); }
             }
-            saveReactionData(trackId, data);
-            if (likeCountEl) { likeCountEl.textContent = data.likes; likeCountEl.style.transform = 'scale(1.3)'; setTimeout(()=>likeCountEl.style.transform='scale(1)', 150); }
-            if (dislikeCountEl) { dislikeCountEl.textContent = data.dislikes; dislikeCountEl.style.transform = 'scale(1.3)'; setTimeout(()=>dislikeCountEl.style.transform='scale(1)', 150); }
+            if (newVoteState) localStorage.setItem(storageKey, newVoteState); else localStorage.removeItem(storageKey);
+
+            ref.transaction((currentData) => {
+                if (currentData === null) return { likes: 0, dislikes: 0 };
+                return { likes: (currentData.likes || 0) + newLikeCountChange, dislikes: (currentData.dislikes || 0) + newDislikeCountChange };
+            });
         };
 
         // === GLOBAL PLAYER ===
@@ -724,9 +738,8 @@
         function getCoverHTML(track) { return track.cover ? `<div class="track-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>` : `<div class="track-cover">🎵</div>`; }
         const downloadIcon = `<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>`;
         
-        // 🔥 ОБНОВЛЁННАЯ ФУНКЦИЯ createFullCard
         function createFullCard(track) {
-            const idx = tracks.findIndex(t => t.id === track.id); const r = getReactionData(track.id);
+            const idx = tracks.findIndex(t => t.id === track.id);
             const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
             const modalId = track.id === 1 ? 'modalTrack1' : (track.id === 2 ? 'modalTrack2' : 'modalTrack1');
             const card = document.createElement('div'); card.className = 'track-card'; card.dataset.id = track.id;
@@ -745,14 +758,14 @@
                             <a href="${track.file}" download="${downloadName}" class="download-btn">${downloadIcon}</a>
                         </div>
                         <div class="track-actions">
-                            <button class="like-btn ${r.user==='like'?'active':''}" onclick="toggleReaction(${track.id},'like',this)" title="Нравится">
+                            <button class="like-btn" onclick="toggleReaction(${track.id},'like',this)" title="Нравится">
                                 <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
                             </button>
-                            <span class="reaction-count" id="count-like-${track.id}">${r.likes}</span>
-                            <button class="dislike-btn ${r.user==='dislike'?'active':''}" onclick="toggleReaction(${track.id},'dislike',this)" title="Не нравится">
+                            <span class="reaction-count" id="count-like-${track.id}">0</span>
+                            <button class="dislike-btn" onclick="toggleReaction(${track.id},'dislike',this)" title="Не нравится">
                                 <svg viewBox="0 0 24 24"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
                             </button>
-                            <span class="reaction-count" id="count-dislike-${track.id}">${r.dislikes}</span>
+                            <span class="reaction-count" id="count-dislike-${track.id}">0</span>
                         </div>
                     </div>
                 </div>
@@ -760,9 +773,8 @@
             return card;
         }
         
-        // 🔥 ОБНОВЛЁННАЯ ФУНКЦИЯ createCompactItem — название сверху, лайки снизу
         function createCompactItem(track) {
-            const idx = tracks.findIndex(t => t.id === track.id); const r = getReactionData(track.id);
+            const idx = tracks.findIndex(t => t.id === track.id);
             const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
             const item = document.createElement('div'); item.className = 'compact-item'; item.dataset.id = track.id;
             const coverHTML = track.cover ? `<div class="compact-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>` : `<div class="compact-cover">🎵</div>`;
@@ -779,14 +791,14 @@
                             <svg viewBox="0 0 24 24" style="width:14px;fill:currentColor;margin-left:2px;"><polygon points="5,3 19,12 5,21"/></svg>
                         </button>
                         <div class="track-actions">
-                            <button class="like-btn ${r.user==='like'?'active':''}" onclick="toggleReaction(${track.id},'like',this)" title="Нравится">
+                            <button class="like-btn" onclick="toggleReaction(${track.id},'like',this)" title="Нравится">
                                 <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
                             </button>
-                            <span class="reaction-count" id="count-like-${track.id}">${r.likes}</span>
-                            <button class="dislike-btn ${r.user==='dislike'?'active':''}" onclick="toggleReaction(${track.id},'dislike',this)" title="Не нравится">
+                            <span class="reaction-count" id="count-like-${track.id}">0</span>
+                            <button class="dislike-btn" onclick="toggleReaction(${track.id},'dislike',this)" title="Не нравится">
                                 <svg viewBox="0 0 24 24"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
                             </button>
-                            <span class="reaction-count" id="count-dislike-${track.id}">${r.dislikes}</span>
+                            <span class="reaction-count" id="count-dislike-${track.id}">0</span>
                         </div>
                         <a href="${track.file}" download="${downloadName}" class="download-btn">${downloadIcon}</a>
                     </div>
@@ -803,7 +815,6 @@
                 archiveTracks.slice(4).forEach(track => hiddenTracks.appendChild(createCompactItem(track)));
                 showAllBtn.style.display = archiveTracks.length > 4 ? 'flex' : 'none';
             } else { archiveList.innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:30px;">В архиве пока пусто. Скоро будет 🔜</p>'; showAllBtn.style.display = 'none'; }
-            // Восстановить подсветку последнего трека
             const savedIdx = localStorage.getItem('lastTrackIndex');
             if (savedIdx !== null) highlightActiveTrack(tracks[parseInt(savedIdx)].id);
         }
@@ -825,7 +836,7 @@
         window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
         function toggleNews() { const w = document.getElementById('newsWrapper'); w.classList.toggle('visible'); if (w.classList.contains('visible')) setTimeout(() => w.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100); }
         function createParticles() { const c = document.getElementById('particles'); for (let i = 0; i < 70; i++) { const p = document.createElement('div'); p.className = 'particle'; p.style.left = Math.random() * 100 + '%'; p.style.top = Math.random() * 100 + '%'; p.style.animationDuration = (Math.random() * 4 + 3) + 's'; p.style.animationDelay = (Math.random() * 5) + 's'; p.style.opacity = Math.random() * 0.7 + 0.3; c.appendChild(p); } }
-        function initSite() { createParticles(); renderTracks(); window.dispatchEvent(new Event('scroll')); }
+        function initSite() { createParticles(); renderTracks(); initReactions(); window.dispatchEvent(new Event('scroll')); }
 
         // === CHAT SYSTEM ===
         const CHAT_REF = db ? db.ref('evgenii_chat') : null;
@@ -867,3 +878,4 @@
     </script>
 </body>
 </html>
+
