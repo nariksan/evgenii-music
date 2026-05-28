@@ -324,7 +324,7 @@
         .track-card:hover { transform: translateY(-6px) scale(1.01); z-index: 5; }
         .track-card:hover::before { opacity: 1; filter: drop-shadow(0 0 10px var(--neon-blue)); }
         
-        /* 🔥 ACTIVE TRACK & REACTIONS CSS */
+        /* 🔥 ACTIVE TRACK */
         .track-card.active, .compact-item.active {
             border-color: var(--neon-cyan) !important;
             box-shadow: 0 0 0 2px var(--neon-cyan), 0 0 30px rgba(0, 245, 212, 0.4), inset 0 0 20px rgba(0, 245, 212, 0.1) !important;
@@ -338,10 +338,12 @@
             box-shadow: 0 0 20px rgba(0, 245, 212, 0.5); animation: pulse 1.5s infinite;
         }
         .track-card.active .track-info::after, .compact-item.active .compact-info::after {
-            content: '🔊 Сейчас играет'; display: block; font-family: 'JetBrains Mono', monospace;
+            content: ' Сейчас играет'; display: block; font-family: 'JetBrains Mono', monospace;
             font-size: 0.65rem; color: var(--neon-cyan); margin-top: 6px;
             text-shadow: 0 0 8px rgba(0, 245, 212, 0.6); animation: pulse-live 1.5s infinite;
         }
+        
+        /* === REACTIONS CSS === */
         .track-actions { display: flex; align-items: center; gap: 6px; margin-left: 8px; flex-shrink: 0; }
         .like-btn, .dislike-btn {
             width: 34px; height: 34px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
@@ -362,14 +364,32 @@
         .track-card:hover .track-cover::before { opacity: 1; }
         .track-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s; }
         .track-card:hover .track-cover img { transform: scale(1.08) rotate(0.5deg); filter: brightness(1.1) saturate(1.2); }
+        
+        /* === TRACK PLAYER ROW === */
         .track-player-row { padding: 22px; display: flex; align-items: center; gap: 16px; position: relative; z-index: 2; }
+        
+        /* 🔥 ОРИГИНАЛЬНАЯ КНОПКА PLAY */
         .play-btn {
-            width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-            color: var(--text-primary); border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;
-            cursor: pointer; flex-shrink: 0; transition: 0.25s; box-shadow: 0 4px 20px rgba(0,0,0,0.3); position: relative; overflow: visible;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            color: var(--text-primary); border: 1px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: 0.25s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3); position: relative; overflow: visible;
         }
-        .play-btn svg { width: 20px; fill: currentColor; margin-left: 2px; transition: margin 0.2s; }
+        .play-btn::before {
+            content: ''; position: absolute; inset: -2px; border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--neon-blue), var(--neon-pink), var(--neon-purple), var(--neon-blue));
+            animation: spin 3s linear infinite; opacity: 0; transition: opacity 0.3s; z-index: -1;
+        }
+        .play-btn:hover::before { opacity: 1; }
         .play-btn:hover { transform: scale(1.1); box-shadow: 0 6px 25px rgba(0, 212, 255, 0.4); }
+        .play-btn svg { width: 20px; fill: currentColor; margin-left: 2px; transition: margin 0.2s; }
+        .play-btn.active {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            color: white; box-shadow: var(--glow-pink), 0 0 60px rgba(255,45,117,0.4); animation: pulse 1.5s infinite;
+        }
+        .play-btn.active svg { margin-left: 0; }
+        
         .track-info { flex: 1; min-width: 0; }
         .track-info h3 { font-size: 1.1rem; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
         .track-info p { font-size: 0.85rem; color: var(--text-secondary); opacity: 0.85; }
@@ -383,10 +403,11 @@
         .download-btn:hover { border-color: var(--neon-blue); color: white; transform: scale(1.1); box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3); }
         .download-btn svg { width: 16px; height: 16px; fill: currentColor; }
         
+        /* === COMPACT LIST — НОВЫЙ LAYOUT === */
         .compact-list { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 24px; }
         .compact-item {
             background: linear-gradient(145deg, rgba(20,20,30,0.7), rgba(15,15,25,0.9)); border-radius: 16px; padding: 14px 18px;
-            display: flex; align-items: center; gap: 14px; transition: all 0.3s ease; position: relative; backdrop-filter: blur(12px);
+            display: flex; align-items: flex-start; gap: 14px; transition: all 0.3s ease; position: relative; backdrop-filter: blur(12px);
             border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 0 10px rgba(0, 212, 255, 0.05);
         }
         .compact-item::before { content: ''; position: absolute; inset: -1px; border-radius: 17px; padding: 1px; background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-purple), transparent); background-size: 200% 200%; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0.5; pointer-events: none; transition: opacity 0.3s; }
@@ -395,13 +416,22 @@
         .compact-cover { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #1a1a2e, #0f0f1a); overflow: hidden; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; position: relative; }
         .compact-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
         .compact-item:hover .compact-cover img { transform: scale(1.1); }
-        .compact-info { flex: 1; min-width: 0; }
-        .compact-info h4 { font-size: 1rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
-        .compact-info p { font-size: 0.8rem; color: var(--text-secondary); opacity: 0.8; }
-        .compact-duration { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--text-secondary); flex-shrink: 0; opacity: 0.8; }
-        .compact-item .track-actions { margin-left: 4px; gap: 4px; }
+        .compact-cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 70%, rgba(0,0,0,0.5)); pointer-events: none; }
+        
+        /* 🔥 НОВАЯ СТРУКТУРА: название сверху, лайки снизу */
+        .compact-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+        .compact-info .compact-title-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .compact-info h4 { font-size: 1rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+        .compact-info p { font-size: 0.8rem; color: var(--text-secondary); opacity: 0.8; margin: 0; }
+        .compact-info .compact-bottom-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .compact-duration { font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--text-secondary); flex-shrink: 0; }
+        .compact-item .compact-play-btn { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; }
+        .compact-item .compact-play-btn svg { width: 14px; height: 14px; margin-left: 2px; }
+        .compact-item .track-actions { margin-left: 0; gap: 4px; }
         .compact-item .like-btn, .compact-item .dislike-btn { width: 30px; height: 30px; }
         .compact-item .like-btn svg, .compact-item .dislike-btn svg { width: 14px; height: 14px; }
+        .compact-item .download-btn { width: 30px; height: 30px; flex-shrink: 0; }
+        .compact-item .download-btn svg { width: 14px; height: 14px; }
         
         .show-all-btn { width: 100%; padding: 18px 24px; margin-top: 12px; background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.18); border-radius: 14px; color: var(--text-secondary); font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.35s; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .show-all-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--neon-blue); color: var(--text-primary); transform: translateY(-2px); }
@@ -416,8 +446,24 @@
         .insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); box-shadow: 0 4px 20px rgba(188, 24, 136, 0.4); }
         .s-btn:hover { transform: translateY(-5px) scale(1.03); z-index: 3; }
         footer { text-align: center; padding: 48px 24px 60px; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+        
         @media (max-width: 900px) { .profile-card { flex-direction: column; align-items: center; text-align: center; padding: 30px 20px; } .avatar-wrapper { margin-bottom: 20px; } .username-row { justify-content: center; } .stats { justify-content: center; width: 100%; } }
-        @media (max-width: 768px) { .container { padding: 0 20px; } section { padding: 90px 0; } .hero h1 { font-size: clamp(2.2rem, 8vw, 4rem); } .track-player-row { padding: 18px; gap: 12px; } .play-btn { width: 44px; height: 44px; } .nav-links a { padding: 6px 12px; font-size: 0.8rem; } .cursor, .cursor-dot { display: none !important; } .global-player { height: auto; flex-wrap: wrap; padding: 8px 16px; gap: 8px; } .player-track-info { max-width: 120px; } .player-progress-wrapper { order: 10; width: 100%; margin-top: 4px; } .player-volume-wrapper { display: none; } .compact-item { flex-wrap: wrap; } }
+        @media (max-width: 768px) { 
+            .container { padding: 0 20px; } section { padding: 90px 0; } .hero h1 { font-size: clamp(2.2rem, 8vw, 4rem); }
+            .track-player-row { padding: 18px; gap: 12px; } .play-btn { width: 44px; height: 44px; }
+            .nav-links a { padding: 6px 12px; font-size: 0.8rem; }
+            .cursor, .cursor-dot { display: none !important; }
+            .global-player { height: auto; flex-wrap: wrap; padding: 8px 16px; gap: 8px; }
+            .player-track-info { max-width: 120px; }
+            .player-progress-wrapper { order: 10; width: 100%; margin-top: 4px; }
+            .player-volume-wrapper { display: none; }
+            /* 🔥 Адаптация компактных карточек для узких экранов */
+            .compact-item { padding: 12px 14px; gap: 10px; }
+            .compact-cover { width: 40px; height: 40px; }
+            .compact-info .compact-play-btn { width: 32px; height: 32px; }
+            .compact-item .like-btn, .compact-item .dislike-btn { width: 28px; height: 28px; }
+        }
+        
         ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); } ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--neon-pink), var(--neon-blue)); border-radius: 4px; }
         
         .chat-toggle { position: fixed; bottom: 90px; right: 24px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); border: 2px solid rgba(255,255,255,0.2); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; box-shadow: var(--glow-purple); transition: 0.3s; font-size: 1.5rem; }
@@ -502,7 +548,7 @@
     <div class="release-modal-overlay" id="modalTrack2">
         <div class="release-modal">
             <button class="release-close" onclick="closeReleaseModal('modalTrack2')">×</button>
-            <div class="release-icon">🤜🏻</div><h3 class="release-title">О релизе: "Братья"</h3>
+            <div class="release-icon">🤜</div><h3 class="release-title">О релизе: "Братья"</h3>
             <div class="release-content"><h4>Краткое содержание</h4><p class="release-desc">Трек о верности и связи, которая сильнее времени. Мощный бас и глубокий смысл.</p><h4>Стиль</h4><p class="release-style-text">Heavy AI Hip-Hop • Melancholic</p></div>
             <div class="release-footer"><button class="release-btn outline" onclick="closeReleaseModal('modalTrack2')"><i class="fas fa-times"></i> Закрыть</button></div>
         </div>
@@ -566,7 +612,7 @@
 
         <section class="social-section"><div class="container">
             <div class="section-header" style="border-left-color: #24A1DE;"><div class="section-tag" style="color: #24A1DE;">// CONNECT</div><div class="section-title">Связь</div></div>
-            <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto 30px; line-height: 1.6;">Подписывайся, чтобы не пропустить новые релизы 🔥</p>
+            <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto 30px; line-height: 1.6;">Подписывайся, чтобы не пропустить новые релизы </p>
             <div class="social-btns">
                 <a href="https://t.me/+zo3YoDDckwoyOGYy" target="_blank" class="s-btn tg"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>Telegram Chat</a>
                 <a href="https://www.instagram.com/zhenyaa0?igsh=ZHV4ZHE1MGQwd3N5&utm_source=qr" target="_blank" class="s-btn insta"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Instagram</a>
@@ -678,6 +724,7 @@
         function getCoverHTML(track) { return track.cover ? `<div class="track-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>` : `<div class="track-cover">🎵</div>`; }
         const downloadIcon = `<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>`;
         
+        // 🔥 ОБНОВЛЁННАЯ ФУНКЦИЯ createFullCard
         function createFullCard(track) {
             const idx = tracks.findIndex(t => t.id === track.id); const r = getReactionData(track.id);
             const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
@@ -688,9 +735,49 @@
                 <div class="track-player-row">
                     <button class="play-btn" onclick="playFromCard(${idx})"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>
                     <div class="sound-wave" id="wave-${track.id}"><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div></div>
-                    <div class="track-info"><h3>${track.title}</h3><p>${track.desc || 'Без описания'}</p></div>
-                    <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-                        <span class="track-duration">${track.duration}</span>
+                    <div class="track-info">
+                        <h3>${track.title}</h3>
+                        <p>${track.desc || 'Без описания'}</p>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+                        <div style="display:flex;align-items:center;gap:4px;">
+                            <span class="track-duration">${track.duration}</span>
+                            <a href="${track.file}" download="${downloadName}" class="download-btn">${downloadIcon}</a>
+                        </div>
+                        <div class="track-actions">
+                            <button class="like-btn ${r.user==='like'?'active':''}" onclick="toggleReaction(${track.id},'like',this)" title="Нравится">
+                                <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            </button>
+                            <span class="reaction-count" id="count-like-${track.id}">${r.likes}</span>
+                            <button class="dislike-btn ${r.user==='dislike'?'active':''}" onclick="toggleReaction(${track.id},'dislike',this)" title="Не нравится">
+                                <svg viewBox="0 0 24 24"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
+                            </button>
+                            <span class="reaction-count" id="count-dislike-${track.id}">${r.dislikes}</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="release-info-btn" onclick="openReleaseModal('${modalId}')"><i class="fas fa-info-circle"></i> О релизе</button>`;
+            return card;
+        }
+        
+        // 🔥 ОБНОВЛЁННАЯ ФУНКЦИЯ createCompactItem — название сверху, лайки снизу
+        function createCompactItem(track) {
+            const idx = tracks.findIndex(t => t.id === track.id); const r = getReactionData(track.id);
+            const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
+            const item = document.createElement('div'); item.className = 'compact-item'; item.dataset.id = track.id;
+            const coverHTML = track.cover ? `<div class="compact-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>` : `<div class="compact-cover">🎵</div>`;
+            item.innerHTML = `
+                ${coverHTML}
+                <div class="compact-info">
+                    <div class="compact-title-row">
+                        <h4>${track.title}</h4>
+                        <span class="compact-duration">${track.duration}</span>
+                    </div>
+                    <p>${track.desc || 'Без описания'}</p>
+                    <div class="compact-bottom-row">
+                        <button class="play-btn compact-play-btn" onclick="playFromCard(${idx})" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05));color:var(--text-primary);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+                            <svg viewBox="0 0 24 24" style="width:14px;fill:currentColor;margin-left:2px;"><polygon points="5,3 19,12 5,21"/></svg>
+                        </button>
                         <div class="track-actions">
                             <button class="like-btn ${r.user==='like'?'active':''}" onclick="toggleReaction(${track.id},'like',this)" title="Нравится">
                                 <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
@@ -703,30 +790,7 @@
                         </div>
                         <a href="${track.file}" download="${downloadName}" class="download-btn">${downloadIcon}</a>
                     </div>
-                </div>
-                <button class="release-info-btn" onclick="openReleaseModal('${modalId}')"><i class="fas fa-info-circle"></i> О релизе</button>`;
-            return card;
-        }
-        
-        function createCompactItem(track) {
-            const idx = tracks.findIndex(t => t.id === track.id); const r = getReactionData(track.id);
-            const downloadName = track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
-            const item = document.createElement('div'); item.className = 'compact-item'; item.dataset.id = track.id;
-            const coverHTML = track.cover ? `<div class="compact-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>` : `<div class="compact-cover">🎵</div>`;
-            item.innerHTML = `
-                ${coverHTML}
-                <button class="play-btn compact-play-btn" onclick="playFromCard(${idx})" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05));color:var(--text-primary);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-                    <svg viewBox="0 0 24 24" style="width:14px;fill:currentColor;margin-left:2px;"><polygon points="5,3 19,12 5,21"/></svg>
-                </button>
-                <div class="compact-info"><h4>${track.title}</h4><p>${track.desc || 'Без описания'}</p></div>
-                <span class="compact-duration">${track.duration}</span>
-                <div class="track-actions">
-                    <button class="like-btn ${r.user==='like'?'active':''}" onclick="toggleReaction(${track.id},'like',this)" title="Нравится"><svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg></button>
-                    <span class="reaction-count" id="count-like-${track.id}">${r.likes}</span>
-                    <button class="dislike-btn ${r.user==='dislike'?'active':''}" onclick="toggleReaction(${track.id},'dislike',this)" title="Не нравится"><svg viewBox="0 0 24 24"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg></button>
-                    <span class="reaction-count" id="count-dislike-${track.id}">${r.dislikes}</span>
-                </div>
-                <a href="${track.file}" download="${downloadName}" class="download-btn">${downloadIcon}</a>`;
+                </div>`;
             return item;
         }
         
