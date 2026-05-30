@@ -8,7 +8,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
     
-    <!-- Firebase (Compat version for easier usage in single file) -->
+    <!-- Firebase SDKs (Compat) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
@@ -592,7 +592,7 @@
                 <ul class="stats">
                     <li><strong id="trackCount">0</strong><span>треков</span></li>
                     <li><strong>AI</strong><span>voice</span></li>
-                    <li><strong id="subscriberCount">0</strong><span>подписчиков</span></li>
+                    <li><strong id="subscriberCount">...</strong><span>подписчиков</span></li>
                 </ul>
                 <div class="bio">
                     Где заканчиваюсь я — и начинается ИИ.<br>
@@ -770,7 +770,10 @@
         try { 
             if (!firebase.apps.length) firebase.initializeApp(firebaseConfig); 
             db = firebase.database(); 
-        } catch (e) { console.error("Firebase Init Error:", e); }
+            console.log("Firebase initialized successfully");
+        } catch (e) { 
+            console.error("Firebase Init Error:", e); 
+        }
 
         // === GLOBAL VARIABLES ===
         const welcomeScreen = document.getElementById('welcomeScreen');
@@ -1041,6 +1044,8 @@
                     const count = snapshot.exists() ? snapshot.numChildren() : 0;
                     subscriberCountEl.textContent = count;
                 });
+            } else {
+                subscriberCountEl.textContent = "Offline";
             }
             if (localStorage.getItem('evgenii_subscribed')) { 
                 document.getElementById('subscribeBtn').classList.add('subscribed'); 
