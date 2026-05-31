@@ -446,7 +446,7 @@
                     
                     <!-- 2. НОВЫЕ КНОПКИ (в линию) -->
                     <div class="action-dual-row">
-                        <button class="glass-btn release-btn" onclick="openReleaseModal()">
+                        <button class="glass-btn release-btn" onclick="openNewRelease()">
                             <span class="glass-btn-icon">🎵</span> Новый релиз
                         </button>
                         <button class="glass-btn chat-btn" onclick="openChatModal()">
@@ -666,7 +666,8 @@
         function openWelcomeNews() { document.getElementById('welcomeNewsModal').classList.add('active'); }
         function closeWelcomeNews() { document.getElementById('welcomeNewsModal').classList.remove('active'); }
         
-        function openReleaseModal() { document.getElementById('releaseModal').classList.add('active'); }
+        // Исправленная функция для кнопки "Новый релиз"
+        function openNewRelease() { document.getElementById('releaseModal').classList.add('active'); }
         function closeReleaseModal() { document.getElementById('releaseModal').classList.remove('active'); }
         function playBtnAnim(btn) { btn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'; setTimeout(() => btn.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>', 2000); }
 
