@@ -526,7 +526,7 @@
     <!-- === RELEASE MODAL (Дублирует первый трек + КНОПКА ЗАКРЫТЬ) === -->
     <div class="welcome-modal-overlay" id="releaseModal">
         <div class="welcome-modal">
-            <button class="wn-close" onclick="closeReleaseModal()">×</button>
+            <button class="wn-close" onclick="closeNewReleaseModal()">×</button>
             <div class="modal-header"><i class="fas fa-compact-disc"></i> СВЕЖИЙ ДРОП</div>
             <div class="mini-player">
                 <div class="mini-cover"><img src="cover/cover7.jpg" alt="Поезд на юг" onerror="this.style.display='none'"></div>
@@ -543,7 +543,7 @@
             
             <!-- Добавлена кнопка закрыть внизу -->
             <div class="modal-footer">
-                <button class="modal-close-btn" onclick="closeReleaseModal()">Закрыть</button>
+                <button class="modal-close-btn" onclick="closeNewReleaseModal()">Закрыть</button>
             </div>
         </div>
     </div>
@@ -720,7 +720,8 @@
         
         // Исправленная функция для кнопки "Новый релиз"
         function openNewRelease() { document.getElementById('releaseModal').classList.add('active'); }
-        function closeReleaseModal() { document.getElementById('releaseModal').classList.remove('active'); }
+        // Новая отдельная функция для закрытия модалки релиза на welcome-экране
+        function closeNewReleaseModal() { document.getElementById('releaseModal').classList.remove('active'); }
         function playBtnAnim(btn) { btn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'; setTimeout(() => btn.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>', 2000); }
 
         function openChatModal() { 
@@ -846,7 +847,7 @@
         // === GLOBAL KEYS ===
         document.addEventListener('keydown', (e) => {
             if (!welcomeScreen.classList.contains('hidden') && e.key === 'Enter' && !document.querySelector('.welcome-modal-overlay.active')) { e.preventDefault(); enterSite(); }
-            if (e.key === 'Escape') { closeWelcomeNews(); closeReleaseModal(); closeChatModal(); closeSubscribeModal(); document.querySelectorAll('.release-modal-overlay.active').forEach(m => m.classList.remove('active')); }
+            if (e.key === 'Escape') { closeWelcomeNews(); closeNewReleaseModal(); closeChatModal(); closeSubscribeModal(); document.querySelectorAll('.release-modal-overlay.active').forEach(m => m.classList.remove('active')); }
         });
     </script>
 </body>
