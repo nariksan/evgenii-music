@@ -184,7 +184,7 @@
         .cyber-btn.secondary:hover { box-shadow: 0 0 35px rgba(255, 45, 117, 0.7); border-color: #ff5a96; }
         .cyber-btn.outline:hover { box-shadow: 0 0 35px rgba(181, 55, 242, 0.7); border-color: #d474ff; color: white; }
 
-        /* === WELCOME NEWS MODAL (Новое окно для ленты на входе) === */
+        /* === WELCOME NEWS MODAL === */
         .welcome-news-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px);
             z-index: 11000; display: none; align-items: center; justify-content: center;
@@ -769,7 +769,7 @@
         </div>
     </div>
 
-    <!-- === WELCOME NEWS MODAL (Новое окно) === -->
+    <!-- === WELCOME NEWS MODAL === -->
     <div class="welcome-news-overlay" id="welcomeNewsModal">
         <div class="welcome-news-modal">
             <button class="wn-close" onclick="closeWelcomeNews()">×</button>
@@ -918,6 +918,7 @@
 
         const welcomeScreen = document.getElementById('welcomeScreen'), mainSite = document.getElementById('mainSite'), enterBtn = document.getElementById('enterBtn');
         
+        // Исправлен синтаксис в tracks (убраны лишние кавычки)
         const tracks = [
             { id: 1, title: "Поезд на юг", desc: "", file: "tracks/song7.mp3", duration: "3:23", cover: "cover/cover7.jpg", isNew: true },
             { id: 2, title: "Братья", desc: "", file: "tracks/song6.mp3", duration: "4:03", cover: "cover/cover6.jpg", isNew: true },
@@ -927,7 +928,7 @@
             { id: 6, title: "Воздух Густеет", desc: "", file: "tracks/song1.mp3", duration: "03:23", cover: "covers/cover0.jpg", isNew: false },
             { id: 7, title: "Нейронный Дождь", desc: "О чём думает нейросеть?", file: "tracks/song1.mp3", duration: "4:03", cover: "cover/cover2.jpg", isNew: false },
             { id: 8, title: "Placeholder II", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false },
-            { id: 9, title: "Placeholder III", desc: "Coming soon...", file: "#", duration: 0:00", cover: "", isNew: false },
+            { id: 9, title: "Placeholder III", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false },
             { id: 10, title: "Placeholder IV", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false },
             { id: 11, title: "Placeholder V", desc: "Coming soon...", file: "#", duration: "0:00", cover: "", isNew: false }
         ];
