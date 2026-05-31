@@ -214,8 +214,20 @@
         .mini-play:hover { transform: scale(1.1); box-shadow: 0 0 15px rgba(255,45,117,0.5); }
         .mini-play svg { width: 15px; fill: white; margin-left: 2px; }
         .mini-dur { font-family: 'JetBrains Mono'; font-size: 0.85rem; color: var(--neon-cyan); }
-        .mini-download { display: block; width: 100%; padding: 12px; text-align: center; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); border-radius: 12px; color: var(--neon-cyan); text-decoration: none; font-family: 'JetBrains Mono'; font-size: 0.85rem; transition: 0.3s; }
+        .mini-download { display: block; width: 100%; padding: 12px; text-align: center; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); border-radius: 12px; color: var(--neon-cyan); text-decoration: none; font-family: 'JetBrains Mono'; font-size: 0.85rem; transition: 0.3s; position: relative; overflow: hidden; }
         .mini-download:hover { background: rgba(0,212,255,0.2); box-shadow: 0 0 15px rgba(0,212,255,0.3); }
+        
+        /* Анимация загрузки для кнопки скачивания */
+        .download-loading { pointer-events: none; opacity: 0.8; }
+        .download-loading i, .download-loading svg { display: none !important; }
+        .download-loading::after {
+            content: ''; display: inline-block; width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.3); border-radius: 50%;
+            border-top-color: var(--neon-cyan);
+            animation: spinLoader 0.8s linear infinite;
+            vertical-align: middle; margin-right: 8px;
+        }
+        @keyframes spinLoader { to { transform: rotate(360deg); } }
 
         /* Мини-чат */
         .mini-chat-box { height: 240px; overflow-y: auto; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 12px; }
@@ -539,7 +551,7 @@
                     </div>
                 </div>
             </div>
-            <a href="tracks/song7.mp3" download="поезд-на-юг.mp3" class="mini-download">⬇️ Скачать трек</a>
+            <a href="tracks/song7.mp3" download="поезд-на-юг.mp3" class="mini-download download-trigger">⬇️ Скачать трек</a>
             
             <!-- Добавлена кнопка закрыть внизу -->
             <div class="modal-footer">
@@ -703,7 +715,7 @@
         }
         enterBtn.addEventListener('click', enterSite);
         
-        function initSite() { createParticles(); renderTracks(); window.dispatchEvent(new Event('scroll')); }
+        function initSite() { createParticles(); renderTracks(); window.dispatchEvent(new Event('scroll')); initDownloadButtons(); }
 
         const cursor = document.querySelector('.cursor'), cursorDot = document.querySelector('.cursor-dot'), isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
         if (!isMobile) { 
@@ -713,6 +725,25 @@
         window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
         function toggleNews() { const w = document.getElementById('newsWrapper'); w.classList.toggle('visible'); if (w.classList.contains('visible')) setTimeout(() => w.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100); }
         function createParticles() { const c = document.getElementById('particles'); for (let i = 0; i < 70; i++) { const p = document.createElement('div'); p.className = 'particle'; p.style.left = Math.random() * 100 + '%'; p.style.top = Math.random() * 100 + '%'; p.style.animationDuration = (Math.random() * 4 + 3) + 's'; p.style.animationDelay = (Math.random() * 5) + 's'; p.style.opacity = Math.random() * 0.7 + 0.3; c.appendChild(p); } }
+
+        // === DOWNLOAD ANIMATION LOGIC ===
+        function initDownloadButtons() {
+            const btns = document.querySelectorAll('.download-btn, .mini-download');
+            btns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    if (this.classList.contains('download-loading')) return; // Уже идет загрузка
+                    
+                    const originalContent = this.innerHTML;
+                    this.classList.add('download-loading');
+                    this.innerHTML = '<span>Загрузка...</span>';
+                    
+                    setTimeout(() => {
+                        this.classList.remove('download-loading');
+                        this.innerHTML = originalContent;
+                    }, 2000); // Возврат через 2 секунды
+                });
+            });
+        }
 
         // === WELCOME MODALS LOGIC ===
         function openWelcomeNews() { document.getElementById('welcomeNewsModal').classList.add('active'); }
@@ -788,13 +819,13 @@
         function createFullCard(track) {
             const idx = tracks.findIndex(t => t.id === track.id);
             const card = document.createElement('div'); card.className = 'track-card'; card.dataset.id = track.id;
-            card.innerHTML = `${getCoverHTML(track)}<div class="track-player-row"><button class="play-btn" onclick="playFromCard(${idx})"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button><div class="track-info"><h3>${track.title}</h3><p>${track.desc || 'Без описания'}</p></div><div style="display:flex;align-items:center;gap:4px;"><span class="track-duration">${track.duration}</span><a href="${track.file}" download="${track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-')}.mp3" class="download-btn">${downloadIcon}</a></div></div><button class="release-info-btn" onclick="openReleaseModal('${track.id===1?'modalTrack1':'modalTrack2'}')"><i class="fas fa-info-circle"></i> О релизе</button>`;
+            card.innerHTML = `${getCoverHTML(track)}<div class="track-player-row"><button class="play-btn" onclick="playFromCard(${idx})"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button><div class="track-info"><h3>${track.title}</h3><p>${track.desc || 'Без описания'}</p></div><div style="display:flex;align-items:center;gap:4px;"><span class="track-duration">${track.duration}</span><a href="${track.file}" download="${track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-')}.mp3" class="download-btn download-trigger">${downloadIcon}</a></div></div><button class="release-info-btn" onclick="openReleaseModal('${track.id===1?'modalTrack1':'modalTrack2'}')"><i class="fas fa-info-circle"></i> О релизе</button>`;
             return card;
         }
         function createCompactItem(track) {
             const idx = tracks.findIndex(t => t.id === track.id);
             const item = document.createElement('div'); item.className = 'compact-item'; item.dataset.id = track.id;
-            item.innerHTML = `${track.cover ? `<div class="compact-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>` : `<div class="compact-cover">🎵</div>`}<button class="play-btn compact-play-btn" onclick="playFromCard(${idx})" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05));color:var(--text-primary);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;"><svg viewBox="0 0 24 24" style="width:14px;fill:currentColor;margin-left:2px;"><polygon points="5,3 19,12 5,21"/></svg></button><div class="compact-info"><h4>${track.title}</h4><p>${track.desc || 'Без описания'}</p></div><span class="compact-duration">${track.duration}</span><a href="${track.file}" download="${track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-')}.mp3" class="download-btn">${downloadIcon}</a>`;
+            item.innerHTML = `${track.cover ? `<div class="compact-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>` : `<div class="compact-cover">🎵</div>`}<button class="play-btn compact-play-btn" onclick="playFromCard(${idx})" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05));color:var(--text-primary);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;"><svg viewBox="0 0 24 24" style="width:14px;fill:currentColor;margin-left:2px;"><polygon points="5,3 19,12 5,21"/></svg></button><div class="compact-info"><h4>${track.title}</h4><p>${track.desc || 'Без описания'}</p></div><span class="compact-duration">${track.duration}</span><a href="${track.file}" download="${track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-')}.mp3" class="download-btn download-trigger">${downloadIcon}</a>`;
             return item;
         }
         function renderTracks() {
@@ -806,6 +837,7 @@
                 archiveTracks.slice(4).forEach(track => hiddenTracks.appendChild(createCompactItem(track)));
                 showAllBtn.style.display = archiveTracks.length > 4 ? 'flex' : 'none';
             } else { archiveList.innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:30px;">В архиве пока пусто. Скоро будет 🔜</p>'; showAllBtn.style.display = 'none'; }
+            initDownloadButtons(); // Инициализируем анимацию для новых кнопок
         }
         function toggleArchive() {
             const list = document.getElementById('hiddenTracks'), btn = document.getElementById('showAllBtn'); list.classList.toggle('visible');
