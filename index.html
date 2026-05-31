@@ -99,10 +99,41 @@
         .status-dot { width: 12px; height: 12px; background: var(--neon-cyan); border-radius: 50%; box-shadow: 0 0 10px var(--neon-cyan); animation: pulse-live 1.5s infinite; }
         @keyframes pulse-live { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.8); } }
 
-        .bio { line-height: 1.6; color: var(--text-secondary); font-size: 1rem; margin-bottom: 32px; }
-        .bio strong { color: var(--text-primary); font-weight: 600; }
-        .bio a { color: var(--neon-cyan); text-decoration: none; transition: 0.3s; }
-        .bio a:hover { text-shadow: 0 0 10px var(--neon-cyan); }
+        /* === CYBER BIO FRAME === */
+        .cyber-bio-frame {
+            background: linear-gradient(145deg, rgba(15,15,25,0.8), rgba(25,25,40,0.6));
+            border: 1px solid rgba(255, 45, 117, 0.3);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 32px;
+            position: relative;
+            box-shadow: 0 0 15px rgba(255, 45, 117, 0.1), inset 0 0 20px rgba(0, 212, 255, 0.05);
+            transition: 0.3s;
+        }
+        .cyber-bio-frame:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.2), inset 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+        .cyber-bio-frame::before {
+            content: ''; position: absolute; top: -1px; left: -1px;
+            width: 30px; height: 30px; border-top: 2px solid var(--neon-cyan); border-left: 2px solid var(--neon-cyan);
+            border-radius: 12px 0 0 0;
+        }
+        .cyber-bio-frame::after {
+            content: ''; position: absolute; bottom: -1px; right: -1px;
+            width: 30px; height: 30px; border-bottom: 2px solid var(--neon-cyan); border-right: 2px solid var(--neon-cyan);
+            border-radius: 0 0 12px 0;
+        }
+        .cyber-bio-text {
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+        .cyber-bio-text strong { color: var(--neon-cyan); }
+        .cyber-bio-text em { font-style: normal; color: var(--neon-pink); opacity: 0.9; }
 
         .action-btns { display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%; }
         .cyber-btn {
@@ -161,6 +192,15 @@
         .wn-close:hover { color: var(--neon-pink); transform: rotate(90deg); }
         .modal-header { font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; }
         .modal-header i { color: var(--neon-cyan); }
+        
+        /* Модальный футер для кнопок */
+        .modal-footer { margin-top: 20px; display: flex; justify-content: center; }
+        .modal-close-btn {
+            padding: 10px 28px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05); color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; cursor: pointer; transition: 0.3s;
+        }
+        .modal-close-btn:hover { border-color: var(--neon-blue); color: white; background: rgba(0, 212, 255, 0.1); box-shadow: 0 0 15px rgba(0, 212, 255, 0.2); }
 
         /* Мини-плеер для релиза */
         .mini-player { display: flex; gap: 15px; align-items: center; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid rgba(255,45,117,0.2); margin-bottom: 15px; }
@@ -193,7 +233,7 @@
         .message-time { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-secondary); margin-top: 4px; opacity: 0.7; }
         .empty-chat { text-align: center; color: var(--text-secondary); font-size: 0.85rem; padding: 30px 20px; opacity: 0.7; }
 
-        /* === ОСТАЛЬНОЙ CSS (Сокращен для читаемости, функционал сохранен) === */
+        /* === ОСТАЛЬНОЙ CSS === */
         .subscribe-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 20000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; padding: 20px; }
         .subscribe-modal-overlay.active { display: flex; opacity: 1; }
         .subscribe-modal { width: 100%; max-width: 450px; padding: 40px 30px; background: linear-gradient(145deg, rgba(20,20,30,0.95), rgba(15,15,25,0.95)); border: 2px solid var(--neon-cyan); border-radius: 24px; box-shadow: 0 0 40px rgba(0, 245, 212, 0.3), 0 0 80px rgba(0, 245, 212, 0.1), inset 0 0 40px rgba(0, 245, 212, 0.05); text-align: center; position: relative; transform: scale(0.9) translateY(20px); transition: transform 0.3s ease; animation: modalGlow 3s ease infinite; }
@@ -436,7 +476,14 @@
                     <h1 class="username">EVGENII<span style="color:var(--neon-cyan)">.</span></h1>
                     <div class="status-dot" title="Online"></div>
                 </div>
-                <div class="bio">Где заканчиваюсь я — и начинается ИИ.<br>Эксперимент на стыке эмоций и кода.</div>
+                
+                <!-- НОВАЯ КРАСИВАЯ РАМКА ДЛЯ ТЕКСТА -->
+                <div class="cyber-bio-frame">
+                    <div class="cyber-bio-text">
+                        <em>Где заканчиваюсь я</em> — и начинается ИИ.<br>
+                        <strong>Эксперимент</strong> на стыке эмоций и кода.
+                    </div>
+                </div>
                 
                 <div class="action-btns" style="grid-template-columns: 1fr; gap: 12px;">
                     <!-- 1. Лента обновлений -->
@@ -476,7 +523,7 @@
         </div>
     </div>
 
-    <!-- === RELEASE MODAL (Дублирует первый трек) === -->
+    <!-- === RELEASE MODAL (Дублирует первый трек + КНОПКА ЗАКРЫТЬ) === -->
     <div class="welcome-modal-overlay" id="releaseModal">
         <div class="welcome-modal">
             <button class="wn-close" onclick="closeReleaseModal()">×</button>
@@ -493,6 +540,11 @@
                 </div>
             </div>
             <a href="tracks/song7.mp3" download="поезд-на-юг.mp3" class="mini-download">⬇️ Скачать трек</a>
+            
+            <!-- Добавлена кнопка закрыть внизу -->
+            <div class="modal-footer">
+                <button class="modal-close-btn" onclick="closeReleaseModal()">Закрыть</button>
+            </div>
         </div>
     </div>
 
