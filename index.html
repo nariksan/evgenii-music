@@ -5,24 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVGENII — Music</title>
     
-    <!-- Favicon & Icons -->
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
     <link rel="apple-touch-icon" href="./icon.png">
     
-    <!-- PWA -->
     <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#0a0a0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -225,19 +221,6 @@
         .mini-play:hover { transform: scale(1.1); box-shadow: 0 0 15px rgba(255,45,117,0.5); }
         .mini-play svg { width: 15px; fill: white; margin-left: 2px; }
         .mini-dur { font-family: 'JetBrains Mono'; font-size: 0.85rem; color: var(--neon-cyan); }
-        .mini-download { display: block; width: 100%; padding: 12px; text-align: center; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); border-radius: 12px; color: var(--neon-cyan); text-decoration: none; font-family: 'JetBrains Mono'; font-size: 0.85rem; transition: 0.3s; position: relative; overflow: hidden; margin-bottom: 8px; }
-        .mini-download:hover { background: rgba(0,212,255,0.2); box-shadow: 0 0 15px rgba(0,212,255,0.3); }
-        
-        .download-loading { pointer-events: none; opacity: 0.8; }
-        .download-loading i, .download-loading svg { display: none !important; }
-        .download-loading::after {
-            content: ''; display: inline-block; width: 16px; height: 16px;
-            border: 2px solid rgba(255,255,255,0.3); border-radius: 50%;
-            border-top-color: var(--neon-cyan);
-            animation: spinLoader 0.8s linear infinite;
-            vertical-align: middle; margin-right: 8px;
-        }
-        @keyframes spinLoader { to { transform: rotate(360deg); } }
 
         .mini-chat-box { height: 240px; overflow-y: auto; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 12px; }
         .mini-chat-input { display: flex; gap: 10px; }
@@ -826,7 +809,7 @@
         </div>
     </div>
 
-    <!-- RELEASE MODAL -->
+    <!-- RELEASE MODAL (БЕЗ СКАЧИВАНИЯ) -->
     <div class="welcome-modal-overlay" id="releaseModal">
         <div class="welcome-modal">
             <button class="wn-close" onclick="closeNewReleaseModal()">×</button>
@@ -842,7 +825,6 @@
                     </div>
                 </div>
             </div>
-            <a href="tracks/song7.mp3" download="поезд-на-юг.mp3" class="mini-download download-trigger" data-track="Поезд на юг">⬇️ Скачать трек</a>
             <div class="modal-footer">
                 <button class="modal-close-btn" onclick="closeNewReleaseModal()">Закрыть</button>
             </div>
@@ -947,10 +929,6 @@
 
     <!-- ==========================
          MAIN SITE — С ИЗМЕНЕНИЯМИ
-         ✅ Нет nav с EVGENII
-         ✅ Текст в рамке крупнее
-         ✅ Две кнопки: Лента + Чат
-         ✅ Модальное окно для скачивания
     ========================== -->
     <div id="mainSite">
         <div class="cursor"></div><div class="cursor-dot"></div>
@@ -958,8 +936,6 @@
         <div class="particles" id="particles"></div>
         <div class="grid-overlay"></div>
         
-        <!-- ✅ NAV УДАЛЁН — нет надписи EVGENII сверху -->
-
         <!-- HERO -->
         <section class="hero"><div class="container">
             <h1><span class="gradient-text">EVGENII</span></h1>
@@ -1067,17 +1043,14 @@
             const fileNameEl = document.getElementById('downloadFileName');
             const downloadLink = document.getElementById('downloadActualLink');
             
-            // Устанавливаем данные трека
             trackNameEl.textContent = trackName;
             const fileName = trackName.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
             fileNameEl.textContent = fileName;
             downloadLink.href = trackFile;
             downloadLink.setAttribute('download', fileName);
             
-            // Показываем модальное окно
             modal.classList.add('active');
             
-            // Автоматически начинаем "подготовку" через 2 секунды
             setTimeout(() => {
                 downloadLink.click();
             }, 2000);
@@ -1094,11 +1067,9 @@
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
                     
-                    // Получаем данные трека
                     const trackName = this.getAttribute('data-track') || 'Трек';
                     const trackFile = this.getAttribute('href') || '#';
                     
-                    // Открываем модальное окно
                     openDownloadModal(trackName, trackFile);
                 });
             });
