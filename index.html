@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVGENII — Music</title>
     
+    <!-- Favicon & Icons -->
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
     <link rel="apple-touch-icon" href="./icon.png">
     
+    <!-- PWA -->
     <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#0a0a0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -221,7 +225,7 @@
         .mini-play:hover { transform: scale(1.1); box-shadow: 0 0 15px rgba(255,45,117,0.5); }
         .mini-play svg { width: 15px; fill: white; margin-left: 2px; }
         .mini-dur { font-family: 'JetBrains Mono'; font-size: 0.85rem; color: var(--neon-cyan); }
-        .mini-download { display: block; width: 100%; padding: 12px; text-align: center; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); border-radius: 12px; color: var(--neon-cyan); text-decoration: none; font-family: 'JetBrains Mono'; font-size: 0.85rem; transition: 0.3s; position: relative; overflow: hidden; }
+        .mini-download { display: block; width: 100%; padding: 12px; text-align: center; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); border-radius: 12px; color: var(--neon-cyan); text-decoration: none; font-family: 'JetBrains Mono'; font-size: 0.85rem; transition: 0.3s; position: relative; overflow: hidden; margin-bottom: 8px; }
         .mini-download:hover { background: rgba(0,212,255,0.2); box-shadow: 0 0 15px rgba(0,212,255,0.3); }
         
         .download-loading { pointer-events: none; opacity: 0.8; }
@@ -641,7 +645,7 @@
                     
                     <div class="action-dual-row">
                         <button class="glass-btn release-btn" onclick="openNewRelease()">
-                            <span class="glass-btn-icon"></span> Новый релиз
+                            <span class="glass-btn-icon">🎵</span> Новый релиз
                         </button>
                         <button class="glass-btn chat-btn" onclick="openChatModal()">
                             <span class="glass-btn-icon">💬</span> Чат
@@ -662,9 +666,9 @@
             <button class="wn-close" onclick="closeWelcomeNews()">×</button>
             <div class="modal-header"><i class="fas fa-bolt"></i> СИСТЕМНЫЙ ЖУРНАЛ</div>
             <ul class="wn-list">
-                <li class="wn-item"><div class="wn-date">27 МАЯ</div><div class="wn-text"><span class="wn-tag NEW">NEW</span>Трек <strong>"Поезд на юг"</strong> уже в релизах! 🎧</div></li>
+                <li class="wn-item"><div class="wn-date">27 МАЯ</div><div class="wn-text"><span class="wn-tag NEW">NEW</span>Трек <strong>"Поезд на юг"</strong> уже в релизах! </div></li>
                 <li class="wn-item"><div class="wn-date">24 МАЯ</div><div class="wn-text"><span class="wn-tag">NEW</span>Обновлен <strong>дизайн входа 🎨✨</strong></div></li>
-                <li class="wn-item"><div class="wn-date">22 МАЯ</div><div class="wn-text"><span class="wn-tag">SYS</span>Добавлен <strong>внутренний чат</strong></div></li>
+                <li class="wn-item"><div class="wn-date">22 МАЯ</div><div class="wn-text"><span class="wn-tag">SYS</span>Добавлен <strong>внутренний чат💬</strong></div></li>
             </ul>
         </div>
     </div>
@@ -768,6 +772,7 @@
          ✅ Нет nav с EVGENII
          ✅ Текст в рамке крупнее
          ✅ Две кнопки: Лента + Чат
+         ✅ Скачивание файлов исправлено (загрузка не блокируется)
     ========================== -->
     <div id="mainSite">
         <div class="cursor"></div><div class="cursor-dot"></div>
@@ -877,7 +882,7 @@
         function toggleNews() { const w = document.getElementById('newsWrapper'); w.classList.toggle('visible'); if (w.classList.contains('visible')) setTimeout(() => w.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100); }
         function createParticles() { const c = document.getElementById('particles'); for (let i = 0; i < 70; i++) { const p = document.createElement('div'); p.className = 'particle'; p.style.left = Math.random() * 100 + '%'; p.style.top = Math.random() * 100 + '%'; p.style.animationDuration = (Math.random() * 4 + 3) + 's'; p.style.animationDelay = (Math.random() * 5) + 's'; p.style.opacity = Math.random() * 0.7 + 0.3; c.appendChild(p); } }
 
-        // АНИМАЦИЯ ЗАГРУЗКИ ПОД КНОПКОЙ
+        // ✅ ИСПРАВЛЕННАЯ ФУНКЦИЯ СКАЧИВАНИЯ (убран e.preventDefault())
         function initDownloadButtons() {
             const btns = document.querySelectorAll('.download-btn, .mini-download');
             btns.forEach(btn => {
@@ -898,13 +903,14 @@
                     
                     loaderContainer.classList.add('active');
                     
+                    // Таймер возврата кнопки в исходное состояние
                     setTimeout(() => {
                         this.classList.remove('download-loading');
                         this.innerHTML = originalText;
                         loaderContainer.classList.remove('active');
                     }, 2500);
                     
-                    e.preventDefault();
+                    // ✅ Убран e.preventDefault() — ссылка сработает и файл скачается!
                 });
             });
         }
@@ -984,7 +990,7 @@
         function createCompactItem(track) {
             const idx = tracks.findIndex(t => t.id === track.id);
             const item = document.createElement('div'); item.className = 'compact-item'; item.dataset.id = track.id;
-            item.innerHTML = `${track.cover ? `<div class="compact-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>` : `<div class="compact-cover">🎵</div>`}<button class="play-btn compact-play-btn" onclick="playFromCard(${idx})" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05));color:var(--text-primary);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;"><svg viewBox="0 0 24 24" style="width:14px;fill:currentColor;margin-left:2px;"><polygon points="5,3 19,12 5,21"/></svg></button><div class="compact-info"><h4>${track.title}</h4><p>${track.desc || 'Без описания'}</p></div><span class="compact-duration">${track.duration}</span><a href="${track.file}" download="${track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-')}.mp3" class="download-btn download-trigger">${downloadIcon}</a>`;
+            item.innerHTML = `${track.cover ? `<div class="compact-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>` : `<div class="compact-cover"></div>`}<button class="play-btn compact-play-btn" onclick="playFromCard(${idx})" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05));color:var(--text-primary);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;"><svg viewBox="0 0 24 24" style="width:14px;fill:currentColor;margin-left:2px;"><polygon points="5,3 19,12 5,21"/></svg></button><div class="compact-info"><h4>${track.title}</h4><p>${track.desc || 'Без описания'}</p></div><span class="compact-duration">${track.duration}</span><a href="${track.file}" download="${track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-')}.mp3" class="download-btn download-trigger">${downloadIcon}</a>`;
             return item;
         }
         function renderTracks() {
