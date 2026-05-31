@@ -299,6 +299,156 @@
         .release-info-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 10px 16px; margin-top: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(181, 55, 242, 0.3); border-radius: 12px; color: var(--neon-purple); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; cursor: pointer; transition: all 0.3s ease; }
         .release-info-btn:hover { background: rgba(181, 55, 242, 0.15); border-color: var(--neon-purple); color: #fff; box-shadow: 0 0 20px rgba(181, 55, 242, 0.3); transform: translateY(-2px); }
 
+        /* === DOWNLOAD MODAL (НОВОЕ) === */
+        .download-modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(20px);
+            z-index: 30000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+        }
+        .download-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .download-modal {
+            width: 100%;
+            max-width: 480px;
+            background: linear-gradient(145deg, rgba(15,15,25,0.98), rgba(20,20,35,0.98));
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.3), 0 0 100px rgba(0, 212, 255, 0.1), inset 0 0 50px rgba(0, 212, 255, 0.05);
+            transform: scale(0.85) translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: downloadModalGlow 4s ease infinite;
+        }
+        @keyframes downloadModalGlow {
+            0%, 100% { box-shadow: 0 0 50px rgba(0, 212, 255, 0.3), 0 0 100px rgba(0, 212, 255, 0.1), inset 0 0 50px rgba(0, 212, 255, 0.05); }
+            50% { box-shadow: 0 0 70px rgba(0, 212, 255, 0.5), 0 0 120px rgba(0, 212, 255, 0.2), inset 0 0 70px rgba(0, 212, 255, 0.1); }
+        }
+        .download-modal-overlay.active .download-modal {
+            transform: scale(1) translateY(0);
+        }
+        .download-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.3s;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .download-modal-close:hover {
+            color: var(--neon-pink);
+            transform: rotate(90deg) scale(1.1);
+            background: rgba(255, 45, 117, 0.1);
+        }
+        .download-icon {
+            font-size: 4rem;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: downloadIconPulse 2s ease-in-out infinite;
+        }
+        @keyframes downloadIconPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .download-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+        .download-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+        .download-description strong {
+            color: var(--neon-cyan);
+            font-weight: 600;
+        }
+        .download-wait-info {
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+        }
+        .download-wait-info i {
+            margin-right: 8px;
+            animation: spinLoader 2s linear infinite;
+        }
+        .download-track-name {
+            background: rgba(255, 45, 117, 0.08);
+            border: 1px solid rgba(255, 45, 117, 0.3);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--neon-pink);
+        }
+        .download-track-name strong {
+            color: white;
+            font-size: 1.1rem;
+        }
+        .download-btn-action {
+            width: 100%;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+            color: var(--dark-bg);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .download-btn-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.6);
+            filter: brightness(1.1);
+        }
+        .download-btn-action:active {
+            transform: translateY(-1px);
+        }
+        .download-btn-action i {
+            font-size: 1.2rem;
+        }
+
         /* === GLOBAL PLAYER === */
         .global-player { position: fixed; bottom: 0; left: 0; width: 100%; height: 72px; z-index: 9000; background: linear-gradient(145deg, rgba(10,10,15,0.95), rgba(20,20,30,0.98)); border-top: 1px solid rgba(0, 212, 255, 0.3); backdrop-filter: blur(20px); display: none; align-items: center; padding: 0 20px; box-shadow: 0 -4px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,212,255,0.15); animation: playerSlideUp 0.3s ease; }
         .global-player.visible { display: flex; }
@@ -577,6 +727,9 @@
             .hero-cyber-text .line-1 { font-size: 1.2rem; }
             .hero-cyber-text .line-2 { font-size: 1rem; }
             .hero-cyber-text .line-3 { font-size: 0.95rem; }
+            .download-modal { padding: 30px 20px; }
+            .download-icon { font-size: 3rem; }
+            .download-title { font-size: 1.3rem; }
         }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
@@ -689,7 +842,7 @@
                     </div>
                 </div>
             </div>
-            <a href="tracks/song7.mp3" download="поезд-на-юг.mp3" class="mini-download download-trigger">⬇️ Скачать трек</a>
+            <a href="tracks/song7.mp3" download="поезд-на-юг.mp3" class="mini-download download-trigger" data-track="Поезд на юг">⬇️ Скачать трек</a>
             <div class="modal-footer">
                 <button class="modal-close-btn" onclick="closeNewReleaseModal()">Закрыть</button>
             </div>
@@ -721,6 +874,31 @@
             <div class="sub-input-group"><input type="email" id="subEmail" class="sub-input" placeholder="your@email.com" required></div>
             <button class="sub-btn-action" id="subActionBtn" onclick="handleSubscribe()">Подписаться</button>
             <div class="sub-status" id="subStatus"></div>
+        </div>
+    </div>
+
+    <!-- DOWNLOAD MODAL (НОВОЕ) -->
+    <div class="download-modal-overlay" id="downloadModal">
+        <div class="download-modal">
+            <button class="download-modal-close" onclick="closeDownloadModal()">×</button>
+            <div class="download-icon">
+                <i class="fas fa-cloud-download-alt"></i>
+            </div>
+            <h3 class="download-title">Подготовка к скачиванию</h3>
+            <p class="download-description">
+                Трек <strong id="downloadTrackName">—</strong> готовится для загрузки
+            </p>
+            <div class="download-wait-info">
+                <i class="fas fa-spinner"></i>
+                <span>Скачивание происходит не сразу. Пожалуйста, подождите несколько секунд...</span>
+            </div>
+            <div class="download-track-name">
+                Файл: <strong id="downloadFileName">track.mp3</strong>
+            </div>
+            <a href="#" id="downloadActualLink" class="download-btn-action" download>
+                <i class="fas fa-download"></i>
+                <span>Скачать трек</span>
+            </a>
         </div>
     </div>
 
@@ -772,7 +950,7 @@
          ✅ Нет nav с EVGENII
          ✅ Текст в рамке крупнее
          ✅ Две кнопки: Лента + Чат
-         ✅ Скачивание файлов исправлено (загрузка не блокируется)
+         ✅ Модальное окно для скачивания
     ========================== -->
     <div id="mainSite">
         <div class="cursor"></div><div class="cursor-dot"></div>
@@ -882,35 +1060,46 @@
         function toggleNews() { const w = document.getElementById('newsWrapper'); w.classList.toggle('visible'); if (w.classList.contains('visible')) setTimeout(() => w.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100); }
         function createParticles() { const c = document.getElementById('particles'); for (let i = 0; i < 70; i++) { const p = document.createElement('div'); p.className = 'particle'; p.style.left = Math.random() * 100 + '%'; p.style.top = Math.random() * 100 + '%'; p.style.animationDuration = (Math.random() * 4 + 3) + 's'; p.style.animationDelay = (Math.random() * 5) + 's'; p.style.opacity = Math.random() * 0.7 + 0.3; c.appendChild(p); } }
 
-        // ✅ ИСПРАВЛЕННАЯ ФУНКЦИЯ СКАЧИВАНИЯ (убран e.preventDefault())
+        // ✅ МОДАЛЬНОЕ ОКНО СКАЧИВАНИЯ
+        function openDownloadModal(trackName, trackFile) {
+            const modal = document.getElementById('downloadModal');
+            const trackNameEl = document.getElementById('downloadTrackName');
+            const fileNameEl = document.getElementById('downloadFileName');
+            const downloadLink = document.getElementById('downloadActualLink');
+            
+            // Устанавливаем данные трека
+            trackNameEl.textContent = trackName;
+            const fileName = trackName.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-') + '.mp3';
+            fileNameEl.textContent = fileName;
+            downloadLink.href = trackFile;
+            downloadLink.setAttribute('download', fileName);
+            
+            // Показываем модальное окно
+            modal.classList.add('active');
+            
+            // Автоматически начинаем "подготовку" через 2 секунды
+            setTimeout(() => {
+                downloadLink.click();
+            }, 2000);
+        }
+        
+        function closeDownloadModal() {
+            document.getElementById('downloadModal').classList.remove('active');
+        }
+
+        // Инициализация кнопок скачивания с модальным окном
         function initDownloadButtons() {
             const btns = document.querySelectorAll('.download-btn, .mini-download');
             btns.forEach(btn => {
                 btn.addEventListener('click', function(e) {
-                    if (this.classList.contains('download-loading')) return;
+                    e.preventDefault();
                     
-                    let loaderContainer = this.nextElementSibling;
-                    if (!loaderContainer || !loaderContainer.classList.contains('download-loader-container')) {
-                        loaderContainer = document.createElement('div');
-                        loaderContainer.className = 'download-loader-container';
-                        loaderContainer.innerHTML = '<span class="download-loader">Загрузка...</span>';
-                        this.parentNode.insertBefore(loaderContainer, this.nextSibling);
-                    }
+                    // Получаем данные трека
+                    const trackName = this.getAttribute('data-track') || 'Трек';
+                    const trackFile = this.getAttribute('href') || '#';
                     
-                    this.classList.add('download-loading');
-                    const originalText = this.textContent;
-                    this.innerHTML = '<span>⏳</span>';
-                    
-                    loaderContainer.classList.add('active');
-                    
-                    // Таймер возврата кнопки в исходное состояние
-                    setTimeout(() => {
-                        this.classList.remove('download-loading');
-                        this.innerHTML = originalText;
-                        loaderContainer.classList.remove('active');
-                    }, 2500);
-                    
-                    // ✅ Убран e.preventDefault() — ссылка сработает и файл скачается!
+                    // Открываем модальное окно
+                    openDownloadModal(trackName, trackFile);
                 });
             });
         }
@@ -935,8 +1124,8 @@
             mod.scrollTop = mod.scrollHeight;
         }
 
-        ['welcomeNewsModal', 'releaseModal', 'chatModal'].forEach(id => {
-            document.getElementById(id).addEventListener('click', (e) => { if(e.target.classList.contains('welcome-modal-overlay')) e.target.classList.remove('active'); });
+        ['welcomeNewsModal', 'releaseModal', 'chatModal', 'downloadModal'].forEach(id => {
+            document.getElementById(id).addEventListener('click', (e) => { if(e.target.classList.contains('welcome-modal-overlay') || e.target.classList.contains('download-modal-overlay')) e.target.classList.remove('active'); });
         });
 
         document.getElementById('modalChatSend').addEventListener('click', () => {
@@ -984,13 +1173,13 @@
         function createFullCard(track) {
             const idx = tracks.findIndex(t => t.id === track.id);
             const card = document.createElement('div'); card.className = 'track-card'; card.dataset.id = track.id;
-            card.innerHTML = `${getCoverHTML(track)}<div class="track-player-row"><button class="play-btn" onclick="playFromCard(${idx})"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button><div class="track-info"><h3>${track.title}</h3><p>${track.desc || 'Без описания'}</p></div><div style="display:flex;align-items:center;gap:4px;"><span class="track-duration">${track.duration}</span><a href="${track.file}" download="${track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-')}.mp3" class="download-btn download-trigger">${downloadIcon}</a></div></div><button class="release-info-btn" onclick="openReleaseModal('${track.id===1?'modalTrack1':'modalTrack2'}')"><i class="fas fa-info-circle"></i> О релизе</button>`;
+            card.innerHTML = `${getCoverHTML(track)}<div class="track-player-row"><button class="play-btn" onclick="playFromCard(${idx})"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button><div class="track-info"><h3>${track.title}</h3><p>${track.desc || 'Без описания'}</p></div><div style="display:flex;align-items:center;gap:4px;"><span class="track-duration">${track.duration}</span><a href="${track.file}" class="download-btn download-trigger" data-track="${track.title}">${downloadIcon}</a></div></div><button class="release-info-btn" onclick="openReleaseModal('${track.id===1?'modalTrack1':'modalTrack2'}')"><i class="fas fa-info-circle"></i> О релизе</button>`;
             return card;
         }
         function createCompactItem(track) {
             const idx = tracks.findIndex(t => t.id === track.id);
             const item = document.createElement('div'); item.className = 'compact-item'; item.dataset.id = track.id;
-            item.innerHTML = `${track.cover ? `<div class="compact-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>` : `<div class="compact-cover"></div>`}<button class="play-btn compact-play-btn" onclick="playFromCard(${idx})" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05));color:var(--text-primary);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;"><svg viewBox="0 0 24 24" style="width:14px;fill:currentColor;margin-left:2px;"><polygon points="5,3 19,12 5,21"/></svg></button><div class="compact-info"><h4>${track.title}</h4><p>${track.desc || 'Без описания'}</p></div><span class="compact-duration">${track.duration}</span><a href="${track.file}" download="${track.title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-')}.mp3" class="download-btn download-trigger">${downloadIcon}</a>`;
+            item.innerHTML = `${track.cover ? `<div class="compact-cover"><img src="${track.cover}" alt="${track.title}" onerror="this.parentElement.innerHTML='🎵'"></div>` : `<div class="compact-cover"></div>`}<button class="play-btn compact-play-btn" onclick="playFromCard(${idx})" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05));color:var(--text-primary);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;"><svg viewBox="0 0 24 24" style="width:14px;fill:currentColor;margin-left:2px;"><polygon points="5,3 19,12 5,21"/></svg></button><div class="compact-info"><h4>${track.title}</h4><p>${track.desc || 'Без описания'}</p></div><span class="compact-duration">${track.duration}</span><a href="${track.file}" class="download-btn download-trigger" data-track="${track.title}">${downloadIcon}</a>`;
             return item;
         }
         function renderTracks() {
@@ -1043,8 +1232,8 @@
 
         // GLOBAL KEYS
         document.addEventListener('keydown', (e) => {
-            if (!welcomeScreen.classList.contains('hidden') && e.key === 'Enter' && !document.querySelector('.welcome-modal-overlay.active')) { e.preventDefault(); enterSite(); }
-            if (e.key === 'Escape') { closeWelcomeNews(); closeNewReleaseModal(); closeChatModal(); closeSubscribeModal(); document.querySelectorAll('.release-modal-overlay.active').forEach(m => m.classList.remove('active')); }
+            if (!welcomeScreen.classList.contains('hidden') && e.key === 'Enter' && !document.querySelector('.welcome-modal-overlay.active') && !document.querySelector('.download-modal-overlay.active')) { e.preventDefault(); enterSite(); }
+            if (e.key === 'Escape') { closeWelcomeNews(); closeNewReleaseModal(); closeChatModal(); closeSubscribeModal(); closeDownloadModal(); document.querySelectorAll('.release-modal-overlay.active').forEach(m => m.classList.remove('active')); }
         });
     </script>
 </body>
