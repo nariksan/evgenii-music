@@ -109,8 +109,9 @@
         .tile-icon.tracks { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.chat { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.community { background: rgba(176, 0, 255, 0.15); color: var(--purple); }
-        .tile-icon.about { background: rgba(255, 0, 229, 0.15); color: var(--magenta); }
         .tile-icon.contact { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
+        .tile-icon.about { background: rgba(255, 0, 229, 0.15); color: var(--magenta); }
+        .tile-icon.placeholder { background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); }
         .tile-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
         .tile-desc { font-size: 0.75rem; color: var(--text-secondary); }
 
@@ -233,6 +234,20 @@
         .form-status.error { color: #ff6b6b; }
         .contact-intro { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 10px; }
         .contact-intro p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
+
+        .vpn-warning {
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.1), rgba(255, 85, 0, 0.05));
+            border-left: 3px solid #ffaa00;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .vpn-warning-icon { font-size: 1.2rem; flex-shrink: 0; }
+        .vpn-warning-text { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4; }
+        .vpn-warning-text strong { color: #ffaa00; }
 
         .sticky-player { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(100%); width: 100%; max-width: 480px; background: rgba(15, 15, 30, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--card-border); padding: 12px 16px 20px; z-index: 100; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 24px 24px 0 0; box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5); }
         .sticky-player.visible { transform: translateX(-50%) translateY(0); }
@@ -361,20 +376,30 @@
                     <div class="tile-title">Все треки</div>
                     <div class="tile-desc">Полная дискография</div>
                 </div>
-                <div class="quick-tile" onclick="navigateTo('chatPage')">
-                    <div class="tile-icon chat">💬</div>
-                    <div class="tile-title">Чат</div>
-                    <div class="tile-desc">Общение с участниками</div>
+                <div class="quick-tile" onclick="navigateTo('communityPage')">
+                    <div class="tile-icon community">👥</div>
+                    <div class="tile-title">Сообщества</div>
+                    <div class="tile-desc">Bip & Telegram</div>
                 </div>
                 <div class="quick-tile" onclick="navigateTo('contactPage')">
                     <div class="tile-icon contact">✉️</div>
                     <div class="tile-title">Связь</div>
                     <div class="tile-desc">Написать автору</div>
                 </div>
+                <div class="quick-tile" onclick="navigateTo('chatPage')">
+                    <div class="tile-icon chat">💬</div>
+                    <div class="tile-title">Чат</div>
+                    <div class="tile-desc">Общение с участниками</div>
+                </div>
                 <div class="quick-tile" onclick="navigateTo('aboutPage')">
                     <div class="tile-icon about">ℹ️</div>
                     <div class="tile-title">О проекте</div>
                     <div class="tile-desc">Узнать больше</div>
+                </div>
+                <div class="quick-tile" style="opacity: 0.3; cursor: default;">
+                    <div class="tile-icon placeholder">⚡</div>
+                    <div class="tile-title">Скоро</div>
+                    <div class="tile-desc">В разработке</div>
                 </div>
             </div>
         </div>
@@ -419,12 +444,12 @@
     <div class="page" id="communityPage">
         <div class="community-header fade-in-up">
             <button class="back-btn" onclick="goBack()">←</button>
-            <div class="community-page-title">Сообщество</div>
+            <div class="community-page-title">Сообщества</div>
         </div>
         <div class="community-content fade-in-up">
             <div class="community-intro"><p>Присоединяйтесь к нашим сообществам, чтобы быть в курсе новых релизов и эксклюзивного контента</p></div>
             <a href="#" class="community-card coming-soon" onclick="event.preventDefault();">
-                <div class="community-icon bip"></div>
+                <div class="community-icon bip">🎵</div>
                 <div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div>
                 <div class="community-arrow">→</div>
             </a>
@@ -451,7 +476,7 @@
                 <span>Онлайн</span>
             </div>
         </div>
-        <div class="chat-status offline" id="chatStatus">️ Supabase не настроен</div>
+        <div class="chat-status offline" id="chatStatus">⚠️ Supabase не настроен</div>
         <div class="chat-container fade-in-up">
             <div class="chat-messages" id="chatMessages">
                 <div class="chat-loading" id="chatLoading" style="display:none;">
@@ -497,7 +522,15 @@
                     <label class="form-label">Сообщение</label>
                     <textarea class="form-textarea" name="message" placeholder="Напишите ваш вопрос, предложение или отзыв..." required maxlength="1000"></textarea>
                 </div>
-                
+
+                <!-- ПРЕДУПРЕЖДЕНИЕ О VPN -->
+                <div class="vpn-warning">
+                    <div class="vpn-warning-icon">🔐</div>
+                    <div class="vpn-warning-text">
+                        <strong>Важно:</strong> Для отправки через Telegram включите <strong>VPN</strong>
+                    </div>
+                </div>
+
                 <button type="submit" class="submit-btn" id="submitBtn">
                     <span>ОТПРАВИТЬ СООБЩЕНИЕ</span>
                 </button>
@@ -729,7 +762,7 @@ setInterval(updateTime, 1000);
 updateTime();
 
 // ============================================
-//  ЧАТ (РАБОТАЕТ ТОЛЬКО ЕСЛИ SUPABASE НАСТРОЕН)
+// 💬 ЧАТ (РАБОТАЕТ ТОЛЬКО ЕСЛИ SUPABASE НАСТРОЕН)
 // ============================================
 const chatMessagesEl = document.getElementById('chatMessages');
 const chatInput = document.getElementById('chatInput');
@@ -757,7 +790,7 @@ function scrollToBottom() { setTimeout(() => { chatMessagesEl.scrollTop = chatMe
 
 async function loadChatHistory() {
     if (!supabaseClient) {
-        chatStatus.textContent = '️ Supabase не настроен. Чат недоступен.';
+        chatStatus.textContent = '⚠️ Supabase не настроен. Чат недоступен.';
         chatStatus.className = 'chat-status offline';
         chatMessagesEl.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-secondary);">Чат будет доступен после настройки базы данных</div>';
         return;
@@ -880,7 +913,7 @@ const chatObserver = new MutationObserver(function(mutations) {
 chatObserver.observe(document.getElementById('chatPage'), { attributes: true, attributeFilter: ['class'] });
 
 // ============================================
-//  ФОРМА СВЯЗИ С TELEGRAM
+// 📩 ФОРМА СВЯЗИ С TELEGRAM
 // ============================================
 const contactForm = document.getElementById('contactForm');
 const formSubmitBtn = document.getElementById('submitBtn');
@@ -900,9 +933,9 @@ if (contactForm) {
         formStatus.textContent = '';
         formStatus.className = 'form-status';
         
-        const message = ` <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n` +
+        const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n` +
                        `👤 <b>Имя:</b> ${name}\n` +
-                       ` <b>Контакт:</b> ${contact}\n\n` +
+                       `📧 <b>Контакт:</b> ${contact}\n\n` +
                        `💬 <b>Сообщение:</b>\n${messageText}\n\n` +
                        `⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
         
