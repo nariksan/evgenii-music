@@ -16,6 +16,7 @@
             --cyan: #00e5ff;
             --magenta: #ff00e5;
             --purple: #b000ff;
+            --gold: #ffb347;
             --dark-bg: #0a0a1a;
             --card-bg: rgba(20, 20, 40, 0.8);
             --card-border: rgba(0, 229, 255, 0.15);
@@ -109,6 +110,7 @@
         .quick-tile.disabled:hover { transform: none; box-shadow: none; border-color: var(--card-border); }
         .tile-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 14px; }
         .tile-icon.tracks { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
+        .tile-icon.instrumental { background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 0, 229, 0.15)); color: var(--gold); }
         .tile-icon.chat { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
         .tile-icon.community { background: rgba(176, 0, 255, 0.15); color: var(--purple); }
         .tile-icon.contact { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
@@ -120,10 +122,10 @@
         .logout-btn { display: block; margin: 20px auto 0; padding: 12px 30px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: transparent; color: var(--text-secondary); font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; }
         .logout-btn:hover { border-color: rgba(255, 0, 0, 0.3); color: #ff6b6b; }
 
-        .tracks-header, .about-header, .community-header, .chat-header, .contact-header { display: flex; align-items: center; gap: 16px; margin-bottom: 30px; padding-top: 10px; }
+        .tracks-header, .about-header, .community-header, .chat-header, .contact-header, .instrumentals-header { display: flex; align-items: center; gap: 16px; margin-bottom: 30px; padding-top: 10px; }
         .back-btn { width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-primary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; }
         .back-btn:hover { border-color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
-        .tracks-page-title, .about-page-title, .community-page-title, .chat-page-title, .contact-page-title { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; }
+        .tracks-page-title, .about-page-title, .community-page-title, .chat-page-title, .contact-page-title, .instrumentals-page-title { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; }
 
         .featured-release { position: relative; width: 100%; border-radius: 28px; overflow: hidden; margin-bottom: 36px; border: 1px solid var(--card-border); background: linear-gradient(180deg, #0d2030 0%, #1a0a2e 50%, #0d1020 100%); padding: 30px 20px 36px; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
         .featured-release::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 200px; background: radial-gradient(ellipse at 50% 0%, rgba(0, 229, 255, 0.12) 0%, transparent 70%); pointer-events: none; }
@@ -158,6 +160,365 @@
         .track-download-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); transform: scale(1.05); }
         .track-download-btn:active { transform: scale(0.95); }
         .track-download-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* ============================================
+           ИНСТРУМЕНТАЛЫ — СТИЛИ
+           ============================================ */
+        .instrumentals-intro {
+            background: linear-gradient(135deg, rgba(255, 179, 71, 0.08), rgba(176, 0, 255, 0.08));
+            border: 1px solid rgba(255, 179, 71, 0.2);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .instrumentals-intro::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 179, 71, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+        .instrumentals-intro-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        .instrumentals-intro-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .instrumental-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 22px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .instrumental-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 179, 71, 0.1);
+            border-color: rgba(255, 179, 71, 0.3);
+        }
+        .instrumental-card.active {
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(255, 179, 71, 0.15);
+        }
+        .instrumental-card-top {
+            display: flex;
+            gap: 14px;
+            padding: 16px 16px 12px;
+            align-items: center;
+        }
+        .instrumental-cover {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #2a1a3a, #3a2a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .instrumental-cover img { width: 100%; height: 100%; object-fit: cover; }
+        .instrumental-play-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .instrumental-cover:hover .instrumental-play-overlay { opacity: 1; }
+        .instrumental-play-overlay svg { width: 32px; height: 32px; fill: #fff; }
+        .instrumental-card.active .instrumental-play-overlay { opacity: 1; background: rgba(255, 179, 71, 0.3); }
+        .instrumental-main-info { flex: 1; min-width: 0; }
+        .instrumental-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .instrumental-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+        .instrumental-tag {
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .instrumental-tag.genre {
+            background: rgba(255, 179, 71, 0.15);
+            color: var(--gold);
+        }
+        .instrumental-tag.mood {
+            background: rgba(176, 0, 255, 0.15);
+            color: #d580ff;
+        }
+        .instrumental-card-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .instrumental-card-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: rgba(20, 20, 40, 0.6);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .instrumental-card-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(255, 179, 71, 0.1);
+        }
+        .instrumental-card-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .instrumental-description {
+            padding: 0 16px 16px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.55;
+            border-top: 1px dashed rgba(255, 179, 71, 0.15);
+            padding-top: 12px;
+            margin-top: 4px;
+            font-style: italic;
+        }
+        .instrumental-description::before {
+            content: '“';
+            color: var(--gold);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-right: 4px;
+            font-style: normal;
+        }
+        .instrumental-description::after {
+            content: '”';
+            color: var(--gold);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-left: 4px;
+            font-style: normal;
+        }
+
+        /* ============================================
+           ОТДЕЛЬНЫЙ ПЛЕЕР ДЛЯ ИНСТРУМЕНТАЛОВ
+           ============================================ */
+        .instrumental-player {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 480px;
+            background: linear-gradient(180deg, rgba(20, 15, 30, 0.97), rgba(10, 8, 20, 0.98));
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 179, 71, 0.25);
+            padding: 16px 20px 22px;
+            z-index: 100;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 28px 28px 0 0;
+            box-shadow: 0 -10px 50px rgba(255, 179, 71, 0.15), 0 -5px 30px rgba(0, 0, 0, 0.6);
+        }
+        .instrumental-player.visible { transform: translateX(-50%) translateY(0); }
+        .instrumental-player::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), var(--magenta), var(--gold), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .instrumental-player-top {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        .instrumental-player-cover {
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #2a1a3a, #3a2a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(255, 179, 71, 0.2);
+        }
+        .instrumental-player-cover img { width: 100%; height: 100%; object-fit: cover; }
+        .instrumental-player-cover.playing::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border: 2px solid var(--gold);
+            border-radius: 16px;
+            opacity: 0.6;
+            animation: pulseBorder 2s ease-in-out infinite;
+        }
+        @keyframes pulseBorder {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        .instrumental-player-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .instrumental-player-label {
+            font-size: 0.65rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .instrumental-player-label::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .instrumental-player-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .instrumental-player-tags {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        .instrumental-player-tag {
+            font-size: 0.6rem;
+            padding: 2px 7px;
+            border-radius: 5px;
+            background: rgba(255, 179, 71, 0.12);
+            color: var(--gold);
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .instrumental-player-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .instrumental-play-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--gold), var(--magenta));
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(255, 179, 71, 0.4);
+            transition: transform 0.2s ease;
+        }
+        .instrumental-play-btn:hover { transform: scale(1.08); }
+        .instrumental-play-btn:active { transform: scale(0.95); }
+        .instrumental-play-btn svg { width: 20px; height: 20px; fill: #fff; margin-left: 2px; }
+        .instrumental-skip-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px;
+            transition: color 0.2s ease;
+        }
+        .instrumental-skip-btn:hover { color: var(--gold); }
+        .instrumental-skip-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .instrumental-player-description {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-style: italic;
+            padding: 10px 14px;
+            background: rgba(255, 179, 71, 0.04);
+            border-left: 2px solid var(--gold);
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 12px;
+            max-height: 60px;
+            overflow-y: auto;
+        }
+        .instrumental-progress-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .instrumental-time {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-family: 'Orbitron', monospace;
+            min-width: 35px;
+        }
+        .instrumental-time.end { text-align: right; }
+        .instrumental-bar-container {
+            flex: 1;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+        .instrumental-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--magenta));
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 8px rgba(255, 179, 71, 0.5);
+        }
 
         .about-content, .community-content { display: flex; flex-direction: column; gap: 20px; }
         .about-card { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; line-height: 1.6; font-size: 1rem; }
@@ -308,7 +669,7 @@
             .banner-title { font-size: 1.6rem; letter-spacing: 4px; }
             .featured-title { font-size: 1.4rem; }
             .featured-cover { width: 160px; height: 160px; }
-            .about-page-title, .community-page-title, .chat-page-title, .contact-page-title, .tracks-page-title { font-size: 1.8rem; }
+            .about-page-title, .community-page-title, .chat-page-title, .contact-page-title, .tracks-page-title, .instrumentals-page-title { font-size: 1.8rem; }
             .login-logo { font-size: 2.2rem; }
         }
     </style>
@@ -381,6 +742,11 @@
                     <div class="tile-title">Все треки</div>
                     <div class="tile-desc">Полная дискография</div>
                 </div>
+                <div class="quick-tile" onclick="navigateTo('instrumentalsPage')">
+                    <div class="tile-icon instrumental">🎹</div>
+                    <div class="tile-title">Инструменталы</div>
+                    <div class="tile-desc">Музыка без слов</div>
+                </div>
                 <div class="quick-tile" onclick="navigateTo('communityPage')">
                     <div class="tile-icon community">👥</div>
                     <div class="tile-title">Сообщества</div>
@@ -401,11 +767,6 @@
                     <div class="tile-title">О проекте</div>
                     <div class="tile-desc">Узнать больше</div>
                 </div>
-                <div class="quick-tile disabled">
-                    <div class="tile-icon placeholder">⚡</div>
-                    <div class="tile-title">Скоро</div>
-                    <div class="tile-desc">В разработке</div>
-                </div>
             </div>
         </div>
         <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
@@ -422,6 +783,22 @@
             <div class="section-title">ВСЕ ТРЕКИ</div>
             <div class="tracks-list" id="tracksList"></div>
         </div>
+    </div>
+
+    <!-- СТРАНИЦА ИНСТРУМЕНТАЛОВ -->
+    <div class="page" id="instrumentalsPage">
+        <div class="instrumentals-header fade-in-up">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="instrumentals-page-title">Инструменталы</div>
+        </div>
+        <div class="instrumentals-intro fade-in-up">
+            <div class="instrumentals-intro-title">БЕЗ СЛОВ · ТОЛЬКО ЗВУК</div>
+            <div class="instrumentals-intro-text">
+                Музыка, в которой говорят не тексты, а эмоции. Каждый трек — отдельное настроение, атмосфера и история без единого слова.
+            </div>
+        </div>
+        <div class="section-title fade-in-up">КОЛЛЕКЦИЯ</div>
+        <div class="tracks-list fade-in-up" id="instrumentalsList"></div>
     </div>
 
     <!-- СТРАНИЦА О ПРОЕКТЕ -->
@@ -528,7 +905,6 @@
                     <textarea class="form-textarea" name="message" placeholder="Напишите ваш вопрос, предложение или отзыв..." required maxlength="1000"></textarea>
                 </div>
 
-                <!-- ПРЕДУПРЕЖДЕНИЕ О VPN -->
                 <div class="vpn-warning">
                     <div class="vpn-warning-icon">🔐</div>
                     <div class="vpn-warning-text">
@@ -544,7 +920,7 @@
         </div>
     </div>
 
-    <!-- ПЛЕЕР -->
+    <!-- ОБЫЧНЫЙ ПЛЕЕР -->
     <div class="sticky-player" id="stickyPlayer">
         <div class="player-top-row">
             <div class="player-mini-cover" id="playerCover">🎵</div>
@@ -562,6 +938,29 @@
             <span class="player-time-mini" id="playerCurrentTime">0:00</span>
             <div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div>
             <span class="player-time-mini end" id="playerTotalTime">0:00</span>
+        </div>
+    </div>
+
+    <!-- ПЛЕЕР ИНСТРУМЕНТАЛОВ -->
+    <div class="instrumental-player" id="instrumentalPlayer">
+        <div class="instrumental-player-top">
+            <div class="instrumental-player-cover" id="instPlayerCover">🎹</div>
+            <div class="instrumental-player-info">
+                <div class="instrumental-player-label">Инструментал</div>
+                <div class="instrumental-player-title" id="instPlayerTitle">Название</div>
+                <div class="instrumental-player-tags" id="instPlayerTags"></div>
+            </div>
+            <div class="instrumental-player-controls">
+                <button class="instrumental-skip-btn" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+                <button class="instrumental-play-btn" id="instPlayBtn" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+                <button class="instrumental-skip-btn" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+            </div>
+        </div>
+        <div class="instrumental-player-description" id="instPlayerDescription">Описание трека...</div>
+        <div class="instrumental-progress-wrapper">
+            <span class="instrumental-time" id="instCurrentTime">0:00</span>
+            <div class="instrumental-bar-container" onclick="instSeek(event)"><div class="instrumental-bar-fill" id="instBarFill"></div></div>
+            <span class="instrumental-time end" id="instTotalTime">0:00</span>
         </div>
     </div>
 
@@ -586,6 +985,7 @@
     </div>
 
     <audio id="audioPlayer" preload="metadata"></audio>
+    <audio id="instrumentalAudio" preload="metadata"></audio>
 
     <script>
 // ============================================
@@ -646,6 +1046,92 @@ const allTracks = [
 ];
 
 // ============================================
+// DATA - ИНСТРУМЕНТАЛЫ (ТРЕКИ БЕЗ СЛОВ)
+// ============================================
+const instrumentalTracks = [
+    {
+        id: 'inst-1',
+        title: "Неоновая ночь",
+        genre: "Ambient",
+        mood: "Меланхолия",
+        file: "instrumentals/neon-night.mp3",
+        duration: "4:12",
+        cover: "cover/inst-cover-1.jpg",
+        description: "Медленное погружение в огни ночного города. Синтезаторы плывут как туман над асфальтом, оставляя ощущение одиночества среди миллионов."
+    },
+    {
+        id: 'inst-2',
+        title: "Цифровой рассвет",
+        genre: "Electronic",
+        mood: "Надежда",
+        file: "instrumentals/digital-dawn.mp3",
+        duration: "3:45",
+        cover: "cover/inst-cover-2.jpg",
+        description: "Первые лучи солнца сквозь экран. Тёплые пэды и мягкий бит создают атмосферу нового начала — когда всё ещё возможно."
+    },
+    {
+        id: 'inst-3',
+        title: "Память машин",
+        genre: "Downtempo",
+        mood: "Ностальгия",
+        file: "instrumentals/machine-memory.mp3",
+        duration: "5:08",
+        cover: "cover/inst-cover-3.jpg",
+        description: "Что помнит искусственный интеллект, когда его выключают? Этот трек — попытка услышать тишину между вычислениями."
+    },
+    {
+        id: 'inst-4',
+        title: "Пустые улицы",
+        genre: "Lo-Fi",
+        mood: "Покой",
+        file: "instrumentals/empty-streets.mp3",
+        duration: "3:22",
+        cover: "cover/inst-cover-4.jpg",
+        description: "Три часа ночи. Ни души. Только шуршение шин и далёкий гул города. Идеальный саундтрек для долгих размышлений."
+    },
+    {
+        id: 'inst-5',
+        title: "Эхо в серверной",
+        genre: "Dark Ambient",
+        mood: "Тревога",
+        file: "instrumentals/server-echo.mp3",
+        duration: "4:37",
+        cover: "cover/inst-cover-5.jpg",
+        description: "Глубокий гул серверов, щелчки реле и низкочастотный дроун. Атмосфера заброшенного дата-центра, где всё ещё что-то работает."
+    },
+    {
+        id: 'inst-6',
+        title: "Сон алгоритма",
+        genre: "Ambient",
+        mood: "Медитация",
+        file: "instrumentals/algorithm-dream.mp3",
+        duration: "6:15",
+        cover: "cover/inst-cover-6.jpg",
+        description: "Что снится нейросети? Плавные звуковые ландшафты, где нет начала и конца — только бесконечный поток данных, превращённый в музыку."
+    },
+    {
+        id: 'inst-7',
+        title: "Последний гигабайт",
+        genre: "Cinematic",
+        mood: "Эпичность",
+        file: "instrumentals/last-gigabyte.mp3",
+        duration: "4:50",
+        cover: "cover/inst-cover-7.jpg",
+        description: "Кинематографичная композиция с нарастающим напряжением. Оркестровые струнные встречаются с электроникой — финал большой истории."
+    },
+    {
+        id: 'inst-8',
+        title: "Код тишины",
+        genre: "Minimal",
+        mood: "Сосредоточенность",
+        file: "instrumentals/silence-code.mp3",
+        duration: "3:58",
+        cover: "cover/inst-cover-8.jpg",
+        description: "Минимализм в чистом виде. Несколько нот, повторяющихся как мантра. Музыка для тех, кто ищет ответы внутри себя."
+    }
+];
+
+// ============================================
 // RENDER
 // ============================================
 function renderNewRelease() {
@@ -668,13 +1154,58 @@ function renderNewRelease() {
 }
 
 // ============================================
-// AUDIO PLAYER
+// RENDER ИНСТРУМЕНТАЛОВ
+// ============================================
+function renderInstrumentals() {
+    const list = document.getElementById('instrumentalsList');
+    if (!list) return;
+    list.innerHTML = '';
+    instrumentalTracks.forEach((t, i) => {
+        const card = document.createElement('div');
+        card.className = 'instrumental-card';
+        card.dataset.id = t.id;
+        const coverHtml = t.cover
+            ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">`
+            : '🎹';
+        card.innerHTML = `
+            <div class="instrumental-card-top">
+                <div class="instrumental-cover" onclick="playInstrumental(instrumentalTracks[${i}], ${i})">
+                    ${coverHtml}
+                    <div class="instrumental-play-overlay">
+                        <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="instrumental-main-info">
+                    <div class="instrumental-title">${t.title}</div>
+                    <div class="instrumental-tags">
+                        <span class="instrumental-tag genre">${t.genre}</span>
+                        <span class="instrumental-tag mood">${t.mood}</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:var(--text-secondary); font-family:'Orbitron',monospace; margin-top:4px;">${t.duration}</div>
+                </div>
+                <div class="instrumental-card-actions">
+                    <button class="instrumental-card-btn" onclick="event.stopPropagation(); openDownloadModal(instrumentalTracks[${i}], true)" title="Скачать">
+                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="instrumental-description">${t.description}</div>
+        `;
+        list.appendChild(card);
+    });
+}
+
+// ============================================
+// ОБЫЧНЫЙ AUDIO PLAYER
 // ============================================
 const audio = document.getElementById('audioPlayer');
 let currentTrack = null, isPlaying = false, simulationInterval = null, currentTrackIndex = -1;
 const playlist = [newRelease, ...allTracks];
 
 function playTrack(track, index = -1) {
+    // Останавливаем инструментальный плеер, если он играл
+    stopInstrumentalPlayer();
+    
     currentTrack = track;
     currentTrackIndex = index >= 0 ? index : playlist.findIndex(t => t.id === track.id);
     document.getElementById('playerTitle').textContent = track.title;
@@ -683,6 +1214,7 @@ function playTrack(track, index = -1) {
     if (track.cover) { pc.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">`; } else { pc.textContent = '🎵'; }
     document.getElementById('playerTotalTime').textContent = track.duration;
     document.getElementById('stickyPlayer').classList.add('visible');
+    document.getElementById('instrumentalPlayer').classList.remove('visible');
     document.querySelectorAll('.track-item').forEach(el => el.classList.remove('active'));
     const ae = document.querySelector(`.track-item[data-id="${track.id}"]`);
     if (ae) ae.classList.add('active');
@@ -705,18 +1237,229 @@ audio.addEventListener('loadedmetadata', () => { document.getElementById('player
 audio.addEventListener('ended', () => { setPlayingState(false); document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00'; playNextTrack(); });
 
 // ============================================
+// ИНСТРУМЕНТАЛЬНЫЙ ПЛЕЕР
+// ============================================
+const instAudio = document.getElementById('instrumentalAudio');
+let currentInstTrack = null, isInstPlaying = false, instSimulationInterval = null, currentInstIndex = -1;
+
+function playInstrumental(track, index = -1) {
+    // Останавливаем обычный плеер
+    stopRegularPlayer();
+    
+    currentInstTrack = track;
+    currentInstIndex = index >= 0 ? index : instrumentalTracks.findIndex(t => t.id === track.id);
+    
+    // Обновляем UI плеера
+    document.getElementById('instPlayerTitle').textContent = track.title;
+    document.getElementById('instPlayerDescription').textContent = track.description;
+    document.getElementById('instTotalTime').textContent = track.duration;
+    
+    // Теги
+    const tagsEl = document.getElementById('instPlayerTags');
+    tagsEl.innerHTML = `
+        <span class="instrumental-player-tag">${track.genre}</span>
+        <span class="instrumental-player-tag">${track.mood}</span>
+    `;
+    
+    // Обложка
+    const coverEl = document.getElementById('instPlayerCover');
+    if (track.cover) {
+        coverEl.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎹'">`;
+    } else {
+        coverEl.textContent = '🎹';
+    }
+    
+    // Показываем плеер
+    document.getElementById('instrumentalPlayer').classList.add('visible');
+    document.getElementById('stickyPlayer').classList.remove('visible');
+    
+    // Подсветка активной карточки
+    document.querySelectorAll('.instrumental-card').forEach(el => el.classList.remove('active'));
+    const activeCard = document.querySelector(`.instrumental-card[data-id="${track.id}"]`);
+    if (activeCard) activeCard.classList.add('active');
+    
+    // Запуск аудио
+    instAudio.src = track.file;
+    instAudio.play()
+        .then(() => setInstPlayingState(true))
+        .catch(() => startInstSimulation());
+}
+
+function instTogglePlay() {
+    if (!currentInstTrack) return;
+    if (isInstPlaying) {
+        instAudio.pause();
+        clearInterval(instSimulationInterval);
+        setInstPlayingState(false);
+    } else {
+        instAudio.play().catch(() => startInstSimulation());
+        setInstPlayingState(true);
+    }
+}
+
+function setInstPlayingState(state) {
+    isInstPlaying = state;
+    const icon = document.getElementById('instPlayIcon');
+    icon.innerHTML = state
+        ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'
+        : '<polygon points="5,3 19,12 5,21"/>';
+    
+    const cover = document.getElementById('instPlayerCover');
+    if (state) cover.classList.add('playing');
+    else cover.classList.remove('playing');
+}
+
+function instSkipForward() {
+    if (currentInstTrack) {
+        instAudio.currentTime = Math.min(instAudio.duration || parseDuration(currentInstTrack.duration), instAudio.currentTime + 10);
+    }
+}
+
+function instSkipBackward() {
+    if (currentInstTrack) {
+        instAudio.currentTime = Math.max(0, instAudio.currentTime - 10);
+    }
+}
+
+function instSeek(event) {
+    if (!currentInstTrack) return;
+    const bar = event.currentTarget;
+    const rect = bar.getBoundingClientRect();
+    const percent = (event.clientX - rect.left) / rect.width;
+    instAudio.currentTime = percent * (instAudio.duration || parseDuration(currentInstTrack.duration));
+}
+
+function playNextInstrumental() {
+    const nextIndex = currentInstIndex < instrumentalTracks.length - 1 ? currentInstIndex + 1 : 0;
+    playInstrumental(instrumentalTracks[nextIndex], nextIndex);
+}
+
+function startInstSimulation() {
+    setInstPlayingState(true);
+    let ct = 0;
+    const dur = parseDuration(currentInstTrack.duration);
+    clearInterval(instSimulationInterval);
+    instSimulationInterval = setInterval(() => {
+        ct++;
+        if (ct >= dur) {
+            clearInterval(instSimulationInterval);
+            setInstPlayingState(false);
+            document.getElementById('instBarFill').style.width = '0%';
+            document.getElementById('instCurrentTime').textContent = '0:00';
+            playNextInstrumental();
+        } else {
+            document.getElementById('instBarFill').style.width = `${(ct / dur) * 100}%`;
+            document.getElementById('instCurrentTime').textContent = formatTime(ct);
+        }
+    }, 1000);
+}
+
+// События инструментального аудио
+instAudio.addEventListener('timeupdate', () => {
+    if (!currentInstTrack) return;
+    const d = instAudio.duration || parseDuration(currentInstTrack.duration);
+    document.getElementById('instBarFill').style.width = `${(instAudio.currentTime / d) * 100}%`;
+    document.getElementById('instCurrentTime').textContent = formatTime(instAudio.currentTime);
+});
+
+instAudio.addEventListener('loadedmetadata', () => {
+    document.getElementById('instTotalTime').textContent = formatTime(instAudio.duration);
+});
+
+instAudio.addEventListener('ended', () => {
+    setInstPlayingState(false);
+    document.getElementById('instBarFill').style.width = '0%';
+    document.getElementById('instCurrentTime').textContent = '0:00';
+    playNextInstrumental();
+});
+
+// Остановить обычный плеер
+function stopRegularPlayer() {
+    audio.pause();
+    clearInterval(simulationInterval);
+    setPlayingState(false);
+    document.getElementById('playerBarFill').style.width = '0%';
+    document.getElementById('playerCurrentTime').textContent = '0:00';
+}
+
+// Остановить инструментальный плеер
+function stopInstrumentalPlayer() {
+    instAudio.pause();
+    clearInterval(instSimulationInterval);
+    setInstPlayingState(false);
+    document.getElementById('instBarFill').style.width = '0%';
+    document.getElementById('instCurrentTime').textContent = '0:00';
+}
+
+// ============================================
 // DOWNLOAD
 // ============================================
 let downloadTrack = null;
-function openDownloadModal(track) { downloadTrack = track; const mc = document.getElementById('modalCover'); if (track.cover) { mc.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">`; } else { mc.textContent = '🎵'; } document.getElementById('modalTitle').textContent = track.title; document.getElementById('modalDuration').textContent = track.duration; const b = document.getElementById('modalDownloadBtn'); b.textContent = 'СКАЧАТЬ ТРЕК'; b.disabled = false; document.getElementById('downloadModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeDownloadModal() { document.getElementById('downloadModal').classList.remove('active'); document.body.style.overflow = ''; downloadTrack = null; }
-function startDownload() { if (!downloadTrack) return; const b = document.getElementById('modalDownloadBtn'); b.textContent = 'ЗАГРУЗКА...'; b.disabled = true; const l = document.createElement('a'); l.href = downloadTrack.file; l.download = `${downloadTrack.title}.mp3`; l.style.display = 'none'; document.body.appendChild(l); setTimeout(() => { l.click(); document.body.removeChild(l); b.textContent = '✓ ТРЕК ЗАГРУЖЕН'; setTimeout(() => closeDownloadModal(), 1500); }, 1500); }
-document.getElementById('downloadModal').addEventListener('click', function(e) { if (e.target === this) closeDownloadModal(); });
+let downloadIsInstrumental = false;
+
+function openDownloadModal(track, isInstrumental = false) {
+    downloadTrack = track;
+    downloadIsInstrumental = isInstrumental;
+    const mc = document.getElementById('modalCover');
+    if (track.cover) {
+        mc.innerHTML = `<img src="${track.cover}" alt="${track.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">`;
+    } else {
+        mc.textContent = isInstrumental ? '🎹' : '🎵';
+    }
+    document.getElementById('modalTitle').textContent = track.title;
+    document.getElementById('modalDuration').textContent = track.duration;
+    const b = document.getElementById('modalDownloadBtn');
+    b.textContent = 'СКАЧАТЬ ТРЕК';
+    b.disabled = false;
+    document.getElementById('downloadModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDownloadModal() {
+    document.getElementById('downloadModal').classList.remove('active');
+    document.body.style.overflow = '';
+    downloadTrack = null;
+    downloadIsInstrumental = false;
+}
+
+function startDownload() {
+    if (!downloadTrack) return;
+    const b = document.getElementById('modalDownloadBtn');
+    b.textContent = 'ЗАГРУЗКА...';
+    b.disabled = true;
+    const l = document.createElement('a');
+    l.href = downloadTrack.file;
+    l.download = `${downloadTrack.title}.mp3`;
+    l.style.display = 'none';
+    document.body.appendChild(l);
+    setTimeout(() => {
+        l.click();
+        document.body.removeChild(l);
+        b.textContent = '✓ ТРЕК ЗАГРУЖЕН';
+        setTimeout(() => closeDownloadModal(), 1500);
+    }, 1500);
+}
+
+document.getElementById('downloadModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDownloadModal();
+});
 
 // ============================================
 // TRACKS RENDER
 // ============================================
-function renderTracks() { const c = document.getElementById('tracksList'); c.innerHTML = ''; allTracks.forEach((t, i) => { const el = document.createElement('div'); el.className = 'track-item'; el.dataset.id = t.id; el.onclick = () => playTrack(t, i + 1); const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">` : '🎵'; el.innerHTML = `<div class="track-cover">${coverHtml}</div><div class="track-info"><div class="track-title">${t.title}</div><div class="track-artist">${t.subtitle || 'EVGENII'}</div></div><div class="track-duration">${t.duration}</div><button class="track-download-btn" onclick="event.stopPropagation(); openDownloadModal(allTracks[${i}])" title="Скачать трек"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`; c.appendChild(el); }); }
+function renderTracks() {
+    const c = document.getElementById('tracksList');
+    c.innerHTML = '';
+    allTracks.forEach((t, i) => {
+        const el = document.createElement('div');
+        el.className = 'track-item';
+        el.dataset.id = t.id;
+        el.onclick = () => playTrack(t, i + 1);
+        const coverHtml = t.cover ? `<img src="${t.cover}" alt="${t.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='🎵'">` : '🎵';
+        el.innerHTML = `<div class="track-cover">${coverHtml}</div><div class="track-info"><div class="track-title">${t.title}</div><div class="track-artist">${t.subtitle || 'EVGENII'}</div></div><div class="track-duration">${t.duration}</div><button class="track-download-btn" onclick="event.stopPropagation(); openDownloadModal(allTracks[${i}])" title="Скачать трек"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;
+        c.appendChild(el);
+    });
+}
 
 // ============================================
 // UTILS
@@ -742,18 +1485,29 @@ if (savedName) showMainScreen(savedName);
 
 loginForm.addEventListener('submit', function(e) { e.preventDefault(); const name = nameInput.value.trim(); if (name) { localStorage.setItem('evgenii_user', name); showMainScreen(name); } else { nameInput.style.borderColor = '#ff4444'; nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)'; setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.boxShadow = ''; }, 1500); } });
 
-function showMainScreen(name) { loginScreen.classList.add('hidden'); document.getElementById('homePage').classList.add('active'); headerName.textContent = name.toUpperCase(); updateTime(); renderNewRelease(); renderTracks(); }
+function showMainScreen(name) {
+    loginScreen.classList.add('hidden');
+    document.getElementById('homePage').classList.add('active');
+    headerName.textContent = name.toUpperCase();
+    updateTime();
+    renderNewRelease();
+    renderTracks();
+    renderInstrumentals();
+}
 
 let chatSubscription = null;
 
 logoutBtn.addEventListener('click', function() {
     localStorage.removeItem('evgenii_user');
-    ['homePage','tracksPage','aboutPage','communityPage','chatPage','contactPage'].forEach(p => document.getElementById(p).classList.remove('active'));
+    ['homePage','tracksPage','aboutPage','communityPage','chatPage','contactPage','instrumentalsPage'].forEach(p => document.getElementById(p).classList.remove('active'));
     currentPage = 'homePage'; pageHistory = ['homePage'];
     loginScreen.classList.remove('hidden'); nameInput.value = '';
     loginGreeting.textContent = getLoginGreeting(new Date().getHours());
+    // Остановить оба плеера
+    stopRegularPlayer();
+    stopInstrumentalPlayer();
     document.getElementById('stickyPlayer').classList.remove('visible');
-    audio.pause(); clearInterval(simulationInterval);
+    document.getElementById('instrumentalPlayer').classList.remove('visible');
     if (chatSubscription && supabaseClient) { supabaseClient.removeChannel(chatSubscription); chatSubscription = null; }
 });
 
