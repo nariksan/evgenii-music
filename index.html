@@ -1088,15 +1088,62 @@ const subscriberTracks = [
 let currentCategory = 'all';
 
 // ============================================
-// КОММЕНТАРИИ
+// КОММЕНТАРИИ С КЭШИРОВАНИЕМ
 // ============================================
 let commentsCache = {};
 let currentCommentsTrackId = null;
 let currentCommentsTrackType = null;
 let commentCountsCache = {};
 
+// Время жизни кэша - 5 минут
+const COMMENTS_CACHE_TIME = 5 * 60 * 1000;
+
+// Получить комментарии из localStorage
+function getCachedComments(trackId, trackType) {
+    const key = `comments_${trackType}_${trackId}`;
+    try {
+        const cached = localStorage.getItem(key);
+        if (!cached) return null;
+        const data = JSON.parse(cached);
+        // Проверяем, не истёк ли срок кэша
+        if (Date.now() - data.time > COMMENTS_CACHE_TIME) return null;
+        return data.comments;
+    } catch(e) { 
+        return null; 
+    }
+}
+
+// Сохранить комментарии в localStorage
+function setCachedComments(trackId, trackType, comments) {
+    const key = `comments_${trackType}_${trackId}`;
+    try {
+        localStorage.setItem(key, JSON.stringify({
+            time: Date.now(),
+            comments: comments
+        }));
+    } catch(e) {
+        console.warn('Не удалось сохранить кэш:', e);
+    }
+}
+
+// Очистить кэш для конкретного трека
+function clearCommentsCache(trackId, trackType) {
+    const key = `comments_${trackType}_${trackId}`;
+    try {
+        localStorage.removeItem(key);
+    } catch(e) {}
+}
+
 async function loadComments(trackId, trackType) {
     const cacheKey = `${trackType}_${trackId}`;
+    
+    // Сначала проверяем локальный кэш
+    const cached = getCachedComments(trackId, trackType);
+    if (cached) {
+        commentsCache[cacheKey] = cached;
+        return cached;
+    }
+    
     if (!supabaseClient) return [];
     try {
         const { data, error } = await supabaseClient
@@ -1107,10 +1154,13 @@ async function loadComments(trackId, trackType) {
             .order('created_at', { ascending: false });
         if (error) throw error;
         commentsCache[cacheKey] = data || [];
+        // Сохраняем в localStorage
+        setCachedComments(trackId, trackType, data || []);
         return data || [];
     } catch (e) {
         console.error('Ошибка загрузки комментариев:', e);
-        return [];
+        // Если ошибка - возвращаем кэш, даже старый
+        return cached || [];
     }
 }
 
@@ -1152,6 +1202,8 @@ async function addComment(trackId, trackType, userName, commentText) {
         const cacheKey = `${trackType}_${trackId}`;
         if (!commentsCache[cacheKey]) commentsCache[cacheKey] = [];
         commentsCache[cacheKey].unshift(data[0]);
+        // Обновляем localStorage
+        setCachedComments(trackId, trackType, commentsCache[cacheKey]);
         commentCountsCache[trackType + '_' + trackId] = (commentCountsCache[trackType + '_' + trackId] || 0) + 1;
         return true;
     } catch (e) {
@@ -1172,7 +1224,7 @@ function openCommentsModal(trackId, trackType, trackTitle) {
     title.textContent = trackTitle;
     const typeLabels = { tracks: 'Трек EVGENII', instrumentals: 'Инструментал', subscribers: 'Трек подписчика' };
     subtitle.textContent = typeLabels[trackType] || '';
-    list.innerHTML = '<div class="comments-loading">Загрузка комментариев...</div>';
+    list.innerHTML = '<div class="comments-loading">⏳ Загрузка...</div>';
     
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -1190,7 +1242,7 @@ function openCommentsModal(trackId, trackType, trackTitle) {
         const userName = localStorage.getItem('evgenii_user') || 'Гость';
         const submitBtn = document.getElementById('commentSubmitBtn');
         submitBtn.disabled = true;
-        submitBtn.textContent = 'ОТПРАВКА...';
+        submitBtn.textContent = '⏳ Отправка...';
         
         const success = await addComment(trackId, trackType, userName, commentText);
         
@@ -1725,12 +1777,6 @@ function showMainScreen(name) {
     renderAllTracksList();
     renderInstrumentals();
     renderSubscribers();
-    // Загружаем счётчики комментариев после рендера
-    preloadCommentCounts().then(() => {
-        renderAllTracksList();
-        renderInstrumentals();
-        renderSubscribers();
-    });
 }
 logoutBtn.addEventListener('click', function() {
     localStorage.removeItem('evgenii_user');
