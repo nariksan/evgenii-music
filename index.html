@@ -517,9 +517,9 @@
         <div class="quick-grid">
             <div class="quick-tile" onclick="navigateTo('tracksPage')"><div class="tile-icon tracks">🎵</div><div class="tile-title">Все треки</div><div class="tile-desc">Полная дискография</div></div>
             <div class="quick-tile" onclick="navigateTo('instrumentalsPage')"><div class="tile-icon instrumental">🎹</div><div class="tile-title">Инструменталы</div><div class="tile-desc">Музыка без слов</div></div>
-            <div class="quick-tile" onclick="navigateTo('subscribersPage')"><div class="tile-icon subscribers"></div><div class="tile-title">Дай голос</div><div class="tile-desc">Твой текст — наш голос</div></div>
+            <div class="quick-tile" onclick="navigateTo('subscribersPage')"><div class="tile-icon subscribers">🎤</div><div class="tile-title">Дай голос</div><div class="tile-desc">Твой текст — наш голос</div></div>
             <div class="quick-tile" onclick="navigateTo('communityPage')"><div class="tile-icon community">🌐</div><div class="tile-title">Сообщества</div><div class="tile-desc">Bip & Telegram</div></div>
-            <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
+            <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">✉️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
             <div class="quick-tile disabled"><div class="tile-icon" style="background:rgba(0,229,255,0.15);color:var(--cyan)">💬</div><div class="tile-title">Чат</div><div class="tile-desc">Скоро будет доступен</div></div>
             <div class="quick-tile" onclick="navigateTo('supportPage')"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">Сказать спасибо</div></div>
             <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">ℹ️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
@@ -532,7 +532,7 @@
     <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Все треки</div></div>
     <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
     <div class="category-tabs fade-in-up" id="categoryTabs">
-        <button class="category-tab active" data-category="all" onclick="switchCategory('all')"><span class="tab-icon"></span><span>Все</span><span class="tab-count" id="countAll">0</span></button>
+        <button class="category-tab active" data-category="all" onclick="switchCategory('all')"><span class="tab-icon">🎧</span><span>Все</span><span class="tab-count" id="countAll">0</span></button>
         <button class="category-tab" data-category="tracks" onclick="switchCategory('tracks')"><span class="tab-icon">🎵</span><span>Треки</span><span class="tab-count" id="countTracks">0</span></button>
         <button class="category-tab" data-category="instrumentals" onclick="switchCategory('instrumentals')"><span class="tab-icon">🎹</span><span>Инструменталы</span><span class="tab-count" id="countInstrumentals">0</span></button>
         <button class="category-tab" data-category="subscribers" onclick="switchCategory('subscribers')"><span class="tab-icon">🎤</span><span>Дай голос</span><span class="tab-count" id="countSubscribers">0</span></button>
@@ -611,7 +611,7 @@
     <div class="support-cards fade-in-up">
         <div class="support-card coffee" onclick="openSupportLink('coffee')"><div class="support-card-icon">☕</div><div class="support-card-content"><div class="support-card-title">Автору на кофе</div><div class="support-card-desc">Быстрый способ сказать спасибо</div></div><div class="support-card-price">100 ₽</div></div>
         <div class="support-card project" onclick="openSupportLink('project')"><div class="support-card-icon">💜</div><div class="support-card-content"><div class="support-card-title">Поддержать проект</div><div class="support-card-desc">Помочь развитию и новым релизам</div></div><div class="support-card-price">Выбрать сумму</div></div>
-        <div class="support-card vtb" onclick="openSupportLink('vtb')"><div class="support-card-icon"></div><div class="support-card-content"><div class="support-card-title">ВТБ Оплата</div><div class="support-card-desc">QR-код для оплаты любой суммы</div></div><div class="support-card-price">Любая</div></div>
+        <div class="support-card vtb" onclick="openSupportLink('vtb')"><div class="support-card-icon">🏦</div><div class="support-card-content"><div class="support-card-title">ВТБ Оплата</div><div class="support-card-desc">QR-код для оплаты любой суммы</div></div><div class="support-card-price">Любая</div></div>
     </div>
     <div class="support-note fade-in-up"><p>💳 Удобная оплата картой через ЮMoney. Спасибо за поддержку!</p><div class="qr-section"><div class="qr-code"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC" alt="QR"></div><div class="qr-label">Отсканируй для оплаты 100 ₽</div><div class="qr-hint">Камера телефона → QR код</div></div></div>
 </div>
@@ -621,7 +621,7 @@
     <div class="player-progress-wrapper"><span class="player-time-mini" id="playerCurrentTime">0:00</span><div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div><span class="player-time-mini end" id="playerTotalTime">0:00</span></div>
 </div>
 <div class="floating-player gold" id="instrumentalPlayer">
-    <div class="floating-player-top"><div class="floating-player-cover gold" id="instPlayerCover"></div><div class="floating-player-info"><div class="floating-player-label gold">Инструментал</div><div class="floating-player-title" id="instPlayerTitle">Название</div><div class="floating-player-tags" id="instPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
+    <div class="floating-player-top"><div class="floating-player-cover gold" id="instPlayerCover">🎹</div><div class="floating-player-info"><div class="floating-player-label gold">Инструментал</div><div class="floating-player-title" id="instPlayerTitle">Название</div><div class="floating-player-tags" id="instPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
     <div class="floating-player-description gold" id="instPlayerDescription">Описание трека...</div>
     <div class="floating-progress-wrapper"><span class="floating-time" id="instCurrentTime">0:00</span><div class="floating-bar-container" onclick="instSeek(event)"><div class="floating-bar-fill gold" id="instBarFill"></div></div><span class="floating-time end" id="instTotalTime">0:00</span></div>
 </div>
@@ -778,6 +778,7 @@ async function loadAllCommentCounts() {
         });
         Object.assign(commentCountsCache, counts);
         updateAllCommentBadges();
+        renderNewRelease(); // Обновляем кнопки нового релиза после загрузки счётчиков
     } catch (e) {
         console.error('Ошибка загрузки счётчиков:', e);
     }
@@ -895,6 +896,7 @@ async function sendComment() {
         input.style.height = 'auto';
         commentCountsCache[String(currentCommentTrack.id)] = (commentCountsCache[String(currentCommentTrack.id)] || 0) + 1;
         updateAllCommentBadges();
+        renderNewRelease(); // Обновляем кнопки нового релиза после добавления комментария
     } catch (e) {
         console.error('Ошибка отправки:', e);
         alert('Ошибка отправки комментария: ' + e.message);
@@ -928,9 +930,11 @@ document.getElementById('commentInput').addEventListener('keydown', function(e) 
 // ============================================
 function renderNewRelease() {
     const h = document.getElementById('homeReleaseCard');
-    if (h) h.innerHTML = `<div class="release-cover"><span class="release-badge">NEW</span>${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML=''">` : '🎵'}</div><div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">${newRelease.title}</div><div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div></div>`;
+    const commentCount = commentCountsCache[String(newRelease.id)] || 0;
+    if (h) h.innerHTML = `<div class="release-cover"><span class="release-badge">NEW</span>${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">` : ''}</div><div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">${newRelease.title}</div><div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div></div><button class="track-comment-btn" data-track-id="${newRelease.id}" onclick="event.stopPropagation();openCommentsModal(newRelease,'tracks')" style="margin-right:8px"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="comment-count-badge">${commentCount > 0 ? commentCount : ''}</span></button>`;
+    
     const f = document.getElementById('featuredRelease');
-    if (f) f.innerHTML = `<button class="featured-download-btn" onclick="event.stopPropagation();openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button><div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML=''">` : '🎵'}</div><div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div><div class="featured-title">${newRelease.title}</div><div class="featured-artist">EVGENII</div><button class="play-btn-large"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>`;
+    if (f) f.innerHTML = `<button class="featured-download-btn" onclick="event.stopPropagation();openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button><div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">` : ''}</div><div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div><div class="featured-title">${newRelease.title}</div><div class="featured-artist">EVGENII</div><div style="display:flex;gap:12px;align-items:center;z-index:1"><button class="play-btn-large" onclick="event.stopPropagation();playNewRelease()"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button><button class="track-comment-btn" data-track-id="${newRelease.id}" onclick="event.stopPropagation();openCommentsModal(newRelease,'tracks')" style="width:50px;height:50px;border-radius:50%;border:1px solid var(--card-border);background:rgba(20,20,40,0.8);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s ease;position:relative"><svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="comment-count-badge" style="top:-2px;right:-2px">${commentCount > 0 ? commentCount : ''}</span></button></div>`;
 }
 
 function updateCategoryCounts() {
@@ -946,7 +950,7 @@ function createTrackEl(track, category, index) {
     el.dataset.id = track.id;
     const coverHtml = track.cover ? `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵'}'">` : (category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵');
     const badgeClass = category === 'instrumentals' ? 'gold' : category === 'subscribers' ? 'pink' : 'cyan';
-    const badgeIcon = category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '';
+    const badgeIcon = category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵';
     let artistText = '', artistClass = '';
     if (category === 'tracks') artistText = track.subtitle || 'EVGENII';
     else if (category === 'instrumentals') { artistText = track.genre + ' · ' + track.mood; artistClass = 'gold'; }
@@ -962,7 +966,7 @@ function createTrackEl(track, category, index) {
 function createDivider(category) {
     const div = document.createElement('div');
     div.className = 'category-divider';
-    const labels = { tracks: { icon: '', text: 'ТРЕКИ EVGENII', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '', text: 'ДАЙ ГОЛОС', color: 'pink' } };
+    const labels = { tracks: { icon: '', text: 'ТРЕКИ EVGENII', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '🎤', text: 'ДАЙ ГОЛОС', color: 'pink' } };
     const l = labels[category];
     div.innerHTML = `<div class="category-divider-line"></div><div class="category-divider-label ${l.color}"><span>${l.icon}</span><span>${l.text}</span></div><div class="category-divider-line"></div>`;
     return div;
@@ -1002,7 +1006,7 @@ function renderInstrumentals() {
         const card = document.createElement('div');
         card.className = 'special-card gold';
         card.dataset.id = t.id;
-        const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">` : '';
+        const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">` : '🎹';
         const commentCount = commentCountsCache[String(t.id)] || 0;
         card.innerHTML = `<div class="special-card-top"><div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-tags"><span class="special-tag genre">${t.genre}</span><span class="special-tag mood">${t.mood}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn gold" data-action="comment" data-track-id="${t.id}" onclick="event.stopPropagation();openCommentsModal(instrumentalTracks[${i}],'instrumentals')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="comment-count-badge">${commentCount > 0 ? commentCount : ''}</span></button><button class="special-card-btn gold" onclick="event.stopPropagation();openDownloadModal(instrumentalTracks[${i}],'instrumental')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description gold">${t.description}</div>`;
         list.appendChild(card);
@@ -1017,7 +1021,7 @@ function renderSubscribers() {
         const card = document.createElement('div');
         card.className = 'special-card pink';
         card.dataset.id = t.id;
-        const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML=''">` : '🎤';
+        const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎤'">` : '🎤';
         const commentCount = commentCountsCache[String(t.id)] || 0;
         card.innerHTML = `<div class="special-card-top"><div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-author">✍ ${t.author}</div><div class="special-tags"><span class="special-tag style">${t.style}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn pink" data-action="comment" data-track-id="${t.id}" onclick="event.stopPropagation();openCommentsModal(subscriberTracks[${i}],'subscribers')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="comment-count-badge">${commentCount > 0 ? commentCount : ''}</span></button><button class="special-card-btn pink" onclick="event.stopPropagation();openDownloadModal(subscriberTracks[${i}],'subscriber')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description pink">${t.description}</div>`;
         list.appendChild(card);
@@ -1100,7 +1104,7 @@ function playInstrumental(track, index = -1) {
     document.getElementById('instTotalTime').textContent = track.duration;
     document.getElementById('instPlayerTags').innerHTML = `<span class="floating-player-tag gold">${track.genre}</span><span class="floating-player-tag gold">${track.mood}</span>`;
     const c = document.getElementById('instPlayerCover');
-    if (track.cover) c.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML=''">`; else c.textContent = '';
+    if (track.cover) c.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">`; else c.textContent = '🎹';
     document.getElementById('instrumentalPlayer').classList.add('visible');
     document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
     const a = document.querySelector(`[data-id="${track.id}"]`);
@@ -1131,7 +1135,7 @@ function playSubscriber(track, index = -1) {
     document.getElementById('subTotalTime').textContent = track.duration;
     document.getElementById('subPlayerTags').innerHTML = `<span class="floating-player-tag pink">${track.style}</span>`;
     const c = document.getElementById('subPlayerCover');
-    if (track.cover) c.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML=''">`; else c.textContent = '🎤';
+    if (track.cover) c.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎤'">`; else c.textContent = '🎤';
     document.getElementById('subscriberPlayer').classList.add('visible');
     document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
     const a = document.querySelector(`[data-id="${track.id}"]`);
@@ -1157,7 +1161,7 @@ let downloadTrack = null;
 function openDownloadModal(track, type = 'regular') {
     downloadTrack = track;
     const mc = document.getElementById('modalCover');
-    const icon = type === 'instrumental' ? '' : type === 'subscriber' ? '' : '🎵';
+    const icon = type === 'instrumental' ? '🎹' : type === 'subscriber' ? '🎤' : '🎵';
     if (track.cover) mc.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${icon}'">`; else mc.textContent = icon;
     document.getElementById('modalTitle').textContent = track.title;
     document.getElementById('modalArtist').textContent = type === 'subscriber' ? track.author : 'EVGENII';
@@ -1275,7 +1279,7 @@ if (contactForm) {
         formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
         formStatus.textContent = '';
         formStatus.className = 'form-status';
-        const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+        const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
         try {
             const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
