@@ -150,10 +150,14 @@
         .track-artist.pink { color: var(--pink); }
         .track-artist.gold { color: var(--gold); }
         .track-duration { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; flex-shrink: 0; font-family: 'Orbitron', monospace; margin-right: 8px; }
-        .track-download-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s ease; }
+        .track-download-btn, .track-comment-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s ease; }
         .track-download-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); transform: scale(1.05); }
         .track-download-btn:active { transform: scale(0.95); }
-        .track-download-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .track-download-btn svg, .track-comment-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .track-comment-btn { position: relative; }
+        .track-comment-btn:hover { border-color: var(--magenta); color: var(--magenta); background: rgba(255, 0, 229, 0.1); transform: scale(1.05); }
+        .track-comment-btn:active { transform: scale(0.95); }
+        .comment-count-badge { position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px; border-radius: 9px; background: var(--magenta); color: #fff; font-size: 0.6rem; font-weight: 700; display: flex; align-items: center; justify-content: center; padding: 0 4px; border: 2px solid var(--dark-bg); font-family: 'Orbitron', monospace; }
         .intro-block { border-radius: 20px; padding: 20px; margin-bottom: 24px; position: relative; overflow: hidden; }
         .intro-block::before { content: ''; position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; pointer-events: none; }
         .intro-block.gold { background: linear-gradient(135deg, rgba(255, 179, 71, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 179, 71, 0.2); }
@@ -189,7 +193,7 @@
         .special-tag.mood { background: rgba(176, 0, 255, 0.15); color: #d580ff; }
         .special-tag.style { background: rgba(255, 107, 157, 0.15); color: var(--pink); }
         .special-card-actions { display: flex; gap: 8px; flex-shrink: 0; }
-        .special-card-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .special-card-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; position: relative; }
         .special-card-btn.gold:hover { border-color: var(--gold); color: var(--gold); background: rgba(255, 179, 71, 0.1); }
         .special-card-btn.pink:hover { border-color: var(--pink); color: var(--pink); background: rgba(255, 107, 157, 0.1); }
         .special-card-btn svg { width: 18px; height: 18px; fill: currentColor; }
@@ -353,6 +357,49 @@
         .modal-download-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .modal-cancel-btn { width: 100%; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; }
         .modal-cancel-btn:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--text-primary); }
+        /* СТИЛИ КОММЕНТАРИЕВ */
+        .comment-item {
+            background: rgba(20, 25, 40, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            animation: fadeInUp 0.4s ease;
+        }
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .comment-author {
+            font-weight: 700;
+            color: var(--cyan);
+            font-size: 0.9rem;
+        }
+        .comment-time {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-family: 'Orbitron', monospace;
+        }
+        .comment-text {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+        .comments-empty {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .comments-loading {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-secondary);
+        }
         .support-intro {
             background: linear-gradient(135deg, rgba(255, 179, 71, 0.06), rgba(255, 107, 157, 0.06));
             border: 1px solid rgba(255, 179, 71, 0.2);
@@ -901,6 +948,25 @@
     </div>
 </div>
 
+<!-- МОДАЛКА КОММЕНТАРИЕВ -->
+<div class="modal-overlay" id="commentsModal">
+    <div class="modal-content" style="max-width:500px">
+        <div class="modal-header">💬 КОММЕНТАРИИ</div>
+        <div style="text-align:center;margin-bottom:20px">
+            <div id="commentsModalTitle" style="font-size:1.3rem;font-weight:700"></div>
+            <div id="commentsModalSubtitle" style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px"></div>
+        </div>
+        <div id="commentsList" style="max-height:300px;overflow-y:auto;margin-bottom:20px;padding:0 4px"></div>
+        <form id="commentForm">
+            <div class="form-group" style="margin-bottom:12px">
+                <textarea class="form-textarea" id="commentInput" placeholder="Напиши комментарий..." required maxlength="500" style="min-height:80px"></textarea>
+            </div>
+            <button type="submit" class="submit-btn" id="commentSubmitBtn">ОТПРАВИТЬ</button>
+        </form>
+        <button class="modal-cancel-btn" onclick="closeCommentsModal()" style="margin-top:12px">Закрыть</button>
+    </div>
+</div>
+
 <!-- МОДАЛКА ВЫБОРА СУММЫ -->
 <div class="amount-modal-overlay" id="amountModal">
     <div class="amount-modal">
@@ -944,14 +1010,14 @@
 // SUPABASE
 // ============================================
 let supabaseClient = null;
-const SUPABASE_URL = 'ВСТАВЬ_PROJECT_URL';
-const SUPABASE_ANON_KEY = 'ВСТАВЬ_ANON_KEY';
+const SUPABASE_URL = 'https://wvzmcxcaupclvntvhsug.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_fvh6_wr0lVFrRGEgB_Fipw_Dwl_8ISd';
 try {
-    if (SUPABASE_URL !== 'ВСТАВЬ_PROJECT_URL' && SUPABASE_ANON_KEY !== 'ВСТАВЬ_ANON_KEY') {
+    if (SUPABASE_URL && SUPABASE_ANON_KEY) {
         const { createClient } = supabase;
         supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         console.log('✅ Supabase подключён');
-    } else { console.log('⚠️ Supabase не настроен'); }
+    }
 } catch (e) { console.error('Ошибка Supabase:', e); }
 
 // ============================================
@@ -1022,6 +1088,199 @@ const subscriberTracks = [
 let currentCategory = 'all';
 
 // ============================================
+// КОММЕНТАРИИ
+// ============================================
+let commentsCache = {};
+let currentCommentsTrackId = null;
+let currentCommentsTrackType = null;
+let commentCountsCache = {};
+
+async function loadComments(trackId, trackType) {
+    const cacheKey = `${trackType}_${trackId}`;
+    if (!supabaseClient) return [];
+    try {
+        const { data, error } = await supabaseClient
+            .from('track_comments')
+            .select('*')
+            .eq('track_id', String(trackId))
+            .eq('track_type', trackType)
+            .order('created_at', { ascending: false });
+        if (error) throw error;
+        commentsCache[cacheKey] = data || [];
+        return data || [];
+    } catch (e) {
+        console.error('Ошибка загрузки комментариев:', e);
+        return [];
+    }
+}
+
+async function loadCommentCounts(trackIds, trackType) {
+    if (!supabaseClient) return {};
+    const counts = {};
+    try {
+        const { data, error } = await supabaseClient
+            .from('track_comments')
+            .select('track_id')
+            .eq('track_type', trackType)
+            .in('track_id', trackIds.map(String));
+        if (error) throw error;
+        (data || []).forEach(row => {
+            counts[row.track_id] = (counts[row.track_id] || 0) + 1;
+        });
+    } catch (e) {
+        console.error('Ошибка загрузки счётчиков:', e);
+    }
+    return counts;
+}
+
+async function addComment(trackId, trackType, userName, commentText) {
+    if (!supabaseClient) {
+        alert('Комментарии временно недоступны (Supabase не подключён)');
+        return false;
+    }
+    try {
+        const { data, error } = await supabaseClient
+            .from('track_comments')
+            .insert([{
+                track_id: String(trackId),
+                track_type: trackType,
+                user_name: userName,
+                comment_text: commentText
+            }])
+            .select();
+        if (error) throw error;
+        const cacheKey = `${trackType}_${trackId}`;
+        if (!commentsCache[cacheKey]) commentsCache[cacheKey] = [];
+        commentsCache[cacheKey].unshift(data[0]);
+        commentCountsCache[trackType + '_' + trackId] = (commentCountsCache[trackType + '_' + trackId] || 0) + 1;
+        return true;
+    } catch (e) {
+        console.error('Ошибка добавления комментария:', e);
+        return false;
+    }
+}
+
+function openCommentsModal(trackId, trackType, trackTitle) {
+    currentCommentsTrackId = trackId;
+    currentCommentsTrackType = trackType;
+    const modal = document.getElementById('commentsModal');
+    const title = document.getElementById('commentsModalTitle');
+    const subtitle = document.getElementById('commentsModalSubtitle');
+    const list = document.getElementById('commentsList');
+    const form = document.getElementById('commentForm');
+    
+    title.textContent = trackTitle;
+    const typeLabels = { tracks: 'Трек EVGENII', instrumentals: 'Инструментал', subscribers: 'Трек подписчика' };
+    subtitle.textContent = typeLabels[trackType] || '';
+    list.innerHTML = '<div class="comments-loading">Загрузка комментариев...</div>';
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    loadComments(trackId, trackType).then(comments => {
+        renderComments(comments);
+    });
+    
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+        const input = document.getElementById('commentInput');
+        const commentText = input.value.trim();
+        if (!commentText) return;
+        
+        const userName = localStorage.getItem('evgenii_user') || 'Гость';
+        const submitBtn = document.getElementById('commentSubmitBtn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'ОТПРАВКА...';
+        
+        const success = await addComment(trackId, trackType, userName, commentText);
+        
+        if (success) {
+            input.value = '';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'ОТПРАВИТЬ';
+            const comments = await loadComments(trackId, trackType);
+            renderComments(comments);
+            updateCommentBadge(trackId, trackType);
+        } else {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'ОТПРАВИТЬ';
+            alert('Ошибка при отправке комментария');
+        }
+    };
+}
+
+function renderComments(comments) {
+    const list = document.getElementById('commentsList');
+    if (!comments || comments.length === 0) {
+        list.innerHTML = '<div class="comments-empty">💬 Пока нет комментариев.<br>Будь первым!</div>';
+        return;
+    }
+    list.innerHTML = comments.map(c => `
+        <div class="comment-item">
+            <div class="comment-header">
+                <div class="comment-author">${escapeHtml(c.user_name)}</div>
+                <div class="comment-time">${new Date(c.created_at).toLocaleString('ru-RU', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div>
+            </div>
+            <div class="comment-text">${escapeHtml(c.comment_text)}</div>
+        </div>
+    `).join('');
+}
+
+function updateCommentBadge(trackId, trackType) {
+    const key = `${trackType}_${trackId}`;
+    const count = commentCountsCache[key] || 0;
+    document.querySelectorAll(`.track-comment-btn[data-track-id="${trackId}"][data-track-type="${trackType}"] .comment-count-badge`).forEach(badge => {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'flex' : 'none';
+    });
+    document.querySelectorAll(`.special-card-btn[data-track-id="${trackId}"][data-track-type="${trackType}"] .comment-count-badge`).forEach(badge => {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'flex' : 'none';
+    });
+}
+
+function closeCommentsModal() {
+    document.getElementById('commentsModal').classList.remove('active');
+    document.body.style.overflow = '';
+    currentCommentsTrackId = null;
+    currentCommentsTrackType = null;
+}
+
+document.getElementById('commentsModal').addEventListener('click', function(e) {
+    if (e.target === this) closeCommentsModal();
+});
+
+async function preloadCommentCounts() {
+    if (!supabaseClient) return;
+    const trackIds = allTracks.map(t => t.id);
+    const instIds = instrumentalTracks.map(t => t.id);
+    const subIds = subscriberTracks.map(t => t.id);
+    
+    const [trackCounts, instCounts, subCounts] = await Promise.all([
+        loadCommentCounts(trackIds, 'tracks'),
+        loadCommentCounts(instIds, 'instrumentals'),
+        loadCommentCounts(subIds, 'subscribers')
+    ]);
+    
+    Object.assign(commentCountsCache, 
+        Object.fromEntries(Object.entries(trackCounts).map(([k,v]) => [`tracks_${k}`, v])),
+        Object.fromEntries(Object.entries(instCounts).map(([k,v]) => [`instrumentals_${k}`, v])),
+        Object.fromEntries(Object.entries(subCounts).map(([k,v]) => [`subscribers_${k}`, v]))
+    );
+    
+    // Обновляем все бейджи
+    document.querySelectorAll('.comment-count-badge').forEach(badge => {
+        const btn = badge.closest('[data-track-id]');
+        if (btn) {
+            const key = `${btn.dataset.trackType}_${btn.dataset.trackId}`;
+            const count = commentCountsCache[key] || 0;
+            badge.textContent = count;
+            badge.style.display = count > 0 ? 'flex' : 'none';
+        }
+    });
+}
+
+// ============================================
 // RENDER
 // ============================================
 function renderNewRelease() {
@@ -1052,7 +1311,9 @@ function createTrackEl(track, category, index) {
     const playFn = category === 'tracks' ? `playTrack(allTracks[${index}],${index})` : category === 'instrumentals' ? `playInstrumental(instrumentalTracks[${index}],${index})` : `playSubscriber(subscriberTracks[${index}],${index})`;
     const dataArray = category === 'tracks' ? 'allTracks' : category === 'instrumentals' ? 'instrumentalTracks' : 'subscriberTracks';
     const downloadType = category === 'tracks' ? 'regular' : category;
-    el.innerHTML = `<div class="track-cover" onclick="${playFn}">${coverHtml}<div class="track-category-badge ${badgeClass}">${badgeIcon}</div></div><div class="track-info" onclick="${playFn}"><div class="track-title">${track.title}</div><div class="track-artist ${artistClass}">${artistText}</div></div><div class="track-duration">${track.duration}</div><button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(${dataArray}[${index}],'${downloadType}')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;
+    const countKey = `${category}_${track.id}`;
+    const count = commentCountsCache[countKey] || 0;
+    el.innerHTML = `<div class="track-cover" onclick="${playFn}">${coverHtml}<div class="track-category-badge ${badgeClass}">${badgeIcon}</div></div><div class="track-info" onclick="${playFn}"><div class="track-title">${track.title}</div><div class="track-artist ${artistClass}">${artistText}</div></div><div class="track-duration">${track.duration}</div><button class="track-comment-btn" data-track-id="${track.id}" data-track-type="${category}" onclick="event.stopPropagation();openCommentsModal(${JSON.stringify(track.id)},'${category}',${JSON.stringify(track.title)})" title="Комментарии"><svg viewBox="0 0 24 24"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg><span class="comment-count-badge" style="display:${count > 0 ? 'flex' : 'none'}">${count}</span></button><button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(${dataArray}[${index}],'${downloadType}')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>`;
     return el;
 }
 
@@ -1100,7 +1361,9 @@ function renderInstrumentals() {
         card.className = 'special-card gold';
         card.dataset.id = t.id;
         const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">` : '🎹';
-        card.innerHTML = `<div class="special-card-top"><div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-tags"><span class="special-tag genre">${t.genre}</span><span class="special-tag mood">${t.mood}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn gold" onclick="event.stopPropagation();openDownloadModal(instrumentalTracks[${i}],'instrumental')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description gold">${t.description}</div>`;
+        const countKey = `instrumentals_${t.id}`;
+        const count = commentCountsCache[countKey] || 0;
+        card.innerHTML = `<div class="special-card-top"><div class="special-cover gold" onclick="playInstrumental(instrumentalTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-tags"><span class="special-tag genre">${t.genre}</span><span class="special-tag mood">${t.mood}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn gold" data-track-id="${t.id}" data-track-type="instrumentals" onclick="event.stopPropagation();openCommentsModal(${JSON.stringify(t.id)},'instrumentals',${JSON.stringify(t.title)})" title="Комментарии"><svg viewBox="0 0 24 24"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg><span class="comment-count-badge" style="display:${count > 0 ? 'flex' : 'none'}">${count}</span></button><button class="special-card-btn gold" onclick="event.stopPropagation();openDownloadModal(instrumentalTracks[${i}],'instrumental')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description gold">${t.description}</div>`;
         list.appendChild(card);
     });
 }
@@ -1114,7 +1377,9 @@ function renderSubscribers() {
         card.className = 'special-card pink';
         card.dataset.id = t.id;
         const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎤'">` : '🎤';
-        card.innerHTML = `<div class="special-card-top"><div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-author">✍ ${t.author}</div><div class="special-tags"><span class="special-tag style">${t.style}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn pink" onclick="event.stopPropagation();openDownloadModal(subscriberTracks[${i}],'subscriber')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description pink">${t.description}</div>`;
+        const countKey = `subscribers_${t.id}`;
+        const count = commentCountsCache[countKey] || 0;
+        card.innerHTML = `<div class="special-card-top"><div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-author">✍ ${t.author}</div><div class="special-tags"><span class="special-tag style">${t.style}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn pink" data-track-id="${t.id}" data-track-type="subscribers" onclick="event.stopPropagation();openCommentsModal(${JSON.stringify(t.id)},'subscribers',${JSON.stringify(t.title)})" title="Комментарии"><svg viewBox="0 0 24 24"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg><span class="comment-count-badge" style="display:${count > 0 ? 'flex' : 'none'}">${count}</span></button><button class="special-card-btn pink" onclick="event.stopPropagation();openDownloadModal(subscriberTracks[${i}],'subscriber')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description pink">${t.description}</div>`;
         list.appendChild(card);
     });
 }
@@ -1345,6 +1610,12 @@ function showMainScreen(name) {
     renderAllTracksList();
     renderInstrumentals();
     renderSubscribers();
+    // Загружаем счётчики комментариев после рендера
+    preloadCommentCounts().then(() => {
+        renderAllTracksList();
+        renderInstrumentals();
+        renderSubscribers();
+    });
 }
 logoutBtn.addEventListener('click', function() {
     localStorage.removeItem('evgenii_user');
@@ -1483,4 +1754,3 @@ document.getElementById('vtbModal').addEventListener('click', function(e) {
 </script>
 </body>
 </html>
-
