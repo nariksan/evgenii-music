@@ -383,15 +383,6 @@
         .comment-author { font-size: 0.8rem; font-weight: 600; color: var(--cyan); }
         .comment-time { font-size: 0.65rem; color: var(--text-secondary); }
         .comment-text { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; word-break: break-word; }
-        .comment-actions { display: flex; gap: 8px; margin-top: 8px; }
-        .like-btn { display: flex; align-items: center; gap: 5px; padding: 4px 10px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: transparent; color: var(--text-secondary); cursor: pointer; font-size: 0.75rem; font-family: 'Inter', sans-serif; transition: all 0.2s ease; }
-        .like-btn:hover { border-color: var(--pink); color: var(--pink); background: rgba(255, 107, 157, 0.08); }
-        .like-btn:active { transform: scale(0.92); }
-        .like-btn.liked { border-color: var(--pink); color: var(--pink); background: rgba(255, 107, 157, 0.12); }
-        .like-btn.liked svg { fill: var(--pink); animation: likePop 0.3s ease; }
-        .like-btn svg { width: 14px; height: 14px; fill: currentColor; }
-        .like-count { font-weight: 600; font-family: 'Orbitron', monospace; font-size: 0.7rem; }
-        @keyframes likePop { 0% { transform: scale(1); } 50% { transform: scale(1.4); } 100% { transform: scale(1); } }
         .comments-empty { text-align: center; padding: 30px 20px; color: var(--text-secondary); font-size: 0.9rem; }
         .comments-empty-icon { font-size: 2rem; margin-bottom: 8px; opacity: 0.5; }
         .comments-loading { text-align: center; padding: 20px; color: var(--text-secondary); font-size: 0.85rem; }
@@ -526,9 +517,9 @@
         <div class="quick-grid">
             <div class="quick-tile" onclick="navigateTo('tracksPage')"><div class="tile-icon tracks">🎵</div><div class="tile-title">Все треки</div><div class="tile-desc">Полная дискография</div></div>
             <div class="quick-tile" onclick="navigateTo('instrumentalsPage')"><div class="tile-icon instrumental">🎹</div><div class="tile-title">Инструменталы</div><div class="tile-desc">Музыка без слов</div></div>
-            <div class="quick-tile" onclick="navigateTo('subscribersPage')"><div class="tile-icon subscribers"></div><div class="tile-title">Дай голос</div><div class="tile-desc">Твой текст — наш голос</div></div>
+            <div class="quick-tile" onclick="navigateTo('subscribersPage')"><div class="tile-icon subscribers">🎤</div><div class="tile-title">Дай голос</div><div class="tile-desc">Твой текст — наш голос</div></div>
             <div class="quick-tile" onclick="navigateTo('communityPage')"><div class="tile-icon community">🌐</div><div class="tile-title">Сообщества</div><div class="tile-desc">Bip & Telegram</div></div>
-            <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
+            <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">✉️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
             <div class="quick-tile disabled"><div class="tile-icon" style="background:rgba(0,229,255,0.15);color:var(--cyan)">💬</div><div class="tile-title">Чат</div><div class="tile-desc">Скоро будет доступен</div></div>
             <div class="quick-tile" onclick="navigateTo('supportPage')"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">Сказать спасибо</div></div>
             <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">ℹ️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
@@ -541,10 +532,10 @@
     <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Все треки</div></div>
     <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
     <div class="category-tabs fade-in-up" id="categoryTabs">
-        <button class="category-tab active" data-category="all" onclick="switchCategory('all')"><span class="tab-icon"></span><span>Все</span><span class="tab-count" id="countAll">0</span></button>
+        <button class="category-tab active" data-category="all" onclick="switchCategory('all')"><span class="tab-icon">🎧</span><span>Все</span><span class="tab-count" id="countAll">0</span></button>
         <button class="category-tab" data-category="tracks" onclick="switchCategory('tracks')"><span class="tab-icon">🎵</span><span>Треки</span><span class="tab-count" id="countTracks">0</span></button>
         <button class="category-tab" data-category="instrumentals" onclick="switchCategory('instrumentals')"><span class="tab-icon">🎹</span><span>Инструменталы</span><span class="tab-count" id="countInstrumentals">0</span></button>
-        <button class="category-tab" data-category="subscribers" onclick="switchCategory('subscribers')"><span class="tab-icon"></span><span>Дай голос</span><span class="tab-count" id="countSubscribers">0</span></button>
+        <button class="category-tab" data-category="subscribers" onclick="switchCategory('subscribers')"><span class="tab-icon">🎤</span><span>Дай голос</span><span class="tab-count" id="countSubscribers">0</span></button>
     </div>
     <div class="tracks-list fade-in-up" id="allTracksList"></div>
 </div>
@@ -594,7 +585,7 @@
         <div class="community-intro"><p>Присоединяйтесь к нашим сообществам, чтобы быть в курсе новых релизов и эксклюзивного контента</p></div>
         <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon bip">🎵</div><div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
         <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon telegram">✈️</div><div class="community-info"><div class="community-name">Telegram</div><div class="community-desc">Новости и обновления</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
-        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon instagram"></div><div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
+        <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon instagram">📷</div><div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
     </div>
 </div>
 
@@ -635,7 +626,7 @@
     <div class="floating-progress-wrapper"><span class="floating-time" id="instCurrentTime">0:00</span><div class="floating-bar-container" onclick="instSeek(event)"><div class="floating-bar-fill gold" id="instBarFill"></div></div><span class="floating-time end" id="instTotalTime">0:00</span></div>
 </div>
 <div class="floating-player pink" id="subscriberPlayer">
-    <div class="floating-player-top"><div class="floating-player-cover pink" id="subPlayerCover"></div><div class="floating-player-info"><div class="floating-player-label pink">Текст зазвучал</div><div class="floating-player-title" id="subPlayerTitle">Название</div><div class="floating-player-author pink" id="subPlayerAuthor">Автор текста</div><div class="floating-player-tags" id="subPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn pink" onclick="subSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn pink" onclick="subTogglePlay()"><svg viewBox="0 0 24 24" id="subPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn pink" onclick="subSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
+    <div class="floating-player-top"><div class="floating-player-cover pink" id="subPlayerCover">🎤</div><div class="floating-player-info"><div class="floating-player-label pink">Текст зазвучал</div><div class="floating-player-title" id="subPlayerTitle">Название</div><div class="floating-player-author pink" id="subPlayerAuthor">Автор текста</div><div class="floating-player-tags" id="subPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn pink" onclick="subSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn pink" onclick="subTogglePlay()"><svg viewBox="0 0 24 24" id="subPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn pink" onclick="subSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
     <div class="floating-player-description pink" id="subPlayerDescription">Комментарий...</div>
     <div class="floating-progress-wrapper"><span class="floating-time" id="subCurrentTime">0:00</span><div class="floating-bar-container" onclick="subSeek(event)"><div class="floating-bar-fill pink" id="subBarFill"></div></div><span class="floating-time end" id="subTotalTime">0:00</span></div>
 </div>
@@ -722,20 +713,6 @@ try {
 const TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
 const TELEGRAM_CHAT_ID = '5129595944';
 
-// ============================================
-// УНИКАЛЬНЫЙ USER ID
-// ============================================
-function getUserId() {
-    let userId = localStorage.getItem('evgenii_user_id');
-    if (!userId) {
-        userId = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
-        localStorage.setItem('evgenii_user_id', userId);
-    }
-    return userId;
-}
-const CURRENT_USER_ID = getUserId();
-console.log(' Твой userId:', CURRENT_USER_ID);
-
 const newRelease = { id: 'new-release', title: "Последний трек.", subtitle: "New Release", file: "tracks/song15.mp3", duration: "4:18", cover: "cover/cover.png" };
 
 const allTracks = [
@@ -801,7 +778,7 @@ async function loadAllCommentCounts() {
         });
         Object.assign(commentCountsCache, counts);
         updateAllCommentBadges();
-        renderNewRelease();
+        renderNewRelease(); // Обновляем кнопки нового релиза после загрузки счётчиков
     } catch (e) {
         console.error('Ошибка загрузки счётчиков:', e);
     }
@@ -824,7 +801,7 @@ function openCommentsModal(track, trackType) {
     const countEl = document.getElementById('commentsCount');
 
     const typeLabels = { tracks: 'Трек', instrumentals: 'Инструментал', subscribers: 'Дай голос' };
-    const icon = trackType === 'instrumentals' ? '🎹' : trackType === 'subscribers' ? '' : '🎵';
+    const icon = trackType === 'instrumentals' ? '🎹' : trackType === 'subscribers' ? '🎤' : '🎵';
     const coverHtml = track.cover ? `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${icon}'">` : icon;
     const artistText = trackType === 'subscribers' ? track.author : 'EVGENII';
 
@@ -837,12 +814,14 @@ function openCommentsModal(track, trackType) {
 
     if (commentsUnsubscribe) commentsUnsubscribe();
     
+    // ВАЖНО: убрали orderBy — сортируем на клиенте
     commentsUnsubscribe = db.collection('comments')
         .where('trackId', '==', String(track.id))
         .onSnapshot(snapshot => {
             const comments = [];
             snapshot.forEach(doc => comments.push({ id: doc.id, ...doc.data() }));
             
+            // Сортируем по дате на клиенте
             comments.sort((a, b) => {
                 const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt || 0);
                 const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt || 0);
@@ -856,7 +835,6 @@ function openCommentsModal(track, trackType) {
             list.innerHTML = '<div class="comments-empty"><div class="comments-empty-icon">⚠️</div>Ошибка: ' + error.message + '</div>';
         });
 
-    subscribeToUserLikes();
     setTimeout(() => document.getElementById('commentInput').focus(), 300);
 }
 
@@ -869,10 +847,6 @@ function renderComments(comments) {
     list.innerHTML = comments.map(c => {
         const initial = (c.userName || '?')[0].toUpperCase();
         const time = formatCommentTime(c.createdAt);
-        const likesCount = c.likesCount || 0;
-        const isLiked = !!userLikesCache[c.id];
-        const likeClass = isLiked ? ' liked' : '';
-        
         return `<div class="comment-item">
             <div class="comment-avatar">${escapeHtml(initial)}</div>
             <div class="comment-body">
@@ -881,14 +855,6 @@ function renderComments(comments) {
                     <span class="comment-time">${time}</span>
                 </div>
                 <div class="comment-text">${escapeHtml(c.text)}</div>
-                <div class="comment-actions">
-                    <button class="like-btn${likeClass}" data-comment-id="${c.id}" data-comment-doc="${c.id}" onclick="toggleLike('${c.id}','${c.id}')">
-                        <svg viewBox="0 0 24 24"><path d="${isLiked 
-                            ? 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' 
-                            : 'M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z'}"/></svg>
-                        <span class="like-count">${likesCount > 0 ? likesCount : ''}</span>
-                    </button>
-                </div>
             </div>
         </div>`;
     }).join('');
@@ -924,14 +890,13 @@ async function sendComment() {
             trackTitle: currentCommentTrack.title,
             userName: userName,
             text: text,
-            likesCount: 0,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
         input.value = '';
         input.style.height = 'auto';
         commentCountsCache[String(currentCommentTrack.id)] = (commentCountsCache[String(currentCommentTrack.id)] || 0) + 1;
         updateAllCommentBadges();
-        renderNewRelease();
+        renderNewRelease(); // Обновляем кнопки нового релиза после добавления комментария
     } catch (e) {
         console.error('Ошибка отправки:', e);
         alert('Ошибка отправки комментария: ' + e.message);
@@ -940,121 +905,10 @@ async function sendComment() {
     }
 }
 
-// ============================================
-// ЛАЙКИ
-// ============================================
-let userLikesCache = {};
-let likesUnsubscribe = null;
-
-function subscribeToUserLikes() {
-    if (likesUnsubscribe) likesUnsubscribe();
-    
-    likesUnsubscribe = db.collection('likes')
-        .where('userId', '==', CURRENT_USER_ID)
-        .onSnapshot(snapshot => {
-            userLikesCache = {};
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                userLikesCache[data.commentId] = doc.id;
-            });
-            updateLikeButtons();
-        }, error => {
-            console.error('Ошибка подписки на лайки:', error);
-        });
-}
-
-async function toggleLike(commentId, commentDocId) {
-    if (!db) return;
-    const btn = document.querySelector(`.like-btn[data-comment-id="${commentId}"]`);
-    if (btn) btn.disabled = true;
-    
-    try {
-        const likesRef = db.collection('likes');
-        const commentRef = db.collection('comments').doc(commentDocId);
-        
-        const existingLike = userLikesCache[commentId];
-        
-        if (existingLike) {
-            await db.runTransaction(async (transaction) => {
-                const commentDoc = await transaction.get(commentRef);
-                if (!commentDoc.exists) throw new Error('Комментарий не найден');
-                
-                const currentCount = commentDoc.data().likesCount || 0;
-                const newCount = Math.max(0, currentCount - 1);
-                
-                transaction.delete(likesRef.doc(existingLike));
-                transaction.update(commentRef, { likesCount: newCount });
-            });
-            
-            delete userLikesCache[commentId];
-        } else {
-            await db.runTransaction(async (transaction) => {
-                const commentDoc = await transaction.get(commentRef);
-                if (!commentDoc.exists) throw new Error('Комментарий не найден');
-                
-                const currentCount = commentDoc.data().likesCount || 0;
-                
-                const newLikeRef = likesRef.doc();
-                transaction.set(newLikeRef, {
-                    commentId: commentId,
-                    userId: CURRENT_USER_ID,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                transaction.update(commentRef, { likesCount: currentCount + 1 });
-            });
-            
-            const snapshot = await likesRef
-                .where('commentId', '==', commentId)
-                .where('userId', '==', CURRENT_USER_ID)
-                .limit(1)
-                .get();
-            snapshot.forEach(doc => {
-                userLikesCache[commentId] = doc.id;
-            });
-        }
-        
-        updateLikeButtons();
-    } catch (e) {
-        console.error('Ошибка лайка:', e);
-        alert('Ошибка: ' + e.message);
-    } finally {
-        if (btn) btn.disabled = false;
-    }
-}
-
-function updateLikeButtons() {
-    document.querySelectorAll('.like-btn').forEach(btn => {
-        const commentId = btn.dataset.commentId;
-        const isLiked = !!userLikesCache[commentId];
-        btn.classList.toggle('liked', isLiked);
-        btn.innerHTML = isLiked 
-            ? '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'
-            : '<svg viewBox="0 0 24 24"><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/></svg>';
-        
-        const countSpan = btn.querySelector('.like-count');
-        if (countSpan) {
-            const commentItem = btn.closest('.comment-item');
-            if (commentItem) {
-                const allBtns = commentItem.querySelectorAll('.like-btn');
-                allBtns.forEach(b => {
-                    const cs = b.querySelector('.like-count');
-                    if (cs) {
-                        const currentText = cs.textContent;
-                        const currentNum = parseInt(currentText) || 0;
-                        cs.textContent = currentNum > 0 ? currentNum : '';
-                    }
-                });
-            }
-        }
-    });
-}
-
 function closeCommentsModal() {
     document.getElementById('commentsModal').classList.remove('active');
     document.body.style.overflow = '';
     if (commentsUnsubscribe) { commentsUnsubscribe(); commentsUnsubscribe = null; }
-    if (likesUnsubscribe) { likesUnsubscribe(); likesUnsubscribe = null; }
-    userLikesCache = {};
     currentCommentTrack = null;
 }
 
@@ -1096,11 +950,11 @@ function createTrackEl(track, category, index) {
     el.dataset.id = track.id;
     const coverHtml = track.cover ? `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵'}'">` : (category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵');
     const badgeClass = category === 'instrumentals' ? 'gold' : category === 'subscribers' ? 'pink' : 'cyan';
-    const badgeIcon = category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '';
+    const badgeIcon = category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵';
     let artistText = '', artistClass = '';
     if (category === 'tracks') artistText = track.subtitle || 'EVGENII';
     else if (category === 'instrumentals') { artistText = track.genre + ' · ' + track.mood; artistClass = 'gold'; }
-    else if (category === 'subscribers') { artistText = ' ' + track.author + ' · ' + track.style; artistClass = 'pink'; }
+    else if (category === 'subscribers') { artistText = '✍ ' + track.author + ' · ' + track.style; artistClass = 'pink'; }
     const playFn = category === 'tracks' ? `playTrack(allTracks[${index}],${index})` : category === 'instrumentals' ? `playInstrumental(instrumentalTracks[${index}],${index})` : `playSubscriber(subscriberTracks[${index}],${index})`;
     const dataArray = category === 'tracks' ? 'allTracks' : category === 'instrumentals' ? 'instrumentalTracks' : 'subscriberTracks';
     const downloadType = category === 'tracks' ? 'regular' : category;
@@ -1112,7 +966,7 @@ function createTrackEl(track, category, index) {
 function createDivider(category) {
     const div = document.createElement('div');
     div.className = 'category-divider';
-    const labels = { tracks: { icon: '', text: 'ТРЕКИ EVGENII', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '', text: 'ДАЙ ГОЛОС', color: 'pink' } };
+    const labels = { tracks: { icon: '', text: 'ТРЕКИ EVGENII', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '🎤', text: 'ДАЙ ГОЛОС', color: 'pink' } };
     const l = labels[category];
     div.innerHTML = `<div class="category-divider-line"></div><div class="category-divider-label ${l.color}"><span>${l.icon}</span><span>${l.text}</span></div><div class="category-divider-line"></div>`;
     return div;
@@ -1167,7 +1021,7 @@ function renderSubscribers() {
         const card = document.createElement('div');
         card.className = 'special-card pink';
         card.dataset.id = t.id;
-        const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML=''">` : '🎤';
+        const coverHtml = t.cover ? `<img src="${t.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎤'">` : '🎤';
         const commentCount = commentCountsCache[String(t.id)] || 0;
         card.innerHTML = `<div class="special-card-top"><div class="special-cover pink" onclick="playSubscriber(subscriberTracks[${i}],${i})">${coverHtml}<div class="special-play-overlay"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div><div class="special-main-info"><div class="special-title">${t.title}</div><div class="special-author">✍ ${t.author}</div><div class="special-tags"><span class="special-tag style">${t.style}</span></div><div style="font-size:.75rem;color:var(--text-secondary);font-family:'Orbitron',monospace;margin-top:4px">${t.duration}</div></div><div class="special-card-actions"><button class="special-card-btn pink" data-action="comment" data-track-id="${t.id}" onclick="event.stopPropagation();openCommentsModal(subscriberTracks[${i}],'subscribers')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="comment-count-badge">${commentCount > 0 ? commentCount : ''}</span></button><button class="special-card-btn pink" onclick="event.stopPropagation();openDownloadModal(subscriberTracks[${i}],'subscriber')"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button></div></div><div class="special-description pink">${t.description}</div>`;
         list.appendChild(card);
@@ -1250,7 +1104,7 @@ function playInstrumental(track, index = -1) {
     document.getElementById('instTotalTime').textContent = track.duration;
     document.getElementById('instPlayerTags').innerHTML = `<span class="floating-player-tag gold">${track.genre}</span><span class="floating-player-tag gold">${track.mood}</span>`;
     const c = document.getElementById('instPlayerCover');
-    if (track.cover) c.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML=''">`; else c.textContent = '';
+    if (track.cover) c.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎹'">`; else c.textContent = '🎹';
     document.getElementById('instrumentalPlayer').classList.add('visible');
     document.querySelectorAll('.track-item, .special-card').forEach(el => el.classList.remove('active'));
     const a = document.querySelector(`[data-id="${track.id}"]`);
@@ -1307,7 +1161,7 @@ let downloadTrack = null;
 function openDownloadModal(track, type = 'regular') {
     downloadTrack = track;
     const mc = document.getElementById('modalCover');
-    const icon = type === 'instrumental' ? '' : type === 'subscriber' ? '' : '🎵';
+    const icon = type === 'instrumental' ? '🎹' : type === 'subscriber' ? '🎤' : '🎵';
     if (track.cover) mc.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${icon}'">`; else mc.textContent = icon;
     document.getElementById('modalTitle').textContent = track.title;
     document.getElementById('modalArtist').textContent = type === 'subscriber' ? track.author : 'EVGENII';
@@ -1425,7 +1279,7 @@ if (contactForm) {
         formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
         formStatus.textContent = '';
         formStatus.className = 'form-status';
-        const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+        const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n\n💬 <b>Сообщение:</b>\n${messageText}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
         try {
             const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
@@ -1457,7 +1311,7 @@ if (voiceForm) {
         voiceFormStatus.textContent = '';
         voiceFormStatus.className = 'form-status';
         const lyricsPreview = lyrics.length > 2000 ? lyrics.substring(0, 2000) + '\n\n[...текст обрезан, полный пришлю в личку...]' : lyrics;
-        const message = ` <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n🎸 <b>Стиль:</b> ${style}\n\n <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+        const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n🎸 <b>Стиль:</b> ${style}\n\n📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n\n💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
         try {
             const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
