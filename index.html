@@ -1912,6 +1912,25 @@ document.getElementById('vtbModal').addEventListener('click', function(e) {
         closeVTBModal();
     }
 });
+
+// ============================================
+// ПРОБУЖДЕНИЕ SUPABASE (чтобы не засыпал)
+// ============================================
+if (supabaseClient) {
+    // Пробуждаем через 2 секунды после загрузки
+    setTimeout(() => {
+        supabaseClient.from('track_comments').select('id').limit(1).then(() => {
+            console.log('✅ Supabase разбужен');
+        }).catch(() => {
+            console.log('⚠️ Supabase недоступен (возможно, VPN выключен)');
+        });
+    }, 2000);
+    
+    // Повторяем каждые 4 минуты (чтобы не засыпал)
+    setInterval(() => {
+        supabaseClient.from('track_comments').select('id').limit(1).catch(() => {});
+    }, 4 * 60 * 1000);
+}
 </script>
 </body>
 </html>
