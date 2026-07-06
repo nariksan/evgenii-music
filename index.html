@@ -67,15 +67,55 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .geo-shape-banner:nth-child(3) { width: 50px; height: 50px; border-color: var(--purple); bottom: 20%; left: 30%; transform: rotate(30deg); animation-delay: -4s; }
 .geo-shape-banner:nth-child(4) { width: 35px; height: 35px; border-color: var(--cyan); bottom: 25%; right: 20%; border-radius: 4px; animation-delay: -1s; }
 .banner-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900; letter-spacing: 6px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; position: relative; z-index: 2; filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.3)); display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.banner-subtitle { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 4px; color: var(--red); margin-top: 8px; text-shadow: 0 0 15px rgba(255, 0, 64, 0.5); }
 .banner-slogan { font-size: 0.85rem; color: var(--text-secondary); margin-top: 12px; text-align: center; position: relative; z-index: 2; }
 .section-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-secondary); margin-bottom: 16px; font-weight: 600; }
 .release-section { margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto; }
 .release-card { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; transition: transform 0.2s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden; }
 .release-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 229, 255, 0.1); }
-.tv-card { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--card-bg); border: 1px solid rgba(255, 0, 64, 0.2); border-radius: 20px; transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; cursor: pointer; position: relative; overflow: hidden; }
-.tv-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 0, 64, 0.15); border-color: rgba(255, 0, 64, 0.4); }
-.tv-card.live { border-color: var(--red); box-shadow: 0 0 25px rgba(255, 0, 64, 0.2); }
-.tv-card.live::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--red), transparent); animation: shimmer 3s linear infinite; }
+
+/* ВЫДЕЛЕННАЯ КНОПКА КИНО ПРОСТРАНСТВО */
+.tv-card { 
+  display: flex; 
+  align-items: center; 
+  gap: 16px; 
+  padding: 20px; 
+  background: linear-gradient(135deg, rgba(255, 0, 64, 0.1), rgba(176, 0, 255, 0.1)); 
+  border: 2px solid rgba(255, 0, 64, 0.4); 
+  border-radius: 20px; 
+  transition: all 0.3s ease; 
+  cursor: pointer; 
+  position: relative; 
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(255, 0, 64, 0.2);
+}
+.tv-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 0, 64, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+.tv-card:hover::before {
+  left: 100%;
+}
+.tv-card:hover { 
+  transform: translateY(-3px); 
+  box-shadow: 0 0 40px rgba(255, 0, 64, 0.4);
+  border-color: var(--red);
+}
+.tv-card.live { 
+  border-color: var(--red); 
+  box-shadow: 0 0 40px rgba(255, 0, 64, 0.5);
+  animation: liveGlow 2s ease-in-out infinite;
+}
+@keyframes liveGlow {
+  0%, 100% { box-shadow: 0 0 40px rgba(255, 0, 64, 0.5); }
+  50% { box-shadow: 0 0 60px rgba(255, 0, 64, 0.8); }
+}
 .tv-cover { position: relative; width: 70px; height: 70px; border-radius: 14px; overflow: hidden; flex-shrink: 0; background: linear-gradient(135deg, #2a0a1a, #1a0a2a); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
 .tv-cover img { width: 100%; height: 100%; object-fit: cover; }
 .tv-badge { position: absolute; top: 6px; left: 6px; padding: 3px 6px; border-radius: 6px; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.5px; z-index: 2; display: flex; align-items: center; gap: 4px; }
@@ -84,10 +124,11 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .tv-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 .tv-info { flex: 1; min-width: 0; }
 .tv-label { font-size: 0.7rem; color: var(--red); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-.tv-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
-.tv-meta { font-size: 0.8rem; color: var(--text-secondary); }
-.tv-arrow { font-size: 1.3rem; color: var(--text-secondary); transition: transform 0.3s ease, color 0.3s ease; flex-shrink: 0; }
-.tv-card:hover .tv-arrow { transform: translateX(4px); color: var(--red); }
+.tv-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+.tv-meta { font-size: 0.85rem; color: var(--text-secondary); }
+.tv-arrow { font-size: 1.5rem; color: var(--red); transition: transform 0.3s ease; flex-shrink: 0; }
+.tv-card:hover .tv-arrow { transform: translateX(6px); }
+
 .release-cover { position: relative; width: 70px; height: 70px; border-radius: 14px; overflow: hidden; flex-shrink: 0; background: linear-gradient(135deg, #1a2a3a, #2a1a3a); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
 .release-cover img { width: 100%; height: 100%; object-fit: cover; }
 .release-badge { position: absolute; top: 6px; left: 6px; background: var(--cyan); color: #000; font-size: 0.55rem; font-weight: 700; padding: 3px 6px; border-radius: 6px; letter-spacing: 0.5px; z-index: 2; }
@@ -112,15 +153,13 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .tile-icon.about { background: rgba(255, 0, 229, 0.15); color: var(--magenta); }
 .tile-icon.support { background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 107, 157, 0.15)); color: var(--gold); }
 .tile-icon.discussions { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
+.tile-icon.cinema { background: linear-gradient(135deg, rgba(255, 0, 64, 0.2), rgba(176, 0, 255, 0.15)); color: var(--red); }
 .tile-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
 .tile-desc { font-size: 0.75rem; color: var(--text-secondary); }
 .logout-btn { display: block; margin: 20px auto 0; padding: 12px 30px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: transparent; color: var(--text-secondary); font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; }
 .logout-btn:hover { border-color: rgba(255, 0, 0, 0.3); color: #ff6b6b; }
-
-/* СКРЫТАЯ КНОПКА АДМИНКИ */
 .admin-trigger { display: block; margin: 10px auto 0; padding: 8px 16px; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; background: transparent; color: rgba(255, 255, 255, 0.2); font-size: 0.7rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; opacity: 0.3; }
 .admin-trigger:hover { opacity: 1; border-color: rgba(0, 229, 255, 0.3); color: var(--cyan); background: rgba(0, 229, 255, 0.05); }
-
 .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-top: 10px; }
 .back-btn { width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-primary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; }
 .back-btn:hover { border-color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
@@ -380,8 +419,6 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .modal-download-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 .modal-cancel-btn { width: 100%; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; }
 .modal-cancel-btn:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--text-primary); }
-
-/* ПОДДЕРЖКА */
 .support-wrapper { max-width: 520px; margin: 0 auto; }
 .support-intro-new { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 24px; text-align: center; }
 .support-intro-new p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
@@ -418,8 +455,6 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .support-hint .hint-icon { font-size: 1.2rem; margin-right: 6px; }
 .copy-toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px); padding: 14px 24px; background: linear-gradient(135deg, rgba(0, 255, 136, 0.95), rgba(0, 200, 100, 0.95)); color: #000; border-radius: 14px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4); opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 5000; display: flex; align-items: center; gap: 8px; }
 .copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* ОБСУЖДЕНИЯ */
 .discussions-intro { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto; }
 .discussions-intro p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
 .discussions-container { max-width: 800px; margin: 0 auto; background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; height: calc(100vh - 280px); min-height: 500px; }
@@ -459,10 +494,6 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .discussion-send-btn:active { transform: scale(0.95); }
 .discussion-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 .discussion-send-btn svg { width: 18px; height: 18px; fill: #fff; }
-
-/* ============================================ */
-/* EVGENII TV - СТРАНИЦА */
-/* ============================================ */
 .tv-wrapper { max-width: 1200px; margin: 0 auto; }
 .tv-main-player { position: relative; width: 100%; border-radius: 24px; overflow: hidden; background: #000; border: 2px solid var(--card-border); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); margin-bottom: 30px; transition: all 0.4s ease; }
 .tv-main-player.live { border-color: var(--red); box-shadow: 0 20px 60px rgba(255, 0, 64, 0.3); }
@@ -508,10 +539,51 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .tv-empty-state-subtext { font-size: 0.9rem; opacity: 0.6; }
 .loading-spinner { display: inline-block; width: 40px; height: 40px; border: 3px solid rgba(0, 229, 255, 0.2); border-top-color: var(--cyan); border-radius: 50%; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
+.cinema-nav { display: flex; gap: 8px; margin-bottom: 24px; overflow-x: auto; padding: 4px 2px 8px; scrollbar-width: none; -ms-overflow-style: none; }
+.cinema-nav::-webkit-scrollbar { display: none; }
+.cinema-nav-btn { flex-shrink: 0; padding: 12px 20px; border-radius: 12px; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; white-space: nowrap; }
+.cinema-nav-btn:hover { border-color: rgba(255, 0, 64, 0.3); color: var(--text-primary); }
+.cinema-nav-btn.active { background: linear-gradient(135deg, rgba(255, 0, 64, 0.15), rgba(176, 0, 255, 0.15)); border-color: var(--red); color: var(--text-primary); box-shadow: 0 4px 20px rgba(255, 0, 64, 0.15); }
+.cinema-nav-btn .nav-icon { font-size: 1.1rem; }
+.cinema-section { display: none; }
+.cinema-section.active { display: block; animation: fadeIn 0.4s ease; }
+.news-list { display: flex; flex-direction: column; gap: 16px; max-width: 800px; margin: 0 auto; }
+.news-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; padding: 20px; transition: all 0.3s ease; }
+.news-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 0, 64, 0.1); border-color: rgba(255, 0, 64, 0.3); }
+.news-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.news-tag { padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+.news-tag.premiere { background: rgba(255, 0, 64, 0.15); color: var(--red); }
+.news-tag.update { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
+.news-tag.announce { background: rgba(255, 179, 71, 0.15); color: var(--gold); }
+.news-date { font-size: 0.8rem; color: var(--text-secondary); margin-left: auto; }
+.news-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+.news-text { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
+.schedule-list { display: flex; flex-direction: column; gap: 12px; max-width: 800px; margin: 0 auto; }
+.schedule-item { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; transition: all 0.3s ease; }
+.schedule-item:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 0, 64, 0.1); border-color: rgba(255, 0, 64, 0.3); }
+.schedule-item.past { opacity: 0.5; }
+.schedule-date-box { width: 70px; height: 70px; border-radius: 12px; background: linear-gradient(135deg, rgba(255, 0, 64, 0.15), rgba(176, 0, 255, 0.15)); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+.schedule-day { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--red); }
+.schedule-month { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+.schedule-info { flex: 1; min-width: 0; }
+.schedule-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
+.schedule-time { font-size: 0.85rem; color: var(--cyan); font-family: 'Orbitron', monospace; }
+.schedule-desc { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
 
-/* ============================================ */
-/* АДМИН-ПАНЕЛЬ */
-/* ============================================ */
+/* КИНО СЕРИАЛЫ */
+.media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+.media-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; }
+.media-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(255, 0, 64, 0.15); border-color: rgba(255, 0, 64, 0.3); }
+.media-poster { position: relative; width: 100%; aspect-ratio: 2/3; background: linear-gradient(135deg, #1a2a3a, #2a1a3a); overflow: hidden; }
+.media-poster img { width: 100%; height: 100%; object-fit: cover; }
+.media-play-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+.media-card:hover .media-play-overlay { opacity: 1; }
+.media-play-icon { width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 0, 64, 0.9); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(255, 0, 64, 0.4); }
+.media-play-icon svg { width: 28px; height: 28px; fill: #fff; margin-left: 4px; }
+.media-info { padding: 16px; }
+.media-title { font-size: 1rem; font-weight: 600; margin-bottom: 6px; line-height: 1.3; }
+.media-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
 .admin-container { max-width: 900px; margin: 0 auto; }
 .admin-section { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; margin-bottom: 24px; }
 .admin-section-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
@@ -547,7 +619,6 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .admin-empty { text-align: center; padding: 40px 20px; color: var(--text-secondary); font-size: 0.9rem; }
 .admin-login-form { max-width: 400px; margin: 0 auto; text-align: center; }
 .admin-login-form h3 { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 20px; color: var(--cyan); }
-
 .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease forwards; }
 @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 .page.active .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
@@ -555,7 +626,6 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .page.active .fade-in-up:nth-child(3) { animation-delay: 0.3s; }
 .page.active .fade-in-up:nth-child(4) { animation-delay: 0.4s; }
 .page.active .fade-in-up:nth-child(5) { animation-delay: 0.5s; }
-
 @media (min-width: 768px) {
 .quick-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .banner-title { font-size: 3rem; }
@@ -626,24 +696,36 @@ body { padding-bottom: 0; }
 <div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div>
 </div>
 </div>
+
+<!-- ============================================ -->
+<!-- 1. КИНО ПРОСТРАНСТВО (ВЫДЕЛЕННАЯ КНОПКА) -->
+<!-- ============================================ -->
 <div class="release-section fade-in-up">
-<div class="section-title">ПРЯМЫЕ ЭФИРЫ</div>
-<div class="tv-card" id="homeTvCard" onclick="navigateTo('tvPage');initTvPage()">
-<div class="tv-cover" id="homeTvCover">📺</div>
+<div class="section-title">КИНОПРОСТРАНСТВО</div>
+<div class="tv-card" id="homeTvCard" onclick="navigateTo('cinemaPage')">
+<div class="tv-cover" id="homeTvCover">🎬</div>
 <div class="tv-info">
 <div class="tv-label" id="homeTvLabel">
 <span class="tv-badge offline" id="homeTvBadge"><span class="tv-badge-dot"></span>OFFLINE</span>
 </div>
-<div class="tv-title">Evgenii TV</div>
-<div class="tv-meta" id="homeTvMeta">Прямые трансляции · Архив</div>
+<div class="tv-title">Кино Пространство</div>
+<div class="tv-meta" id="homeTvMeta">Премьеры · Кинопоказы · Архив</div>
 </div>
 <div class="tv-arrow">→</div>
 </div>
 </div>
+
+<!-- ============================================ -->
+<!-- 2. НОВЫЙ РЕЛИЗ -->
+<!-- ============================================ -->
 <div class="release-section fade-in-up">
 <div class="section-title">НОВЫЙ РЕЛИЗ</div>
 <div class="release-card" id="homeReleaseCard" onclick="playNewRelease()"></div>
 </div>
+
+<!-- ============================================ -->
+<!-- 3. БЫСТРЫЙ ДОСТУП (БЕЗ КИНО ПРОСТРАНСТВА) -->
+<!-- ============================================ -->
 <div class="quick-access-section fade-in-up">
 <div class="section-title">БЫСТРЫЙ ДОСТУП</div>
 <div class="quick-grid">
@@ -661,37 +743,88 @@ body { padding-bottom: 0; }
 <button class="admin-trigger" onclick="showAdminLogin()">⚙️</button>
 </div>
 
-<!-- EVGENII TV - ПОЛНАЯ СТРАНИЦА -->
-<div class="page" id="tvPage">
-<div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title"><span>📺 EVGENII TV</span><div class="live-indicator" id="liveIndicator" style="display: none;"><div class="live-dot"></div><span>LIVE</span></div></div></div>
-<div class="tv-wrapper">
-<div class="intro-block red fade-in-up"><div class="intro-title red">ПРЯМЫЕ ЭФИРЫ · АРХИВ</div><div class="intro-text">Смотри прямые трансляции в реальном времени и пересматривай записи прошлых эфиров. Здесь рождается магия — без фильтров и монтажа.</div></div>
+<!-- ============================================ -->
+<!-- КИНО ПРОСТРАНСТВО - ПОЛНАЯ СТРАНИЦА -->
+<!-- ============================================ -->
+<div class="page" id="cinemaPage">
+<div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title"><span>🎬 КИНО ПРОСТРАНСТВО</span></div></div>
+
+<!-- Баннер Кино (БЕЗ БЕЛОЙ ПОЛОСКИ) -->
+<div class="banner fade-in-up" style="background: linear-gradient(135deg, #1a0a2e, #2a0a1a, #1a0a2e); border-color: rgba(255, 0, 64, 0.3);">
+<div class="banner-content" style="background: radial-gradient(ellipse at 30% 50%, rgba(255, 0, 64, 0.2) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(176, 0, 255, 0.2) 0%, transparent 60%);">
+<div class="banner-geometric"><div class="geo-shape-banner" style="border-color: var(--red);"></div><div class="geo-shape-banner" style="border-color: var(--magenta); animation-delay: -2s;"></div><div class="geo-shape-banner" style="border-color: var(--purple); animation-delay: -4s;"></div><div class="geo-shape-banner" style="border-color: var(--red); animation-delay: -1s;"></div></div>
+<div class="banner-title" style="background: linear-gradient(135deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.3));">EVGENII<span class="ai-badge" style="background: linear-gradient(135deg, var(--red), var(--magenta)); -webkit-text-fill-color: #000;">AI</span></div>
+<div class="banner-subtitle">КИНО ПРОСТРАНСТВО</div>
+<div class="banner-slogan">Премьеры · Кинопоказы · Архив</div>
+</div>
+</div>
+
+<!-- Навигация внутри Кино (НОВЫЙ ПОРЯДОК) -->
+<div class="cinema-nav fade-in-up">
+<button class="cinema-nav-btn active" onclick="switchCinemaSection('live', this)"><span class="nav-icon">🎥</span><span>Прямой эфир</span></button>
+<button class="cinema-nav-btn" onclick="switchCinemaSection('media', this)"><span class="nav-icon">🎬</span><span>Кино сериалы</span></button>
+<button class="cinema-nav-btn" onclick="switchCinemaSection('archive', this)"><span class="nav-icon">📼</span><span>Архив трансляций</span></button>
+<button class="cinema-nav-btn" onclick="switchCinemaSection('news', this)"><span class="nav-icon">📰</span><span>Новости</span></button>
+</div>
+
+<!-- РАЗДЕЛ: ПРЯМОЙ ЭФИР -->
+<div class="cinema-section active" id="cinemaLive">
+<div class="intro-block red fade-in-up"><div class="intro-title red">ПРЯМОЙ ЭФИР</div><div class="intro-text">Смотри премьеры и кинопоказы в реальном времени. Кино, которое объединяет.</div></div>
 <div class="tv-main-player fade-in-up" id="mainPlayer">
 <div class="tv-player-wrapper">
 <div class="tv-live-badge" id="liveBadge" style="display: none;"><div class="live-indicator"><div class="live-dot"></div><span>LIVE</span></div></div>
 <div class="tv-viewer-count" id="viewerCount" style="display: none;"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg><span id="viewerNumber">0</span></div>
 <div class="tv-player-overlay" id="playerOverlay">
-<div class="tv-offline-icon">📡</div>
-<div class="tv-offline-text">Сейчас нет трансляции</div>
-<div class="tv-offline-subtext">Следи за анонсами — впереди много интересного</div>
+<div class="tv-offline-icon">🎬</div>
+<div class="tv-offline-text">Сейчас нет кинопоказа</div>
+<div class="tv-offline-subtext">Следи за расписанием — скоро покажем что-то крутое 🎬</div>
 </div>
 <div id="playerContainer"></div>
 </div>
 <div class="stream-info">
-<div class="stream-title" id="streamTitle">Ожидание трансляции</div>
+<div class="stream-title" id="streamTitle">Ожидание кинопоказа</div>
 <div class="stream-meta">
 <div class="stream-meta-item"><span>📅</span><span id="streamDate">—</span></div>
 <div class="stream-meta-item"><span>⏱️</span><span id="streamDuration">—</span></div>
 </div>
 </div>
 </div>
+</div>
+
+<!-- РАЗДЕЛ: КИНО СЕРИАЛЫ -->
+<div class="cinema-section" id="cinemaMedia">
+<div class="intro-block red fade-in-up"><div class="intro-title red">КИНО · СЕРИАЛЫ · МУЛЬТИКИ</div><div class="intro-text">Смотри лучшие фильмы, сериалы и мультфильмы. Выбирай категорию и наслаждайся просмотром!</div></div>
+
+<!-- Подкатегории -->
+<div class="category-tabs fade-in-up" id="mediaCategoryTabs">
+<button class="category-tab active" data-category="movies" onclick="switchMediaCategory('movies', this)"><span class="tab-icon">🎬</span><span>Кино</span></button>
+<button class="category-tab" data-category="series" onclick="switchMediaCategory('series', this)"><span class="tab-icon">📺</span><span>Сериалы</span></button>
+<button class="category-tab" data-category="cartoons" onclick="switchMediaCategory('cartoons', this)"><span class="tab-icon">🎨</span><span>Мультики</span></button>
+</div>
+
+<div class="media-grid fade-in-up" id="mediaGrid">
+<div class="tv-empty-state"><div class="loading-spinner"></div></div>
+</div>
+</div>
+
+<!-- РАЗДЕЛ: АРХИВ ТРАНСЛЯЦИЙ -->
+<div class="cinema-section" id="cinemaArchive">
+<div class="intro-block red fade-in-up"><div class="intro-title red">АРХИВ ТРАНСЛЯЦИЙ</div><div class="intro-text">Пересматривай лучшие фильмы и трансляции из нашего архива.</div></div>
 <div class="archive-section fade-in-up">
 <div class="archive-header">
-<div class="archive-title"><span>📼</span><span>Архив трансляций</span><span class="archive-count" id="archiveCount">0</span></div>
+<div class="archive-title"><span>🎬</span><span>Все трансляции</span><span class="archive-count" id="archiveCount">0</span></div>
 </div>
 <div class="archive-grid" id="archiveGrid">
 <div class="tv-empty-state"><div class="loading-spinner"></div></div>
 </div>
+</div>
+</div>
+
+<!-- РАЗДЕЛ: НОВОСТИ -->
+<div class="cinema-section" id="cinemaNews">
+<div class="intro-block red fade-in-up"><div class="intro-title red">НОВОСТИ КИНО</div><div class="intro-text">Анонсы премьер, обновления и важные события Кино Пространства.</div></div>
+<div class="news-list fade-in-up" id="newsList">
+<div class="tv-empty-state"><div class="loading-spinner"></div></div>
 </div>
 </div>
 </div>
@@ -700,7 +833,6 @@ body { padding-bottom: 0; }
 <div class="page" id="adminPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">⚙️ Админ-панель</div></div>
 <div class="admin-container">
-<!-- Форма входа -->
 <div class="admin-section fade-in-up" id="adminLoginSection">
 <div class="admin-login-form">
 <h3>🔐 АВТОРИЗАЦИЯ</h3>
@@ -712,11 +844,9 @@ body { padding-bottom: 0; }
 <div class="form-status" id="adminLoginStatus"></div>
 </div>
 </div>
-<!-- Основной контент админки -->
 <div id="adminContent" style="display:none">
-<!-- Управление текущим стримом -->
 <div class="admin-section fade-in-up">
-<div class="admin-section-title live">🔴 ТЕКУЩИЙ СТРИМ</div>
+<div class="admin-section-title live">🔴 ТЕКУЩИЙ КИНОПОКАЗ</div>
 <div class="admin-status" id="adminStreamStatus">
 <div class="admin-status-indicator offline"></div>
 <div class="admin-status-text">Оффлайн</div>
@@ -729,25 +859,74 @@ body { padding-bottom: 0; }
 <input type="text" class="form-input" id="adminVideoId" placeholder="Например: 456239012">
 </div>
 <div class="form-group">
-<label class="form-label">Название стрима</label>
-<input type="text" class="form-input" id="adminStreamTitle" placeholder="Вечерний эфир">
+<label class="form-label">Название кинопоказа</label>
+<input type="text" class="form-input" id="adminStreamTitle" placeholder="Вечерний киносеанс">
 </div>
 </div>
-<button class="admin-btn primary" onclick="startLiveStream()">🔴 НАЧАТЬ LIVE</button>
+<button class="admin-btn primary" onclick="startLiveStream()">🔴 НАЧАТЬ КИНОПОКАЗ</button>
 </div>
 </div>
 <div id="adminStreamControls" style="display:none">
 <div class="admin-form">
 <div style="padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;margin-bottom:16px">
-<div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px">Текущий стрим:</div>
+<div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px">Текущий кинопоказ:</div>
 <div style="font-size:1.1rem;font-weight:600;margin-bottom:4px" id="adminCurrentStreamTitle">—</div>
 <div style="font-size:0.85rem;color:var(--text-secondary)" id="adminCurrentStreamId">Video ID: —</div>
 </div>
-<button class="admin-btn danger" onclick="stopLiveStream()">⏹ ОСТАНОВИТЬ LIVE</button>
+<button class="admin-btn danger" onclick="stopLiveStream()">⏹ ОСТАНОВИТЬ КИНОПОКАЗ</button>
 </div>
 </div>
 </div>
-<!-- Управление архивом -->
+
+<!-- АДМИН: КИНО СЕРИАЛЫ -->
+<div class="admin-section fade-in-up">
+<div class="admin-section-title archive" style="color: var(--gold);">🎬 КИНО СЕРИАЛЫ</div>
+<div id="adminMediaForm" style="display:none">
+<div class="admin-form" style="margin-bottom:20px">
+<div class="form-group">
+<label class="form-label">Категория</label>
+<select class="form-select" id="adminMediaCategory">
+<option value="movies">Кино</option>
+<option value="series">Сериалы</option>
+<option value="cartoons">Мультики</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label">Название</label>
+<input type="text" class="form-input" id="adminMediaTitle" placeholder="Название фильма/сериала">
+</div>
+<div class="form-group">
+<label class="form-label">Описание</label>
+<textarea class="form-textarea" id="adminMediaDesc" placeholder="Краткое описание..." style="min-height:100px"></textarea>
+</div>
+<div class="form-group">
+<label class="form-label">URL постера (фото)</label>
+<input type="text" class="form-input" id="adminMediaPoster" placeholder="https://...">
+</div>
+<div class="form-group">
+<label class="form-label">Ссылка на видео</label>
+<input type="text" class="form-input" id="adminMediaVideo" placeholder="https://youtube.com/... или другая ссылка">
+</div>
+<div class="form-group" id="adminSeriesOrderGroup" style="display:none">
+<label class="form-label">Порядок сортировки (для сериалов)</label>
+<input type="number" class="form-input" id="adminMediaOrder" placeholder="1, 2, 3..." min="1">
+</div>
+<div style="display:flex;gap:12px">
+<button class="admin-btn secondary" onclick="addMedia()">➕ ДОБАВИТЬ</button>
+<button class="admin-btn danger" onclick="toggleMediaForm()">ОТМЕНА</button>
+</div>
+</div>
+</div>
+<div id="adminMediaList">
+<div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+<button class="admin-btn secondary" onclick="toggleMediaForm()">➕ ДОБАВИТЬ КОНТЕНТ</button>
+</div>
+<div class="admin-video-list" id="adminMediaAdminList">
+<div class="admin-empty">Загрузка...</div>
+</div>
+</div>
+</div>
+
 <div class="admin-section fade-in-up">
 <div class="admin-section-title archive">📼 АРХИВ ТРАНСЛЯЦИЙ</div>
 <div id="adminArchiveForm" style="display:none">
@@ -759,7 +938,7 @@ body { padding-bottom: 0; }
 </div>
 <div class="form-group">
 <label class="form-label">Название</label>
-<input type="text" class="form-input" id="adminArchiveTitle" placeholder="Первый стрим">
+<input type="text" class="form-input" id="adminArchiveTitle" placeholder="Первый кинопоказ">
 </div>
 </div>
 <div class="admin-form-row">
@@ -780,9 +959,51 @@ body { padding-bottom: 0; }
 </div>
 <div id="adminArchiveList">
 <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
-<button class="admin-btn secondary" onclick="toggleArchiveForm()">➕ ДОБАВИТЬ ВИДЕО</button>
+<button class="admin-btn secondary" onclick="toggleArchiveForm()">➕ ДОБАВИТЬ ТРАНСЛЯЦИЮ</button>
 </div>
 <div class="admin-video-list" id="adminVideoList">
+<div class="admin-empty">Загрузка...</div>
+</div>
+</div>
+</div>
+
+<div class="admin-section fade-in-up">
+<div class="admin-section-title archive" style="color: var(--gold);">📰 НОВОСТИ</div>
+<div id="adminNewsForm" style="display:none">
+<div class="admin-form" style="margin-bottom:20px">
+<div class="form-group">
+<label class="form-label">Заголовок</label>
+<input type="text" class="form-input" id="adminNewsTitle" placeholder="Анонс премьеры">
+</div>
+<div class="form-group">
+<label class="form-label">Текст новости</label>
+<textarea class="form-textarea" id="adminNewsText" placeholder="Описание новости..." style="min-height:100px"></textarea>
+</div>
+<div class="admin-form-row">
+<div class="form-group">
+<label class="form-label">Тип</label>
+<select class="form-select" id="adminNewsTag">
+<option value="premiere">Премьера</option>
+<option value="update">Обновление</option>
+<option value="announce">Анонс</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label">Дата</label>
+<input type="date" class="form-input" id="adminNewsDate">
+</div>
+</div>
+<div style="display:flex;gap:12px">
+<button class="admin-btn secondary" onclick="addNews()">➕ ДОБАВИТЬ НОВОСТЬ</button>
+<button class="admin-btn danger" onclick="toggleNewsForm()">ОТМЕНА</button>
+</div>
+</div>
+</div>
+<div id="adminNewsList">
+<div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+<button class="admin-btn secondary" onclick="toggleNewsForm()">➕ ДОБАВИТЬ НОВОСТЬ</button>
+</div>
+<div class="admin-video-list" id="adminNewsAdminList">
 <div class="admin-empty">Загрузка...</div>
 </div>
 </div>
@@ -940,7 +1161,7 @@ body { padding-bottom: 0; }
 <div class="player-progress-wrapper"><span class="player-time-mini" id="playerCurrentTime">0:00</span><div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div><span class="player-time-mini end" id="playerTotalTime">0:00</span></div>
 </div>
 <div class="floating-player gold" id="instrumentalPlayer">
-<div class="floating-player-top"><div class="floating-player-cover gold" id="instPlayerCover">🎹</div><div class="floating-player-info"><div class="floating-player-label gold">Инструментал</div><div class="floating-player-title" id="instPlayerTitle">Название</div><div class="floating-player-tags" id="instPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
+<div class="floating-player-top"><div class="floating-player-cover gold" id="instPlayerCover"></div><div class="floating-player-info"><div class="floating-player-label gold">Инструментал</div><div class="floating-player-title" id="instPlayerTitle">Название</div><div class="floating-player-tags" id="instPlayerTags"></div></div><div class="floating-player-controls"><button class="floating-skip-btn gold" onclick="instSkipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="floating-play-btn gold" onclick="instTogglePlay()"><svg viewBox="0 0 24 24" id="instPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="floating-skip-btn gold" onclick="instSkipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
 <div class="floating-player-description gold" id="instPlayerDescription">Описание трека...</div>
 <div class="floating-progress-wrapper"><span class="floating-time" id="instCurrentTime">0:00</span><div class="floating-bar-container" onclick="instSeek(event)"><div class="floating-bar-fill gold" id="instBarFill"></div></div><span class="floating-time end" id="instTotalTime">0:00</span></div>
 </div>
@@ -963,9 +1184,6 @@ body { padding-bottom: 0; }
 <audio id="instrumentalAudio" preload="metadata"></audio>
 <audio id="subscriberAudio" preload="metadata"></audio>
 <script>
-// ============================================
-// FIREBASE
-// ============================================
 const firebaseConfig = {
 apiKey: "AIzaSyCw8S1fghfKUMUtNsDFDbz-oFeSkRD_NOk",
 authDomain: "evgenii-music-b5adf.firebaseapp.com",
@@ -979,59 +1197,52 @@ try {
 firebase.initializeApp(firebaseConfig);
 db = firebase.firestore();
 console.log('✅ Firebase подключён');
-} catch (e) {
-console.error('❌ Ошибка Firebase:', e);
-}
+} catch (e) { console.error('❌ Ошибка Firebase:', e); }
 const TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
 const TELEGRAM_CHAT_ID = '5129595944';
-
-// ============================================
-// EVGENII TV - НАСТРОЙКИ
-// ============================================
-const VK_GROUP_ID = '-239947159';
-const ADMIN_PASSWORD = 'evgenii2024'; // ← ИЗМЕНИ ПАРОЛЬ ЗДЕСЬ
+const VK_GROUP_ID = '-228312316';
+const ADMIN_PASSWORD = 'evgenii2024';
 
 let currentStream = null;
 let streamUnsubscribe = null;
 let isAdminLoggedIn = false;
+let currentCinemaSection = 'live';
+let currentMediaCategory = 'movies';
 
-// ============================================
-// ДАННЫЕ МУЗЫКИ
-// ============================================
 const newRelease = { id: 'new-release', title: "Последний трек.", subtitle: "New Release", file: "tracks/song15.mp3", duration: "4:18", cover: "cover/cover.png" };
 const allTracks = [
-{ id: 2,  title: "Пустой код",                subtitle: "", file: "tracks/song.mp3",  duration: "3:20", cover: "cover/cover.jpg" },
-{ id: 3,  title: "А мне похуй",               subtitle: "", file: "tracks/song2.mp3",  duration: "3:11", cover: "cover/cover.jpg" },
-{ id: 4,  title: "Нейронный Дождь",           subtitle: "", file: "tracks/song3.mp3",  duration: "4:03", cover: "cover/cover.jpg" },
-{ id: 5,  title: "Бункер",                    subtitle: "", file: "tracks/song4.mp3",  duration: "3:01", cover: "cover/cover.jpg" },
-{ id: 6,  title: "Поезд на юг",               subtitle: "", file: "tracks/song5.mp3",  duration: "3:23", cover: "cover/cover.jpg" },
-{ id: 7,  title: "Сгоревший экран",           subtitle: "", file: "tracks/song6.mp3",  duration: "3:39", cover: "cover/cover.jpg" },
-{ id: 8,  title: "«Ёлка горит, а мне похуй»", subtitle: "", file: "tracks/song7.mp3",  duration: "2:30", cover: "cover/cover.jpg" },
-{ id: 9,  title: "19_11",                     subtitle: "", file: "tracks/song8.mp3",  duration: "2:59", cover: "cover/cover.jpg" },
-{ id: 10, title: "Маленький демон",           subtitle: "", file: "tracks/song9.mp3",  duration: "4:32", cover: "cover/cover.jpg" },
-{ id: 11, title: "Бот как поэт",              subtitle: "", file: "tracks/song10.mp3", duration: "2:34", cover: "cover/cover.jpg" },
-{ id: 12, title: "«Телефон Не Звонит»",       subtitle: "", file: "tracks/song11.mp3", duration: "3:14", cover: "cover/cover.jpg" },
-{ id: 13, title: "Белая ткань",               subtitle: "", file: "tracks/song12.mp3", duration: "3:28", cover: "cover/cover.jpg" },
-{ id: 14, title: "Лишний",                    subtitle: "", file: "tracks/song13.mp3", duration: "4:04", cover: "cover/cover.jpg" },
-{ id: 15, title: "Тишина",                    subtitle: "", file: "tracks/song14.mp3", duration: "4:48", cover: "cover/cover.jpg" },
-{ id: 16, title: "Братья",                    subtitle: "", file: "tracks/song1.mp3",  duration: "4:19", cover: "cover/cover.jpg" },
-{ id: 17, title: "пусто",                     subtitle: "", file: "tracks/song0.mp3",  duration: "0:00", cover: "cover/cover.jpg" },
-{ id: 18, title: "пусто",                     subtitle: "", file: "tracks/song0.mp3",  duration: "0:00", cover: "cover/cover.jpg" },
-{ id: 19, title: "пусто",                     subtitle: "", file: "tracks/song0.mp3",  duration: "0:00", cover: "cover/cover.jpg" }
+{ id: 2,  title: "Пустой код", subtitle: "", file: "tracks/song.mp3", duration: "3:20", cover: "cover/cover.jpg" },
+{ id: 3,  title: "А мне похуй", subtitle: "", file: "tracks/song2.mp3", duration: "3:11", cover: "cover/cover.jpg" },
+{ id: 4,  title: "Нейронный Дождь", subtitle: "", file: "tracks/song3.mp3", duration: "4:03", cover: "cover/cover.jpg" },
+{ id: 5,  title: "Бункер", subtitle: "", file: "tracks/song4.mp3", duration: "3:01", cover: "cover/cover.jpg" },
+{ id: 6,  title: "Поезд на юг", subtitle: "", file: "tracks/song5.mp3", duration: "3:23", cover: "cover/cover.jpg" },
+{ id: 7,  title: "Сгоревший экран", subtitle: "", file: "tracks/song6.mp3", duration: "3:39", cover: "cover/cover.jpg" },
+{ id: 8,  title: "«Ёлка горит, а мне похуй»", subtitle: "", file: "tracks/song7.mp3", duration: "2:30", cover: "cover/cover.jpg" },
+{ id: 9,  title: "19_11", subtitle: "", file: "tracks/song8.mp3", duration: "2:59", cover: "cover/cover.jpg" },
+{ id: 10, title: "Маленький демон", subtitle: "", file: "tracks/song9.mp3", duration: "4:32", cover: "cover/cover.jpg" },
+{ id: 11, title: "Бот как поэт", subtitle: "", file: "tracks/song10.mp3", duration: "2:34", cover: "cover/cover.jpg" },
+{ id: 12, title: "«Телефон Не Звонит»", subtitle: "", file: "tracks/song11.mp3", duration: "3:14", cover: "cover/cover.jpg" },
+{ id: 13, title: "Белая ткань", subtitle: "", file: "tracks/song12.mp3", duration: "3:28", cover: "cover/cover.jpg" },
+{ id: 14, title: "Лишний", subtitle: "", file: "tracks/song13.mp3", duration: "4:04", cover: "cover/cover.jpg" },
+{ id: 15, title: "Тишина", subtitle: "", file: "tracks/song14.mp3", duration: "4:48", cover: "cover/cover.jpg" },
+{ id: 16, title: "Братья", subtitle: "", file: "tracks/song1.mp3", duration: "4:19", cover: "cover/cover.jpg" },
+{ id: 17, title: "пусто", subtitle: "", file: "tracks/song0.mp3", duration: "0:00", cover: "cover/cover.jpg" },
+{ id: 18, title: "пусто", subtitle: "", file: "tracks/song0.mp3", duration: "0:00", cover: "cover/cover.jpg" },
+{ id: 19, title: "пусто", subtitle: "", file: "tracks/song0.mp3", duration: "0:00", cover: "cover/cover.jpg" }
 ];
 const instrumentalTracks = [
 { id: 'inst-1', title: "Пробуждения", genre: "", mood: "", file: "instrumentals/The Awakening.mp3", duration: "5:34", cover: "instrgiv/cover.png", description: "Мрачная кинематографическая, готическая оркестровая, таинственная, завораживающая, гипнотическая, драматичные струнные, мощные синтезаторы, атмосферная" },
-{ id: 'inst-2', title: "Неоновая ночь", genre: "Ambient", mood: "Меланхолия", file: "instrumentals/instru.mp3", duration: "4:39", cover: "cover/cover.jpg", description: "Медленное погружение в огни ночного города. Синтезаторы плывут как туман над асфальтом, оставляя ощущение одиночества среди миллионов." },
-{ id: 'inst-3', title: "Цифровой рассвет", genre: "Electronic", mood: "Надежда", file: "instrumentals/instru1.mp3", duration: "5:10", cover: "cover/cover.jpg", description: "Первые лучи солнца сквозь экран. Тёплые пэды и мягкий бит создают атмосферу нового начала." },
-{ id: 'inst-4', title: "Память машин", genre: "Downtempo", mood: "Ностальгия", file: "instrumentals/instru2.mp3", duration: "5:13", cover: "cover/cover.jpg", description: "Что помнит искусственный интеллект, когда его выключают? Попытка услышать тишину между вычислениями." },
-{ id: 'inst-5', title: "Пустые улицы", genre: "Lo-Fi", mood: "Покой", file: "instrumentals/instru3.mp3", duration: "2:36", cover: "cover/cover.jpg", description: "Три часа ночи. Ни души. Только шуршение шин и далёкий гул города." },
-{ id: 'inst-6', title: "Эхо в серверной", genre: "Dark Ambient", mood: "Тревога", file: "instrumentals/server-echo.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Глубокий гул серверов, щелчки реле и низкочастотный дроун. Атмосфера заброшенного дата-центра." },
-{ id: 'inst-7', title: "Сон алгоритма", genre: "Ambient", mood: "Медитация", file: "instrumentals/algorithm-dream.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Плавные звуковые ландшафты, где нет начала и конца — только бесконечный поток данных." },
-{ id: 'inst-8', title: "Последний гигабайт", genre: "Cinematic", mood: "Эпичность", file: "instrumentals/last-gigabyte.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Кинематографичная композиция с нарастающим напряжением. Оркестровые струнные встречаются с электроникой." },
-{ id: 'inst-9', title: "Код тишины", genre: "Minimal", mood: "Сосредоточенность", file: "instrumentals/silence-code.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Минимализм в чистом виде. Несколько нот, повторяющихся как мантра." }
+{ id: 'inst-2', title: "Неоновая ночь", genre: "Ambient", mood: "Меланхолия", file: "instrumentals/instru.mp3", duration: "4:39", cover: "cover/cover.jpg", description: "Медленное погружение в огни ночного города." },
+{ id: 'inst-3', title: "Цифровой рассвет", genre: "Electronic", mood: "Надежда", file: "instrumentals/instru1.mp3", duration: "5:10", cover: "cover/cover.jpg", description: "Первые лучи солнца сквозь экран." },
+{ id: 'inst-4', title: "Память машин", genre: "Downtempo", mood: "Ностальгия", file: "instrumentals/instru2.mp3", duration: "5:13", cover: "cover/cover.jpg", description: "Что помнит искусственный интеллект, когда его выключают?" },
+{ id: 'inst-5', title: "Пустые улицы", genre: "Lo-Fi", mood: "Покой", file: "instrumentals/instru3.mp3", duration: "2:36", cover: "cover/cover.jpg", description: "Три часа ночи. Ни души." },
+{ id: 'inst-6', title: "Эхо в серверной", genre: "Dark Ambient", mood: "Тревога", file: "instrumentals/server-echo.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Глубокий гул серверов." },
+{ id: 'inst-7', title: "Сон алгоритма", genre: "Ambient", mood: "Медитация", file: "instrumentals/algorithm-dream.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Плавные звуковые ландшафты." },
+{ id: 'inst-8', title: "Последний гигабайт", genre: "Cinematic", mood: "Эпичность", file: "instrumentals/last-gigabyte.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Кинематографичная композиция." },
+{ id: 'inst-9', title: "Код тишины", genre: "Minimal", mood: "Сосредоточенность", file: "instrumentals/silence-code.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "Минимализм в чистом виде." }
 ];
 const subscriberTracks = [
-{ id: 'sub-1', title: "Тень на стене", author: "Светлана.", style: "меланхоличный хип-хоп", file: "voices/digital-dreams.mp3", duration: "3:25", cover: "voice/cover1.png", description: "Трек, который Светлана прожила в реальной жизни. О том, как быть тенью, и о том, как найти в себе силы стать огнём. Для тех, кто любит тише, чем шум города, но громче, чем гроза. 🔥" },
+{ id: 'sub-1', title: "Тень на стене", author: "Светлана.", style: "меланхоличный хип-хоп", file: "voices/digital-dreams.mp3", duration: "3:25", cover: "voice/cover1.png", description: "Трек, который Светлана прожила в реальной жизни." },
 { id: 'sub-2', title: "Серверная полночь", author: "Алексей М.", style: "Рок", file: "voices/server-midnight.mp3", duration: "4:34", cover: "voice/cover.png", description: "Текст Алексея о бессонных ночах у монитора." },
 { id: 'sub-3', title: "пусто", author: "имя.", style: "Э", file: "voices/digital-dreams.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
 { id: 'sub-4', title: "пусто", author: "имя.", style: "", file: "voices/last-commit.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." },
@@ -1042,11 +1253,29 @@ const subscriberTracks = [
 let currentCategory = 'all';
 
 // ============================================
-// EVGENII TV - ФУНКЦИИ
+// КИНО ПРОСТРАНСТВО
 // ============================================
-function initTvPage() {
+function switchCinemaSection(section, btn) {
+  currentCinemaSection = section;
+  document.querySelectorAll('.cinema-nav-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.cinema-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('cinema' + section.charAt(0).toUpperCase() + section.slice(1)).classList.add('active');
+  if (section === 'live') { loadCurrentStream(); }
+  if (section === 'archive') { loadArchive(); }
+  if (section === 'news') { loadNews(); }
+  if (section === 'media') { loadMedia(); }
+}
+
+function switchMediaCategory(category, btn) {
+  currentMediaCategory = category;
+  document.querySelectorAll('#mediaCategoryTabs .category-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  loadMedia();
+}
+
+function initCinemaPage() {
   loadCurrentStream();
-  loadArchive();
 }
 
 function loadCurrentStream() {
@@ -1067,7 +1296,7 @@ function loadCurrentStream() {
         updateAdminStreamStatus(null);
       }
     }, error => {
-      console.error('Ошибка загрузки трансляции:', error);
+      console.error(error);
       showOfflineState();
       updateHomeTvCard(null);
       updateAdminStreamStatus(null);
@@ -1080,49 +1309,43 @@ function updateHomeTvCard(stream) {
   const meta = document.getElementById('homeTvMeta');
   const cover = document.getElementById('homeTvCover');
   if (!card) return;
-
   if (stream && stream.isLive && stream.videoId) {
     card.classList.add('live');
     badge.className = 'tv-badge live';
     badge.innerHTML = '<span class="tv-badge-dot"></span>LIVE';
-    meta.textContent = stream.title || 'Прямая трансляция';
+    meta.textContent = stream.title || 'Идёт кинопоказ';
     if (stream.thumbnail) {
-      cover.innerHTML = `<img src="${stream.thumbnail}" onerror="this.style.display='none';this.parentElement.innerHTML='📺'">`;
+      cover.innerHTML = `<img src="${stream.thumbnail}" onerror="this.style.display='none';this.parentElement.innerHTML='🎬'">`;
     } else {
-      cover.innerHTML = '📺';
+      cover.innerHTML = '🎬';
     }
   } else {
     card.classList.remove('live');
     badge.className = 'tv-badge offline';
     badge.innerHTML = '<span class="tv-badge-dot"></span>OFFLINE';
-    meta.textContent = 'Прямые трансляции · Архив';
-    cover.innerHTML = '📺';
+    meta.textContent = 'Премьеры · Кинопоказы · Архив';
+    cover.innerHTML = '🎬';
   }
 }
 
 function updatePlayer(stream) {
   const playerContainer = document.getElementById('playerContainer');
   const overlay = document.getElementById('playerOverlay');
-  const liveIndicator = document.getElementById('liveIndicator');
   const liveBadge = document.getElementById('liveBadge');
   const viewerCount = document.getElementById('viewerCount');
   const mainPlayer = document.getElementById('mainPlayer');
-
   if (stream && stream.isLive && stream.videoId) {
     overlay.classList.add('hidden');
-    liveIndicator.style.display = 'inline-flex';
     liveBadge.style.display = 'block';
     viewerCount.style.display = 'flex';
     mainPlayer.classList.add('live');
-
     const iframe = document.createElement('iframe');
     iframe.src = `https://vk.com/video_ext.php?oid=${VK_GROUP_ID}&id=${stream.videoId}&hd=2&autoplay=1`;
-    iframe.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;';
+    iframe.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture;';
     iframe.allowFullscreen = true;
     playerContainer.innerHTML = '';
     playerContainer.appendChild(iframe);
-
-    document.getElementById('streamTitle').textContent = stream.title || 'Прямая трансляция';
+    document.getElementById('streamTitle').textContent = stream.title || 'Идёт кинопоказ';
     document.getElementById('streamDate').textContent = formatDate(stream.startedAt);
     document.getElementById('streamDuration').textContent = 'В эфире';
     document.getElementById('viewerNumber').textContent = stream.viewers || 0;
@@ -1134,81 +1357,101 @@ function updatePlayer(stream) {
 function showOfflineState() {
   const playerContainer = document.getElementById('playerContainer');
   const overlay = document.getElementById('playerOverlay');
-  const liveIndicator = document.getElementById('liveIndicator');
   const liveBadge = document.getElementById('liveBadge');
   const viewerCount = document.getElementById('viewerCount');
   const mainPlayer = document.getElementById('mainPlayer');
-
   playerContainer.innerHTML = '';
   overlay.classList.remove('hidden');
-  liveIndicator.style.display = 'none';
   liveBadge.style.display = 'none';
   viewerCount.style.display = 'none';
   mainPlayer.classList.remove('live');
-
-  document.getElementById('streamTitle').textContent = 'Ожидание трансляции';
+  document.getElementById('streamTitle').textContent = 'Ожидание кинопоказа';
   document.getElementById('streamDate').textContent = '—';
   document.getElementById('streamDuration').textContent = '—';
 }
 
-function loadArchive() {
-  if (!db) {
-    renderArchive([]);
+// КИНО СЕРИАЛЫ
+function loadMedia() {
+  if (!db) { renderMedia([]); return; }
+  const grid = document.getElementById('mediaGrid');
+  grid.innerHTML = '<div class="tv-empty-state"><div class="loading-spinner"></div></div>';
+  db.collection('cinema').doc('media').collection(currentMediaCategory)
+    .orderBy('order', 'asc').limit(100).get()
+    .then(snapshot => {
+      const items = [];
+      snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+      renderMedia(items);
+      renderAdminMediaList(items);
+    })
+    .catch(error => { console.error(error); renderMedia([]); renderAdminMediaList([]); });
+}
+
+function renderMedia(items) {
+  const grid = document.getElementById('mediaGrid');
+  if (items.length === 0) {
+    grid.innerHTML = '<div class="tv-empty-state"><div class="tv-empty-state-icon">🎬</div><div class="tv-empty-state-text">Пока нет контента</div><div class="tv-empty-state-subtext">Скоро здесь появятся фильмы и сериалы</div></div>';
     return;
   }
+  grid.innerHTML = items.map(item => `
+    <div class="media-card" onclick="playMedia('${item.videoUrl || ''}', '${escapeHtml(item.title || '')}')">
+      <div class="media-poster">
+        ${item.poster ? `<img src="${item.poster}" alt="${escapeHtml(item.title)}">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:0.3">🎬</div>'}
+        <div class="media-play-overlay">
+          <div class="media-play-icon">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="media-info">
+        <div class="media-title">${escapeHtml(item.title || 'Без названия')}</div>
+        ${item.description ? `<div class="media-desc">${escapeHtml(item.description)}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function playMedia(videoUrl, title) {
+  if (!videoUrl) {
+    alert('Ссылка на видео не указана');
+    return;
+  }
+  window.open(videoUrl, '_blank');
+}
+
+// АРХИВ
+function loadArchive() {
+  if (!db) { renderArchive([]); return; }
   const grid = document.getElementById('archiveGrid');
   grid.innerHTML = '<div class="tv-empty-state"><div class="loading-spinner"></div></div>';
-
   db.collection('streams').doc('archive').collection('videos')
-    .orderBy('date', 'desc')
-    .limit(50)
-    .get()
+    .orderBy('date', 'desc').limit(50).get()
     .then(snapshot => {
       const archive = [];
       snapshot.forEach(doc => archive.push({ id: doc.id, ...doc.data() }));
       renderArchive(archive);
       renderAdminArchiveList(archive);
     })
-    .catch(error => {
-      console.error('Ошибка загрузки архива:', error);
-      renderArchive([]);
-      renderAdminArchiveList([]);
-    });
+    .catch(error => { console.error(error); renderArchive([]); renderAdminArchiveList([]); });
 }
 
 function renderArchive(archive) {
   const grid = document.getElementById('archiveGrid');
   const count = document.getElementById('archiveCount');
   count.textContent = archive.length;
-
   if (archive.length === 0) {
-    grid.innerHTML = `
-      <div class="tv-empty-state">
-        <div class="tv-empty-state-icon">📼</div>
-        <div class="tv-empty-state-text">Пока нет записей</div>
-        <div class="tv-empty-state-subtext">Архив появится после первой трансляции</div>
-      </div>
-    `;
+    grid.innerHTML = '<div class="tv-empty-state"><div class="tv-empty-state-icon">🎬</div><div class="tv-empty-state-text">Пока нет записей</div><div class="tv-empty-state-subtext">Архив пополнится после первого кинопоказа</div></div>';
     return;
   }
-
   grid.innerHTML = archive.map(stream => `
-    <div class="archive-card" onclick="playArchive('${stream.videoId}', '${escapeHtml(stream.title || 'Трансляция')}')">
+    <div class="archive-card" onclick="playArchive('${stream.videoId}', '${escapeHtml(stream.title || 'Кинопоказ')}')">
       <div class="archive-thumbnail">
-        ${stream.thumbnail ? `<img src="${stream.thumbnail}" alt="${escapeHtml(stream.title)}">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:0.3">📺</div>'}
+        ${stream.thumbnail ? `<img src="${stream.thumbnail}" alt="">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:0.3">📼</div>'}
         <div class="archive-duration">${stream.duration || '0:00'}</div>
-        <div class="archive-play-overlay">
-          <div class="archive-play-icon">
-            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-          </div>
-        </div>
+        <div class="archive-play-overlay"><div class="archive-play-icon"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
       </div>
       <div class="archive-info">
-        <div class="archive-title-text">${escapeHtml(stream.title || 'Трансляция')}</div>
-        <div class="archive-date">
-          <span>📅</span>
-          <span>${formatDate(stream.date)}</span>
-        </div>
+        <div class="archive-title-text">${escapeHtml(stream.title || 'Кинопоказ')}</div>
+        <div class="archive-date"><span>📅</span><span>${formatDate(stream.date)}</span></div>
       </div>
     </div>
   `).join('');
@@ -1217,29 +1460,60 @@ function renderArchive(archive) {
 function playArchive(videoId, title) {
   const playerContainer = document.getElementById('playerContainer');
   const overlay = document.getElementById('playerOverlay');
-  const liveIndicator = document.getElementById('liveIndicator');
   const liveBadge = document.getElementById('liveBadge');
   const viewerCount = document.getElementById('viewerCount');
   const mainPlayer = document.getElementById('mainPlayer');
-
   overlay.classList.add('hidden');
-  liveIndicator.style.display = 'none';
   liveBadge.style.display = 'none';
   viewerCount.style.display = 'none';
   mainPlayer.classList.remove('live');
-
   const iframe = document.createElement('iframe');
   iframe.src = `https://vk.com/video_ext.php?oid=${VK_GROUP_ID}&id=${videoId}&hd=2`;
-  iframe.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;';
+  iframe.allow = 'autoplay; encrypted-media; fullscreen;';
   iframe.allowFullscreen = true;
   playerContainer.innerHTML = '';
   playerContainer.appendChild(iframe);
-
   document.getElementById('streamTitle').textContent = title;
   document.getElementById('streamDate').textContent = 'Из архива';
   document.getElementById('streamDuration').textContent = 'Запись';
-
   document.getElementById('mainPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const liveBtn = document.querySelector('.cinema-nav-btn');
+  switchCinemaSection('live', liveBtn);
+}
+
+// НОВОСТИ
+function loadNews() {
+  if (!db) { renderNews([]); return; }
+  const list = document.getElementById('newsList');
+  list.innerHTML = '<div class="tv-empty-state"><div class="loading-spinner"></div></div>';
+  db.collection('cinema').doc('news').collection('items')
+    .orderBy('date', 'desc').limit(50).get()
+    .then(snapshot => {
+      const news = [];
+      snapshot.forEach(doc => news.push({ id: doc.id, ...doc.data() }));
+      renderNews(news);
+      renderAdminNewsList(news);
+    })
+    .catch(error => { console.error(error); renderNews([]); renderAdminNewsList([]); });
+}
+
+function renderNews(news) {
+  const list = document.getElementById('newsList');
+  if (news.length === 0) {
+    list.innerHTML = '<div class="tv-empty-state"><div class="tv-empty-state-icon">📰</div><div class="tv-empty-state-text">Новостей пока нет</div><div class="tv-empty-state-subtext">Следи за обновлениями</div></div>';
+    return;
+  }
+  const tagLabels = { premiere: 'Премьера', update: 'Обновление', announce: 'Анонс' };
+  list.innerHTML = news.map(n => `
+    <div class="news-card">
+      <div class="news-header">
+        <span class="news-tag ${n.tag || 'announce'}">${tagLabels[n.tag] || 'Новость'}</span>
+        <span class="news-date">${formatDate(n.date)}</span>
+      </div>
+      <div class="news-title">${escapeHtml(n.title)}</div>
+      <div class="news-text">${escapeHtml(n.text)}</div>
+    </div>
+  `).join('');
 }
 
 function formatDate(timestamp) {
@@ -1262,7 +1536,6 @@ function showAdminLogin() {
 function adminLogin() {
   const password = document.getElementById('adminPasswordInput').value;
   const status = document.getElementById('adminLoginStatus');
-  
   if (password === ADMIN_PASSWORD) {
     isAdminLoggedIn = true;
     status.textContent = '✅ Успешный вход!';
@@ -1281,29 +1554,23 @@ function adminLogin() {
 function loadAdminData() {
   loadCurrentStream();
   loadArchive();
+  loadNews();
+  loadMedia();
 }
 
 function updateAdminStreamStatus(stream) {
   const statusEl = document.getElementById('adminStreamStatus');
   const formEl = document.getElementById('adminStreamForm');
   const controlsEl = document.getElementById('adminStreamControls');
-  
   if (!statusEl) return;
-  
   if (stream && stream.isLive && stream.videoId) {
-    statusEl.innerHTML = `
-      <div class="admin-status-indicator live"></div>
-      <div class="admin-status-text live">LIVE — В эфире</div>
-    `;
+    statusEl.innerHTML = '<div class="admin-status-indicator live"></div><div class="admin-status-text live">LIVE — Идёт кинопоказ</div>';
     formEl.style.display = 'none';
     controlsEl.style.display = 'block';
     document.getElementById('adminCurrentStreamTitle').textContent = stream.title || 'Без названия';
     document.getElementById('adminCurrentStreamId').textContent = `Video ID: ${stream.videoId}`;
   } else {
-    statusEl.innerHTML = `
-      <div class="admin-status-indicator offline"></div>
-      <div class="admin-status-text">Оффлайн</div>
-    `;
+    statusEl.innerHTML = '<div class="admin-status-indicator offline"></div><div class="admin-status-text">Оффлайн</div>';
     formEl.style.display = 'block';
     controlsEl.style.display = 'none';
   }
@@ -1311,107 +1578,140 @@ function updateAdminStreamStatus(stream) {
 
 async function startLiveStream() {
   if (!db) return;
-  
   const videoId = document.getElementById('adminVideoId').value.trim();
   const title = document.getElementById('adminStreamTitle').value.trim();
-  
-  if (!videoId) {
-    alert('Введите Video ID');
-    return;
-  }
-  
+  if (!videoId) { alert('Введите Video ID'); return; }
   try {
     await db.collection('streams').doc('current').set({
-      isLive: true,
-      videoId: videoId,
-      title: title || 'Прямая трансляция',
-      startedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      viewers: 0
+      isLive: true, videoId: videoId, title: title || 'Кинопоказ',
+      startedAt: firebase.firestore.FieldValue.serverTimestamp(), viewers: 0
     });
-    
     document.getElementById('adminVideoId').value = '';
     document.getElementById('adminStreamTitle').value = '';
-    alert('✅ LIVE запущен!');
-  } catch (error) {
-    console.error('Ошибка запуска стрима:', error);
-    alert('Ошибка: ' + error.message);
-  }
+    alert('✅ КИНОПОКАЗ ЗАПУЩЕН!');
+  } catch (error) { alert('Ошибка: ' + error.message); }
 }
 
 async function stopLiveStream() {
   if (!db) return;
-  
-  if (!confirm('Остановить трансляцию?')) return;
-  
+  if (!confirm('Остановить кинопоказ?')) return;
   try {
-    await db.collection('streams').doc('current').update({
-      isLive: false
-    });
-    alert('✅ LIVE остановлен');
-  } catch (error) {
-    console.error('Ошибка остановки стрима:', error);
-    alert('Ошибка: ' + error.message);
-  }
+    await db.collection('streams').doc('current').update({ isLive: false });
+    alert('✅ КИНОПОКАЗ ОСТАНОВЛЕН');
+  } catch (error) { alert('Ошибка: ' + error.message); }
 }
 
+// КИНО СЕРИАЛЫ АДМИН
+document.getElementById('adminMediaCategory').addEventListener('change', function() {
+  const orderGroup = document.getElementById('adminSeriesOrderGroup');
+  if (this.value === 'series') {
+    orderGroup.style.display = 'block';
+  } else {
+    orderGroup.style.display = 'none';
+  }
+});
+
+function toggleMediaForm() {
+  const form = document.getElementById('adminMediaForm');
+  const list = document.getElementById('adminMediaList');
+  if (form.style.display === 'none') { form.style.display = 'block'; list.style.display = 'none'; }
+  else { form.style.display = 'none'; list.style.display = 'block'; }
+}
+
+async function addMedia() {
+  if (!db) return;
+  const category = document.getElementById('adminMediaCategory').value;
+  const title = document.getElementById('adminMediaTitle').value.trim();
+  const description = document.getElementById('adminMediaDesc').value.trim();
+  const poster = document.getElementById('adminMediaPoster').value.trim();
+  const videoUrl = document.getElementById('adminMediaVideo').value.trim();
+  const order = parseInt(document.getElementById('adminMediaOrder').value) || 999;
+  
+  if (!title) { alert('Заполните название'); return; }
+  
+  try {
+    await db.collection('cinema').doc('media').collection(category).add({
+      title, description: description || '', poster: poster || '',
+      videoUrl: videoUrl || '', order: order,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    document.getElementById('adminMediaTitle').value = '';
+    document.getElementById('adminMediaDesc').value = '';
+    document.getElementById('adminMediaPoster').value = '';
+    document.getElementById('adminMediaVideo').value = '';
+    document.getElementById('adminMediaOrder').value = '';
+    toggleMediaForm();
+    loadMedia();
+    alert('✅ Контент добавлен');
+  } catch (error) { alert('Ошибка: ' + error.message); }
+}
+
+function renderAdminMediaList(items) {
+  const list = document.getElementById('adminMediaAdminList');
+  if (!list) return;
+  if (items.length === 0) { list.innerHTML = '<div class="admin-empty">Контента нет</div>'; return; }
+  list.innerHTML = items.map(item => `
+    <div class="admin-video-item">
+      <div class="admin-video-info">
+        <div class="admin-video-title">${escapeHtml(item.title)}</div>
+        <div class="admin-video-meta">
+          <span>🎬 ${currentMediaCategory}</span>
+          ${item.order ? `<span>Порядок: ${item.order}</span>` : ''}
+        </div>
+      </div>
+      <div class="admin-video-actions">
+        <button class="admin-video-btn danger" onclick="deleteMedia('${item.id}')">
+          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function deleteMedia(itemId) {
+  if (!db) return;
+  if (!confirm('Удалить этот контент?')) return;
+  try {
+    await db.collection('cinema').doc('media').collection(currentMediaCategory).doc(itemId).delete();
+    loadMedia();
+    alert('✅ Контент удалён');
+  } catch (error) { alert('Ошибка: ' + error.message); }
+}
+
+// АРХИВ АДМИН
 function toggleArchiveForm() {
   const form = document.getElementById('adminArchiveForm');
   const list = document.getElementById('adminArchiveList');
-  
-  if (form.style.display === 'none') {
-    form.style.display = 'block';
-    list.style.display = 'none';
-  } else {
-    form.style.display = 'none';
-    list.style.display = 'block';
-  }
+  if (form.style.display === 'none') { form.style.display = 'block'; list.style.display = 'none'; }
+  else { form.style.display = 'none'; list.style.display = 'block'; }
 }
 
 async function addArchiveVideo() {
   if (!db) return;
-  
   const videoId = document.getElementById('adminArchiveVideoId').value.trim();
   const title = document.getElementById('adminArchiveTitle').value.trim();
   const duration = document.getElementById('adminArchiveDuration').value.trim();
   const thumbnail = document.getElementById('adminArchiveThumbnail').value.trim();
-  
-  if (!videoId || !title) {
-    alert('Заполните Video ID и название');
-    return;
-  }
-  
+  if (!videoId || !title) { alert('Заполните Video ID и название'); return; }
   try {
     await db.collection('streams').doc('archive').collection('videos').add({
-      videoId: videoId,
-      title: title,
-      duration: duration || '0:00',
-      thumbnail: thumbnail || '',
+      videoId, title, duration: duration || '0:00', thumbnail: thumbnail || '',
       date: firebase.firestore.FieldValue.serverTimestamp()
     });
-    
     document.getElementById('adminArchiveVideoId').value = '';
     document.getElementById('adminArchiveTitle').value = '';
     document.getElementById('adminArchiveDuration').value = '';
     document.getElementById('adminArchiveThumbnail').value = '';
-    
     toggleArchiveForm();
     loadArchive();
-    alert('✅ Видео добавлено в архив');
-  } catch (error) {
-    console.error('Ошибка добавления видео:', error);
-    alert('Ошибка: ' + error.message);
-  }
+    alert('✅ Трансляция добавлена в архив');
+  } catch (error) { alert('Ошибка: ' + error.message); }
 }
 
 function renderAdminArchiveList(archive) {
   const list = document.getElementById('adminVideoList');
   if (!list) return;
-  
-  if (archive.length === 0) {
-    list.innerHTML = '<div class="admin-empty">Архив пуст</div>';
-    return;
-  }
-  
+  if (archive.length === 0) { list.innerHTML = '<div class="admin-empty">Архив пуст</div>'; return; }
   list.innerHTML = archive.map(stream => `
     <div class="admin-video-item">
       <div class="admin-video-info">
@@ -1423,7 +1723,7 @@ function renderAdminArchiveList(archive) {
         </div>
       </div>
       <div class="admin-video-actions">
-        <button class="admin-video-btn danger" onclick="deleteArchiveVideo('${stream.id}')" title="Удалить">
+        <button class="admin-video-btn danger" onclick="deleteArchiveVideo('${stream.id}')">
           <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
         </button>
       </div>
@@ -1433,17 +1733,73 @@ function renderAdminArchiveList(archive) {
 
 async function deleteArchiveVideo(videoDocId) {
   if (!db) return;
-  
-  if (!confirm('Удалить это видео из архива?')) return;
-  
+  if (!confirm('Удалить эту трансляцию из архива?')) return;
   try {
     await db.collection('streams').doc('archive').collection('videos').doc(videoDocId).delete();
     loadArchive();
-    alert('✅ Видео удалено');
-  } catch (error) {
-    console.error('Ошибка удаления видео:', error);
-    alert('Ошибка: ' + error.message);
-  }
+    alert('✅ Трансляция удалена');
+  } catch (error) { alert('Ошибка: ' + error.message); }
+}
+
+// НОВОСТИ АДМИН
+function toggleNewsForm() {
+  const form = document.getElementById('adminNewsForm');
+  const list = document.getElementById('adminNewsList');
+  if (form.style.display === 'none') { form.style.display = 'block'; list.style.display = 'none'; }
+  else { form.style.display = 'none'; list.style.display = 'block'; }
+}
+
+async function addNews() {
+  if (!db) return;
+  const title = document.getElementById('adminNewsTitle').value.trim();
+  const text = document.getElementById('adminNewsText').value.trim();
+  const tag = document.getElementById('adminNewsTag').value;
+  const dateStr = document.getElementById('adminNewsDate').value;
+  if (!title || !text) { alert('Заполните заголовок и текст'); return; }
+  try {
+    const date = dateStr ? new Date(dateStr) : new Date();
+    await db.collection('cinema').doc('news').collection('items').add({
+      title, text, tag, date: firebase.firestore.Timestamp.fromDate(date)
+    });
+    document.getElementById('adminNewsTitle').value = '';
+    document.getElementById('adminNewsText').value = '';
+    document.getElementById('adminNewsDate').value = '';
+    toggleNewsForm();
+    loadNews();
+    alert('✅ Новость добавлена');
+  } catch (error) { alert('Ошибка: ' + error.message); }
+}
+
+function renderAdminNewsList(news) {
+  const list = document.getElementById('adminNewsAdminList');
+  if (!list) return;
+  if (news.length === 0) { list.innerHTML = '<div class="admin-empty">Новостей нет</div>'; return; }
+  list.innerHTML = news.map(n => `
+    <div class="admin-video-item">
+      <div class="admin-video-info">
+        <div class="admin-video-title">${escapeHtml(n.title)}</div>
+        <div class="admin-video-meta">
+          <span>${n.tag || 'announce'}</span>
+          <span>📅 ${formatDate(n.date)}</span>
+        </div>
+      </div>
+      <div class="admin-video-actions">
+        <button class="admin-video-btn danger" onclick="deleteNews('${n.id}')">
+          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function deleteNews(newsId) {
+  if (!db) return;
+  if (!confirm('Удалить новость?')) return;
+  try {
+    await db.collection('cinema').doc('news').collection('items').doc(newsId).delete();
+    loadNews();
+    alert('✅ Новость удалена');
+  } catch (error) { alert('Ошибка: ' + error.message); }
 }
 
 // ============================================
@@ -1483,14 +1839,13 @@ function loadDiscussions() {
   list.innerHTML = '<div class="discussions-loading">Загрузка обсуждений</div>';
   if (discussionsUnsubscribe) discussionsUnsubscribe();
   discussionsUnsubscribe = db.collection('discussions')
-    .orderBy('createdAt', 'desc')
-    .limit(100)
+    .orderBy('createdAt', 'desc').limit(100)
     .onSnapshot(snapshot => {
       discussionsList = [];
       snapshot.forEach(doc => discussionsList.push({ id: doc.id, ...doc.data() }));
       renderDiscussions();
     }, error => {
-      console.error('Ошибка загрузки обсуждений:', error);
+      console.error(error);
       list.innerHTML = '<div class="discussions-empty"><div class="discussions-empty-icon">⚠️</div>Ошибка: ' + error.message + '</div>';
     });
 }
@@ -1509,25 +1864,8 @@ function renderDiscussions() {
   list.innerHTML = reversed.map(d => {
     const initial = (d.userName || '?')[0].toUpperCase();
     const time = formatDiscussionTime(d.createdAt);
-    const trackHtml = d.trackTitle ? `
-      <div class="discussion-track-ref">
-        <span class="discussion-track-icon">${d.trackType === 'instrumentals' ? '🎹' : d.trackType === 'subscribers' ? '🎤' : '🎵'}</span>
-        <span class="discussion-track-name">${escapeHtml(d.trackTitle)}</span>
-      </div>
-    ` : '';
-    return `
-      <div class="discussion-item">
-        <div class="discussion-avatar">${escapeHtml(initial)}</div>
-        <div class="discussion-body">
-          <div class="discussion-header">
-            <span class="discussion-author">${escapeHtml(d.userName)}</span>
-            <span class="discussion-time">${time}</span>
-          </div>
-          ${trackHtml}
-          <div class="discussion-text">${escapeHtml(d.text)}</div>
-        </div>
-      </div>
-    `;
+    const trackHtml = d.trackTitle ? `<div class="discussion-track-ref"><span class="discussion-track-icon">${d.trackType === 'instrumentals' ? '🎹' : d.trackType === 'subscribers' ? '🎤' : '🎵'}</span><span class="discussion-track-name">${escapeHtml(d.trackTitle)}</span></div>` : '';
+    return `<div class="discussion-item"><div class="discussion-avatar">${escapeHtml(initial)}</div><div class="discussion-body"><div class="discussion-header"><span class="discussion-author">${escapeHtml(d.userName)}</span><span class="discussion-time">${time}</span></div>${trackHtml}<div class="discussion-text">${escapeHtml(d.text)}</div></div></div>`;
   }).join('');
   list.scrollTop = list.scrollHeight;
 }
@@ -1554,11 +1892,7 @@ async function sendDiscussion() {
   const attachToggle = document.getElementById('discussionAttachToggle');
   btn.disabled = true;
   try {
-    const data = {
-      userName,
-      text,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
+    const data = { userName, text, createdAt: firebase.firestore.FieldValue.serverTimestamp() };
     if (attachToggle && attachToggle.checked) {
       const current = getCurrentPlayingTrack();
       if (current) {
@@ -1570,13 +1904,8 @@ async function sendDiscussion() {
     await db.collection('discussions').add(data);
     input.value = '';
     input.style.height = 'auto';
-  } catch (e) {
-    console.error('Ошибка отправки:', e);
-    alert('Ошибка: ' + e.message);
-  } finally {
-    btn.disabled = false;
-    input.focus();
-  }
+  } catch (e) { alert('Ошибка: ' + e.message); }
+  finally { btn.disabled = false; input.focus(); }
 }
 
 document.getElementById('discussionInput').addEventListener('input', function() {
@@ -1588,7 +1917,7 @@ document.getElementById('discussionInput').addEventListener('keydown', function(
 });
 
 // ============================================
-// RENDER
+// RENDER МУЗЫКИ
 // ============================================
 function renderNewRelease() {
 const h = document.getElementById('homeReleaseCard');
@@ -1848,12 +2177,10 @@ ne.classList.add('active');
 window.scrollTo(0, 0);
 currentPage = pageId;
 if (pageId === 'discussionsPage') loadDiscussions();
-if (pageId === 'tvPage') initTvPage();
+if (pageId === 'cinemaPage') initCinemaPage();
 if (pageId === 'adminPage' && !isAdminLoggedIn) showAdminLogin();
 }
-function goBack() {
-navigateTo('homePage');
-}
+function goBack() { navigateTo('homePage'); }
 
 // ============================================
 // LOGIN
@@ -1888,7 +2215,7 @@ loadCurrentStream();
 }
 logoutBtn.addEventListener('click', function() {
 localStorage.removeItem('evgenii_user');
-['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage','supportPage','discussionsPage','tvPage','adminPage'].forEach(p => document.getElementById(p).classList.remove('active'));
+['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage','supportPage','discussionsPage','cinemaPage','adminPage'].forEach(p => document.getElementById(p).classList.remove('active'));
 currentPage = 'homePage';
 loginScreen.classList.remove('hidden'); nameInput.value = '';
 loginGreeting.textContent = getLoginGreeting(new Date().getHours());
@@ -1929,7 +2256,7 @@ const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-
 const data = await response.json();
 if (data.ok) { formStatus.textContent = '✅ Сообщение отправлено! Я отвечу вам скоро.'; formStatus.className = 'form-status success'; this.reset(); }
 else throw new Error(data.description || 'Ошибка Telegram API');
-} catch (error) { console.error('Ошибка отправки:', error); formStatus.textContent = `❌ Ошибка: ${error.message}`; formStatus.className = 'form-status error'; }
+} catch (error) { console.error(error); formStatus.textContent = `❌ Ошибка: ${error.message}`; formStatus.className = 'form-status error'; }
 finally { formSubmitBtn.disabled = false; formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>'; }
 });
 }
@@ -1953,7 +2280,7 @@ voiceSubmitBtn.disabled = true;
 voiceSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
 voiceFormStatus.textContent = '';
 voiceFormStatus.className = 'form-status';
-const lyricsPreview = lyrics.length > 2000 ? lyrics.substring(0, 2000) + '\n[...текст обрезан, полный пришлю в личку...]' : lyrics;
+const lyricsPreview = lyrics.length > 2000 ? lyrics.substring(0, 2000) + '\n[...текст обрезан...]' : lyrics;
 const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>
 👤 <b>Имя:</b> ${name}
 📧 <b>Контакт:</b> ${contact}
@@ -1969,7 +2296,7 @@ const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-
 const data = await response.json();
 if (data.ok) { voiceFormStatus.textContent = '✅ Текст отправлен! Я свяжусь с тобой, когда трек будет готов.'; voiceFormStatus.className = 'form-status success'; this.reset(); }
 else throw new Error(data.description || 'Ошибка Telegram API');
-} catch (error) { console.error('Ошибка отправки:', error); voiceFormStatus.textContent = `❌ Ошибка: ${error.message}`; voiceFormStatus.className = 'form-status error'; }
+} catch (error) { console.error(error); voiceFormStatus.textContent = `❌ Ошибка: ${error.message}`; voiceFormStatus.className = 'form-status error'; }
 finally { voiceSubmitBtn.disabled = false; voiceSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ ТЕКСТ</span>'; }
 });
 }
@@ -1994,7 +2321,7 @@ function copyCardNumber() {
     document.body.appendChild(textarea);
     textarea.select();
     try { document.execCommand('copy'); showCopySuccess(); }
-    catch (err) { console.error('Не удалось скопировать:', err); alert('Номер карты: ' + CARD_NUMBER); }
+    catch (err) { console.error(err); alert('Номер карты: ' + CARD_NUMBER); }
     document.body.removeChild(textarea);
   }
   function showCopySuccess() {
@@ -2014,3 +2341,4 @@ updateAttachLabel();
 </script>
 </body>
 </html>
+
