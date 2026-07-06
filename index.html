@@ -12,7 +12,7 @@
 :root {
 --cyan: #00e5ff; --magenta: #ff00e5; --purple: #b000ff;
 --gold: #ffb347; --green: #00ff88; --pink: #ff6b9d;
---dark-bg: #0a0a1a; --card-bg: rgba(20, 20, 40, 0.8);
+--red: #ff0040; --dark-bg: #0a0a1a; --card-bg: rgba(20, 20, 40, 0.8);
 --card-border: rgba(0, 229, 255, 0.15);
 --text-primary: #ffffff; --text-secondary: rgba(255, 255, 255, 0.6);
 }
@@ -38,14 +38,9 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .geo-shape:nth-child(3) { width: 60px; height: 60px; border-color: var(--purple); bottom: 20%; left: 25%; transform: rotate(30deg); animation-delay: -4s; }
 .geo-shape:nth-child(4) { width: 45px; height: 45px; border-color: var(--cyan); bottom: 25%; right: 15%; border-radius: 8px; animation-delay: -1s; }
 @keyframes geoFloat { 0%, 100% { transform: translateY(0) rotate(45deg); opacity: 0.5; } 50% { transform: translateY(-10px) rotate(50deg); opacity: 0.8; } }
-
-/* ============================================ */
-/* AI BADGE - НОВЫЙ СТИЛЬ */
-/* ============================================ */
 .login-logo { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 8px; background: linear-gradient(135deg, var(--cyan), var(--purple), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; position: relative; z-index: 2; filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.3)); display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
 .ai-badge { display: inline-block; font-size: 0.9rem; font-weight: 900; letter-spacing: 3px; padding: 4px 12px; border-radius: 8px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); color: #000; box-shadow: 0 0 15px rgba(0, 229, 255, 0.4); animation: aiPulse 2s ease-in-out infinite; vertical-align: middle; -webkit-text-fill-color: #000; text-shadow: none; }
 @keyframes aiPulse { 0%, 100% { box-shadow: 0 0 15px rgba(0, 229, 255, 0.4), 0 0 30px rgba(255, 0, 229, 0.2); } 50% { box-shadow: 0 0 25px rgba(0, 229, 255, 0.7), 0 0 50px rgba(255, 0, 229, 0.4); } }
-
 .login-slogan { font-size: 0.9rem; color: var(--text-secondary); margin-top: 12px; text-align: center; position: relative; z-index: 2; letter-spacing: 1px; }
 .login-greeting { font-size: 1.5rem; color: var(--text-primary); margin-bottom: 30px; font-weight: 300; text-align: center; }
 .login-form { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
@@ -71,14 +66,28 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .geo-shape-banner:nth-child(2) { width: 40px; height: 40px; border-color: var(--magenta); top: 20%; right: 25%; border-radius: 50%; animation-delay: -2s; }
 .geo-shape-banner:nth-child(3) { width: 50px; height: 50px; border-color: var(--purple); bottom: 20%; left: 30%; transform: rotate(30deg); animation-delay: -4s; }
 .geo-shape-banner:nth-child(4) { width: 35px; height: 35px; border-color: var(--cyan); bottom: 25%; right: 20%; border-radius: 4px; animation-delay: -1s; }
-
 .banner-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900; letter-spacing: 6px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; position: relative; z-index: 2; filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.3)); display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
-
 .banner-slogan { font-size: 0.85rem; color: var(--text-secondary); margin-top: 12px; text-align: center; position: relative; z-index: 2; }
 .section-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-secondary); margin-bottom: 16px; font-weight: 600; }
 .release-section { margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto; }
-.release-card { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; transition: transform 0.2s ease, box-shadow 0.3s ease; cursor: pointer; }
+.release-card { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; transition: transform 0.2s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden; }
 .release-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 229, 255, 0.1); }
+.tv-card { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--card-bg); border: 1px solid rgba(255, 0, 64, 0.2); border-radius: 20px; transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; cursor: pointer; position: relative; overflow: hidden; }
+.tv-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 0, 64, 0.15); border-color: rgba(255, 0, 64, 0.4); }
+.tv-card.live { border-color: var(--red); box-shadow: 0 0 25px rgba(255, 0, 64, 0.2); }
+.tv-card.live::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--red), transparent); animation: shimmer 3s linear infinite; }
+.tv-cover { position: relative; width: 70px; height: 70px; border-radius: 14px; overflow: hidden; flex-shrink: 0; background: linear-gradient(135deg, #2a0a1a, #1a0a2a); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
+.tv-cover img { width: 100%; height: 100%; object-fit: cover; }
+.tv-badge { position: absolute; top: 6px; left: 6px; padding: 3px 6px; border-radius: 6px; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.5px; z-index: 2; display: flex; align-items: center; gap: 4px; }
+.tv-badge.live { background: var(--red); color: #fff; animation: livePulse 2s ease-in-out infinite; box-shadow: 0 0 10px rgba(255, 0, 64, 0.5); }
+.tv-badge.offline { background: rgba(255, 255, 255, 0.1); color: var(--text-secondary); }
+.tv-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.tv-info { flex: 1; min-width: 0; }
+.tv-label { font-size: 0.7rem; color: var(--red); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.tv-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
+.tv-meta { font-size: 0.8rem; color: var(--text-secondary); }
+.tv-arrow { font-size: 1.3rem; color: var(--text-secondary); transition: transform 0.3s ease, color 0.3s ease; flex-shrink: 0; }
+.tv-card:hover .tv-arrow { transform: translateX(4px); color: var(--red); }
 .release-cover { position: relative; width: 70px; height: 70px; border-radius: 14px; overflow: hidden; flex-shrink: 0; background: linear-gradient(135deg, #1a2a3a, #2a1a3a); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
 .release-cover img { width: 100%; height: 100%; object-fit: cover; }
 .release-badge { position: absolute; top: 6px; left: 6px; background: var(--cyan); color: #000; font-size: 0.55rem; font-weight: 700; padding: 3px 6px; border-radius: 6px; letter-spacing: 0.5px; z-index: 2; }
@@ -107,10 +116,15 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .tile-desc { font-size: 0.75rem; color: var(--text-secondary); }
 .logout-btn { display: block; margin: 20px auto 0; padding: 12px 30px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: transparent; color: var(--text-secondary); font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; }
 .logout-btn:hover { border-color: rgba(255, 0, 0, 0.3); color: #ff6b6b; }
+
+/* СКРЫТАЯ КНОПКА АДМИНКИ */
+.admin-trigger { display: block; margin: 10px auto 0; padding: 8px 16px; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; background: transparent; color: rgba(255, 255, 255, 0.2); font-size: 0.7rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; opacity: 0.3; }
+.admin-trigger:hover { opacity: 1; border-color: rgba(0, 229, 255, 0.3); color: var(--cyan); background: rgba(0, 229, 255, 0.05); }
+
 .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-top: 10px; }
 .back-btn { width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-primary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; }
 .back-btn:hover { border-color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
-.page-title { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; }
+.page-title { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .category-tabs { display: flex; gap: 8px; margin-bottom: 24px; overflow-x: auto; padding: 4px 2px 8px; scrollbar-width: none; -ms-overflow-style: none; }
 .category-tabs::-webkit-scrollbar { display: none; }
 .category-tab { flex-shrink: 0; padding: 10px 16px; border-radius: 12px; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; white-space: nowrap; }
@@ -170,9 +184,12 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .intro-block.gold::before { background: radial-gradient(circle, rgba(255, 179, 71, 0.15), transparent 70%); }
 .intro-block.pink { background: linear-gradient(135deg, rgba(255, 107, 157, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 107, 157, 0.2); }
 .intro-block.pink::before { background: radial-gradient(circle, rgba(255, 107, 157, 0.15), transparent 70%); }
+.intro-block.red { background: linear-gradient(135deg, rgba(255, 0, 64, 0.08), rgba(176, 0, 255, 0.08)); border: 1px solid rgba(255, 0, 64, 0.2); }
+.intro-block.red::before { background: radial-gradient(circle, rgba(255, 0, 64, 0.15), transparent 70%); }
 .intro-title { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 8px; position: relative; z-index: 1; }
 .intro-title.gold { color: var(--gold); }
 .intro-title.pink { color: var(--pink); }
+.intro-title.red { color: var(--red); }
 .intro-text { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; position: relative; z-index: 1; }
 .special-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; overflow: hidden; margin-bottom: 16px; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; max-width: 800px; margin-left: auto; margin-right: auto; }
 .special-card:hover { transform: translateY(-3px); }
@@ -297,7 +314,7 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .about-content, .community-content { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto; }
 .about-card { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; line-height: 1.6; font-size: 1rem; }
 .about-card .highlight { color: var(--cyan); font-weight: 600; }
-.about-card .evgenii-title { font-family: 'Orbitron', sans-serif; color: var(--cyan); font-weight: 700; letter-spacing: 2px; }
+.about-card .evgenii-title { font-family: 'Orbitron', sans-serif; color: var(--cyan); font-weight: 700; letter-spacing: 2px; display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .about-quote { border-left: 3px solid var(--cyan); padding-left: 20px; margin: 20px 0; font-style: italic; color: var(--cyan); font-size: 1.05rem; line-height: 1.7; }
 .about-card p { margin-bottom: 12px; color: var(--text-secondary); }
 .about-card p:last-child { margin-bottom: 0; }
@@ -364,254 +381,43 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .modal-cancel-btn { width: 100%; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; }
 .modal-cancel-btn:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--text-primary); }
 
-/* ============================================ */
-/* НОВАЯ КАРТА ПОДДЕРЖКИ ЯНДЕКС PAY */
-/* ============================================ */
+/* ПОДДЕРЖКА */
 .support-wrapper { max-width: 520px; margin: 0 auto; }
 .support-intro-new { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 24px; text-align: center; }
 .support-intro-new p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
 .support-intro-new .heart-icon { font-size: 2rem; display: block; margin-bottom: 10px; animation: heartBeat 2s ease-in-out infinite; }
 @keyframes heartBeat { 0%, 100% { transform: scale(1); } 25% { transform: scale(1.1); } 50% { transform: scale(1); } 75% { transform: scale(1.05); } }
-
-.yandex-pay-card {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16/10;
-  border-radius: 24px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #1a0a2e 0%, #0d1b2a 50%, #1a0a2e 100%);
-  border: 1px solid rgba(255, 204, 0, 0.25);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 204, 0, 0.1);
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-.yandex-pay-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background:
-    radial-gradient(ellipse at 20% 20%, rgba(255, 204, 0, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(176, 0, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 70%);
-  pointer-events: none;
-}
-.yandex-pay-card::after {
-  content: '';
-  position: absolute;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
-  transform: rotate(0deg);
-  animation: cardShine 6s linear infinite;
-  pointer-events: none;
-}
-@keyframes cardShine {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-}
-.yandex-pay-card:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(255, 204, 0, 0.2);
-}
-
-.card-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  position: relative;
-  z-index: 2;
-}
-.card-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.card-logo-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #ffcc00, #ff0000);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: #000;
-  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
-  font-family: 'Orbitron', sans-serif;
-}
-.card-logo-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.card-logo-label {
-  font-size: 0.65rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 600;
-}
-.card-logo-name {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #ffcc00;
-  letter-spacing: 1px;
-  text-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
-}
-.card-chip {
-  width: 48px;
-  height: 36px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #ffd700 0%, #b8860b 50%, #ffd700 100%);
-  position: relative;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(255, 215, 0, 0.3);
-  overflow: hidden;
-}
-.card-chip::before {
-  content: '';
-  position: absolute;
-  inset: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
-}
-.card-chip::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 0; right: 0;
-  height: 1px;
-  background: rgba(0, 0, 0, 0.3);
-}
-
-.card-number-block {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding: 8px 0;
-}
-.card-number-label {
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-.card-number {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: #fff;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  word-spacing: 8px;
-  user-select: all;
-}
-@media (max-width: 380px) {
-  .card-number { font-size: 1.15rem; letter-spacing: 2px; word-spacing: 5px; }
-  .yandex-pay-card { padding: 20px; }
-}
-
-.card-bottom-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  position: relative;
-  z-index: 2;
-}
-.card-holder {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.card-holder-label {
-  font-size: 0.6rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-}
-.card-holder-name {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 2px;
-}
-.copy-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border: 1px solid rgba(255, 204, 0, 0.4);
-  border-radius: 12px;
-  background: rgba(255, 204, 0, 0.1);
-  color: #ffcc00;
-  font-size: 0.8rem;
-  font-weight: 700;
-  font-family: 'Inter', sans-serif;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  backdrop-filter: blur(10px);
-}
-.copy-btn:hover {
-  background: rgba(255, 204, 0, 0.2);
-  border-color: #ffcc00;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 204, 0, 0.3);
-}
+.yandex-pay-card { position: relative; width: 100%; aspect-ratio: 16/10; border-radius: 24px; overflow: hidden; background: linear-gradient(135deg, #1a0a2e 0%, #0d1b2a 50%, #1a0a2e 100%); border: 1px solid rgba(255, 204, 0, 0.25); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 204, 0, 0.1); padding: 28px; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+.yandex-pay-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 20% 20%, rgba(255, 204, 0, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(176, 0, 255, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 70%); pointer-events: none; }
+.yandex-pay-card::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%); transform: rotate(0deg); animation: cardShine 6s linear infinite; pointer-events: none; }
+@keyframes cardShine { 0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); } 100% { transform: translateX(100%) translateY(100%) rotate(45deg); } }
+.yandex-pay-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(255, 204, 0, 0.2); }
+.card-top-row { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 2; }
+.card-logo { display: flex; align-items: center; gap: 10px; }
+.card-logo-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #ffcc00, #ff0000); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 900; color: #000; box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4); font-family: 'Orbitron', sans-serif; }
+.card-logo-text { display: flex; flex-direction: column; gap: 2px; }
+.card-logo-label { font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+.card-logo-name { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 700; color: #ffcc00; letter-spacing: 1px; text-shadow: 0 0 15px rgba(255, 204, 0, 0.4); }
+.card-chip { width: 48px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #ffd700 0%, #b8860b 50%, #ffd700 100%); position: relative; box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(255, 215, 0, 0.3); overflow: hidden; }
+.card-chip::before { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 4px; }
+.card-chip::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(0, 0, 0, 0.3); }
+.card-number-block { position: relative; z-index: 2; text-align: center; padding: 8px 0; }
+.card-number-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 600; }
+.card-number { font-family: 'Orbitron', monospace; font-size: 1.5rem; font-weight: 700; letter-spacing: 3px; color: #fff; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); word-spacing: 8px; user-select: all; }
+.card-bottom-row { display: flex; justify-content: space-between; align-items: flex-end; position: relative; z-index: 2; }
+.card-holder { display: flex; flex-direction: column; gap: 4px; }
+.card-holder-label { font-size: 0.6rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.5px; }
+.card-holder-name { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700; color: #fff; letter-spacing: 2px; }
+.copy-btn { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid rgba(255, 204, 0, 0.4); border-radius: 12px; background: rgba(255, 204, 0, 0.1); color: #ffcc00; font-size: 0.8rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(10px); }
+.copy-btn:hover { background: rgba(255, 204, 0, 0.2); border-color: #ffcc00; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 204, 0, 0.3); }
 .copy-btn:active { transform: translateY(0); }
-.copy-btn.copied {
-  background: rgba(0, 255, 136, 0.15);
-  border-color: #00ff88;
-  color: #00ff88;
-}
+.copy-btn.copied { background: rgba(0, 255, 136, 0.15); border-color: #00ff88; color: #00ff88; }
 .copy-btn svg { width: 16px; height: 16px; fill: currentColor; }
-
-.support-hint {
-  margin-top: 20px;
-  text-align: center;
-  padding: 16px 20px;
-  background: rgba(20, 25, 40, 0.6);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
+.support-hint { margin-top: 20px; text-align: center; padding: 16px 20px; background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 16px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; }
 .support-hint strong { color: #ffcc00; font-weight: 700; }
 .support-hint .hint-icon { font-size: 1.2rem; margin-right: 6px; }
-
-.copy-toast {
-  position: fixed;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  padding: 14px 24px;
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.95), rgba(0, 200, 100, 0.95));
-  color: #000;
-  border-radius: 14px;
-  font-weight: 700;
-  font-size: 0.9rem;
-  box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  z-index: 5000;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.copy-toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
+.copy-toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px); padding: 14px 24px; background: linear-gradient(135deg, rgba(0, 255, 136, 0.95), rgba(0, 200, 100, 0.95)); color: #000; border-radius: 14px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4); opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 5000; display: flex; align-items: center; gap: 8px; }
+.copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* ОБСУЖДЕНИЯ */
 .discussions-intro { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto; }
@@ -653,6 +459,95 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .discussion-send-btn:active { transform: scale(0.95); }
 .discussion-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 .discussion-send-btn svg { width: 18px; height: 18px; fill: #fff; }
+
+/* ============================================ */
+/* EVGENII TV - СТРАНИЦА */
+/* ============================================ */
+.tv-wrapper { max-width: 1200px; margin: 0 auto; }
+.tv-main-player { position: relative; width: 100%; border-radius: 24px; overflow: hidden; background: #000; border: 2px solid var(--card-border); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); margin-bottom: 30px; transition: all 0.4s ease; }
+.tv-main-player.live { border-color: var(--red); box-shadow: 0 20px 60px rgba(255, 0, 64, 0.3); }
+.tv-player-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, #0d1b2a, #1a0a2e); }
+.tv-player-wrapper iframe { width: 100%; height: 100%; border: none; display: block; }
+.tv-player-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(13, 27, 42, 0.95), rgba(26, 10, 46, 0.95)); z-index: 10; text-align: center; padding: 20px; }
+.tv-player-overlay.hidden { display: none; }
+.tv-offline-icon { font-size: 4rem; margin-bottom: 20px; opacity: 0.5; animation: tvFloat 3s ease-in-out infinite; }
+@keyframes tvFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.tv-offline-text { font-size: 1.3rem; color: var(--text-primary); margin-bottom: 8px; font-weight: 600; }
+.tv-offline-subtext { font-size: 0.9rem; color: var(--text-secondary); opacity: 0.7; max-width: 400px; }
+.live-indicator { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: var(--red); border-radius: 8px; font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; animation: livePulse 2s ease-in-out infinite; box-shadow: 0 0 20px rgba(255, 0, 64, 0.5); }
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: dotBlink 1s ease-in-out infinite; }
+@keyframes livePulse { 0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 64, 0.5); } 50% { box-shadow: 0 0 35px rgba(255, 0, 64, 0.8); } }
+@keyframes dotBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.tv-live-badge { position: absolute; top: 20px; left: 20px; z-index: 20; }
+.tv-viewer-count { position: absolute; top: 20px; right: 20px; padding: 8px 14px; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); border-radius: 10px; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; z-index: 20; border: 1px solid rgba(255, 255, 255, 0.1); }
+.tv-viewer-count svg { width: 18px; height: 18px; fill: var(--red); }
+.stream-info { padding: 20px 24px; background: var(--card-bg); border-top: 1px solid var(--card-border); }
+.stream-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+.stream-meta { display: flex; align-items: center; gap: 16px; color: var(--text-secondary); font-size: 0.9rem; flex-wrap: wrap; }
+.stream-meta-item { display: flex; align-items: center; gap: 6px; }
+.archive-section { max-width: 1200px; margin: 0 auto; }
+.archive-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.archive-title { font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.archive-count { font-size: 0.8rem; padding: 4px 10px; background: rgba(0, 229, 255, 0.15); border-radius: 8px; color: var(--cyan); font-weight: 700; font-family: 'Orbitron', monospace; }
+.archive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.archive-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; }
+.archive-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(255, 0, 64, 0.15); border-color: rgba(255, 0, 64, 0.3); }
+.archive-thumbnail { position: relative; width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, #1a2a3a, #2a1a3a); overflow: hidden; }
+.archive-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+.archive-duration { position: absolute; bottom: 10px; right: 10px; padding: 4px 10px; background: rgba(0, 0, 0, 0.85); border-radius: 6px; font-size: 0.75rem; font-weight: 700; font-family: 'Orbitron', monospace; }
+.archive-play-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+.archive-card:hover .archive-play-overlay { opacity: 1; }
+.archive-play-icon { width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 0, 64, 0.9); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(255, 0, 64, 0.4); }
+.archive-play-icon svg { width: 28px; height: 28px; fill: #fff; margin-left: 4px; }
+.archive-info { padding: 16px; }
+.archive-title-text { font-size: 1rem; font-weight: 600; margin-bottom: 6px; line-height: 1.4; }
+.archive-date { font-size: 0.8rem; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; }
+.tv-empty-state { text-align: center; padding: 60px 20px; color: var(--text-secondary); grid-column: 1/-1; }
+.tv-empty-state-icon { font-size: 3rem; margin-bottom: 16px; opacity: 0.5; }
+.tv-empty-state-text { font-size: 1.1rem; margin-bottom: 8px; color: var(--text-primary); }
+.tv-empty-state-subtext { font-size: 0.9rem; opacity: 0.6; }
+.loading-spinner { display: inline-block; width: 40px; height: 40px; border: 3px solid rgba(0, 229, 255, 0.2); border-top-color: var(--cyan); border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================ */
+/* АДМИН-ПАНЕЛЬ */
+/* ============================================ */
+.admin-container { max-width: 900px; margin: 0 auto; }
+.admin-section { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; margin-bottom: 24px; }
+.admin-section-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.admin-section-title.live { color: var(--red); }
+.admin-section-title.archive { color: var(--cyan); }
+.admin-status { display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(0, 0, 0, 0.3); border-radius: 12px; margin-bottom: 20px; }
+.admin-status-indicator { width: 12px; height: 12px; border-radius: 50%; }
+.admin-status-indicator.live { background: var(--red); box-shadow: 0 0 10px var(--red); animation: dotBlink 1s ease-in-out infinite; }
+.admin-status-indicator.offline { background: var(--text-secondary); }
+.admin-status-text { font-size: 0.95rem; font-weight: 600; }
+.admin-status-text.live { color: var(--red); }
+.admin-form { display: flex; flex-direction: column; gap: 16px; }
+.admin-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.admin-btn { padding: 14px 20px; border: none; border-radius: 12px; font-size: 0.9rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; }
+.admin-btn.primary { background: linear-gradient(135deg, var(--red), var(--magenta)); color: #fff; box-shadow: 0 6px 20px rgba(255, 0, 64, 0.3); }
+.admin-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 0, 64, 0.4); }
+.admin-btn.danger { background: rgba(255, 80, 80, 0.15); border: 1px solid rgba(255, 80, 80, 0.3); color: #ff6b6b; }
+.admin-btn.danger:hover { background: rgba(255, 80, 80, 0.25); border-color: #ff6b6b; }
+.admin-btn.secondary { background: rgba(0, 229, 255, 0.15); border: 1px solid rgba(0, 229, 255, 0.3); color: var(--cyan); }
+.admin-btn.secondary:hover { background: rgba(0, 229, 255, 0.25); border-color: var(--cyan); }
+.admin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.admin-video-list { display: flex; flex-direction: column; gap: 12px; }
+.admin-video-item { display: flex; align-items: center; gap: 16px; padding: 16px; background: rgba(0, 0, 0, 0.3); border-radius: 12px; border: 1px solid var(--card-border); transition: all 0.3s ease; }
+.admin-video-item:hover { border-color: rgba(0, 229, 255, 0.3); background: rgba(0, 229, 255, 0.05); }
+.admin-video-info { flex: 1; min-width: 0; }
+.admin-video-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+.admin-video-meta { font-size: 0.8rem; color: var(--text-secondary); display: flex; gap: 12px; flex-wrap: wrap; }
+.admin-video-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.admin-video-btn { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--card-border); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+.admin-video-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
+.admin-video-btn.danger:hover { border-color: #ff6b6b; color: #ff6b6b; background: rgba(255, 80, 80, 0.1); }
+.admin-video-btn svg { width: 16px; height: 16px; fill: currentColor; }
+.admin-empty { text-align: center; padding: 40px 20px; color: var(--text-secondary); font-size: 0.9rem; }
+.admin-login-form { max-width: 400px; margin: 0 auto; text-align: center; }
+.admin-login-form h3 { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 20px; color: var(--cyan); }
+
 .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease forwards; }
 @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 .page.active .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
@@ -660,6 +555,7 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .page.active .fade-in-up:nth-child(3) { animation-delay: 0.3s; }
 .page.active .fade-in-up:nth-child(4) { animation-delay: 0.4s; }
 .page.active .fade-in-up:nth-child(5) { animation-delay: 0.5s; }
+
 @media (min-width: 768px) {
 .quick-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .banner-title { font-size: 3rem; }
@@ -688,6 +584,10 @@ body { padding-bottom: 0; }
 .voice-toggle-btn { font-size: 0.9rem; letter-spacing: 1px; padding: 18px 20px; }
 .category-tab { padding: 8px 12px; font-size: 0.8rem; }
 .ai-badge { font-size: 0.7rem; padding: 3px 8px; letter-spacing: 2px; }
+.card-number { font-size: 1.15rem; letter-spacing: 2px; word-spacing: 5px; }
+.yandex-pay-card { padding: 20px; }
+.archive-grid { grid-template-columns: 1fr; }
+.admin-form-row { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -727,6 +627,20 @@ body { padding-bottom: 0; }
 </div>
 </div>
 <div class="release-section fade-in-up">
+<div class="section-title">ПРЯМЫЕ ЭФИРЫ</div>
+<div class="tv-card" id="homeTvCard" onclick="navigateTo('tvPage');initTvPage()">
+<div class="tv-cover" id="homeTvCover">📺</div>
+<div class="tv-info">
+<div class="tv-label" id="homeTvLabel">
+<span class="tv-badge offline" id="homeTvBadge"><span class="tv-badge-dot"></span>OFFLINE</span>
+</div>
+<div class="tv-title">Evgenii TV</div>
+<div class="tv-meta" id="homeTvMeta">Прямые трансляции · Архив</div>
+</div>
+<div class="tv-arrow">→</div>
+</div>
+</div>
+<div class="release-section fade-in-up">
 <div class="section-title">НОВЫЙ РЕЛИЗ</div>
 <div class="release-card" id="homeReleaseCard" onclick="playNewRelease()"></div>
 </div>
@@ -744,7 +658,139 @@ body { padding-bottom: 0; }
 </div>
 </div>
 <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
+<button class="admin-trigger" onclick="showAdminLogin()">⚙️</button>
 </div>
+
+<!-- EVGENII TV - ПОЛНАЯ СТРАНИЦА -->
+<div class="page" id="tvPage">
+<div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title"><span>📺 EVGENII TV</span><div class="live-indicator" id="liveIndicator" style="display: none;"><div class="live-dot"></div><span>LIVE</span></div></div></div>
+<div class="tv-wrapper">
+<div class="intro-block red fade-in-up"><div class="intro-title red">ПРЯМЫЕ ЭФИРЫ · АРХИВ</div><div class="intro-text">Смотри прямые трансляции в реальном времени и пересматривай записи прошлых эфиров. Здесь рождается магия — без фильтров и монтажа.</div></div>
+<div class="tv-main-player fade-in-up" id="mainPlayer">
+<div class="tv-player-wrapper">
+<div class="tv-live-badge" id="liveBadge" style="display: none;"><div class="live-indicator"><div class="live-dot"></div><span>LIVE</span></div></div>
+<div class="tv-viewer-count" id="viewerCount" style="display: none;"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg><span id="viewerNumber">0</span></div>
+<div class="tv-player-overlay" id="playerOverlay">
+<div class="tv-offline-icon">📡</div>
+<div class="tv-offline-text">Сейчас нет трансляции</div>
+<div class="tv-offline-subtext">Следи за анонсами — впереди много интересного</div>
+</div>
+<div id="playerContainer"></div>
+</div>
+<div class="stream-info">
+<div class="stream-title" id="streamTitle">Ожидание трансляции</div>
+<div class="stream-meta">
+<div class="stream-meta-item"><span>📅</span><span id="streamDate">—</span></div>
+<div class="stream-meta-item"><span>⏱️</span><span id="streamDuration">—</span></div>
+</div>
+</div>
+</div>
+<div class="archive-section fade-in-up">
+<div class="archive-header">
+<div class="archive-title"><span>📼</span><span>Архив трансляций</span><span class="archive-count" id="archiveCount">0</span></div>
+</div>
+<div class="archive-grid" id="archiveGrid">
+<div class="tv-empty-state"><div class="loading-spinner"></div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- АДМИН-ПАНЕЛЬ -->
+<div class="page" id="adminPage">
+<div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">⚙️ Админ-панель</div></div>
+<div class="admin-container">
+<!-- Форма входа -->
+<div class="admin-section fade-in-up" id="adminLoginSection">
+<div class="admin-login-form">
+<h3>🔐 АВТОРИЗАЦИЯ</h3>
+<div class="form-group">
+<label class="form-label">Пароль администратора</label>
+<input type="password" class="form-input" id="adminPasswordInput" placeholder="Введите пароль" autocomplete="off">
+</div>
+<button class="admin-btn primary" onclick="adminLogin()" style="width:100%">ВОЙТИ В АДМИНКУ</button>
+<div class="form-status" id="adminLoginStatus"></div>
+</div>
+</div>
+<!-- Основной контент админки -->
+<div id="adminContent" style="display:none">
+<!-- Управление текущим стримом -->
+<div class="admin-section fade-in-up">
+<div class="admin-section-title live">🔴 ТЕКУЩИЙ СТРИМ</div>
+<div class="admin-status" id="adminStreamStatus">
+<div class="admin-status-indicator offline"></div>
+<div class="admin-status-text">Оффлайн</div>
+</div>
+<div id="adminStreamForm">
+<div class="admin-form">
+<div class="admin-form-row">
+<div class="form-group">
+<label class="form-label">Video ID (из URL ВК)</label>
+<input type="text" class="form-input" id="adminVideoId" placeholder="Например: 456239012">
+</div>
+<div class="form-group">
+<label class="form-label">Название стрима</label>
+<input type="text" class="form-input" id="adminStreamTitle" placeholder="Вечерний эфир">
+</div>
+</div>
+<button class="admin-btn primary" onclick="startLiveStream()">🔴 НАЧАТЬ LIVE</button>
+</div>
+</div>
+<div id="adminStreamControls" style="display:none">
+<div class="admin-form">
+<div style="padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;margin-bottom:16px">
+<div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px">Текущий стрим:</div>
+<div style="font-size:1.1rem;font-weight:600;margin-bottom:4px" id="adminCurrentStreamTitle">—</div>
+<div style="font-size:0.85rem;color:var(--text-secondary)" id="adminCurrentStreamId">Video ID: —</div>
+</div>
+<button class="admin-btn danger" onclick="stopLiveStream()">⏹ ОСТАНОВИТЬ LIVE</button>
+</div>
+</div>
+</div>
+<!-- Управление архивом -->
+<div class="admin-section fade-in-up">
+<div class="admin-section-title archive">📼 АРХИВ ТРАНСЛЯЦИЙ</div>
+<div id="adminArchiveForm" style="display:none">
+<div class="admin-form" style="margin-bottom:20px">
+<div class="admin-form-row">
+<div class="form-group">
+<label class="form-label">Video ID</label>
+<input type="text" class="form-input" id="adminArchiveVideoId" placeholder="456239012">
+</div>
+<div class="form-group">
+<label class="form-label">Название</label>
+<input type="text" class="form-input" id="adminArchiveTitle" placeholder="Первый стрим">
+</div>
+</div>
+<div class="admin-form-row">
+<div class="form-group">
+<label class="form-label">Длительность</label>
+<input type="text" class="form-input" id="adminArchiveDuration" placeholder="1:23:45">
+</div>
+<div class="form-group">
+<label class="form-label">URL превью (опционально)</label>
+<input type="text" class="form-input" id="adminArchiveThumbnail" placeholder="https://...">
+</div>
+</div>
+<div style="display:flex;gap:12px">
+<button class="admin-btn secondary" onclick="addArchiveVideo()">➕ ДОБАВИТЬ В АРХИВ</button>
+<button class="admin-btn danger" onclick="toggleArchiveForm()">ОТМЕНА</button>
+</div>
+</div>
+</div>
+<div id="adminArchiveList">
+<div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+<button class="admin-btn secondary" onclick="toggleArchiveForm()">➕ ДОБАВИТЬ ВИДЕО</button>
+</div>
+<div class="admin-video-list" id="adminVideoList">
+<div class="admin-empty">Загрузка...</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 <div class="page" id="tracksPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Все треки</div></div>
 <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
@@ -846,10 +892,6 @@ body { padding-bottom: 0; }
 </form>
 </div>
 </div>
-
-<!-- ============================================ -->
-<!-- НОВЫЙ БЛОК ПОДДЕРЖКИ С ЯНДЕКС PAY КАРТОЙ -->
-<!-- ============================================ -->
 <div class="page" id="supportPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Поддержать</div></div>
 <div class="support-wrapper">
@@ -857,7 +899,6 @@ body { padding-bottom: 0; }
     <span class="heart-icon">💜</span>
     <p>Твоя поддержка помогает создавать новую музыку. Каждая чашка кофе, каждый рубль — это новый трек, новая эмоция, новая история.</p>
   </div>
-
   <div class="yandex-pay-card fade-in-up" onclick="copyCardNumber()">
     <div class="card-top-row">
       <div class="card-logo">
@@ -869,12 +910,10 @@ body { padding-bottom: 0; }
       </div>
       <div class="card-chip"></div>
     </div>
-
     <div class="card-number-block">
       <div class="card-number-label">Номер карты</div>
       <div class="card-number" id="cardNumber">2204 3110 0721 9604</div>
     </div>
-
     <div class="card-bottom-row">
       <div class="card-holder">
         <span class="card-holder-label">Получатель</span>
@@ -886,19 +925,16 @@ body { padding-bottom: 0; }
       </button>
     </div>
   </div>
-
   <div class="support-hint fade-in-up">
     <span class="hint-icon">💡</span>
     Нажми на карту или кнопку <strong>«Копировать»</strong>, чтобы скопировать номер. Перевести можно через приложение любого банка — <strong>любая сумма</strong>.
   </div>
 </div>
 </div>
-
 <div class="copy-toast" id="copyToast">
   <span>✓</span>
   <span id="copyToastText">Номер карты скопирован!</span>
 </div>
-
 <div class="sticky-player" id="stickyPlayer">
 <div class="player-top-row"><div class="player-mini-cover" id="playerCover">🎵</div><div class="player-mini-info"><div class="player-mini-title" id="playerTitle">Название трека</div><div class="player-mini-artist" id="playerArtist">Исполнитель</div></div><div class="player-mini-controls"><button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="mini-play-btn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
 <div class="player-progress-wrapper"><span class="player-time-mini" id="playerCurrentTime">0:00</span><div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div><span class="player-time-mini end" id="playerTotalTime">0:00</span></div>
@@ -916,7 +952,7 @@ body { padding-bottom: 0; }
 <div class="modal-overlay" id="downloadModal">
 <div class="modal-content">
 <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
-<div class="modal-track-card"><div class="modal-cover" id="modalCover">🎵</div><div class="modal-track-title" id="modalTitle">Название</div><div class="modal-track-artist" id="modalArtist">EVGENII</div><div class="modal-track-duration" id="modalDuration">0:00</div></div>
+<div class="modal-track-card"><div class="modal-cover" id="modalCover">🎵</div><div class="modal-track-title" id="modalTitle">Название</div><div class="modal-track-artist" id="modalArtist">EVGENII AI</div><div class="modal-track-duration" id="modalDuration">0:00</div></div>
 <div class="modal-info-text">Трек будет загружен на ваше устройство в высоком качестве</div>
 <div class="modal-warning"><div class="modal-warning-icon">⚠</div><div><div class="modal-warning-title">Внимание!</div><div class="modal-warning-text">Скачивание происходит не сразу.<br>Пожалуйста, подождите несколько секунд.</div></div></div>
 <button class="modal-download-btn" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
@@ -948,6 +984,20 @@ console.error('❌ Ошибка Firebase:', e);
 }
 const TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
 const TELEGRAM_CHAT_ID = '5129595944';
+
+// ============================================
+// EVGENII TV - НАСТРОЙКИ
+// ============================================
+const VK_GROUP_ID = '-239947159';
+const ADMIN_PASSWORD = 'evgenii2024'; // ← ИЗМЕНИ ПАРОЛЬ ЗДЕСЬ
+
+let currentStream = null;
+let streamUnsubscribe = null;
+let isAdminLoggedIn = false;
+
+// ============================================
+// ДАННЫЕ МУЗЫКИ
+// ============================================
 const newRelease = { id: 'new-release', title: "Последний трек.", subtitle: "New Release", file: "tracks/song15.mp3", duration: "4:18", cover: "cover/cover.png" };
 const allTracks = [
 { id: 2,  title: "Пустой код",                subtitle: "", file: "tracks/song.mp3",  duration: "3:20", cover: "cover/cover.jpg" },
@@ -990,8 +1040,414 @@ const subscriberTracks = [
 { id: 'sub-7', title: "Бпусто", author: "имя.", style: "", file: "voices/system-bug.mp3", duration: "0:00", cover: "cover/cover.jpg", description: "." }
 ];
 let currentCategory = 'all';
+
 // ============================================
-// ОБСУЖДЕНИЯ (общий чат)
+// EVGENII TV - ФУНКЦИИ
+// ============================================
+function initTvPage() {
+  loadCurrentStream();
+  loadArchive();
+}
+
+function loadCurrentStream() {
+  if (!db) return;
+  if (streamUnsubscribe) streamUnsubscribe();
+  streamUnsubscribe = db.collection('streams').doc('current')
+    .onSnapshot(doc => {
+      if (doc.exists) {
+        const data = doc.data();
+        currentStream = data;
+        updatePlayer(data);
+        updateHomeTvCard(data);
+        updateAdminStreamStatus(data);
+      } else {
+        currentStream = null;
+        showOfflineState();
+        updateHomeTvCard(null);
+        updateAdminStreamStatus(null);
+      }
+    }, error => {
+      console.error('Ошибка загрузки трансляции:', error);
+      showOfflineState();
+      updateHomeTvCard(null);
+      updateAdminStreamStatus(null);
+    });
+}
+
+function updateHomeTvCard(stream) {
+  const card = document.getElementById('homeTvCard');
+  const badge = document.getElementById('homeTvBadge');
+  const meta = document.getElementById('homeTvMeta');
+  const cover = document.getElementById('homeTvCover');
+  if (!card) return;
+
+  if (stream && stream.isLive && stream.videoId) {
+    card.classList.add('live');
+    badge.className = 'tv-badge live';
+    badge.innerHTML = '<span class="tv-badge-dot"></span>LIVE';
+    meta.textContent = stream.title || 'Прямая трансляция';
+    if (stream.thumbnail) {
+      cover.innerHTML = `<img src="${stream.thumbnail}" onerror="this.style.display='none';this.parentElement.innerHTML='📺'">`;
+    } else {
+      cover.innerHTML = '📺';
+    }
+  } else {
+    card.classList.remove('live');
+    badge.className = 'tv-badge offline';
+    badge.innerHTML = '<span class="tv-badge-dot"></span>OFFLINE';
+    meta.textContent = 'Прямые трансляции · Архив';
+    cover.innerHTML = '📺';
+  }
+}
+
+function updatePlayer(stream) {
+  const playerContainer = document.getElementById('playerContainer');
+  const overlay = document.getElementById('playerOverlay');
+  const liveIndicator = document.getElementById('liveIndicator');
+  const liveBadge = document.getElementById('liveBadge');
+  const viewerCount = document.getElementById('viewerCount');
+  const mainPlayer = document.getElementById('mainPlayer');
+
+  if (stream && stream.isLive && stream.videoId) {
+    overlay.classList.add('hidden');
+    liveIndicator.style.display = 'inline-flex';
+    liveBadge.style.display = 'block';
+    viewerCount.style.display = 'flex';
+    mainPlayer.classList.add('live');
+
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://vk.com/video_ext.php?oid=${VK_GROUP_ID}&id=${stream.videoId}&hd=2&autoplay=1`;
+    iframe.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;';
+    iframe.allowFullscreen = true;
+    playerContainer.innerHTML = '';
+    playerContainer.appendChild(iframe);
+
+    document.getElementById('streamTitle').textContent = stream.title || 'Прямая трансляция';
+    document.getElementById('streamDate').textContent = formatDate(stream.startedAt);
+    document.getElementById('streamDuration').textContent = 'В эфире';
+    document.getElementById('viewerNumber').textContent = stream.viewers || 0;
+  } else {
+    showOfflineState();
+  }
+}
+
+function showOfflineState() {
+  const playerContainer = document.getElementById('playerContainer');
+  const overlay = document.getElementById('playerOverlay');
+  const liveIndicator = document.getElementById('liveIndicator');
+  const liveBadge = document.getElementById('liveBadge');
+  const viewerCount = document.getElementById('viewerCount');
+  const mainPlayer = document.getElementById('mainPlayer');
+
+  playerContainer.innerHTML = '';
+  overlay.classList.remove('hidden');
+  liveIndicator.style.display = 'none';
+  liveBadge.style.display = 'none';
+  viewerCount.style.display = 'none';
+  mainPlayer.classList.remove('live');
+
+  document.getElementById('streamTitle').textContent = 'Ожидание трансляции';
+  document.getElementById('streamDate').textContent = '—';
+  document.getElementById('streamDuration').textContent = '—';
+}
+
+function loadArchive() {
+  if (!db) {
+    renderArchive([]);
+    return;
+  }
+  const grid = document.getElementById('archiveGrid');
+  grid.innerHTML = '<div class="tv-empty-state"><div class="loading-spinner"></div></div>';
+
+  db.collection('streams').doc('archive').collection('videos')
+    .orderBy('date', 'desc')
+    .limit(50)
+    .get()
+    .then(snapshot => {
+      const archive = [];
+      snapshot.forEach(doc => archive.push({ id: doc.id, ...doc.data() }));
+      renderArchive(archive);
+      renderAdminArchiveList(archive);
+    })
+    .catch(error => {
+      console.error('Ошибка загрузки архива:', error);
+      renderArchive([]);
+      renderAdminArchiveList([]);
+    });
+}
+
+function renderArchive(archive) {
+  const grid = document.getElementById('archiveGrid');
+  const count = document.getElementById('archiveCount');
+  count.textContent = archive.length;
+
+  if (archive.length === 0) {
+    grid.innerHTML = `
+      <div class="tv-empty-state">
+        <div class="tv-empty-state-icon">📼</div>
+        <div class="tv-empty-state-text">Пока нет записей</div>
+        <div class="tv-empty-state-subtext">Архив появится после первой трансляции</div>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = archive.map(stream => `
+    <div class="archive-card" onclick="playArchive('${stream.videoId}', '${escapeHtml(stream.title || 'Трансляция')}')">
+      <div class="archive-thumbnail">
+        ${stream.thumbnail ? `<img src="${stream.thumbnail}" alt="${escapeHtml(stream.title)}">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:0.3">📺</div>'}
+        <div class="archive-duration">${stream.duration || '0:00'}</div>
+        <div class="archive-play-overlay">
+          <div class="archive-play-icon">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="archive-info">
+        <div class="archive-title-text">${escapeHtml(stream.title || 'Трансляция')}</div>
+        <div class="archive-date">
+          <span>📅</span>
+          <span>${formatDate(stream.date)}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function playArchive(videoId, title) {
+  const playerContainer = document.getElementById('playerContainer');
+  const overlay = document.getElementById('playerOverlay');
+  const liveIndicator = document.getElementById('liveIndicator');
+  const liveBadge = document.getElementById('liveBadge');
+  const viewerCount = document.getElementById('viewerCount');
+  const mainPlayer = document.getElementById('mainPlayer');
+
+  overlay.classList.add('hidden');
+  liveIndicator.style.display = 'none';
+  liveBadge.style.display = 'none';
+  viewerCount.style.display = 'none';
+  mainPlayer.classList.remove('live');
+
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://vk.com/video_ext.php?oid=${VK_GROUP_ID}&id=${videoId}&hd=2`;
+  iframe.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;';
+  iframe.allowFullscreen = true;
+  playerContainer.innerHTML = '';
+  playerContainer.appendChild(iframe);
+
+  document.getElementById('streamTitle').textContent = title;
+  document.getElementById('streamDate').textContent = 'Из архива';
+  document.getElementById('streamDuration').textContent = 'Запись';
+
+  document.getElementById('mainPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function formatDate(timestamp) {
+  if (!timestamp) return '—';
+  const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+  return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// ============================================
+// АДМИН-ПАНЕЛЬ
+// ============================================
+function showAdminLogin() {
+  navigateTo('adminPage');
+  document.getElementById('adminLoginSection').style.display = 'block';
+  document.getElementById('adminContent').style.display = 'none';
+  document.getElementById('adminPasswordInput').value = '';
+  document.getElementById('adminLoginStatus').textContent = '';
+}
+
+function adminLogin() {
+  const password = document.getElementById('adminPasswordInput').value;
+  const status = document.getElementById('adminLoginStatus');
+  
+  if (password === ADMIN_PASSWORD) {
+    isAdminLoggedIn = true;
+    status.textContent = '✅ Успешный вход!';
+    status.className = 'form-status success';
+    setTimeout(() => {
+      document.getElementById('adminLoginSection').style.display = 'none';
+      document.getElementById('adminContent').style.display = 'block';
+      loadAdminData();
+    }, 500);
+  } else {
+    status.textContent = '❌ Неверный пароль';
+    status.className = 'form-status error';
+  }
+}
+
+function loadAdminData() {
+  loadCurrentStream();
+  loadArchive();
+}
+
+function updateAdminStreamStatus(stream) {
+  const statusEl = document.getElementById('adminStreamStatus');
+  const formEl = document.getElementById('adminStreamForm');
+  const controlsEl = document.getElementById('adminStreamControls');
+  
+  if (!statusEl) return;
+  
+  if (stream && stream.isLive && stream.videoId) {
+    statusEl.innerHTML = `
+      <div class="admin-status-indicator live"></div>
+      <div class="admin-status-text live">LIVE — В эфире</div>
+    `;
+    formEl.style.display = 'none';
+    controlsEl.style.display = 'block';
+    document.getElementById('adminCurrentStreamTitle').textContent = stream.title || 'Без названия';
+    document.getElementById('adminCurrentStreamId').textContent = `Video ID: ${stream.videoId}`;
+  } else {
+    statusEl.innerHTML = `
+      <div class="admin-status-indicator offline"></div>
+      <div class="admin-status-text">Оффлайн</div>
+    `;
+    formEl.style.display = 'block';
+    controlsEl.style.display = 'none';
+  }
+}
+
+async function startLiveStream() {
+  if (!db) return;
+  
+  const videoId = document.getElementById('adminVideoId').value.trim();
+  const title = document.getElementById('adminStreamTitle').value.trim();
+  
+  if (!videoId) {
+    alert('Введите Video ID');
+    return;
+  }
+  
+  try {
+    await db.collection('streams').doc('current').set({
+      isLive: true,
+      videoId: videoId,
+      title: title || 'Прямая трансляция',
+      startedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      viewers: 0
+    });
+    
+    document.getElementById('adminVideoId').value = '';
+    document.getElementById('adminStreamTitle').value = '';
+    alert('✅ LIVE запущен!');
+  } catch (error) {
+    console.error('Ошибка запуска стрима:', error);
+    alert('Ошибка: ' + error.message);
+  }
+}
+
+async function stopLiveStream() {
+  if (!db) return;
+  
+  if (!confirm('Остановить трансляцию?')) return;
+  
+  try {
+    await db.collection('streams').doc('current').update({
+      isLive: false
+    });
+    alert('✅ LIVE остановлен');
+  } catch (error) {
+    console.error('Ошибка остановки стрима:', error);
+    alert('Ошибка: ' + error.message);
+  }
+}
+
+function toggleArchiveForm() {
+  const form = document.getElementById('adminArchiveForm');
+  const list = document.getElementById('adminArchiveList');
+  
+  if (form.style.display === 'none') {
+    form.style.display = 'block';
+    list.style.display = 'none';
+  } else {
+    form.style.display = 'none';
+    list.style.display = 'block';
+  }
+}
+
+async function addArchiveVideo() {
+  if (!db) return;
+  
+  const videoId = document.getElementById('adminArchiveVideoId').value.trim();
+  const title = document.getElementById('adminArchiveTitle').value.trim();
+  const duration = document.getElementById('adminArchiveDuration').value.trim();
+  const thumbnail = document.getElementById('adminArchiveThumbnail').value.trim();
+  
+  if (!videoId || !title) {
+    alert('Заполните Video ID и название');
+    return;
+  }
+  
+  try {
+    await db.collection('streams').doc('archive').collection('videos').add({
+      videoId: videoId,
+      title: title,
+      duration: duration || '0:00',
+      thumbnail: thumbnail || '',
+      date: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    
+    document.getElementById('adminArchiveVideoId').value = '';
+    document.getElementById('adminArchiveTitle').value = '';
+    document.getElementById('adminArchiveDuration').value = '';
+    document.getElementById('adminArchiveThumbnail').value = '';
+    
+    toggleArchiveForm();
+    loadArchive();
+    alert('✅ Видео добавлено в архив');
+  } catch (error) {
+    console.error('Ошибка добавления видео:', error);
+    alert('Ошибка: ' + error.message);
+  }
+}
+
+function renderAdminArchiveList(archive) {
+  const list = document.getElementById('adminVideoList');
+  if (!list) return;
+  
+  if (archive.length === 0) {
+    list.innerHTML = '<div class="admin-empty">Архив пуст</div>';
+    return;
+  }
+  
+  list.innerHTML = archive.map(stream => `
+    <div class="admin-video-item">
+      <div class="admin-video-info">
+        <div class="admin-video-title">${escapeHtml(stream.title || 'Без названия')}</div>
+        <div class="admin-video-meta">
+          <span>ID: ${stream.videoId}</span>
+          <span>⏱ ${stream.duration || '0:00'}</span>
+          <span>📅 ${formatDate(stream.date)}</span>
+        </div>
+      </div>
+      <div class="admin-video-actions">
+        <button class="admin-video-btn danger" onclick="deleteArchiveVideo('${stream.id}')" title="Удалить">
+          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function deleteArchiveVideo(videoDocId) {
+  if (!db) return;
+  
+  if (!confirm('Удалить это видео из архива?')) return;
+  
+  try {
+    await db.collection('streams').doc('archive').collection('videos').doc(videoDocId).delete();
+    loadArchive();
+    alert('✅ Видео удалено');
+  } catch (error) {
+    console.error('Ошибка удаления видео:', error);
+    alert('Ошибка: ' + error.message);
+  }
+}
+
+// ============================================
+// ОБСУЖДЕНИЯ
 // ============================================
 let discussionsUnsubscribe = null;
 let discussionsList = [];
@@ -1130,6 +1586,7 @@ document.getElementById('discussionInput').addEventListener('input', function() 
 document.getElementById('discussionInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendDiscussion(); }
 });
+
 // ============================================
 // RENDER
 // ============================================
@@ -1231,6 +1688,7 @@ text.textContent = 'СКРЫТЬ ФОРМУ';
 setTimeout(() => { wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }); const f = wrapper.querySelector('input'); if (f) f.focus({ preventScroll: true }); }, 350);
 } else { text.textContent = 'ПРИСЛАТЬ СВОЙ ТЕКСТ'; }
 }
+
 // ============================================
 // ПЛЕЕРЫ
 // ============================================
@@ -1340,6 +1798,7 @@ function startSubSimulation() { setSubPlayingState(true); let c = 0; const d = p
 subAudio.addEventListener('timeupdate', () => { if (!currentSubTrack) return; const d = subAudio.duration || pd(currentSubTrack.duration); document.getElementById('subBarFill').style.width = `${subAudio.currentTime / d * 100}%`; document.getElementById('subCurrentTime').textContent = ft(subAudio.currentTime); });
 subAudio.addEventListener('loadedmetadata', () => { document.getElementById('subTotalTime').textContent = ft(subAudio.duration); });
 subAudio.addEventListener('ended', () => { setSubPlayingState(false); document.getElementById('subBarFill').style.width = '0%'; document.getElementById('subCurrentTime').textContent = '0:00'; playNextSubscriber(); });
+
 // ============================================
 // DOWNLOAD
 // ============================================
@@ -1368,6 +1827,7 @@ document.body.appendChild(l);
 setTimeout(() => { l.click(); document.body.removeChild(l); b.textContent = '✓ ТРЕК ЗАГРУЖЕН'; setTimeout(() => closeDownloadModal(), 1500); }, 1500);
 }
 document.getElementById('downloadModal').addEventListener('click', function(e) { if (e.target === this) closeDownloadModal(); });
+
 // ============================================
 // UTILS
 // ============================================
@@ -1375,6 +1835,7 @@ function getGreeting(h) { if (h >= 5 && h < 12) return 'ДОБРОЕ УТРО'; 
 function getLoginGreeting(h) { if (h >= 5 && h < 12) return 'Доброе утро'; if (h >= 12 && h < 17) return 'Добрый день'; if (h >= 17 && h < 22) return 'Добрый вечер'; return 'Доброй ночи'; }
 function updateTime() { const n = new Date(); document.getElementById('headerTime').textContent = `${String(n.getHours()).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')}`; document.getElementById('headerGreeting').textContent = getGreeting(n.getHours()); }
 function escapeHtml(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
+
 // ============================================
 // НАВИГАЦИЯ
 // ============================================
@@ -1387,10 +1848,13 @@ ne.classList.add('active');
 window.scrollTo(0, 0);
 currentPage = pageId;
 if (pageId === 'discussionsPage') loadDiscussions();
+if (pageId === 'tvPage') initTvPage();
+if (pageId === 'adminPage' && !isAdminLoggedIn) showAdminLogin();
 }
 function goBack() {
 navigateTo('homePage');
 }
+
 // ============================================
 // LOGIN
 // ============================================
@@ -1420,18 +1884,22 @@ renderAllTracksList();
 renderInstrumentals();
 renderSubscribers();
 updateAttachLabel();
+loadCurrentStream();
 }
 logoutBtn.addEventListener('click', function() {
 localStorage.removeItem('evgenii_user');
-['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage','supportPage','discussionsPage'].forEach(p => document.getElementById(p).classList.remove('active'));
+['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage','supportPage','discussionsPage','tvPage','adminPage'].forEach(p => document.getElementById(p).classList.remove('active'));
 currentPage = 'homePage';
 loginScreen.classList.remove('hidden'); nameInput.value = '';
 loginGreeting.textContent = getLoginGreeting(new Date().getHours());
 stopAllPlayers();
 if (discussionsUnsubscribe) { discussionsUnsubscribe(); discussionsUnsubscribe = null; }
+if (streamUnsubscribe) { streamUnsubscribe(); streamUnsubscribe = null; }
+isAdminLoggedIn = false;
 });
 setInterval(updateTime, 1000);
 updateTime();
+
 // ============================================
 // КОНТАКТЫ
 // ============================================
@@ -1465,6 +1933,7 @@ else throw new Error(data.description || 'Ошибка Telegram API');
 finally { formSubmitBtn.disabled = false; formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>'; }
 });
 }
+
 // ============================================
 // ФОРМА "ДАЙ ГОЛОС"
 // ============================================
@@ -1510,23 +1979,13 @@ finally { voiceSubmitBtn.disabled = false; voiceSubmitBtn.innerHTML = '<span>О�
 // ============================================
 const CARD_NUMBER = '2204311007219604';
 let copyTimeout = null;
-
 function copyCardNumber() {
   const btn = document.getElementById('copyBtn');
   const btnText = document.getElementById('copyBtnText');
   const toast = document.getElementById('copyToast');
-
-  // Используем современный API
   if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(CARD_NUMBER).then(() => {
-      showCopySuccess();
-    }).catch(() => {
-      fallbackCopy();
-    });
-  } else {
-    fallbackCopy();
-  }
-
+    navigator.clipboard.writeText(CARD_NUMBER).then(() => { showCopySuccess(); }).catch(() => { fallbackCopy(); });
+  } else { fallbackCopy(); }
   function fallbackCopy() {
     const textarea = document.createElement('textarea');
     textarea.value = CARD_NUMBER;
@@ -1534,25 +1993,14 @@ function copyCardNumber() {
     textarea.style.opacity = '0';
     document.body.appendChild(textarea);
     textarea.select();
-    try {
-      document.execCommand('copy');
-      showCopySuccess();
-    } catch (err) {
-      console.error('Не удалось скопировать:', err);
-      alert('Номер карты: ' + CARD_NUMBER);
-    }
+    try { document.execCommand('copy'); showCopySuccess(); }
+    catch (err) { console.error('Не удалось скопировать:', err); alert('Номер карты: ' + CARD_NUMBER); }
     document.body.removeChild(textarea);
   }
-
   function showCopySuccess() {
-    // Меняем кнопку
     btn.classList.add('copied');
     btnText.textContent = 'Скопировано!';
-
-    // Показываем тост
     toast.classList.add('show');
-
-    // Сбрасываем через 2.5 секунды
     if (copyTimeout) clearTimeout(copyTimeout);
     copyTimeout = setTimeout(() => {
       btn.classList.remove('copied');
@@ -1562,7 +2010,6 @@ function copyCardNumber() {
   }
 }
 
-// Инициализация подписи "прикрепить трек"
 updateAttachLabel();
 </script>
 </body>
