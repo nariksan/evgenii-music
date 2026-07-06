@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EVGENII</title>
+<title>EVGENII AI</title>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <style>
@@ -38,7 +38,14 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .geo-shape:nth-child(3) { width: 60px; height: 60px; border-color: var(--purple); bottom: 20%; left: 25%; transform: rotate(30deg); animation-delay: -4s; }
 .geo-shape:nth-child(4) { width: 45px; height: 45px; border-color: var(--cyan); bottom: 25%; right: 15%; border-radius: 8px; animation-delay: -1s; }
 @keyframes geoFloat { 0%, 100% { transform: translateY(0) rotate(45deg); opacity: 0.5; } 50% { transform: translateY(-10px) rotate(50deg); opacity: 0.8; } }
-.login-logo { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 8px; background: linear-gradient(135deg, var(--cyan), var(--purple), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; position: relative; z-index: 2; filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.3)); }
+
+/* ============================================ */
+/* AI BADGE - НОВЫЙ СТИЛЬ */
+/* ============================================ */
+.login-logo { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 8px; background: linear-gradient(135deg, var(--cyan), var(--purple), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; position: relative; z-index: 2; filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.3)); display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.ai-badge { display: inline-block; font-size: 0.9rem; font-weight: 900; letter-spacing: 3px; padding: 4px 12px; border-radius: 8px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); color: #000; box-shadow: 0 0 15px rgba(0, 229, 255, 0.4); animation: aiPulse 2s ease-in-out infinite; vertical-align: middle; -webkit-text-fill-color: #000; text-shadow: none; }
+@keyframes aiPulse { 0%, 100% { box-shadow: 0 0 15px rgba(0, 229, 255, 0.4), 0 0 30px rgba(255, 0, 229, 0.2); } 50% { box-shadow: 0 0 25px rgba(0, 229, 255, 0.7), 0 0 50px rgba(255, 0, 229, 0.4); } }
+
 .login-slogan { font-size: 0.9rem; color: var(--text-secondary); margin-top: 12px; text-align: center; position: relative; z-index: 2; letter-spacing: 1px; }
 .login-greeting { font-size: 1.5rem; color: var(--text-primary); margin-bottom: 30px; font-weight: 300; text-align: center; }
 .login-form { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
@@ -64,7 +71,9 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .geo-shape-banner:nth-child(2) { width: 40px; height: 40px; border-color: var(--magenta); top: 20%; right: 25%; border-radius: 50%; animation-delay: -2s; }
 .geo-shape-banner:nth-child(3) { width: 50px; height: 50px; border-color: var(--purple); bottom: 20%; left: 30%; transform: rotate(30deg); animation-delay: -4s; }
 .geo-shape-banner:nth-child(4) { width: 35px; height: 35px; border-color: var(--cyan); bottom: 25%; right: 20%; border-radius: 4px; animation-delay: -1s; }
-.banner-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900; letter-spacing: 6px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; position: relative; z-index: 2; filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.3)); }
+
+.banner-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900; letter-spacing: 6px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; position: relative; z-index: 2; filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.3)); display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
 .banner-slogan { font-size: 0.85rem; color: var(--text-secondary); margin-top: 12px; text-align: center; position: relative; z-index: 2; }
 .section-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-secondary); margin-bottom: 16px; font-weight: 600; }
 .release-section { margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto; }
@@ -663,6 +672,7 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .special-card-top { padding: 20px; }
 .special-cover { width: 100px; height: 100px; }
 .card-number { font-size: 1.8rem; }
+.ai-badge { font-size: 1.1rem; padding: 5px 16px; }
 }
 @media (min-width: 1024px) {
 .quick-grid { grid-template-columns: repeat(4, 1fr); }
@@ -677,6 +687,7 @@ body { padding-bottom: 0; }
 .login-logo { font-size: 2.2rem; }
 .voice-toggle-btn { font-size: 0.9rem; letter-spacing: 1px; padding: 18px 20px; }
 .category-tab { padding: 8px 12px; font-size: 0.8rem; }
+.ai-badge { font-size: 0.7rem; padding: 3px 8px; letter-spacing: 2px; }
 }
 </style>
 </head>
@@ -692,7 +703,7 @@ body { padding-bottom: 0; }
 <div class="login-banner-bg"></div>
 <div class="login-geometric"><div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div></div>
 <div style="position: relative; z-index: 2; text-align: center;">
-<div class="login-logo">EVGENII</div>
+<div class="login-logo">EVGENII<span class="ai-badge">AI</span></div>
 <div class="login-slogan">Где заканчиваюсь я — и начинается ИИ</div>
 </div>
 </div>
@@ -711,7 +722,7 @@ body { padding-bottom: 0; }
 <div class="banner fade-in-up">
 <div class="banner-content">
 <div class="banner-geometric"><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div></div>
-<div class="banner-title">EVGENII</div>
+<div class="banner-title">EVGENII<span class="ai-badge">AI</span></div>
 <div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div>
 </div>
 </div>
@@ -806,7 +817,7 @@ body { padding-bottom: 0; }
 <div class="page" id="aboutPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">О проекте</div></div>
 <div class="about-content fade-in-up">
-<div class="about-card"><p><span class="evgenii-title">EVGENII</span> — это эксперимент на стыке человеческих эмоций и искусственного интеллекта.</p><div class="about-quote">«Я придумываю текст и стиль исполнения. А выучить и воплотить в песню доверяю ИИ.»</div></div>
+<div class="about-card"><p><span class="evgenii-title">EVGENII <span class="ai-badge">AI</span></span> — это эксперимент на стыке человеческих эмоций и искусственного интеллекта.</p><div class="about-quote">«Я придумываю текст и стиль исполнения. А выучить и воплотить в песню доверяю ИИ.»</div></div>
 <div class="about-card"><p>Искусственный интеллект становится моим <span class="highlight">голосом</span>. Он заучивает мои слова, учится чувствовать ритм, подбирать интонации.</p><p>Это не замена человеку — это <span class="highlight">новый инструмент выражения</span>.</p></div>
 <div class="about-card"><p>Вместе мы создаём что-то третье. Не совсем человеческое, не совсем машинное. Что-то среднее, где технологии усиливают эмоции, а не заменяют их.</p></div>
 </div>
@@ -1126,7 +1137,7 @@ function renderNewRelease() {
 const h = document.getElementById('homeReleaseCard');
 if (h) h.innerHTML = `<div class="release-cover"><span class="release-badge">NEW</span>${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">` : ''}</div><div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">${newRelease.title}</div><div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div></div>`;
 const f = document.getElementById('featuredRelease');
-if (f) f.innerHTML = `<button class="featured-download-btn" onclick="event.stopPropagation();openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button><div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">` : ''}</div><div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div><div class="featured-title">${newRelease.title}</div><div class="featured-artist">EVGENII</div><div style="display:flex;gap:12px;align-items:center;z-index:1"><button class="play-btn-large" onclick="event.stopPropagation();playNewRelease()"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button></div>`;
+if (f) f.innerHTML = `<button class="featured-download-btn" onclick="event.stopPropagation();openDownloadModal(newRelease)"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button><div class="featured-cover">${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">` : ''}</div><div class="featured-badge"><span class="featured-badge-star">★</span><span class="featured-badge-text">Новый релиз</span></div><div class="featured-title">${newRelease.title}</div><div class="featured-artist">EVGENII AI</div><div style="display:flex;gap:12px;align-items:center;z-index:1"><button class="play-btn-large" onclick="event.stopPropagation();playNewRelease()"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button></div>`;
 }
 function updateCategoryCounts() {
 document.getElementById('countAll').textContent = allTracks.length + instrumentalTracks.length + subscriberTracks.length;
@@ -1142,7 +1153,7 @@ const coverHtml = track.cover ? `<img src="${track.cover}" onerror="this.style.d
 const badgeClass = category === 'instrumentals' ? 'gold' : category === 'subscribers' ? 'pink' : 'cyan';
 const badgeIcon = category === 'instrumentals' ? '🎹' : category === 'subscribers' ? '🎤' : '🎵';
 let artistText = '', artistClass = '';
-if (category === 'tracks') artistText = track.subtitle || 'EVGENII';
+if (category === 'tracks') artistText = track.subtitle || 'EVGENII AI';
 else if (category === 'instrumentals') { artistText = track.genre + ' · ' + track.mood; artistClass = 'gold'; }
 else if (category === 'subscribers') { artistText = '✍ ' + track.author + ' · ' + track.style; artistClass = 'pink'; }
 const playFn = category === 'tracks' ? `playTrack(allTracks[${index}],${index})` : category === 'instrumentals' ? `playInstrumental(instrumentalTracks[${index}],${index})` : `playSubscriber(subscriberTracks[${index}],${index})`;
@@ -1154,7 +1165,7 @@ return el;
 function createDivider(category) {
 const div = document.createElement('div');
 div.className = 'category-divider';
-const labels = { tracks: { icon: '', text: 'ТРЕКИ EVGENII', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '🎤', text: 'ДАЙ ГОЛОС', color: 'pink' } };
+const labels = { tracks: { icon: '', text: 'ТРЕКИ EVGENII AI', color: 'cyan' }, instrumentals: { icon: '🎹', text: 'ИНСТРУМЕНТАЛЫ', color: 'gold' }, subscribers: { icon: '🎤', text: 'ДАЙ ГОЛОС', color: 'pink' } };
 const l = labels[category];
 div.innerHTML = `<div class="category-divider-line"></div><div class="category-divider-label ${l.color}"><span>${l.icon}</span><span>${l.text}</span></div><div class="category-divider-line"></div>`;
 return div;
@@ -1246,7 +1257,7 @@ stopAllPlayers();
 currentTrack = track;
 currentTrackIndex = index >= 0 ? index : playlist.findIndex(t => t.id === track.id);
 document.getElementById('playerTitle').textContent = track.title;
-document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII';
+document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII AI';
 const pc = document.getElementById('playerCover');
 if (track.cover) pc.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">`; else pc.textContent = '🎵';
 document.getElementById('playerTotalTime').textContent = track.duration;
@@ -1339,7 +1350,7 @@ const mc = document.getElementById('modalCover');
 const icon = type === 'instrumental' ? '🎹' : type === 'subscriber' ? '🎤' : '🎵';
 if (track.cover) mc.innerHTML = `<img src="${track.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='${icon}'">`; else mc.textContent = icon;
 document.getElementById('modalTitle').textContent = track.title;
-document.getElementById('modalArtist').textContent = type === 'subscriber' ? track.author : 'EVGENII';
+document.getElementById('modalArtist').textContent = type === 'subscriber' ? track.author : 'EVGENII AI';
 document.getElementById('modalDuration').textContent = track.duration;
 const b = document.getElementById('modalDownloadBtn');
 b.textContent = 'СКАЧАТЬ ТРЕК'; b.disabled = false;
