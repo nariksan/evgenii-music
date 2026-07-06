@@ -354,19 +354,256 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .modal-download-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 .modal-cancel-btn { width: 100%; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; }
 .modal-cancel-btn:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--text-primary); }
-.amount-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 15, 0.9); backdrop-filter: blur(8px); z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-.amount-modal-overlay.active { opacity: 1; pointer-events: all; }
-.amount-modal { background: linear-gradient(180deg, #0f1525 0%, #0a0e1a 100%); border: 1px solid var(--card-border); border-radius: 28px; padding: 30px 24px; max-width: 400px; width: 100%; transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-.amount-modal-overlay.active .amount-modal { transform: translateY(0) scale(1); }
-.amount-modal-header { text-align: center; margin-bottom: 24px; }
-.amount-modal-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; background: linear-gradient(135deg, var(--cyan), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.amount-modal-subtitle { color: var(--text-secondary); font-size: 0.9rem; }
-.amount-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
-.amount-btn { padding: 16px; border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 14px; background: rgba(20, 20, 40, 0.6); color: var(--text-primary); font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; }
-.amount-btn:hover { border-color: var(--cyan); background: rgba(0, 229, 255, 0.1); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 229, 255, 0.2); }
-.amount-btn:active { transform: translateY(0); }
-.amount-modal-cancel { width: 100%; padding: 14px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease; }
-.amount-modal-cancel:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--text-primary); }
+
+/* ============================================ */
+/* НОВАЯ КАРТА ПОДДЕРЖКИ ЯНДЕКС PAY */
+/* ============================================ */
+.support-wrapper { max-width: 520px; margin: 0 auto; }
+.support-intro-new { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 24px; text-align: center; }
+.support-intro-new p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
+.support-intro-new .heart-icon { font-size: 2rem; display: block; margin-bottom: 10px; animation: heartBeat 2s ease-in-out infinite; }
+@keyframes heartBeat { 0%, 100% { transform: scale(1); } 25% { transform: scale(1.1); } 50% { transform: scale(1); } 75% { transform: scale(1.05); } }
+
+.yandex-pay-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a0a2e 0%, #0d1b2a 50%, #1a0a2e 100%);
+  border: 1px solid rgba(255, 204, 0, 0.25);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 204, 0, 0.1);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.yandex-pay-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(255, 204, 0, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(176, 0, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+.yandex-pay-card::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+  transform: rotate(0deg);
+  animation: cardShine 6s linear infinite;
+  pointer-events: none;
+}
+@keyframes cardShine {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+.yandex-pay-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(255, 204, 0, 0.2);
+}
+
+.card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  z-index: 2;
+}
+.card-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffcc00, #ff0000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #000;
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+  font-family: 'Orbitron', sans-serif;
+}
+.card-logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.card-logo-label {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+.card-logo-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffcc00;
+  letter-spacing: 1px;
+  text-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+}
+.card-chip {
+  width: 48px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ffd700 0%, #b8860b 50%, #ffd700 100%);
+  position: relative;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(255, 215, 0, 0.3);
+  overflow: hidden;
+}
+.card-chip::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+.card-chip::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.card-number-block {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 8px 0;
+}
+.card-number-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.card-number {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  word-spacing: 8px;
+  user-select: all;
+}
+@media (max-width: 380px) {
+  .card-number { font-size: 1.15rem; letter-spacing: 2px; word-spacing: 5px; }
+  .yandex-pay-card { padding: 20px; }
+}
+
+.card-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+  z-index: 2;
+}
+.card-holder {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.card-holder-label {
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.card-holder-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2px;
+}
+.copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 204, 0, 0.4);
+  border-radius: 12px;
+  background: rgba(255, 204, 0, 0.1);
+  color: #ffcc00;
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  backdrop-filter: blur(10px);
+}
+.copy-btn:hover {
+  background: rgba(255, 204, 0, 0.2);
+  border-color: #ffcc00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 204, 0, 0.3);
+}
+.copy-btn:active { transform: translateY(0); }
+.copy-btn.copied {
+  background: rgba(0, 255, 136, 0.15);
+  border-color: #00ff88;
+  color: #00ff88;
+}
+.copy-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+.support-hint {
+  margin-top: 20px;
+  text-align: center;
+  padding: 16px 20px;
+  background: rgba(20, 25, 40, 0.6);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.support-hint strong { color: #ffcc00; font-weight: 700; }
+.support-hint .hint-icon { font-size: 1.2rem; margin-right: 6px; }
+
+.copy-toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 14px 24px;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.95), rgba(0, 200, 100, 0.95));
+  color: #000;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.copy-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* ОБСУЖДЕНИЯ */
 .discussions-intro { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto; }
 .discussions-intro p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
@@ -425,6 +662,7 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .track-cover { width: 70px; height: 70px; }
 .special-card-top { padding: 20px; }
 .special-cover { width: 100px; height: 100px; }
+.card-number { font-size: 1.8rem; }
 }
 @media (min-width: 1024px) {
 .quick-grid { grid-template-columns: repeat(4, 1fr); }
@@ -597,16 +835,59 @@ body { padding-bottom: 0; }
 </form>
 </div>
 </div>
+
+<!-- ============================================ -->
+<!-- НОВЫЙ БЛОК ПОДДЕРЖКИ С ЯНДЕКС PAY КАРТОЙ -->
+<!-- ============================================ -->
 <div class="page" id="supportPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Поддержать</div></div>
-<div class="support-intro fade-in-up"><p>Твоя поддержка помогает создавать новую музыку. Спасибо, что ты с нами!</p></div>
-<div class="support-cards fade-in-up">
-<div class="support-card coffee" onclick="openSupportLink('coffee')"><div class="support-card-icon">☕</div><div class="support-card-content"><div class="support-card-title">Автору на кофе</div><div class="support-card-desc">Быстрый способ сказать спасибо</div></div><div class="support-card-price">100 ₽</div></div>
-<div class="support-card project" onclick="openSupportLink('project')"><div class="support-card-icon">💜</div><div class="support-card-content"><div class="support-card-title">Поддержать проект</div><div class="support-card-desc">Помочь развитию и новым релизам</div></div><div class="support-card-price">Выбрать сумму</div></div>
-<div class="support-card vtb" onclick="openSupportLink('vtb')"><div class="support-card-icon">🏦</div><div class="support-card-content"><div class="support-card-title">ВТБ Оплата</div><div class="support-card-desc">QR-код для оплаты любой суммы</div></div><div class="support-card-price">Любая</div></div>
+<div class="support-wrapper">
+  <div class="support-intro-new fade-in-up">
+    <span class="heart-icon">💜</span>
+    <p>Твоя поддержка помогает создавать новую музыку. Каждая чашка кофе, каждый рубль — это новый трек, новая эмоция, новая история.</p>
+  </div>
+
+  <div class="yandex-pay-card fade-in-up" onclick="copyCardNumber()">
+    <div class="card-top-row">
+      <div class="card-logo">
+        <div class="card-logo-icon">Я</div>
+        <div class="card-logo-text">
+          <span class="card-logo-label">Pay с помощью</span>
+          <span class="card-logo-name">YANDEX PAY</span>
+        </div>
+      </div>
+      <div class="card-chip"></div>
+    </div>
+
+    <div class="card-number-block">
+      <div class="card-number-label">Номер карты</div>
+      <div class="card-number" id="cardNumber">2204 3110 0721 9604</div>
+    </div>
+
+    <div class="card-bottom-row">
+      <div class="card-holder">
+        <span class="card-holder-label">Получатель</span>
+        <span class="card-holder-name">EVGENII</span>
+      </div>
+      <button class="copy-btn" id="copyBtn" onclick="event.stopPropagation(); copyCardNumber()">
+        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        <span id="copyBtnText">Копировать</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="support-hint fade-in-up">
+    <span class="hint-icon">💡</span>
+    Нажми на карту или кнопку <strong>«Копировать»</strong>, чтобы скопировать номер. Перевести можно через приложение любого банка — <strong>любая сумма</strong>.
+  </div>
 </div>
-<div class="support-note fade-in-up"><p>💳 Удобная оплата картой через ЮMoney. Спасибо за поддержку!</p><div class="qr-section"><div class="qr-code"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC" alt="QR"></div><div class="qr-label">Отсканируй для оплаты 100 ₽</div><div class="qr-hint">Камера телефона → QR код</div></div></div>
 </div>
+
+<div class="copy-toast" id="copyToast">
+  <span>✓</span>
+  <span id="copyToastText">Номер карты скопирован!</span>
+</div>
+
 <div class="sticky-player" id="stickyPlayer">
 <div class="player-top-row"><div class="player-mini-cover" id="playerCover">🎵</div><div class="player-mini-info"><div class="player-mini-title" id="playerTitle">Название трека</div><div class="player-mini-artist" id="playerArtist">Исполнитель</div></div><div class="player-mini-controls"><button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="mini-play-btn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
 <div class="player-progress-wrapper"><span class="player-time-mini" id="playerCurrentTime">0:00</span><div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div><span class="player-time-mini end" id="playerTotalTime">0:00</span></div>
@@ -629,31 +910,6 @@ body { padding-bottom: 0; }
 <div class="modal-warning"><div class="modal-warning-icon">⚠</div><div><div class="modal-warning-title">Внимание!</div><div class="modal-warning-text">Скачивание происходит не сразу.<br>Пожалуйста, подождите несколько секунд.</div></div></div>
 <button class="modal-download-btn" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
 <button class="modal-cancel-btn" onclick="closeDownloadModal()">Отмена</button>
-</div>
-</div>
-<div class="amount-modal-overlay" id="amountModal">
-<div class="amount-modal">
-<div class="amount-modal-header"><div class="amount-modal-title">Выбери сумму</div><div class="amount-modal-subtitle">Поддержи проект EVGENII</div></div>
-<div class="amount-grid">
-<button class="amount-btn" onclick="selectAmount(50)">50 ₽</button>
-<button class="amount-btn" onclick="selectAmount(100)">100 ₽</button>
-<button class="amount-btn" onclick="selectAmount(300)">300 ₽</button>
-<button class="amount-btn" onclick="selectAmount(500)">500 ₽</button>
-<button class="amount-btn" onclick="selectAmount(800)">800 ₽</button>
-<button class="amount-btn" onclick="selectAmount(1000)">1000 ₽</button>
-</div>
-<button class="amount-modal-cancel" onclick="closeAmountModal()">Отмена</button>
-</div>
-</div>
-<div class="modal-overlay" id="vtbModal">
-<div class="modal-content">
-<div class="modal-header">ОПЛАТА ЧЕРЕЗ ВТБ</div>
-<div style="text-align: center; margin-bottom: 20px;">
-<p style="color: var(--text-secondary); margin-bottom: 20px;">Отсканируй QR-код для оплаты любой суммы</p>
-<div class="qr-code" style="width: 250px; height: 250px; margin: 0 auto 16px;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://c2c.cbrpay.ru/BS1I004T83DR0LNI9IFPMAQC4JP5BGCC" alt="QR ВТБ"></div>
-<p style="font-size: 0.85rem; color: var(--text-secondary);">Любая сумма · Мгновенно · Безопасно</p>
-</div>
-<button class="modal-cancel-btn" onclick="closeVTBModal()">Закрыть</button>
 </div>
 </div>
 <audio id="audioPlayer" preload="metadata"></audio>
@@ -863,8 +1119,6 @@ document.getElementById('discussionInput').addEventListener('input', function() 
 document.getElementById('discussionInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendDiscussion(); }
 });
-// Обновляем подпись "прикрепить трек" при смене трека
-const _origPlayTrack = window.playTrack;
 // ============================================
 // RENDER
 // ============================================
@@ -1111,7 +1365,7 @@ function getLoginGreeting(h) { if (h >= 5 && h < 12) return 'Доброе утр
 function updateTime() { const n = new Date(); document.getElementById('headerTime').textContent = `${String(n.getHours()).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')}`; document.getElementById('headerGreeting').textContent = getGreeting(n.getHours()); }
 function escapeHtml(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
 // ============================================
-// NAVIGATION
+// НАВИГАЦИЯ
 // ============================================
 let currentPage = 'homePage';
 function navigateTo(pageId) {
@@ -1239,31 +1493,64 @@ else throw new Error(data.description || 'Ошибка Telegram API');
 finally { voiceSubmitBtn.disabled = false; voiceSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ ТЕКСТ</span>'; }
 });
 }
+
 // ============================================
-// ПОДДЕРЖАТЬ
+// КОПИРОВАНИЕ НОМЕРА КАРТЫ
 // ============================================
-const SUPPORT_LINKS = {
-coffee: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Автору+на+кофе&sum=100&paymentType=AC',
-project50: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=50&paymentType=AC',
-project100: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=100&paymentType=AC',
-project300: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=300&paymentType=AC',
-project500: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=500&paymentType=AC',
-project800: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=800&paymentType=AC',
-project1000: 'https://yoomoney.ru/quickpay/confirm.xml?receiver=4100119560778927&quickpay-form=shop&targets=Поддержка+проекта+EVGENII&sum=1000&paymentType=AC'
-};
-function openSupportLink(type) {
-if (type === 'coffee') { window.open(SUPPORT_LINKS.coffee, '_blank'); }
-else if (type === 'project') { document.getElementById('amountModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-else if (type === 'vtb') { document.getElementById('vtbModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+const CARD_NUMBER = '2204311007219604';
+let copyTimeout = null;
+
+function copyCardNumber() {
+  const btn = document.getElementById('copyBtn');
+  const btnText = document.getElementById('copyBtnText');
+  const toast = document.getElementById('copyToast');
+
+  // Используем современный API
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(CARD_NUMBER).then(() => {
+      showCopySuccess();
+    }).catch(() => {
+      fallbackCopy();
+    });
+  } else {
+    fallbackCopy();
+  }
+
+  function fallbackCopy() {
+    const textarea = document.createElement('textarea');
+    textarea.value = CARD_NUMBER;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      showCopySuccess();
+    } catch (err) {
+      console.error('Не удалось скопировать:', err);
+      alert('Номер карты: ' + CARD_NUMBER);
+    }
+    document.body.removeChild(textarea);
+  }
+
+  function showCopySuccess() {
+    // Меняем кнопку
+    btn.classList.add('copied');
+    btnText.textContent = 'Скопировано!';
+
+    // Показываем тост
+    toast.classList.add('show');
+
+    // Сбрасываем через 2.5 секунды
+    if (copyTimeout) clearTimeout(copyTimeout);
+    copyTimeout = setTimeout(() => {
+      btn.classList.remove('copied');
+      btnText.textContent = 'Копировать';
+      toast.classList.remove('show');
+    }, 2500);
+  }
 }
-function selectAmount(amount) {
-const url = SUPPORT_LINKS['project' + amount];
-if (url) { window.open(url, '_blank'); closeAmountModal(); }
-}
-function closeAmountModal() { document.getElementById('amountModal').classList.remove('active'); document.body.style.overflow = ''; }
-function closeVTBModal() { document.getElementById('vtbModal').classList.remove('active'); document.body.style.overflow = ''; }
-document.getElementById('amountModal').addEventListener('click', function(e) { if (e.target === this) closeAmountModal(); });
-document.getElementById('vtbModal').addEventListener('click', function(e) { if (e.target === this) closeVTBModal(); });
+
 // Инициализация подписи "прикрепить трек"
 updateAttachLabel();
 </script>
