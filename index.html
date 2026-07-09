@@ -26,6 +26,88 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .page { display: none; position: relative; z-index: 1; min-height: 100vh; padding: 20px 16px 120px; max-width: 1200px; margin: 0 auto; }
 .page.active { display: block; animation: fadeIn 0.4s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ЭКРАН ТЕХНИЧЕСКИХ РАБОТ */
+.maintenance-screen {
+position: fixed; top: 0; left: 0;
+width: 100%; height: 100%;
+display: flex; flex-direction: column;
+align-items: center; justify-content: center;
+z-index: 9999;
+background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%);
+padding: 40px 20px;
+text-align: center;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.6s ease;
+}
+.maintenance-screen.active { opacity: 1; pointer-events: all; }
+.maintenance-icon {
+font-size: 5rem;
+margin-bottom: 20px;
+animation: maintenanceFloat 3s ease-in-out infinite;
+filter: drop-shadow(0 0 20px rgba(255, 170, 0, 0.4));
+}
+@keyframes maintenanceFloat {
+0%, 100% { transform: translateY(0) rotate(0deg); }
+50% { transform: translateY(-15px) rotate(5deg); }
+}
+.maintenance-title {
+font-family: 'Orbitron', sans-serif;
+font-size: 2rem;
+font-weight: 900;
+letter-spacing: 4px;
+background: linear-gradient(135deg, var(--gold), var(--red));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 16px;
+text-transform: uppercase;
+}
+.maintenance-subtitle {
+font-size: 1.1rem;
+color: var(--text-secondary);
+line-height: 1.6;
+max-width: 500px;
+margin-bottom: 30px;
+}
+.maintenance-subtitle strong { color: var(--gold); }
+.maintenance-gear {
+position: absolute; opacity: 0.05; font-size: 15rem;
+animation: gearSpin 20s linear infinite;
+}
+.maintenance-gear.g1 { top: 10%; left: 10%; }
+.maintenance-gear.g2 { bottom: 10%; right: 10%; animation-direction: reverse; font-size: 12rem; }
+@keyframes gearSpin { to { transform: rotate(360deg); } }
+.maintenance-admin-trigger {
+margin-top: 20px; padding: 8px 16px;
+border: 1px solid rgba(255, 170, 0, 0.2); border-radius: 8px;
+background: transparent; color: rgba(255, 170, 0, 0.3);
+font-size: 0.7rem; font-family: 'Inter', sans-serif;
+cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; opacity: 0.3;
+}
+.maintenance-admin-trigger:hover {
+opacity: 1; border-color: rgba(255, 170, 0, 0.5);
+color: var(--gold); background: rgba(255, 170, 0, 0.05);
+}
+.maintenance-admin-modal {
+position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px);
+z-index: 10000; display: flex; align-items: center; justify-content: center;
+padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.maintenance-admin-modal.active { opacity: 1; pointer-events: all; }
+.maintenance-admin-content {
+width: 100%; max-width: 400px;
+background: linear-gradient(180deg, #0f1525 0%, #0a0e1a 100%);
+border: 1px solid rgba(255, 170, 0, 0.3); border-radius: 24px;
+padding: 30px 24px 24px; box-shadow: 0 20px 60px rgba(255, 170, 0, 0.2);
+}
+.maintenance-admin-title {
+font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700;
+letter-spacing: 2px; text-align: center; margin-bottom: 20px; color: var(--gold);
+}
+
 .login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%); transition: opacity 0.6s ease, transform 0.6s ease; padding: 40px 20px; }
 .login-screen.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; }
 .login-container { width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; }
@@ -73,49 +155,22 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .release-section { margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto; }
 .release-card { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; transition: transform 0.2s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden; }
 .release-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 229, 255, 0.1); }
-
-/* ВЫДЕЛЕННАЯ КНОПКА КИНО ПРОСТРАНСТВО */
-.tv-card { 
-  display: flex; 
-  align-items: center; 
-  gap: 16px; 
-  padding: 20px; 
-  background: linear-gradient(135deg, rgba(255, 0, 64, 0.1), rgba(176, 0, 255, 0.1)); 
-  border: 2px solid rgba(255, 0, 64, 0.4); 
-  border-radius: 20px; 
-  transition: all 0.3s ease; 
-  cursor: pointer; 
-  position: relative; 
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(255, 0, 64, 0.2);
+.tv-card {
+display: flex; align-items: center; gap: 16px; padding: 20px;
+background: linear-gradient(135deg, rgba(255, 0, 64, 0.1), rgba(176, 0, 255, 0.1));
+border: 2px solid rgba(255, 0, 64, 0.4); border-radius: 20px;
+transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden;
+box-shadow: 0 0 30px rgba(255, 0, 64, 0.2);
 }
 .tv-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 0, 64, 0.2), transparent);
-  transition: left 0.6s ease;
+content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255, 0, 64, 0.2), transparent);
+transition: left 0.6s ease;
 }
-.tv-card:hover::before {
-  left: 100%;
-}
-.tv-card:hover { 
-  transform: translateY(-3px); 
-  box-shadow: 0 0 40px rgba(255, 0, 64, 0.4);
-  border-color: var(--red);
-}
-.tv-card.live { 
-  border-color: var(--red); 
-  box-shadow: 0 0 40px rgba(255, 0, 64, 0.5);
-  animation: liveGlow 2s ease-in-out infinite;
-}
-@keyframes liveGlow {
-  0%, 100% { box-shadow: 0 0 40px rgba(255, 0, 64, 0.5); }
-  50% { box-shadow: 0 0 60px rgba(255, 0, 64, 0.8); }
-}
+.tv-card:hover::before { left: 100%; }
+.tv-card:hover { transform: translateY(-3px); box-shadow: 0 0 40px rgba(255, 0, 64, 0.4); border-color: var(--red); }
+.tv-card.live { border-color: var(--red); box-shadow: 0 0 40px rgba(255, 0, 64, 0.5); animation: liveGlow 2s ease-in-out infinite; }
+@keyframes liveGlow { 0%, 100% { box-shadow: 0 0 40px rgba(255, 0, 64, 0.5); } 50% { box-shadow: 0 0 60px rgba(255, 0, 64, 0.8); } }
 .tv-cover { position: relative; width: 70px; height: 70px; border-radius: 14px; overflow: hidden; flex-shrink: 0; background: linear-gradient(135deg, #2a0a1a, #1a0a2a); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
 .tv-cover img { width: 100%; height: 100%; object-fit: cover; }
 .tv-badge { position: absolute; top: 6px; left: 6px; padding: 3px 6px; border-radius: 6px; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.5px; z-index: 2; display: flex; align-items: center; gap: 4px; }
@@ -128,7 +183,6 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .tv-meta { font-size: 0.85rem; color: var(--text-secondary); }
 .tv-arrow { font-size: 1.5rem; color: var(--red); transition: transform 0.3s ease; flex-shrink: 0; }
 .tv-card:hover .tv-arrow { transform: translateX(6px); }
-
 .release-cover { position: relative; width: 70px; height: 70px; border-radius: 14px; overflow: hidden; flex-shrink: 0; background: linear-gradient(135deg, #1a2a3a, #2a1a3a); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
 .release-cover img { width: 100%; height: 100%; object-fit: cover; }
 .release-badge { position: absolute; top: 6px; left: 6px; background: var(--cyan); color: #000; font-size: 0.55rem; font-weight: 700; padding: 3px 6px; border-radius: 6px; letter-spacing: 0.5px; z-index: 2; }
@@ -141,9 +195,6 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .quick-tile { padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; position: relative; }
 .quick-tile:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0, 229, 255, 0.1); border-color: rgba(0, 229, 255, 0.3); }
 .quick-tile:active { transform: translateY(0); }
-.quick-tile.disabled { opacity: 0.45; cursor: not-allowed; }
-.quick-tile.disabled:hover { transform: none; box-shadow: none; border-color: var(--card-border); }
-.quick-tile.disabled::after { content: 'Скоро'; position: absolute; top: 10px; right: 10px; font-size: 0.6rem; padding: 3px 8px; background: rgba(255, 255, 255, 0.1); border-radius: 6px; color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
 .tile-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 14px; }
 .tile-icon.tracks { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
 .tile-icon.instrumental { background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 0, 229, 0.15)); color: var(--gold); }
@@ -153,7 +204,6 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .tile-icon.about { background: rgba(255, 0, 229, 0.15); color: var(--magenta); }
 .tile-icon.support { background: linear-gradient(135deg, rgba(255, 179, 71, 0.2), rgba(255, 107, 157, 0.15)); color: var(--gold); }
 .tile-icon.discussions { background: rgba(0, 229, 255, 0.15); color: var(--cyan); }
-.tile-icon.cinema { background: linear-gradient(135deg, rgba(255, 0, 64, 0.2), rgba(176, 0, 255, 0.15)); color: var(--red); }
 .tile-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
 .tile-desc { font-size: 0.75rem; color: var(--text-secondary); }
 .logout-btn { display: block; margin: 20px auto 0; padding: 12px 30px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background: transparent; color: var(--text-secondary); font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; }
@@ -419,6 +469,43 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .modal-download-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 .modal-cancel-btn { width: 100%; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; }
 .modal-cancel-btn:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--text-primary); }
+
+/* МОДАЛЬНОЕ ОКНО ВИДЕОПЛЕЕРА */
+.video-modal-overlay {
+position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(10px);
+z-index: 3000; display: flex; align-items: center; justify-content: center;
+padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.video-modal-overlay.active { opacity: 1; pointer-events: all; }
+.video-modal-content {
+width: 100%; max-width: 900px;
+background: linear-gradient(180deg, #0f1525 0%, #0a0e1a 100%);
+border: 1px solid rgba(255, 0, 64, 0.3); border-radius: 24px; padding: 20px;
+transform: translateY(30px) scale(0.95);
+transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+max-height: 95vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(255, 0, 64, 0.2);
+}
+.video-modal-overlay.active .video-modal-content { transform: translateY(0) scale(1); }
+.video-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; gap: 12px; }
+.video-modal-title { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; color: var(--text-primary); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.video-modal-close-x { width: 40px; height: 40px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(20, 20, 40, 0.6); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; flex-shrink: 0; }
+.video-modal-close-x:hover { border-color: var(--red); color: var(--red); background: rgba(255, 0, 64, 0.1); }
+.video-modal-warning { background: linear-gradient(135deg, rgba(255, 170, 0, 0.1), rgba(255, 85, 0, 0.05)); border-left: 3px solid #ffaa00; border-radius: 10px; padding: 12px 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+.video-modal-warning-icon { font-size: 1.3rem; flex-shrink: 0; }
+.video-modal-warning-text { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4; }
+.video-modal-warning-text strong { color: #ffaa00; }
+.video-modal-player { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255, 0, 64, 0.2); margin-bottom: 14px; }
+.video-modal-player iframe { width: 100%; height: 100%; border: none; display: block; }
+.video-modal-loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #0d1b2a, #1a0a2e); gap: 16px; z-index: 2; transition: opacity 0.4s ease; }
+.video-modal-loading.hidden { opacity: 0; pointer-events: none; }
+.video-modal-loading .loading-spinner { width: 50px; height: 50px; border: 3px solid rgba(255, 0, 64, 0.2); border-top-color: var(--red); border-radius: 50%; animation: spin 1s linear infinite; }
+.video-modal-loading-text { font-size: 0.9rem; color: var(--text-secondary); letter-spacing: 1px; }
+.video-modal-footer { display: flex; justify-content: center; }
+.video-modal-close-btn { padding: 14px 40px; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 14px; background: rgba(20, 20, 40, 0.6); color: var(--text-primary); font-size: 0.95rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; text-transform: uppercase; }
+.video-modal-close-btn:hover { border-color: var(--red); color: var(--red); background: rgba(255, 0, 64, 0.1); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 0, 64, 0.2); }
+.video-modal-close-btn:active { transform: translateY(0); }
+
 .support-wrapper { max-width: 520px; margin: 0 auto; }
 .support-intro-new { background: rgba(20, 25, 40, 0.6); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 20px; margin-bottom: 24px; text-align: center; }
 .support-intro-new p { color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
@@ -558,37 +645,29 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .news-date { font-size: 0.8rem; color: var(--text-secondary); margin-left: auto; }
 .news-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
 .news-text { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
-.schedule-list { display: flex; flex-direction: column; gap: 12px; max-width: 800px; margin: 0 auto; }
-.schedule-item { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; transition: all 0.3s ease; }
-.schedule-item:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 0, 64, 0.1); border-color: rgba(255, 0, 64, 0.3); }
-.schedule-item.past { opacity: 0.5; }
-.schedule-date-box { width: 70px; height: 70px; border-radius: 12px; background: linear-gradient(135deg, rgba(255, 0, 64, 0.15), rgba(176, 0, 255, 0.15)); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
-.schedule-day { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--red); }
-.schedule-month { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
-.schedule-info { flex: 1; min-width: 0; }
-.schedule-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
-.schedule-time { font-size: 0.85rem; color: var(--cyan); font-family: 'Orbitron', monospace; }
-.schedule-desc { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
 
-/* КИНО СЕРИАЛЫ */
-.media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-.media-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; }
+/* КИНО СЕРИАЛЫ - КОМПАКТНЫЕ КАРТОЧКИ */
+.media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; max-width: 1200px; margin: 0 auto; }
+.media-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; }
 .media-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(255, 0, 64, 0.15); border-color: rgba(255, 0, 64, 0.3); }
 .media-poster { position: relative; width: 100%; aspect-ratio: 2/3; background: linear-gradient(135deg, #1a2a3a, #2a1a3a); overflow: hidden; }
 .media-poster img { width: 100%; height: 100%; object-fit: cover; }
 .media-play-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
 .media-card:hover .media-play-overlay { opacity: 1; }
-.media-play-icon { width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 0, 64, 0.9); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(255, 0, 64, 0.4); }
-.media-play-icon svg { width: 28px; height: 28px; fill: #fff; margin-left: 4px; }
-.media-info { padding: 16px; }
-.media-title { font-size: 1rem; font-weight: 600; margin-bottom: 6px; line-height: 1.3; }
-.media-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.media-play-icon { width: 48px; height: 48px; border-radius: 50%; background: rgba(255, 0, 64, 0.9); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(255, 0, 64, 0.4); }
+.media-play-icon svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+.media-info { padding: 10px 12px 14px; }
+.media-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.media-watch-btn { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 8px; border: 1px solid rgba(255, 0, 64, 0.3); border-radius: 8px; background: rgba(255, 0, 64, 0.08); color: var(--red); font-size: 0.7rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
+.media-watch-btn:hover { background: rgba(255, 0, 64, 0.15); border-color: var(--red); box-shadow: 0 4px 15px rgba(255, 0, 64, 0.2); }
+.media-watch-btn svg { width: 12px; height: 12px; fill: currentColor; }
 
 .admin-container { max-width: 900px; margin: 0 auto; }
 .admin-section { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; margin-bottom: 24px; }
 .admin-section-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
 .admin-section-title.live { color: var(--red); }
 .admin-section-title.archive { color: var(--cyan); }
+.admin-section-title.maintenance { color: var(--gold); }
 .admin-status { display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(0, 0, 0, 0.3); border-radius: 12px; margin-bottom: 20px; }
 .admin-status-indicator { width: 12px; height: 12px; border-radius: 50%; }
 .admin-status-indicator.live { background: var(--red); box-shadow: 0 0 10px var(--red); animation: dotBlink 1s ease-in-out infinite; }
@@ -604,6 +683,8 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .admin-btn.danger:hover { background: rgba(255, 80, 80, 0.25); border-color: #ff6b6b; }
 .admin-btn.secondary { background: rgba(0, 229, 255, 0.15); border: 1px solid rgba(0, 229, 255, 0.3); color: var(--cyan); }
 .admin-btn.secondary:hover { background: rgba(0, 229, 255, 0.25); border-color: var(--cyan); }
+.admin-btn.warning { background: linear-gradient(135deg, var(--gold), #ff8800); color: #000; box-shadow: 0 6px 20px rgba(255, 170, 0, 0.3); }
+.admin-btn.warning:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 170, 0, 0.4); }
 .admin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 .admin-video-list { display: flex; flex-direction: column; gap: 12px; }
 .admin-video-item { display: flex; align-items: center; gap: 16px; padding: 16px; background: rgba(0, 0, 0, 0.3); border-radius: 12px; border: 1px solid var(--card-border); transition: all 0.3s ease; }
@@ -619,6 +700,23 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .admin-empty { text-align: center; padding: 40px 20px; color: var(--text-secondary); font-size: 0.9rem; }
 .admin-login-form { max-width: 400px; margin: 0 auto; text-align: center; }
 .admin-login-form h3 { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 20px; color: var(--cyan); }
+
+/* ПЕРЕКЛЮЧАТЕЛИ ТЕХ РАБОТ */
+.maintenance-toggle { display: flex; align-items: center; justify-content: space-between; padding: 16px; background: rgba(0, 0, 0, 0.3); border-radius: 12px; margin-bottom: 16px; border: 1px solid var(--card-border); }
+.maintenance-toggle-info { flex: 1; }
+.maintenance-toggle-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+.maintenance-toggle-desc { font-size: 0.8rem; color: var(--text-secondary); }
+.maintenance-switch { position: relative; width: 60px; height: 32px; background: rgba(255, 255, 255, 0.1); border-radius: 16px; cursor: pointer; transition: all 0.3s ease; flex-shrink: 0; margin-left: 16px; }
+.maintenance-switch.active { background: linear-gradient(135deg, var(--gold), #ff8800); box-shadow: 0 0 15px rgba(255, 170, 0, 0.4); }
+.maintenance-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; background: #fff; border-radius: 50%; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+.maintenance-switch.active::after { left: 31px; }
+
+/* БЛОК ТЕХ РАБОТ ДЛЯ КИНО */
+.cinema-maintenance-block { background: linear-gradient(135deg, rgba(255, 170, 0, 0.08), rgba(255, 85, 0, 0.05)); border: 2px solid rgba(255, 170, 0, 0.3); border-radius: 20px; padding: 40px 30px; text-align: center; margin: 20px 0; }
+.cinema-maintenance-icon { font-size: 4rem; margin-bottom: 20px; animation: maintenanceFloat 3s ease-in-out infinite; }
+.cinema-maintenance-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--gold); margin-bottom: 12px; letter-spacing: 2px; }
+.cinema-maintenance-text { color: var(--text-secondary); font-size: 1rem; line-height: 1.6; }
+
 .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease forwards; }
 @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 .page.active .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
@@ -639,11 +737,14 @@ body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(
 .special-cover { width: 100px; height: 100px; }
 .card-number { font-size: 1.8rem; }
 .ai-badge { font-size: 1.1rem; padding: 5px 16px; }
+.media-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+.media-title { font-size: 0.9rem; }
 }
 @media (min-width: 1024px) {
 .quick-grid { grid-template-columns: repeat(4, 1fr); }
 body { padding-bottom: 0; }
 .floating-player, .sticky-player { max-width: 500px; }
+.media-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
 }
 @media (max-width: 380px) {
 .banner-title { font-size: 1.6rem; letter-spacing: 4px; }
@@ -658,6 +759,12 @@ body { padding-bottom: 0; }
 .yandex-pay-card { padding: 20px; }
 .archive-grid { grid-template-columns: 1fr; }
 .admin-form-row { grid-template-columns: 1fr; }
+.media-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.media-info { padding: 8px 10px 12px; }
+.media-title { font-size: 0.78rem; }
+.media-watch-btn { padding: 6px; font-size: 0.65rem; }
+.video-modal-content { padding: 14px; }
+.video-modal-title { font-size: 0.95rem; }
 }
 </style>
 </head>
@@ -667,6 +774,37 @@ body { padding-bottom: 0; }
 <div class="bg-orb bg-orb-2"></div>
 <div class="bg-orb bg-orb-3"></div>
 </div>
+
+<!-- ЭКРАН ТЕХНИЧЕСКИХ РАБОТ (ВСЕГО САЙТА) -->
+<div class="maintenance-screen" id="siteMaintenanceScreen">
+<div class="maintenance-gear g1">⚙</div>
+<div class="maintenance-gear g2">⚙</div>
+<div class="maintenance-icon">🔧</div>
+<div class="maintenance-title">Технические работы</div>
+<div class="maintenance-subtitle">
+Извините, сайт временно недоступен.<br>
+Мы работаем над улучшением.<br><br>
+<strong>Скоро всё заработает!</strong>
+</div>
+<button class="maintenance-admin-trigger" onclick="showMaintenanceAdminModal()">⚙️</button>
+</div>
+
+<!-- МОДАЛКА ВХОДА АДМИНА С ЭКРАНА ТЕХ РАБОТ -->
+<div class="maintenance-admin-modal" id="maintenanceAdminModal">
+<div class="maintenance-admin-content">
+<div class="maintenance-admin-title">🔐 ВХОД ДЛЯ АДМИНА</div>
+<div class="form-group">
+<label class="form-label">Пароль администратора</label>
+<input type="password" class="form-input" id="maintenanceAdminPassword" placeholder="Введите пароль" autocomplete="off">
+</div>
+<div style="display:flex;gap:12px">
+<button class="admin-btn warning" onclick="maintenanceAdminLogin()" style="flex:1">ВОЙТИ</button>
+<button class="admin-btn danger" onclick="closeMaintenanceAdminModal()" style="flex:1">ОТМЕНА</button>
+</div>
+<div class="form-status" id="maintenanceAdminStatus"></div>
+</div>
+</div>
+
 <div class="login-screen" id="loginScreen">
 <div class="login-container">
 <div class="login-banner">
@@ -696,10 +834,6 @@ body { padding-bottom: 0; }
 <div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div>
 </div>
 </div>
-
-<!-- ============================================ -->
-<!-- 1. КИНО ПРОСТРАНСТВО (ВЫДЕЛЕННАЯ КНОПКА) -->
-<!-- ============================================ -->
 <div class="release-section fade-in-up">
 <div class="section-title">КИНОПРОСТРАНСТВО</div>
 <div class="tv-card" id="homeTvCard" onclick="navigateTo('cinemaPage')">
@@ -714,18 +848,10 @@ body { padding-bottom: 0; }
 <div class="tv-arrow">→</div>
 </div>
 </div>
-
-<!-- ============================================ -->
-<!-- 2. НОВЫЙ РЕЛИЗ -->
-<!-- ============================================ -->
 <div class="release-section fade-in-up">
 <div class="section-title">НОВЫЙ РЕЛИЗ</div>
 <div class="release-card" id="homeReleaseCard" onclick="playNewRelease()"></div>
 </div>
-
-<!-- ============================================ -->
-<!-- 3. БЫСТРЫЙ ДОСТУП (БЕЗ КИНО ПРОСТРАНСТВА) -->
-<!-- ============================================ -->
 <div class="quick-access-section fade-in-up">
 <div class="section-title">БЫСТРЫЙ ДОСТУП</div>
 <div class="quick-grid">
@@ -742,14 +868,8 @@ body { padding-bottom: 0; }
 <button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
 <button class="admin-trigger" onclick="showAdminLogin()">⚙️</button>
 </div>
-
-<!-- ============================================ -->
-<!-- КИНО ПРОСТРАНСТВО - ПОЛНАЯ СТРАНИЦА -->
-<!-- ============================================ -->
 <div class="page" id="cinemaPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title"><span>🎬 КИНО ПРОСТРАНСТВО</span></div></div>
-
-<!-- Баннер Кино (БЕЗ БЕЛОЙ ПОЛОСКИ) -->
 <div class="banner fade-in-up" style="background: linear-gradient(135deg, #1a0a2e, #2a0a1a, #1a0a2e); border-color: rgba(255, 0, 64, 0.3);">
 <div class="banner-content" style="background: radial-gradient(ellipse at 30% 50%, rgba(255, 0, 64, 0.2) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(176, 0, 255, 0.2) 0%, transparent 60%);">
 <div class="banner-geometric"><div class="geo-shape-banner" style="border-color: var(--red);"></div><div class="geo-shape-banner" style="border-color: var(--magenta); animation-delay: -2s;"></div><div class="geo-shape-banner" style="border-color: var(--purple); animation-delay: -4s;"></div><div class="geo-shape-banner" style="border-color: var(--red); animation-delay: -1s;"></div></div>
@@ -759,14 +879,23 @@ body { padding-bottom: 0; }
 </div>
 </div>
 
-<!-- Навигация внутри Кино (НОВЫЙ ПОРЯДОК) -->
-<div class="cinema-nav fade-in-up">
+<!-- БЛОК ТЕХ РАБОТ ДЛЯ КИНО -->
+<div class="cinema-maintenance-block fade-in-up" id="cinemaMaintenanceBlock" style="display:none">
+<div class="cinema-maintenance-icon">🔧</div>
+<div class="cinema-maintenance-title">Технические работы</div>
+<div class="cinema-maintenance-text">
+Извините, Кино Пространство временно недоступно.<br>
+Мы работаем над улучшением. Скоро всё заработает!
+</div>
+</div>
+
+<!-- Навигация внутри Кино -->
+<div class="cinema-nav fade-in-up" id="cinemaNav">
 <button class="cinema-nav-btn active" onclick="switchCinemaSection('live', this)"><span class="nav-icon">🎥</span><span>Прямой эфир</span></button>
 <button class="cinema-nav-btn" onclick="switchCinemaSection('media', this)"><span class="nav-icon">🎬</span><span>Кино сериалы</span></button>
 <button class="cinema-nav-btn" onclick="switchCinemaSection('archive', this)"><span class="nav-icon">📼</span><span>Архив трансляций</span></button>
 <button class="cinema-nav-btn" onclick="switchCinemaSection('news', this)"><span class="nav-icon">📰</span><span>Новости</span></button>
 </div>
-
 <!-- РАЗДЕЛ: ПРЯМОЙ ЭФИР -->
 <div class="cinema-section active" id="cinemaLive">
 <div class="intro-block red fade-in-up"><div class="intro-title red">ПРЯМОЙ ЭФИР</div><div class="intro-text">Смотри премьеры и кинопоказы в реальном времени. Кино, которое объединяет.</div></div>
@@ -790,23 +919,18 @@ body { padding-bottom: 0; }
 </div>
 </div>
 </div>
-
 <!-- РАЗДЕЛ: КИНО СЕРИАЛЫ -->
 <div class="cinema-section" id="cinemaMedia">
 <div class="intro-block red fade-in-up"><div class="intro-title red">КИНО · СЕРИАЛЫ · МУЛЬТИКИ</div><div class="intro-text">Смотри лучшие фильмы, сериалы и мультфильмы. Выбирай категорию и наслаждайся просмотром!</div></div>
-
-<!-- Подкатегории -->
 <div class="category-tabs fade-in-up" id="mediaCategoryTabs">
 <button class="category-tab active" data-category="movies" onclick="switchMediaCategory('movies', this)"><span class="tab-icon">🎬</span><span>Кино</span></button>
 <button class="category-tab" data-category="series" onclick="switchMediaCategory('series', this)"><span class="tab-icon">📺</span><span>Сериалы</span></button>
 <button class="category-tab" data-category="cartoons" onclick="switchMediaCategory('cartoons', this)"><span class="tab-icon">🎨</span><span>Мультики</span></button>
 </div>
-
 <div class="media-grid fade-in-up" id="mediaGrid">
 <div class="tv-empty-state"><div class="loading-spinner"></div></div>
 </div>
 </div>
-
 <!-- РАЗДЕЛ: АРХИВ ТРАНСЛЯЦИЙ -->
 <div class="cinema-section" id="cinemaArchive">
 <div class="intro-block red fade-in-up"><div class="intro-title red">АРХИВ ТРАНСЛЯЦИЙ</div><div class="intro-text">Пересматривай лучшие фильмы и трансляции из нашего архива.</div></div>
@@ -819,12 +943,35 @@ body { padding-bottom: 0; }
 </div>
 </div>
 </div>
-
 <!-- РАЗДЕЛ: НОВОСТИ -->
 <div class="cinema-section" id="cinemaNews">
 <div class="intro-block red fade-in-up"><div class="intro-title red">НОВОСТИ КИНО</div><div class="intro-text">Анонсы премьер, обновления и важные события Кино Пространства.</div></div>
 <div class="news-list fade-in-up" id="newsList">
 <div class="tv-empty-state"><div class="loading-spinner"></div></div>
+</div>
+</div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ВИДЕОПЛЕЕРА -->
+<div class="video-modal-overlay" id="videoModalOverlay">
+<div class="video-modal-content">
+<div class="video-modal-header">
+<div class="video-modal-title" id="videoModalTitle">Название фильма</div>
+<button class="video-modal-close-x" onclick="closeVideoModal()">✕</button>
+</div>
+<div class="video-modal-warning">
+<div class="video-modal-warning-icon">⏳</div>
+<div class="video-modal-warning-text"><strong>Внимание!</strong> Видео загружается не сразу. Пожалуйста, подождите несколько секунд.</div>
+</div>
+<div class="video-modal-player">
+<div class="video-modal-loading" id="videoModalLoading">
+<div class="loading-spinner"></div>
+<div class="video-modal-loading-text">Загрузка видео...</div>
+</div>
+<div id="videoModalContainer"></div>
+</div>
+<div class="video-modal-footer">
+<button class="video-modal-close-btn" onclick="closeVideoModal()">Закрыть</button>
 </div>
 </div>
 </div>
@@ -845,6 +992,34 @@ body { padding-bottom: 0; }
 </div>
 </div>
 <div id="adminContent" style="display:none">
+
+<!-- ТЕХНИЧЕСКИЕ РАБОТЫ -->
+<div class="admin-section fade-in-up">
+<div class="admin-section-title maintenance">🔧 ТЕХНИЧЕСКИЕ РАБОТЫ</div>
+<div class="maintenance-toggle">
+<div class="maintenance-toggle-info">
+<div class="maintenance-toggle-title">🎬 Для Кино Пространства</div>
+<div class="maintenance-toggle-desc">Включить режим тех работ только для раздела Кино</div>
+</div>
+<div class="maintenance-switch" id="cinemaMaintenanceSwitch" onclick="toggleCinemaMaintenance()"></div>
+</div>
+<div class="maintenance-toggle">
+<div class="maintenance-toggle-info">
+<div class="maintenance-toggle-title">🌐 Для всего сайта</div>
+<div class="maintenance-toggle-desc">Закрыть весь сайт для пользователей (админ сможет войти)</div>
+</div>
+<div class="maintenance-switch" id="siteMaintenanceSwitch" onclick="toggleSiteMaintenance()"></div>
+</div>
+<div style="padding:12px;background:rgba(255,170,0,0.05);border-radius:10px;border-left:3px solid var(--gold);margin-top:12px">
+<div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.5">
+<strong style="color:var(--gold)">💡 Подсказка:</strong><br>
+• При включении тех работ для Кино — в разделе Кино будет показано сообщение<br>
+• При включении тех работ для сайта — весь сайт закроется, но админ сможет войти через скрытую кнопку ⚙️ на экране тех работ<br>
+• В поле Video ID можно вставить: только ID (например 456239089) или полный формат (710696925_456239089)
+</div>
+</div>
+</div>
+
 <div class="admin-section fade-in-up">
 <div class="admin-section-title live">🔴 ТЕКУЩИЙ КИНОПОКАЗ</div>
 <div class="admin-status" id="adminStreamStatus">
@@ -856,7 +1031,7 @@ body { padding-bottom: 0; }
 <div class="admin-form-row">
 <div class="form-group">
 <label class="form-label">Video ID (из URL ВК)</label>
-<input type="text" class="form-input" id="adminVideoId" placeholder="Например: 456239012">
+<input type="text" class="form-input" id="adminVideoId" placeholder="Например: 456239012 или 710696925_456239089">
 </div>
 <div class="form-group">
 <label class="form-label">Название кинопоказа</label>
@@ -877,7 +1052,6 @@ body { padding-bottom: 0; }
 </div>
 </div>
 </div>
-
 <!-- АДМИН: КИНО СЕРИАЛЫ -->
 <div class="admin-section fade-in-up">
 <div class="admin-section-title archive" style="color: var(--gold);">🎬 КИНО СЕРИАЛЫ</div>
@@ -905,7 +1079,7 @@ body { padding-bottom: 0; }
 </div>
 <div class="form-group">
 <label class="form-label">Ссылка на видео</label>
-<input type="text" class="form-input" id="adminMediaVideo" placeholder="https://youtube.com/... или другая ссылка">
+<input type="text" class="form-input" id="adminMediaVideo" placeholder="https://youtube.com/... или vkvideo.ru/video...">
 </div>
 <div class="form-group" id="adminSeriesOrderGroup" style="display:none">
 <label class="form-label">Порядок сортировки (для сериалов)</label>
@@ -926,7 +1100,6 @@ body { padding-bottom: 0; }
 </div>
 </div>
 </div>
-
 <div class="admin-section fade-in-up">
 <div class="admin-section-title archive">📼 АРХИВ ТРАНСЛЯЦИЙ</div>
 <div id="adminArchiveForm" style="display:none">
@@ -934,7 +1107,7 @@ body { padding-bottom: 0; }
 <div class="admin-form-row">
 <div class="form-group">
 <label class="form-label">Video ID</label>
-<input type="text" class="form-input" id="adminArchiveVideoId" placeholder="456239012">
+<input type="text" class="form-input" id="adminArchiveVideoId" placeholder="456239012 или 710696925_456239089">
 </div>
 <div class="form-group">
 <label class="form-label">Название</label>
@@ -966,7 +1139,6 @@ body { padding-bottom: 0; }
 </div>
 </div>
 </div>
-
 <div class="admin-section fade-in-up">
 <div class="admin-section-title archive" style="color: var(--gold);">📰 НОВОСТИ</div>
 <div id="adminNewsForm" style="display:none">
@@ -1011,7 +1183,6 @@ body { padding-bottom: 0; }
 </div>
 </div>
 </div>
-
 <div class="page" id="tracksPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Все треки</div></div>
 <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
@@ -1116,45 +1287,45 @@ body { padding-bottom: 0; }
 <div class="page" id="supportPage">
 <div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Поддержать</div></div>
 <div class="support-wrapper">
-  <div class="support-intro-new fade-in-up">
-    <span class="heart-icon">💜</span>
-    <p>Твоя поддержка помогает создавать новую музыку. Каждая чашка кофе, каждый рубль — это новый трек, новая эмоция, новая история.</p>
-  </div>
-  <div class="yandex-pay-card fade-in-up" onclick="copyCardNumber()">
-    <div class="card-top-row">
-      <div class="card-logo">
-        <div class="card-logo-icon">Я</div>
-        <div class="card-logo-text">
-          <span class="card-logo-label">Pay с помощью</span>
-          <span class="card-logo-name">YANDEX PAY</span>
-        </div>
-      </div>
-      <div class="card-chip"></div>
-    </div>
-    <div class="card-number-block">
-      <div class="card-number-label">Номер карты</div>
-      <div class="card-number" id="cardNumber">2204 3110 0721 9604</div>
-    </div>
-    <div class="card-bottom-row">
-      <div class="card-holder">
-        <span class="card-holder-label">Получатель</span>
-        <span class="card-holder-name">EVGENII</span>
-      </div>
-      <button class="copy-btn" id="copyBtn" onclick="event.stopPropagation(); copyCardNumber()">
-        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-        <span id="copyBtnText">Копировать</span>
-      </button>
-    </div>
-  </div>
-  <div class="support-hint fade-in-up">
-    <span class="hint-icon">💡</span>
-    Нажми на карту или кнопку <strong>«Копировать»</strong>, чтобы скопировать номер. Перевести можно через приложение любого банка — <strong>любая сумма</strong>.
-  </div>
+<div class="support-intro-new fade-in-up">
+<span class="heart-icon">💜</span>
+<p>Твоя поддержка помогает создавать новую музыку. Каждая чашка кофе, каждый рубль — это новый трек, новая эмоция, новая история.</p>
+</div>
+<div class="yandex-pay-card fade-in-up" onclick="copyCardNumber()">
+<div class="card-top-row">
+<div class="card-logo">
+<div class="card-logo-icon">Я</div>
+<div class="card-logo-text">
+<span class="card-logo-label">Pay с помощью</span>
+<span class="card-logo-name">YANDEX PAY</span>
+</div>
+</div>
+<div class="card-chip"></div>
+</div>
+<div class="card-number-block">
+<div class="card-number-label">Номер карты</div>
+<div class="card-number" id="cardNumber">2204 3110 0721 9604</div>
+</div>
+<div class="card-bottom-row">
+<div class="card-holder">
+<span class="card-holder-label">Получатель</span>
+<span class="card-holder-name">EVGENII</span>
+</div>
+<button class="copy-btn" id="copyBtn" onclick="event.stopPropagation(); copyCardNumber()">
+<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+<span id="copyBtnText">Копировать</span>
+</button>
+</div>
+</div>
+<div class="support-hint fade-in-up">
+<span class="hint-icon">💡</span>
+Нажми на карту или кнопку <strong>«Копировать»</strong>, чтобы скопировать номер. Перевести можно через приложение любого банка — <strong>любая сумма</strong>.
+</div>
 </div>
 </div>
 <div class="copy-toast" id="copyToast">
-  <span>✓</span>
-  <span id="copyToastText">Номер карты скопирован!</span>
+<span>✓</span>
+<span id="copyToastText">Номер карты скопирован!</span>
 </div>
 <div class="sticky-player" id="stickyPlayer">
 <div class="player-top-row"><div class="player-mini-cover" id="playerCover">🎵</div><div class="player-mini-info"><div class="player-mini-title" id="playerTitle">Название трека</div><div class="player-mini-artist" id="playerArtist">Исполнитель</div></div><div class="player-mini-controls"><button class="mini-skip-btn" onclick="skipBackward()"><svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button><button class="mini-play-btn" onclick="togglePlay()"><svg viewBox="0 0 24 24" id="miniPlayIcon"><polygon points="5,3 19,12 5,21"/></svg></button><button class="mini-skip-btn" onclick="skipForward()"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button></div></div>
@@ -1202,12 +1373,146 @@ const TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
 const TELEGRAM_CHAT_ID = '5129595944';
 const VK_GROUP_ID = '-228312316';
 const ADMIN_PASSWORD = 'evgenii2024';
-
 let currentStream = null;
 let streamUnsubscribe = null;
 let isAdminLoggedIn = false;
 let currentCinemaSection = 'live';
 let currentMediaCategory = 'movies';
+
+// ТЕХНИЧЕСКИЕ РАБОТЫ
+let maintenanceUnsubscribe = null;
+let cinemaMaintenance = false;
+let siteMaintenance = false;
+
+function loadMaintenanceSettings() {
+if (!db) return;
+if (maintenanceUnsubscribe) maintenanceUnsubscribe();
+maintenanceUnsubscribe = db.collection('settings').doc('maintenance')
+.onSnapshot(doc => {
+if (doc.exists) {
+const data = doc.data();
+cinemaMaintenance = data.cinemaMode || false;
+siteMaintenance = data.siteMode || false;
+} else {
+cinemaMaintenance = false;
+siteMaintenance = false;
+}
+updateMaintenanceUI();
+}, error => {
+console.error('Ошибка загрузки настроек тех работ:', error);
+});
+}
+
+function updateMaintenanceUI() {
+const cinemaSwitch = document.getElementById('cinemaMaintenanceSwitch');
+const siteSwitch = document.getElementById('siteMaintenanceSwitch');
+if (cinemaSwitch) cinemaSwitch.classList.toggle('active', cinemaMaintenance);
+if (siteSwitch) siteSwitch.classList.toggle('active', siteMaintenance);
+
+const cinemaBlock = document.getElementById('cinemaMaintenanceBlock');
+const cinemaNav = document.getElementById('cinemaNav');
+const cinemaSections = document.querySelectorAll('.cinema-section');
+if (cinemaBlock) {
+cinemaBlock.style.display = cinemaMaintenance ? 'block' : 'none';
+}
+if (cinemaNav) {
+cinemaNav.style.display = cinemaMaintenance ? 'none' : 'flex';
+}
+if (cinemaMaintenance) {
+cinemaSections.forEach(s => s.style.display = 'none');
+} else {
+cinemaSections.forEach(s => {
+if (s.id === 'cinema' + currentCinemaSection.charAt(0).toUpperCase() + currentCinemaSection.slice(1)) {
+s.style.display = 'block';
+s.classList.add('active');
+} else {
+s.style.display = 'none';
+s.classList.remove('active');
+}
+});
+}
+
+const siteScreen = document.getElementById('siteMaintenanceScreen');
+if (siteScreen) {
+if (siteMaintenance && !isAdminLoggedIn) {
+siteScreen.classList.add('active');
+} else {
+siteScreen.classList.remove('active');
+}
+}
+}
+
+async function toggleCinemaMaintenance() {
+if (!db) return;
+const newValue = !cinemaMaintenance;
+try {
+await db.collection('settings').doc('maintenance').set({
+cinemaMode: newValue,
+siteMode: siteMaintenance
+}, { merge: true });
+cinemaMaintenance = newValue;
+updateMaintenanceUI();
+alert(newValue ? '✅ Тех работы для Кино ВКЛЮЧЕНЫ' : '✅ Тех работы для Кино ВЫКЛЮЧЕНЫ');
+} catch (error) {
+alert('Ошибка: ' + error.message);
+}
+}
+
+async function toggleSiteMaintenance() {
+if (!db) return;
+const newValue = !siteMaintenance;
+if (newValue) {
+if (!confirm('ВНИМАНИЕ!\n\nЭто закроет весь сайт для всех пользователей.\nАдмин сможет войти через скрытую кнопку ⚙️ на экране тех работ.\n\nПродолжить?')) return;
+}
+try {
+await db.collection('settings').doc('maintenance').set({
+cinemaMode: cinemaMaintenance,
+siteMode: newValue
+}, { merge: true });
+siteMaintenance = newValue;
+updateMaintenanceUI();
+alert(newValue ? '✅ Тех работы для всего сайта ВКЛЮЧЕНЫ' : '✅ Тех работы для всего сайта ВЫКЛЮЧЕНЫ');
+} catch (error) {
+alert('Ошибка: ' + error.message);
+}
+}
+
+function showMaintenanceAdminModal() {
+document.getElementById('maintenanceAdminModal').classList.add('active');
+document.getElementById('maintenanceAdminPassword').value = '';
+document.getElementById('maintenanceAdminStatus').textContent = '';
+}
+
+function closeMaintenanceAdminModal() {
+document.getElementById('maintenanceAdminModal').classList.remove('active');
+}
+
+function maintenanceAdminLogin() {
+const password = document.getElementById('maintenanceAdminPassword').value;
+const status = document.getElementById('maintenanceAdminStatus');
+if (password === ADMIN_PASSWORD) {
+isAdminLoggedIn = true;
+status.textContent = '✅ Успешный вход!';
+status.className = 'form-status success';
+setTimeout(() => {
+closeMaintenanceAdminModal();
+updateMaintenanceUI();
+const savedName = localStorage.getItem('evgenii_user') || 'Админ';
+showMainScreen(savedName);
+navigateTo('adminPage');
+document.getElementById('adminLoginSection').style.display = 'none';
+document.getElementById('adminContent').style.display = 'block';
+loadAdminData();
+}, 500);
+} else {
+status.textContent = '❌ Неверный пароль';
+status.className = 'form-status error';
+}
+}
+
+document.getElementById('maintenanceAdminModal').addEventListener('click', function(e) {
+if (e.target === this) closeMaintenanceAdminModal();
+});
 
 const newRelease = { id: 'new-release', title: "Последний трек.", subtitle: "New Release", file: "tracks/song15.mp3", duration: "4:18", cover: "cover/cover.png" };
 const allTracks = [
@@ -1252,673 +1557,735 @@ const subscriberTracks = [
 ];
 let currentCategory = 'all';
 
-// ============================================
 // КИНО ПРОСТРАНСТВО
-// ============================================
 function switchCinemaSection(section, btn) {
-  currentCinemaSection = section;
-  document.querySelectorAll('.cinema-nav-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  document.querySelectorAll('.cinema-section').forEach(s => s.classList.remove('active'));
-  document.getElementById('cinema' + section.charAt(0).toUpperCase() + section.slice(1)).classList.add('active');
-  if (section === 'live') { loadCurrentStream(); }
-  if (section === 'archive') { loadArchive(); }
-  if (section === 'news') { loadNews(); }
-  if (section === 'media') { loadMedia(); }
+if (cinemaMaintenance) return;
+currentCinemaSection = section;
+document.querySelectorAll('.cinema-nav-btn').forEach(b => b.classList.remove('active'));
+if (btn) btn.classList.add('active');
+
+document.querySelectorAll('.cinema-section').forEach(s => {
+s.classList.remove('active');
+s.style.display = 'none';
+});
+
+const targetId = 'cinema' + section.charAt(0).toUpperCase() + section.slice(1);
+const targetEl = document.getElementById(targetId);
+if (targetEl) {
+targetEl.classList.add('active');
+targetEl.style.display = 'block';
 }
 
+if (section === 'live') { loadCurrentStream(); }
+if (section === 'archive') { loadArchive(); }
+if (section === 'news') { loadNews(); }
+if (section === 'media') { loadMedia(); }
+}
 function switchMediaCategory(category, btn) {
-  currentMediaCategory = category;
-  document.querySelectorAll('#mediaCategoryTabs .category-tab').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  loadMedia();
+currentMediaCategory = category;
+document.querySelectorAll('#mediaCategoryTabs .category-tab').forEach(b => b.classList.remove('active'));
+if (btn) btn.classList.add('active');
+loadMedia();
 }
-
 function initCinemaPage() {
-  loadCurrentStream();
+loadCurrentStream();
 }
-
 function loadCurrentStream() {
-  if (!db) return;
-  if (streamUnsubscribe) streamUnsubscribe();
-  streamUnsubscribe = db.collection('streams').doc('current')
-    .onSnapshot(doc => {
-      if (doc.exists) {
-        const data = doc.data();
-        currentStream = data;
-        updatePlayer(data);
-        updateHomeTvCard(data);
-        updateAdminStreamStatus(data);
-      } else {
-        currentStream = null;
-        showOfflineState();
-        updateHomeTvCard(null);
-        updateAdminStreamStatus(null);
-      }
-    }, error => {
-      console.error(error);
-      showOfflineState();
-      updateHomeTvCard(null);
-      updateAdminStreamStatus(null);
-    });
+if (!db) return;
+if (streamUnsubscribe) streamUnsubscribe();
+streamUnsubscribe = db.collection('streams').doc('current')
+.onSnapshot(doc => {
+if (doc.exists) {
+const data = doc.data();
+currentStream = data;
+updatePlayer(data);
+updateHomeTvCard(data);
+updateAdminStreamStatus(data);
+} else {
+currentStream = null;
+showOfflineState();
+updateHomeTvCard(null);
+updateAdminStreamStatus(null);
+}
+}, error => {
+console.error(error);
+showOfflineState();
+updateHomeTvCard(null);
+updateAdminStreamStatus(null);
+});
+}
+function updateHomeTvCard(stream) {
+const card = document.getElementById('homeTvCard');
+const badge = document.getElementById('homeTvBadge');
+const meta = document.getElementById('homeTvMeta');
+const cover = document.getElementById('homeTvCover');
+if (!card) return;
+if (stream && stream.isLive && stream.videoId) {
+card.classList.add('live');
+badge.className = 'tv-badge live';
+badge.innerHTML = '<span class="tv-badge-dot"></span>LIVE';
+meta.textContent = stream.title || 'Идёт кинопоказ';
+if (stream.thumbnail) {
+cover.innerHTML = `<img src="${stream.thumbnail}" onerror="this.style.display='none';this.parentElement.innerHTML='🎬'">`;
+} else {
+cover.innerHTML = '🎬';
+}
+} else {
+card.classList.remove('live');
+badge.className = 'tv-badge offline';
+badge.innerHTML = '<span class="tv-badge-dot"></span>OFFLINE';
+meta.textContent = 'Премьеры · Кинопоказы · Архив';
+cover.innerHTML = '🎬';
+}
 }
 
-function updateHomeTvCard(stream) {
-  const card = document.getElementById('homeTvCard');
-  const badge = document.getElementById('homeTvBadge');
-  const meta = document.getElementById('homeTvMeta');
-  const cover = document.getElementById('homeTvCover');
-  if (!card) return;
-  if (stream && stream.isLive && stream.videoId) {
-    card.classList.add('live');
-    badge.className = 'tv-badge live';
-    badge.innerHTML = '<span class="tv-badge-dot"></span>LIVE';
-    meta.textContent = stream.title || 'Идёт кинопоказ';
-    if (stream.thumbnail) {
-      cover.innerHTML = `<img src="${stream.thumbnail}" onerror="this.style.display='none';this.parentElement.innerHTML='🎬'">`;
-    } else {
-      cover.innerHTML = '🎬';
-    }
-  } else {
-    card.classList.remove('live');
-    badge.className = 'tv-badge offline';
-    badge.innerHTML = '<span class="tv-badge-dot"></span>OFFLINE';
-    meta.textContent = 'Премьеры · Кинопоказы · Архив';
-    cover.innerHTML = '🎬';
-  }
+// Парсинг videoId: поддержка формата "OID_ID" и простого "ID"
+function parseVideoId(videoId) {
+if (videoId.includes('_')) {
+const parts = videoId.split('_');
+return { oid: parts[0], id: parts[1] };
+}
+return { oid: VK_GROUP_ID, id: videoId };
 }
 
 function updatePlayer(stream) {
-  const playerContainer = document.getElementById('playerContainer');
-  const overlay = document.getElementById('playerOverlay');
-  const liveBadge = document.getElementById('liveBadge');
-  const viewerCount = document.getElementById('viewerCount');
-  const mainPlayer = document.getElementById('mainPlayer');
-  if (stream && stream.isLive && stream.videoId) {
-    overlay.classList.add('hidden');
-    liveBadge.style.display = 'block';
-    viewerCount.style.display = 'flex';
-    mainPlayer.classList.add('live');
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://vk.com/video_ext.php?oid=${VK_GROUP_ID}&id=${stream.videoId}&hd=2&autoplay=1`;
-    iframe.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture;';
-    iframe.allowFullscreen = true;
-    playerContainer.innerHTML = '';
-    playerContainer.appendChild(iframe);
-    document.getElementById('streamTitle').textContent = stream.title || 'Идёт кинопоказ';
-    document.getElementById('streamDate').textContent = formatDate(stream.startedAt);
-    document.getElementById('streamDuration').textContent = 'В эфире';
-    document.getElementById('viewerNumber').textContent = stream.viewers || 0;
-  } else {
-    showOfflineState();
-  }
+const playerContainer = document.getElementById('playerContainer');
+const overlay = document.getElementById('playerOverlay');
+const liveBadge = document.getElementById('liveBadge');
+const viewerCount = document.getElementById('viewerCount');
+const mainPlayer = document.getElementById('mainPlayer');
+if (stream && stream.isLive && stream.videoId) {
+overlay.classList.add('hidden');
+liveBadge.style.display = 'block';
+viewerCount.style.display = 'flex';
+mainPlayer.classList.add('live');
+
+const parsed = parseVideoId(stream.videoId);
+const iframe = document.createElement('iframe');
+iframe.src = `https://vk.com/video_ext.php?oid=${parsed.oid}&id=${parsed.id}&hd=2&autoplay=1`;
+iframe.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture;';
+iframe.allowFullscreen = true;
+playerContainer.innerHTML = '';
+playerContainer.appendChild(iframe);
+document.getElementById('streamTitle').textContent = stream.title || 'Идёт кинопоказ';
+document.getElementById('streamDate').textContent = formatDate(stream.startedAt);
+document.getElementById('streamDuration').textContent = 'В эфире';
+document.getElementById('viewerNumber').textContent = stream.viewers || 0;
+} else {
+showOfflineState();
+}
+}
+function showOfflineState() {
+const playerContainer = document.getElementById('playerContainer');
+const overlay = document.getElementById('playerOverlay');
+const liveBadge = document.getElementById('liveBadge');
+const viewerCount = document.getElementById('viewerCount');
+const mainPlayer = document.getElementById('mainPlayer');
+playerContainer.innerHTML = '';
+overlay.classList.remove('hidden');
+liveBadge.style.display = 'none';
+viewerCount.style.display = 'none';
+mainPlayer.classList.remove('live');
+document.getElementById('streamTitle').textContent = 'Ожидание кинопоказа';
+document.getElementById('streamDate').textContent = '—';
+document.getElementById('streamDuration').textContent = '—';
 }
 
-function showOfflineState() {
-  const playerContainer = document.getElementById('playerContainer');
-  const overlay = document.getElementById('playerOverlay');
-  const liveBadge = document.getElementById('liveBadge');
-  const viewerCount = document.getElementById('viewerCount');
-  const mainPlayer = document.getElementById('mainPlayer');
-  playerContainer.innerHTML = '';
-  overlay.classList.remove('hidden');
-  liveBadge.style.display = 'none';
-  viewerCount.style.display = 'none';
-  mainPlayer.classList.remove('live');
-  document.getElementById('streamTitle').textContent = 'Ожидание кинопоказа';
-  document.getElementById('streamDate').textContent = '—';
-  document.getElementById('streamDuration').textContent = '—';
+// ПАРСИНГ ВИДЕО URL (YouTube, VK, VKvideo, RUTUBE)
+function parseVideoUrl(url) {
+if (!url) return '';
+
+// YouTube
+const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+if (ytMatch) {
+return `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0`;
 }
+
+// VK Video (vk.com, vk.ru, vkvideo.ru)
+if (/vk(video)?\.(com|ru)\//i.test(url)) {
+if (/\/photo/i.test(url)) {
+return 'PHOTO_ERROR';
+}
+const vkMatch = url.match(/(-?\d+)_(\d+)/);
+if (vkMatch) {
+return `https://vk.com/video_ext.php?oid=${vkMatch[1]}&id=${vkMatch[2]}&hd=2&autoplay=1`;
+}
+}
+
+// RUTUBE
+const rutubeMatch = url.match(/rutube\.ru\/video\/([a-zA-Z0-9]+)/);
+if (rutubeMatch) {
+return `https://rutube.ru/play/embed/${rutubeMatch[1]}?autoplay=1`;
+}
+
+if (url.includes('/embed/') || url.includes('video_ext.php')) {
+return url;
+}
+
+return url;
+}
+
+function openVideoModal(videoUrl, title) {
+if (!videoUrl) {
+alert('Ссылка на видео не указана');
+return;
+}
+
+const embedUrl = parseVideoUrl(videoUrl);
+
+if (embedUrl === 'PHOTO_ERROR') {
+alert('❌ Это ссылка на фотографию, а не на видео.\n\nДобавь в админке ссылку именно на видео ВК:\nhttps://vk.com/video-XXXXX_YYYYY');
+return;
+}
+
+const overlay = document.getElementById('videoModalOverlay');
+const container = document.getElementById('videoModalContainer');
+const loading = document.getElementById('videoModalLoading');
+const titleEl = document.getElementById('videoModalTitle');
+
+titleEl.textContent = title || 'Видео';
+container.innerHTML = '';
+loading.classList.remove('hidden');
+
+const iframe = document.createElement('iframe');
+iframe.src = embedUrl;
+iframe.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture;';
+iframe.allowFullscreen = true;
+iframe.style.width = '100%';
+iframe.style.height = '100%';
+iframe.style.border = 'none';
+
+iframe.addEventListener('load', () => {
+setTimeout(() => loading.classList.add('hidden'), 500);
+});
+setTimeout(() => loading.classList.add('hidden'), 4000);
+
+container.appendChild(iframe);
+overlay.classList.add('active');
+document.body.style.overflow = 'hidden';
+}
+
+function closeVideoModal() {
+const overlay = document.getElementById('videoModalOverlay');
+const container = document.getElementById('videoModalContainer');
+overlay.classList.remove('active');
+document.body.style.overflow = '';
+setTimeout(() => { container.innerHTML = ''; }, 300);
+}
+
+document.getElementById('videoModalOverlay').addEventListener('click', function(e) {
+if (e.target === this) closeVideoModal();
+});
+
+document.addEventListener('keydown', function(e) {
+if (e.key === 'Escape') {
+const vm = document.getElementById('videoModalOverlay');
+if (vm.classList.contains('active')) closeVideoModal();
+}
+});
 
 // КИНО СЕРИАЛЫ
 function loadMedia() {
-  if (!db) { renderMedia([]); return; }
-  const grid = document.getElementById('mediaGrid');
-  grid.innerHTML = '<div class="tv-empty-state"><div class="loading-spinner"></div></div>';
-  db.collection('cinema').doc('media').collection(currentMediaCategory)
-    .orderBy('order', 'asc').limit(100).get()
-    .then(snapshot => {
-      const items = [];
-      snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
-      renderMedia(items);
-      renderAdminMediaList(items);
-    })
-    .catch(error => { console.error(error); renderMedia([]); renderAdminMediaList([]); });
+if (!db) { renderMedia([]); return; }
+const grid = document.getElementById('mediaGrid');
+grid.innerHTML = '<div class="tv-empty-state"><div class="loading-spinner"></div></div>';
+db.collection('cinema').doc('media').collection(currentMediaCategory)
+.orderBy('order', 'asc').limit(100).get()
+.then(snapshot => {
+const items = [];
+snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+renderMedia(items);
+renderAdminMediaList(items);
+})
+.catch(error => { console.error(error); renderMedia([]); renderAdminMediaList([]); });
 }
-
 function renderMedia(items) {
-  const grid = document.getElementById('mediaGrid');
-  if (items.length === 0) {
-    grid.innerHTML = '<div class="tv-empty-state"><div class="tv-empty-state-icon">🎬</div><div class="tv-empty-state-text">Пока нет контента</div><div class="tv-empty-state-subtext">Скоро здесь появятся фильмы и сериалы</div></div>';
-    return;
-  }
-  grid.innerHTML = items.map(item => `
-    <div class="media-card" onclick="playMedia('${item.videoUrl || ''}', '${escapeHtml(item.title || '')}')">
-      <div class="media-poster">
-        ${item.poster ? `<img src="${item.poster}" alt="${escapeHtml(item.title)}">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:0.3">🎬</div>'}
-        <div class="media-play-overlay">
-          <div class="media-play-icon">
-            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-          </div>
-        </div>
-      </div>
-      <div class="media-info">
-        <div class="media-title">${escapeHtml(item.title || 'Без названия')}</div>
-        ${item.description ? `<div class="media-desc">${escapeHtml(item.description)}</div>` : ''}
-      </div>
-    </div>
-  `).join('');
+const grid = document.getElementById('mediaGrid');
+if (items.length === 0) {
+grid.innerHTML = '<div class="tv-empty-state"><div class="tv-empty-state-icon">🎬</div><div class="tv-empty-state-text">Пока нет контента</div><div class="tv-empty-state-subtext">Скоро здесь появятся фильмы и сериалы</div></div>';
+return;
 }
-
-function playMedia(videoUrl, title) {
-  if (!videoUrl) {
-    alert('Ссылка на видео не указана');
-    return;
-  }
-  window.open(videoUrl, '_blank');
+grid.innerHTML = items.map(item => `
+<div class="media-card">
+<div class="media-poster" onclick="openVideoModal('${(item.videoUrl || '').replace(/'/g, "\\'")}', '${escapeHtml(item.title || '').replace(/'/g, "\\'")}')">
+${item.poster ? `<img src="${item.poster}" alt="${escapeHtml(item.title)}">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:0.3">🎬</div>'}
+<div class="media-play-overlay">
+<div class="media-play-icon">
+<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+</div>
+</div>
+</div>
+<div class="media-info">
+<div class="media-title">${escapeHtml(item.title || 'Без названия')}</div>
+<button class="media-watch-btn" onclick="openVideoModal('${(item.videoUrl || '').replace(/'/g, "\\'")}', '${escapeHtml(item.title || '').replace(/'/g, "\\'")}')">
+<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+<span>Смотреть</span>
+</button>
+</div>
+</div>
+`).join('');
 }
 
 // АРХИВ
 function loadArchive() {
-  if (!db) { renderArchive([]); return; }
-  const grid = document.getElementById('archiveGrid');
-  grid.innerHTML = '<div class="tv-empty-state"><div class="loading-spinner"></div></div>';
-  db.collection('streams').doc('archive').collection('videos')
-    .orderBy('date', 'desc').limit(50).get()
-    .then(snapshot => {
-      const archive = [];
-      snapshot.forEach(doc => archive.push({ id: doc.id, ...doc.data() }));
-      renderArchive(archive);
-      renderAdminArchiveList(archive);
-    })
-    .catch(error => { console.error(error); renderArchive([]); renderAdminArchiveList([]); });
+if (!db) { renderArchive([]); return; }
+const grid = document.getElementById('archiveGrid');
+grid.innerHTML = '<div class="tv-empty-state"><div class="loading-spinner"></div></div>';
+db.collection('streams').doc('archive').collection('videos')
+.orderBy('date', 'desc').limit(50).get()
+.then(snapshot => {
+const archive = [];
+snapshot.forEach(doc => archive.push({ id: doc.id, ...doc.data() }));
+renderArchive(archive);
+renderAdminArchiveList(archive);
+})
+.catch(error => { console.error(error); renderArchive([]); renderAdminArchiveList([]); });
 }
-
 function renderArchive(archive) {
-  const grid = document.getElementById('archiveGrid');
-  const count = document.getElementById('archiveCount');
-  count.textContent = archive.length;
-  if (archive.length === 0) {
-    grid.innerHTML = '<div class="tv-empty-state"><div class="tv-empty-state-icon">🎬</div><div class="tv-empty-state-text">Пока нет записей</div><div class="tv-empty-state-subtext">Архив пополнится после первого кинопоказа</div></div>';
-    return;
-  }
-  grid.innerHTML = archive.map(stream => `
-    <div class="archive-card" onclick="playArchive('${stream.videoId}', '${escapeHtml(stream.title || 'Кинопоказ')}')">
-      <div class="archive-thumbnail">
-        ${stream.thumbnail ? `<img src="${stream.thumbnail}" alt="">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:0.3">📼</div>'}
-        <div class="archive-duration">${stream.duration || '0:00'}</div>
-        <div class="archive-play-overlay"><div class="archive-play-icon"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-      </div>
-      <div class="archive-info">
-        <div class="archive-title-text">${escapeHtml(stream.title || 'Кинопоказ')}</div>
-        <div class="archive-date"><span>📅</span><span>${formatDate(stream.date)}</span></div>
-      </div>
-    </div>
-  `).join('');
+const grid = document.getElementById('archiveGrid');
+const count = document.getElementById('archiveCount');
+count.textContent = archive.length;
+if (archive.length === 0) {
+grid.innerHTML = '<div class="tv-empty-state"><div class="tv-empty-state-icon">🎬</div><div class="tv-empty-state-text">Пока нет записей</div><div class="tv-empty-state-subtext">Архив пополнится после первого кинопоказа</div></div>';
+return;
 }
-
+grid.innerHTML = archive.map(stream => `
+<div class="archive-card" onclick="playArchive('${stream.videoId}', '${escapeHtml(stream.title || 'Кинопоказ')}')">
+<div class="archive-thumbnail">
+${stream.thumbnail ? `<img src="${stream.thumbnail}" alt="">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:0.3">📼</div>'}
+<div class="archive-duration">${stream.duration || '0:00'}</div>
+<div class="archive-play-overlay"><div class="archive-play-icon"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+</div>
+<div class="archive-info">
+<div class="archive-title-text">${escapeHtml(stream.title || 'Кинопоказ')}</div>
+<div class="archive-date"><span>📅</span><span>${formatDate(stream.date)}</span></div>
+</div>
+</div>
+`).join('');
+}
 function playArchive(videoId, title) {
-  const playerContainer = document.getElementById('playerContainer');
-  const overlay = document.getElementById('playerOverlay');
-  const liveBadge = document.getElementById('liveBadge');
-  const viewerCount = document.getElementById('viewerCount');
-  const mainPlayer = document.getElementById('mainPlayer');
-  overlay.classList.add('hidden');
-  liveBadge.style.display = 'none';
-  viewerCount.style.display = 'none';
-  mainPlayer.classList.remove('live');
-  const iframe = document.createElement('iframe');
-  iframe.src = `https://vk.com/video_ext.php?oid=${VK_GROUP_ID}&id=${videoId}&hd=2`;
-  iframe.allow = 'autoplay; encrypted-media; fullscreen;';
-  iframe.allowFullscreen = true;
-  playerContainer.innerHTML = '';
-  playerContainer.appendChild(iframe);
-  document.getElementById('streamTitle').textContent = title;
-  document.getElementById('streamDate').textContent = 'Из архива';
-  document.getElementById('streamDuration').textContent = 'Запись';
-  document.getElementById('mainPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  const liveBtn = document.querySelector('.cinema-nav-btn');
-  switchCinemaSection('live', liveBtn);
-}
+const playerContainer = document.getElementById('playerContainer');
+const overlay = document.getElementById('playerOverlay');
+const liveBadge = document.getElementById('liveBadge');
+const viewerCount = document.getElementById('viewerCount');
+const mainPlayer = document.getElementById('mainPlayer');
+overlay.classList.add('hidden');
+liveBadge.style.display = 'none';
+viewerCount.style.display = 'none';
+mainPlayer.classList.remove('live');
 
+const parsed = parseVideoId(videoId);
+const iframe = document.createElement('iframe');
+iframe.src = `https://vk.com/video_ext.php?oid=${parsed.oid}&id=${parsed.id}&hd=2`;
+iframe.allow = 'autoplay; encrypted-media; fullscreen;';
+iframe.allowFullscreen = true;
+playerContainer.innerHTML = '';
+playerContainer.appendChild(iframe);
+document.getElementById('streamTitle').textContent = title;
+document.getElementById('streamDate').textContent = 'Из архива';
+document.getElementById('streamDuration').textContent = 'Запись';
+document.getElementById('mainPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+const liveBtn = document.querySelector('.cinema-nav-btn');
+switchCinemaSection('live', liveBtn);
+}
 // НОВОСТИ
 function loadNews() {
-  if (!db) { renderNews([]); return; }
-  const list = document.getElementById('newsList');
-  list.innerHTML = '<div class="tv-empty-state"><div class="loading-spinner"></div></div>';
-  db.collection('cinema').doc('news').collection('items')
-    .orderBy('date', 'desc').limit(50).get()
-    .then(snapshot => {
-      const news = [];
-      snapshot.forEach(doc => news.push({ id: doc.id, ...doc.data() }));
-      renderNews(news);
-      renderAdminNewsList(news);
-    })
-    .catch(error => { console.error(error); renderNews([]); renderAdminNewsList([]); });
+if (!db) { renderNews([]); return; }
+const list = document.getElementById('newsList');
+list.innerHTML = '<div class="tv-empty-state"><div class="loading-spinner"></div></div>';
+db.collection('cinema').doc('news').collection('items')
+.orderBy('date', 'desc').limit(50).get()
+.then(snapshot => {
+const news = [];
+snapshot.forEach(doc => news.push({ id: doc.id, ...doc.data() }));
+renderNews(news);
+renderAdminNewsList(news);
+})
+.catch(error => { console.error(error); renderNews([]); renderAdminNewsList([]); });
 }
-
 function renderNews(news) {
-  const list = document.getElementById('newsList');
-  if (news.length === 0) {
-    list.innerHTML = '<div class="tv-empty-state"><div class="tv-empty-state-icon">📰</div><div class="tv-empty-state-text">Новостей пока нет</div><div class="tv-empty-state-subtext">Следи за обновлениями</div></div>';
-    return;
-  }
-  const tagLabels = { premiere: 'Премьера', update: 'Обновление', announce: 'Анонс' };
-  list.innerHTML = news.map(n => `
-    <div class="news-card">
-      <div class="news-header">
-        <span class="news-tag ${n.tag || 'announce'}">${tagLabels[n.tag] || 'Новость'}</span>
-        <span class="news-date">${formatDate(n.date)}</span>
-      </div>
-      <div class="news-title">${escapeHtml(n.title)}</div>
-      <div class="news-text">${escapeHtml(n.text)}</div>
-    </div>
-  `).join('');
+const list = document.getElementById('newsList');
+if (news.length === 0) {
+list.innerHTML = '<div class="tv-empty-state"><div class="tv-empty-state-icon">📰</div><div class="tv-empty-state-text">Новостей пока нет</div><div class="tv-empty-state-subtext">Следи за обновлениями</div></div>';
+return;
 }
-
+const tagLabels = { premiere: 'Премьера', update: 'Обновление', announce: 'Анонс' };
+list.innerHTML = news.map(n => `
+<div class="news-card">
+<div class="news-header">
+<span class="news-tag ${n.tag || 'announce'}">${tagLabels[n.tag] || 'Новость'}</span>
+<span class="news-date">${formatDate(n.date)}</span>
+</div>
+<div class="news-title">${escapeHtml(n.title)}</div>
+<div class="news-text">${escapeHtml(n.text)}</div>
+</div>
+`).join('');
+}
 function formatDate(timestamp) {
-  if (!timestamp) return '—';
-  const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-  return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+if (!timestamp) return '—';
+const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
 }
-
-// ============================================
 // АДМИН-ПАНЕЛЬ
-// ============================================
 function showAdminLogin() {
-  navigateTo('adminPage');
-  document.getElementById('adminLoginSection').style.display = 'block';
-  document.getElementById('adminContent').style.display = 'none';
-  document.getElementById('adminPasswordInput').value = '';
-  document.getElementById('adminLoginStatus').textContent = '';
+navigateTo('adminPage');
+document.getElementById('adminLoginSection').style.display = 'block';
+document.getElementById('adminContent').style.display = 'none';
+document.getElementById('adminPasswordInput').value = '';
+document.getElementById('adminLoginStatus').textContent = '';
 }
-
 function adminLogin() {
-  const password = document.getElementById('adminPasswordInput').value;
-  const status = document.getElementById('adminLoginStatus');
-  if (password === ADMIN_PASSWORD) {
-    isAdminLoggedIn = true;
-    status.textContent = '✅ Успешный вход!';
-    status.className = 'form-status success';
-    setTimeout(() => {
-      document.getElementById('adminLoginSection').style.display = 'none';
-      document.getElementById('adminContent').style.display = 'block';
-      loadAdminData();
-    }, 500);
-  } else {
-    status.textContent = '❌ Неверный пароль';
-    status.className = 'form-status error';
-  }
+const password = document.getElementById('adminPasswordInput').value;
+const status = document.getElementById('adminLoginStatus');
+if (password === ADMIN_PASSWORD) {
+isAdminLoggedIn = true;
+status.textContent = '✅ Успешный вход!';
+status.className = 'form-status success';
+setTimeout(() => {
+document.getElementById('adminLoginSection').style.display = 'none';
+document.getElementById('adminContent').style.display = 'block';
+loadAdminData();
+updateMaintenanceUI();
+}, 500);
+} else {
+status.textContent = '❌ Неверный пароль';
+status.className = 'form-status error';
 }
-
+}
 function loadAdminData() {
-  loadCurrentStream();
-  loadArchive();
-  loadNews();
-  loadMedia();
+loadCurrentStream();
+loadArchive();
+loadNews();
+loadMedia();
 }
-
 function updateAdminStreamStatus(stream) {
-  const statusEl = document.getElementById('adminStreamStatus');
-  const formEl = document.getElementById('adminStreamForm');
-  const controlsEl = document.getElementById('adminStreamControls');
-  if (!statusEl) return;
-  if (stream && stream.isLive && stream.videoId) {
-    statusEl.innerHTML = '<div class="admin-status-indicator live"></div><div class="admin-status-text live">LIVE — Идёт кинопоказ</div>';
-    formEl.style.display = 'none';
-    controlsEl.style.display = 'block';
-    document.getElementById('adminCurrentStreamTitle').textContent = stream.title || 'Без названия';
-    document.getElementById('adminCurrentStreamId').textContent = `Video ID: ${stream.videoId}`;
-  } else {
-    statusEl.innerHTML = '<div class="admin-status-indicator offline"></div><div class="admin-status-text">Оффлайн</div>';
-    formEl.style.display = 'block';
-    controlsEl.style.display = 'none';
-  }
+const statusEl = document.getElementById('adminStreamStatus');
+const formEl = document.getElementById('adminStreamForm');
+const controlsEl = document.getElementById('adminStreamControls');
+if (!statusEl) return;
+if (stream && stream.isLive && stream.videoId) {
+statusEl.innerHTML = '<div class="admin-status-indicator live"></div><div class="admin-status-text live">LIVE — Идёт кинопоказ</div>';
+formEl.style.display = 'none';
+controlsEl.style.display = 'block';
+document.getElementById('adminCurrentStreamTitle').textContent = stream.title || 'Без названия';
+document.getElementById('adminCurrentStreamId').textContent = `Video ID: ${stream.videoId}`;
+} else {
+statusEl.innerHTML = '<div class="admin-status-indicator offline"></div><div class="admin-status-text">Оффлайн</div>';
+formEl.style.display = 'block';
+controlsEl.style.display = 'none';
 }
-
+}
 async function startLiveStream() {
-  if (!db) return;
-  const videoId = document.getElementById('adminVideoId').value.trim();
-  const title = document.getElementById('adminStreamTitle').value.trim();
-  if (!videoId) { alert('Введите Video ID'); return; }
-  try {
-    await db.collection('streams').doc('current').set({
-      isLive: true, videoId: videoId, title: title || 'Кинопоказ',
-      startedAt: firebase.firestore.FieldValue.serverTimestamp(), viewers: 0
-    });
-    document.getElementById('adminVideoId').value = '';
-    document.getElementById('adminStreamTitle').value = '';
-    alert('✅ КИНОПОКАЗ ЗАПУЩЕН!');
-  } catch (error) { alert('Ошибка: ' + error.message); }
-}
-
-async function stopLiveStream() {
-  if (!db) return;
-  if (!confirm('Остановить кинопоказ?')) return;
-  try {
-    await db.collection('streams').doc('current').update({ isLive: false });
-    alert('✅ КИНОПОКАЗ ОСТАНОВЛЕН');
-  } catch (error) { alert('Ошибка: ' + error.message); }
-}
-
-// КИНО СЕРИАЛЫ АДМИН
-document.getElementById('adminMediaCategory').addEventListener('change', function() {
-  const orderGroup = document.getElementById('adminSeriesOrderGroup');
-  if (this.value === 'series') {
-    orderGroup.style.display = 'block';
-  } else {
-    orderGroup.style.display = 'none';
-  }
+if (!db) return;
+const videoId = document.getElementById('adminVideoId').value.trim();
+const title = document.getElementById('adminStreamTitle').value.trim();
+if (!videoId) { alert('Введите Video ID'); return; }
+try {
+await db.collection('streams').doc('current').set({
+isLive: true, videoId: videoId, title: title || 'Кинопоказ',
+startedAt: firebase.firestore.FieldValue.serverTimestamp(), viewers: 0
 });
-
+document.getElementById('adminVideoId').value = '';
+document.getElementById('adminStreamTitle').value = '';
+alert('✅ КИНОПОКАЗ ЗАПУЩЕН!');
+} catch (error) { alert('Ошибка: ' + error.message); }
+}
+async function stopLiveStream() {
+if (!db) return;
+if (!confirm('Остановить кинопоказ?')) return;
+try {
+await db.collection('streams').doc('current').update({ isLive: false });
+alert('✅ КИНОПОКАЗ ОСТАНОВЛЕН');
+} catch (error) { alert('Ошибка: ' + error.message); }
+}
+document.getElementById('adminMediaCategory').addEventListener('change', function() {
+const orderGroup = document.getElementById('adminSeriesOrderGroup');
+if (this.value === 'series') {
+orderGroup.style.display = 'block';
+} else {
+orderGroup.style.display = 'none';
+}
+});
 function toggleMediaForm() {
-  const form = document.getElementById('adminMediaForm');
-  const list = document.getElementById('adminMediaList');
-  if (form.style.display === 'none') { form.style.display = 'block'; list.style.display = 'none'; }
-  else { form.style.display = 'none'; list.style.display = 'block'; }
+const form = document.getElementById('adminMediaForm');
+const list = document.getElementById('adminMediaList');
+if (form.style.display === 'none') { form.style.display = 'block'; list.style.display = 'none'; }
+else { form.style.display = 'none'; list.style.display = 'block'; }
 }
-
 async function addMedia() {
-  if (!db) return;
-  const category = document.getElementById('adminMediaCategory').value;
-  const title = document.getElementById('adminMediaTitle').value.trim();
-  const description = document.getElementById('adminMediaDesc').value.trim();
-  const poster = document.getElementById('adminMediaPoster').value.trim();
-  const videoUrl = document.getElementById('adminMediaVideo').value.trim();
-  const order = parseInt(document.getElementById('adminMediaOrder').value) || 999;
-  
-  if (!title) { alert('Заполните название'); return; }
-  
-  try {
-    await db.collection('cinema').doc('media').collection(category).add({
-      title, description: description || '', poster: poster || '',
-      videoUrl: videoUrl || '', order: order,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    document.getElementById('adminMediaTitle').value = '';
-    document.getElementById('adminMediaDesc').value = '';
-    document.getElementById('adminMediaPoster').value = '';
-    document.getElementById('adminMediaVideo').value = '';
-    document.getElementById('adminMediaOrder').value = '';
-    toggleMediaForm();
-    loadMedia();
-    alert('✅ Контент добавлен');
-  } catch (error) { alert('Ошибка: ' + error.message); }
+if (!db) return;
+const category = document.getElementById('adminMediaCategory').value;
+const title = document.getElementById('adminMediaTitle').value.trim();
+const description = document.getElementById('adminMediaDesc').value.trim();
+const poster = document.getElementById('adminMediaPoster').value.trim();
+const videoUrl = document.getElementById('adminMediaVideo').value.trim();
+const order = parseInt(document.getElementById('adminMediaOrder').value) || 999;
+if (!title) { alert('Заполните название'); return; }
+try {
+await db.collection('cinema').doc('media').collection(category).add({
+title, description: description || '', poster: poster || '',
+videoUrl: videoUrl || '', order: order,
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
+});
+document.getElementById('adminMediaTitle').value = '';
+document.getElementById('adminMediaDesc').value = '';
+document.getElementById('adminMediaPoster').value = '';
+document.getElementById('adminMediaVideo').value = '';
+document.getElementById('adminMediaOrder').value = '';
+toggleMediaForm();
+loadMedia();
+alert('✅ Контент добавлен');
+} catch (error) { alert('Ошибка: ' + error.message); }
 }
-
 function renderAdminMediaList(items) {
-  const list = document.getElementById('adminMediaAdminList');
-  if (!list) return;
-  if (items.length === 0) { list.innerHTML = '<div class="admin-empty">Контента нет</div>'; return; }
-  list.innerHTML = items.map(item => `
-    <div class="admin-video-item">
-      <div class="admin-video-info">
-        <div class="admin-video-title">${escapeHtml(item.title)}</div>
-        <div class="admin-video-meta">
-          <span>🎬 ${currentMediaCategory}</span>
-          ${item.order ? `<span>Порядок: ${item.order}</span>` : ''}
-        </div>
-      </div>
-      <div class="admin-video-actions">
-        <button class="admin-video-btn danger" onclick="deleteMedia('${item.id}')">
-          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-        </button>
-      </div>
-    </div>
-  `).join('');
+const list = document.getElementById('adminMediaAdminList');
+if (!list) return;
+if (items.length === 0) { list.innerHTML = '<div class="admin-empty">Контента нет</div>'; return; }
+list.innerHTML = items.map(item => `
+<div class="admin-video-item">
+<div class="admin-video-info">
+<div class="admin-video-title">${escapeHtml(item.title)}</div>
+<div class="admin-video-meta">
+<span>🎬 ${currentMediaCategory}</span>
+${item.order ? `<span>Порядок: ${item.order}</span>` : ''}
+</div>
+</div>
+<div class="admin-video-actions">
+<button class="admin-video-btn danger" onclick="deleteMedia('${item.id}')">
+<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+</button>
+</div>
+</div>
+`).join('');
 }
-
 async function deleteMedia(itemId) {
-  if (!db) return;
-  if (!confirm('Удалить этот контент?')) return;
-  try {
-    await db.collection('cinema').doc('media').collection(currentMediaCategory).doc(itemId).delete();
-    loadMedia();
-    alert('✅ Контент удалён');
-  } catch (error) { alert('Ошибка: ' + error.message); }
+if (!db) return;
+if (!confirm('Удалить этот контент?')) return;
+try {
+await db.collection('cinema').doc('media').collection(currentMediaCategory).doc(itemId).delete();
+loadMedia();
+alert('✅ Контент удалён');
+} catch (error) { alert('Ошибка: ' + error.message); }
 }
-
-// АРХИВ АДМИН
 function toggleArchiveForm() {
-  const form = document.getElementById('adminArchiveForm');
-  const list = document.getElementById('adminArchiveList');
-  if (form.style.display === 'none') { form.style.display = 'block'; list.style.display = 'none'; }
-  else { form.style.display = 'none'; list.style.display = 'block'; }
+const form = document.getElementById('adminArchiveForm');
+const list = document.getElementById('adminArchiveList');
+if (form.style.display === 'none') { form.style.display = 'block'; list.style.display = 'none'; }
+else { form.style.display = 'none'; list.style.display = 'block'; }
 }
-
 async function addArchiveVideo() {
-  if (!db) return;
-  const videoId = document.getElementById('adminArchiveVideoId').value.trim();
-  const title = document.getElementById('adminArchiveTitle').value.trim();
-  const duration = document.getElementById('adminArchiveDuration').value.trim();
-  const thumbnail = document.getElementById('adminArchiveThumbnail').value.trim();
-  if (!videoId || !title) { alert('Заполните Video ID и название'); return; }
-  try {
-    await db.collection('streams').doc('archive').collection('videos').add({
-      videoId, title, duration: duration || '0:00', thumbnail: thumbnail || '',
-      date: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    document.getElementById('adminArchiveVideoId').value = '';
-    document.getElementById('adminArchiveTitle').value = '';
-    document.getElementById('adminArchiveDuration').value = '';
-    document.getElementById('adminArchiveThumbnail').value = '';
-    toggleArchiveForm();
-    loadArchive();
-    alert('✅ Трансляция добавлена в архив');
-  } catch (error) { alert('Ошибка: ' + error.message); }
+if (!db) return;
+const videoId = document.getElementById('adminArchiveVideoId').value.trim();
+const title = document.getElementById('adminArchiveTitle').value.trim();
+const duration = document.getElementById('adminArchiveDuration').value.trim();
+const thumbnail = document.getElementById('adminArchiveThumbnail').value.trim();
+if (!videoId || !title) { alert('Заполните Video ID и название'); return; }
+try {
+await db.collection('streams').doc('archive').collection('videos').add({
+videoId, title, duration: duration || '0:00', thumbnail: thumbnail || '',
+date: firebase.firestore.FieldValue.serverTimestamp()
+});
+document.getElementById('adminArchiveVideoId').value = '';
+document.getElementById('adminArchiveTitle').value = '';
+document.getElementById('adminArchiveDuration').value = '';
+document.getElementById('adminArchiveThumbnail').value = '';
+toggleArchiveForm();
+loadArchive();
+alert('✅ Трансляция добавлена в архив');
+} catch (error) { alert('Ошибка: ' + error.message); }
 }
-
 function renderAdminArchiveList(archive) {
-  const list = document.getElementById('adminVideoList');
-  if (!list) return;
-  if (archive.length === 0) { list.innerHTML = '<div class="admin-empty">Архив пуст</div>'; return; }
-  list.innerHTML = archive.map(stream => `
-    <div class="admin-video-item">
-      <div class="admin-video-info">
-        <div class="admin-video-title">${escapeHtml(stream.title || 'Без названия')}</div>
-        <div class="admin-video-meta">
-          <span>ID: ${stream.videoId}</span>
-          <span>⏱ ${stream.duration || '0:00'}</span>
-          <span>📅 ${formatDate(stream.date)}</span>
-        </div>
-      </div>
-      <div class="admin-video-actions">
-        <button class="admin-video-btn danger" onclick="deleteArchiveVideo('${stream.id}')">
-          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-        </button>
-      </div>
-    </div>
-  `).join('');
+const list = document.getElementById('adminVideoList');
+if (!list) return;
+if (archive.length === 0) { list.innerHTML = '<div class="admin-empty">Архив пуст</div>'; return; }
+list.innerHTML = archive.map(stream => `
+<div class="admin-video-item">
+<div class="admin-video-info">
+<div class="admin-video-title">${escapeHtml(stream.title || 'Без названия')}</div>
+<div class="admin-video-meta">
+<span>ID: ${stream.videoId}</span>
+<span>⏱ ${stream.duration || '0:00'}</span>
+<span>📅 ${formatDate(stream.date)}</span>
+</div>
+</div>
+<div class="admin-video-actions">
+<button class="admin-video-btn danger" onclick="deleteArchiveVideo('${stream.id}')">
+<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+</button>
+</div>
+</div>
+`).join('');
 }
-
 async function deleteArchiveVideo(videoDocId) {
-  if (!db) return;
-  if (!confirm('Удалить эту трансляцию из архива?')) return;
-  try {
-    await db.collection('streams').doc('archive').collection('videos').doc(videoDocId).delete();
-    loadArchive();
-    alert('✅ Трансляция удалена');
-  } catch (error) { alert('Ошибка: ' + error.message); }
+if (!db) return;
+if (!confirm('Удалить эту трансляцию из архива?')) return;
+try {
+await db.collection('streams').doc('archive').collection('videos').doc(videoDocId).delete();
+loadArchive();
+alert('✅ Трансляция удалена');
+} catch (error) { alert('Ошибка: ' + error.message); }
 }
-
-// НОВОСТИ АДМИН
 function toggleNewsForm() {
-  const form = document.getElementById('adminNewsForm');
-  const list = document.getElementById('adminNewsList');
-  if (form.style.display === 'none') { form.style.display = 'block'; list.style.display = 'none'; }
-  else { form.style.display = 'none'; list.style.display = 'block'; }
+const form = document.getElementById('adminNewsForm');
+const list = document.getElementById('adminNewsList');
+if (form.style.display === 'none') { form.style.display = 'block'; list.style.display = 'none'; }
+else { form.style.display = 'none'; list.style.display = 'block'; }
 }
-
 async function addNews() {
-  if (!db) return;
-  const title = document.getElementById('adminNewsTitle').value.trim();
-  const text = document.getElementById('adminNewsText').value.trim();
-  const tag = document.getElementById('adminNewsTag').value;
-  const dateStr = document.getElementById('adminNewsDate').value;
-  if (!title || !text) { alert('Заполните заголовок и текст'); return; }
-  try {
-    const date = dateStr ? new Date(dateStr) : new Date();
-    await db.collection('cinema').doc('news').collection('items').add({
-      title, text, tag, date: firebase.firestore.Timestamp.fromDate(date)
-    });
-    document.getElementById('adminNewsTitle').value = '';
-    document.getElementById('adminNewsText').value = '';
-    document.getElementById('adminNewsDate').value = '';
-    toggleNewsForm();
-    loadNews();
-    alert('✅ Новость добавлена');
-  } catch (error) { alert('Ошибка: ' + error.message); }
+if (!db) return;
+const title = document.getElementById('adminNewsTitle').value.trim();
+const text = document.getElementById('adminNewsText').value.trim();
+const tag = document.getElementById('adminNewsTag').value;
+const dateStr = document.getElementById('adminNewsDate').value;
+if (!title || !text) { alert('Заполните заголовок и текст'); return; }
+try {
+const date = dateStr ? new Date(dateStr) : new Date();
+await db.collection('cinema').doc('news').collection('items').add({
+title, text, tag, date: firebase.firestore.Timestamp.fromDate(date)
+});
+document.getElementById('adminNewsTitle').value = '';
+document.getElementById('adminNewsText').value = '';
+document.getElementById('adminNewsDate').value = '';
+toggleNewsForm();
+loadNews();
+alert('✅ Новость добавлена');
+} catch (error) { alert('Ошибка: ' + error.message); }
 }
-
 function renderAdminNewsList(news) {
-  const list = document.getElementById('adminNewsAdminList');
-  if (!list) return;
-  if (news.length === 0) { list.innerHTML = '<div class="admin-empty">Новостей нет</div>'; return; }
-  list.innerHTML = news.map(n => `
-    <div class="admin-video-item">
-      <div class="admin-video-info">
-        <div class="admin-video-title">${escapeHtml(n.title)}</div>
-        <div class="admin-video-meta">
-          <span>${n.tag || 'announce'}</span>
-          <span>📅 ${formatDate(n.date)}</span>
-        </div>
-      </div>
-      <div class="admin-video-actions">
-        <button class="admin-video-btn danger" onclick="deleteNews('${n.id}')">
-          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-        </button>
-      </div>
-    </div>
-  `).join('');
+const list = document.getElementById('adminNewsAdminList');
+if (!list) return;
+if (news.length === 0) { list.innerHTML = '<div class="admin-empty">Новостей нет</div>'; return; }
+list.innerHTML = news.map(n => `
+<div class="admin-video-item">
+<div class="admin-video-info">
+<div class="admin-video-title">${escapeHtml(n.title)}</div>
+<div class="admin-video-meta">
+<span>${n.tag || 'announce'}</span>
+<span>📅 ${formatDate(n.date)}</span>
+</div>
+</div>
+<div class="admin-video-actions">
+<button class="admin-video-btn danger" onclick="deleteNews('${n.id}')">
+<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+</button>
+</div>
+</div>
+`).join('');
 }
-
 async function deleteNews(newsId) {
-  if (!db) return;
-  if (!confirm('Удалить новость?')) return;
-  try {
-    await db.collection('cinema').doc('news').collection('items').doc(newsId).delete();
-    loadNews();
-    alert('✅ Новость удалена');
-  } catch (error) { alert('Ошибка: ' + error.message); }
+if (!db) return;
+if (!confirm('Удалить новость?')) return;
+try {
+await db.collection('cinema').doc('news').collection('items').doc(newsId).delete();
+loadNews();
+alert('✅ Новость удалена');
+} catch (error) { alert('Ошибка: ' + error.message); }
 }
-
-// ============================================
 // ОБСУЖДЕНИЯ
-// ============================================
 let discussionsUnsubscribe = null;
 let discussionsList = [];
-
 function getCurrentPlayingTrack() {
-  if (currentTrack) return { track: currentTrack, type: 'tracks' };
-  if (currentInstTrack) return { track: currentInstTrack, type: 'instrumentals' };
-  if (currentSubTrack) return { track: currentSubTrack, type: 'subscribers' };
-  return null;
+if (currentTrack) return { track: currentTrack, type: 'tracks' };
+if (currentInstTrack) return { track: currentInstTrack, type: 'instrumentals' };
+if (currentSubTrack) return { track: currentSubTrack, type: 'subscribers' };
+return null;
 }
-
 function updateAttachLabel() {
-  const label = document.getElementById('discussionAttachText');
-  const toggle = document.getElementById('discussionAttachToggle');
-  if (!label || !toggle) return;
-  const current = getCurrentPlayingTrack();
-  if (current) {
-    label.textContent = '🎵 Прикрепить: ' + current.track.title;
-    toggle.disabled = false;
-    toggle.parentElement.style.opacity = '1';
-  } else {
-    label.textContent = '🎵 Сначала включи любой трек';
-    toggle.disabled = true;
-    toggle.checked = false;
-    toggle.parentElement.style.opacity = '0.5';
-  }
+const label = document.getElementById('discussionAttachText');
+const toggle = document.getElementById('discussionAttachToggle');
+if (!label || !toggle) return;
+const current = getCurrentPlayingTrack();
+if (current) {
+label.textContent = '🎵 Прикрепить: ' + current.track.title;
+toggle.disabled = false;
+toggle.parentElement.style.opacity = '1';
+} else {
+label.textContent = '🎵 Сначала включи любой трек';
+toggle.disabled = true;
+toggle.checked = false;
+toggle.parentElement.style.opacity = '0.5';
 }
-
+}
 function loadDiscussions() {
-  if (!db) return;
-  const list = document.getElementById('discussionsList');
-  if (!list) return;
-  list.innerHTML = '<div class="discussions-loading">Загрузка обсуждений</div>';
-  if (discussionsUnsubscribe) discussionsUnsubscribe();
-  discussionsUnsubscribe = db.collection('discussions')
-    .orderBy('createdAt', 'desc').limit(100)
-    .onSnapshot(snapshot => {
-      discussionsList = [];
-      snapshot.forEach(doc => discussionsList.push({ id: doc.id, ...doc.data() }));
-      renderDiscussions();
-    }, error => {
-      console.error(error);
-      list.innerHTML = '<div class="discussions-empty"><div class="discussions-empty-icon">⚠️</div>Ошибка: ' + error.message + '</div>';
-    });
+if (!db) return;
+const list = document.getElementById('discussionsList');
+if (!list) return;
+list.innerHTML = '<div class="discussions-loading">Загрузка обсуждений</div>';
+if (discussionsUnsubscribe) discussionsUnsubscribe();
+discussionsUnsubscribe = db.collection('discussions')
+.orderBy('createdAt', 'desc').limit(100)
+.onSnapshot(snapshot => {
+discussionsList = [];
+snapshot.forEach(doc => discussionsList.push({ id: doc.id, ...doc.data() }));
+renderDiscussions();
+}, error => {
+console.error(error);
+list.innerHTML = '<div class="discussions-empty"><div class="discussions-empty-icon">⚠️</div>Ошибка: ' + error.message + '</div>';
+});
 }
-
 function renderDiscussions() {
-  const list = document.getElementById('discussionsList');
-  const count = document.getElementById('discussionsCount');
-  if (!list) return;
-  if (discussionsList.length === 0) {
-    list.innerHTML = '<div class="discussions-empty"><div class="discussions-empty-icon">💬</div>Пока нет сообщений.<br>Будь первым!</div>';
-    if (count) count.textContent = '0';
-    return;
-  }
-  if (count) count.textContent = discussionsList.length;
-  const reversed = [...discussionsList].reverse();
-  list.innerHTML = reversed.map(d => {
-    const initial = (d.userName || '?')[0].toUpperCase();
-    const time = formatDiscussionTime(d.createdAt);
-    const trackHtml = d.trackTitle ? `<div class="discussion-track-ref"><span class="discussion-track-icon">${d.trackType === 'instrumentals' ? '🎹' : d.trackType === 'subscribers' ? '🎤' : '🎵'}</span><span class="discussion-track-name">${escapeHtml(d.trackTitle)}</span></div>` : '';
-    return `<div class="discussion-item"><div class="discussion-avatar">${escapeHtml(initial)}</div><div class="discussion-body"><div class="discussion-header"><span class="discussion-author">${escapeHtml(d.userName)}</span><span class="discussion-time">${time}</span></div>${trackHtml}<div class="discussion-text">${escapeHtml(d.text)}</div></div></div>`;
-  }).join('');
-  list.scrollTop = list.scrollHeight;
+const list = document.getElementById('discussionsList');
+const count = document.getElementById('discussionsCount');
+if (!list) return;
+if (discussionsList.length === 0) {
+list.innerHTML = '<div class="discussions-empty"><div class="discussions-empty-icon">💬</div>Пока нет сообщений.<br>Будь первым!</div>';
+if (count) count.textContent = '0';
+return;
 }
-
+if (count) count.textContent = discussionsList.length;
+const reversed = [...discussionsList].reverse();
+list.innerHTML = reversed.map(d => {
+const initial = (d.userName || '?')[0].toUpperCase();
+const time = formatDiscussionTime(d.createdAt);
+const trackHtml = d.trackTitle ? `<div class="discussion-track-ref"><span class="discussion-track-icon">${d.trackType === 'instrumentals' ? '🎹' : d.trackType === 'subscribers' ? '🎤' : '🎵'}</span><span class="discussion-track-name">${escapeHtml(d.trackTitle)}</span></div>` : '';
+return `<div class="discussion-item"><div class="discussion-avatar">${escapeHtml(initial)}</div><div class="discussion-body"><div class="discussion-header"><span class="discussion-author">${escapeHtml(d.userName)}</span><span class="discussion-time">${time}</span></div>${trackHtml}<div class="discussion-text">${escapeHtml(d.text)}</div></div></div>`;
+}).join('');
+list.scrollTop = list.scrollHeight;
+}
 function formatDiscussionTime(timestamp) {
-  if (!timestamp) return '';
-  const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-  const now = new Date();
-  const diff = Math.floor((now - date) / 1000);
-  if (diff < 60) return 'только что';
-  if (diff < 3600) return `${Math.floor(diff / 60)} мин назад`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)} ч назад`;
-  if (diff < 604800) return `${Math.floor(diff / 86400)} дн назад`;
-  return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
+if (!timestamp) return '';
+const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+const now = new Date();
+const diff = Math.floor((now - date) / 1000);
+if (diff < 60) return 'только что';
+if (diff < 3600) return `${Math.floor(diff / 60)} мин назад`;
+if (diff < 86400) return `${Math.floor(diff / 3600)} ч назад`;
+if (diff < 604800) return `${Math.floor(diff / 86400)} дн назад`;
+return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
 }
-
 async function sendDiscussion() {
-  if (!db) return;
-  const input = document.getElementById('discussionInput');
-  const text = input.value.trim();
-  if (!text) return;
-  const userName = localStorage.getItem('evgenii_user') || 'Гость';
-  const btn = document.getElementById('discussionSendBtn');
-  const attachToggle = document.getElementById('discussionAttachToggle');
-  btn.disabled = true;
-  try {
-    const data = { userName, text, createdAt: firebase.firestore.FieldValue.serverTimestamp() };
-    if (attachToggle && attachToggle.checked) {
-      const current = getCurrentPlayingTrack();
-      if (current) {
-        data.trackId = String(current.track.id);
-        data.trackTitle = current.track.title;
-        data.trackType = current.type;
-      }
-    }
-    await db.collection('discussions').add(data);
-    input.value = '';
-    input.style.height = 'auto';
-  } catch (e) { alert('Ошибка: ' + e.message); }
-  finally { btn.disabled = false; input.focus(); }
+if (!db) return;
+const input = document.getElementById('discussionInput');
+const text = input.value.trim();
+if (!text) return;
+const userName = localStorage.getItem('evgenii_user') || 'Гость';
+const btn = document.getElementById('discussionSendBtn');
+const attachToggle = document.getElementById('discussionAttachToggle');
+btn.disabled = true;
+try {
+const data = { userName, text, createdAt: firebase.firestore.FieldValue.serverTimestamp() };
+if (attachToggle && attachToggle.checked) {
+const current = getCurrentPlayingTrack();
+if (current) {
+data.trackId = String(current.track.id);
+data.trackTitle = current.track.title;
+data.trackType = current.type;
 }
-
+}
+await db.collection('discussions').add(data);
+input.value = '';
+input.style.height = 'auto';
+} catch (e) { alert('Ошибка: ' + e.message); }
+finally { btn.disabled = false; input.focus(); }
+}
 document.getElementById('discussionInput').addEventListener('input', function() {
-  this.style.height = 'auto';
-  this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+this.style.height = 'auto';
+this.style.height = Math.min(this.scrollHeight, 100) + 'px';
 });
 document.getElementById('discussionInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendDiscussion(); }
+if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendDiscussion(); }
 });
-
-// ============================================
 // RENDER МУЗЫКИ
-// ============================================
 function renderNewRelease() {
 const h = document.getElementById('homeReleaseCard');
 if (h) h.innerHTML = `<div class="release-cover"><span class="release-badge">NEW</span>${newRelease.cover ? `<img src="${newRelease.cover}" onerror="this.style.display='none';this.parentElement.innerHTML='🎵'">` : ''}</div><div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">${newRelease.title}</div><div class="release-meta">${newRelease.subtitle.toUpperCase()} · ${newRelease.duration}</div></div>`;
@@ -2017,10 +2384,7 @@ text.textContent = 'СКРЫТЬ ФОРМУ';
 setTimeout(() => { wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }); const f = wrapper.querySelector('input'); if (f) f.focus({ preventScroll: true }); }, 350);
 } else { text.textContent = 'ПРИСЛАТЬ СВОЙ ТЕКСТ'; }
 }
-
-// ============================================
 // ПЛЕЕРЫ
-// ============================================
 const audio = document.getElementById('audioPlayer');
 let currentTrack = null, isPlaying = false, simulationInterval = null, currentTrackIndex = -1;
 const playlist = [newRelease, ...allTracks];
@@ -2127,10 +2491,7 @@ function startSubSimulation() { setSubPlayingState(true); let c = 0; const d = p
 subAudio.addEventListener('timeupdate', () => { if (!currentSubTrack) return; const d = subAudio.duration || pd(currentSubTrack.duration); document.getElementById('subBarFill').style.width = `${subAudio.currentTime / d * 100}%`; document.getElementById('subCurrentTime').textContent = ft(subAudio.currentTime); });
 subAudio.addEventListener('loadedmetadata', () => { document.getElementById('subTotalTime').textContent = ft(subAudio.duration); });
 subAudio.addEventListener('ended', () => { setSubPlayingState(false); document.getElementById('subBarFill').style.width = '0%'; document.getElementById('subCurrentTime').textContent = '0:00'; playNextSubscriber(); });
-
-// ============================================
 // DOWNLOAD
-// ============================================
 let downloadTrack = null;
 function openDownloadModal(track, type = 'regular') {
 downloadTrack = track;
@@ -2156,18 +2517,12 @@ document.body.appendChild(l);
 setTimeout(() => { l.click(); document.body.removeChild(l); b.textContent = '✓ ТРЕК ЗАГРУЖЕН'; setTimeout(() => closeDownloadModal(), 1500); }, 1500);
 }
 document.getElementById('downloadModal').addEventListener('click', function(e) { if (e.target === this) closeDownloadModal(); });
-
-// ============================================
 // UTILS
-// ============================================
 function getGreeting(h) { if (h >= 5 && h < 12) return 'ДОБРОЕ УТРО'; if (h >= 12 && h < 17) return 'ДОБРЫЙ ДЕНЬ'; if (h >= 17 && h < 22) return 'ДОБРЫЙ ВЕЧЕР'; return 'ДОБРОЙ НОЧИ'; }
 function getLoginGreeting(h) { if (h >= 5 && h < 12) return 'Доброе утро'; if (h >= 12 && h < 17) return 'Добрый день'; if (h >= 17 && h < 22) return 'Добрый вечер'; return 'Доброй ночи'; }
 function updateTime() { const n = new Date(); document.getElementById('headerTime').textContent = `${String(n.getHours()).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')}`; document.getElementById('headerGreeting').textContent = getGreeting(n.getHours()); }
 function escapeHtml(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
-
-// ============================================
 // НАВИГАЦИЯ
-// ============================================
 let currentPage = 'homePage';
 function navigateTo(pageId) {
 if (currentPage === pageId) return;
@@ -2181,10 +2536,7 @@ if (pageId === 'cinemaPage') initCinemaPage();
 if (pageId === 'adminPage' && !isAdminLoggedIn) showAdminLogin();
 }
 function goBack() { navigateTo('homePage'); }
-
-// ============================================
 // LOGIN
-// ============================================
 const loginScreen = document.getElementById('loginScreen');
 const loginForm = document.getElementById('loginForm');
 const nameInput = document.getElementById('nameInput');
@@ -2192,13 +2544,32 @@ const loginGreeting = document.getElementById('loginGreeting');
 const headerName = document.getElementById('headerName');
 const logoutBtn = document.getElementById('logoutBtn');
 loginGreeting.textContent = getLoginGreeting(new Date().getHours());
+
+loginScreen.addEventListener('transitionend', function() {
+if (loginScreen.classList.contains('hidden')) {
+loginScreen.style.display = 'none';
+}
+});
+
 const savedName = localStorage.getItem('evgenii_user');
 if (savedName) showMainScreen(savedName);
+
+loadMaintenanceSettings();
+
 loginForm.addEventListener('submit', function(e) {
 e.preventDefault();
 const name = nameInput.value.trim();
-if (name) { localStorage.setItem('evgenii_user', name); showMainScreen(name); }
-else { nameInput.style.borderColor = '#ff4444'; nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)'; setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.boxShadow = ''; }, 1500); }
+if (name) { 
+localStorage.setItem('evgenii_user', name); 
+showMainScreen(name); 
+} else { 
+nameInput.style.borderColor = '#ff4444'; 
+nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)'; 
+setTimeout(() => { 
+nameInput.style.borderColor = ''; 
+nameInput.style.boxShadow = ''; 
+}, 1500); 
+}
 });
 function showMainScreen(name) {
 loginScreen.classList.add('hidden');
@@ -2217,19 +2588,21 @@ logoutBtn.addEventListener('click', function() {
 localStorage.removeItem('evgenii_user');
 ['homePage','tracksPage','aboutPage','communityPage','contactPage','instrumentalsPage','subscribersPage','supportPage','discussionsPage','cinemaPage','adminPage'].forEach(p => document.getElementById(p).classList.remove('active'));
 currentPage = 'homePage';
-loginScreen.classList.remove('hidden'); nameInput.value = '';
+
+loginScreen.style.display = 'flex';
+loginScreen.classList.remove('hidden'); 
+nameInput.value = '';
 loginGreeting.textContent = getLoginGreeting(new Date().getHours());
+
 stopAllPlayers();
 if (discussionsUnsubscribe) { discussionsUnsubscribe(); discussionsUnsubscribe = null; }
 if (streamUnsubscribe) { streamUnsubscribe(); streamUnsubscribe = null; }
+if (maintenanceUnsubscribe) { maintenanceUnsubscribe(); maintenanceUnsubscribe = null; }
 isAdminLoggedIn = false;
 });
 setInterval(updateTime, 1000);
 updateTime();
-
-// ============================================
 // КОНТАКТЫ
-// ============================================
 const contactForm = document.getElementById('contactForm');
 const formSubmitBtn = document.getElementById('submitBtn');
 const formStatus = document.getElementById('formStatus');
@@ -2244,12 +2617,7 @@ formSubmitBtn.disabled = true;
 formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
 formStatus.textContent = '';
 formStatus.className = 'form-status';
-const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>
-👤 <b>Имя:</b> ${name}
-📧 <b>Контакт:</b> ${contact}
-💬 <b>Сообщение:</b>
-${messageText}
-⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+const message = `📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n💬 <b>Сообщение:</b>\n${messageText}\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
 try {
 const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
@@ -2260,10 +2628,7 @@ else throw new Error(data.description || 'Ошибка Telegram API');
 finally { formSubmitBtn.disabled = false; formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>'; }
 });
 }
-
-// ============================================
 // ФОРМА "ДАЙ ГОЛОС"
-// ============================================
 const voiceForm = document.getElementById('voiceForm');
 const voiceSubmitBtn = document.getElementById('voiceSubmitBtn');
 const voiceFormStatus = document.getElementById('voiceFormStatus');
@@ -2281,15 +2646,7 @@ voiceSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
 voiceFormStatus.textContent = '';
 voiceFormStatus.className = 'form-status';
 const lyricsPreview = lyrics.length > 2000 ? lyrics.substring(0, 2000) + '\n[...текст обрезан...]' : lyrics;
-const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>
-👤 <b>Имя:</b> ${name}
-📧 <b>Контакт:</b> ${contact}
-🎸 <b>Стиль:</b> ${style}
-📝 <b>Текст:</b>
-${escapeHtml(lyricsPreview)}
-💬 <b>Комментарий:</b>
-${escapeHtml(comment)}
-⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
+const message = `🎤 <b>НОВАЯ ЗАЯВКА «ДАЙ ГОЛОС»</b>\n👤 <b>Имя:</b> ${name}\n📧 <b>Контакт:</b> ${contact}\n🎸 <b>Стиль:</b> ${style}\n📝 <b>Текст:</b>\n${escapeHtml(lyricsPreview)}\n💬 <b>Комментарий:</b>\n${escapeHtml(comment)}\n⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}`;
 try {
 const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 const response = await fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
@@ -2300,45 +2657,40 @@ else throw new Error(data.description || 'Ошибка Telegram API');
 finally { voiceSubmitBtn.disabled = false; voiceSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ ТЕКСТ</span>'; }
 });
 }
-
-// ============================================
 // КОПИРОВАНИЕ НОМЕРА КАРТЫ
-// ============================================
 const CARD_NUMBER = '2204311007219604';
 let copyTimeout = null;
 function copyCardNumber() {
-  const btn = document.getElementById('copyBtn');
-  const btnText = document.getElementById('copyBtnText');
-  const toast = document.getElementById('copyToast');
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(CARD_NUMBER).then(() => { showCopySuccess(); }).catch(() => { fallbackCopy(); });
-  } else { fallbackCopy(); }
-  function fallbackCopy() {
-    const textarea = document.createElement('textarea');
-    textarea.value = CARD_NUMBER;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.appendChild(textarea);
-    textarea.select();
-    try { document.execCommand('copy'); showCopySuccess(); }
-    catch (err) { console.error(err); alert('Номер карты: ' + CARD_NUMBER); }
-    document.body.removeChild(textarea);
-  }
-  function showCopySuccess() {
-    btn.classList.add('copied');
-    btnText.textContent = 'Скопировано!';
-    toast.classList.add('show');
-    if (copyTimeout) clearTimeout(copyTimeout);
-    copyTimeout = setTimeout(() => {
-      btn.classList.remove('copied');
-      btnText.textContent = 'Копировать';
-      toast.classList.remove('show');
-    }, 2500);
-  }
+const btn = document.getElementById('copyBtn');
+const btnText = document.getElementById('copyBtnText');
+const toast = document.getElementById('copyToast');
+if (navigator.clipboard && window.isSecureContext) {
+navigator.clipboard.writeText(CARD_NUMBER).then(() => { showCopySuccess(); }).catch(() => { fallbackCopy(); });
+} else { fallbackCopy(); }
+function fallbackCopy() {
+const textarea = document.createElement('textarea');
+textarea.value = CARD_NUMBER;
+textarea.style.position = 'fixed';
+textarea.style.opacity = '0';
+document.body.appendChild(textarea);
+textarea.select();
+try { document.execCommand('copy'); showCopySuccess(); }
+catch (err) { console.error(err); alert('Номер карты: ' + CARD_NUMBER); }
+document.body.removeChild(textarea);
 }
-
+function showCopySuccess() {
+btn.classList.add('copied');
+btnText.textContent = 'Скопировано!';
+toast.classList.add('show');
+if (copyTimeout) clearTimeout(copyTimeout);
+copyTimeout = setTimeout(() => {
+btn.classList.remove('copied');
+btnText.textContent = 'Копировать';
+toast.classList.remove('show');
+}, 2500);
+}
+}
 updateAttachLabel();
 </script>
 </body>
 </html>
-
