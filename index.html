@@ -27,6 +27,125 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .page.active{display:block;animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
+/* ============================================
+   ПРЕЛОАДЕР
+============================================ */
+.preloader{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#0a0a1a 0%,#1a0a2e 50%,#0a0a1a 100%);display:flex;align-items:center;justify-content:center;z-index:99999;transition:opacity .8s ease,visibility .8s ease;overflow:hidden}
+.preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.preloader-orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.4;animation:preloaderOrb 3s ease-in-out infinite}
+.preloader-orb-1{width:200px;height:200px;background:var(--cyan);top:20%;left:20%}
+.preloader-orb-2{width:150px;height:150px;background:var(--magenta);bottom:20%;right:20%;animation-delay:-1s}
+.preloader-orb-3{width:100px;height:100px;background:var(--purple);top:50%;left:60%;animation-delay:-2s}
+@keyframes preloaderOrb{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.2)}}
+.preloader-content{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:24px}
+.preloader-logo{font-family:'Orbitron',sans-serif;font-size:2.5rem;font-weight:900;letter-spacing:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
+.preloader-letter{display:inline-block;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0;animation:letterAppear .6s ease forwards;filter:drop-shadow(0 0 10px rgba(0,229,255,.5))}
+.preloader-letter:nth-child(1){animation-delay:.1s}
+.preloader-letter:nth-child(2){animation-delay:.2s}
+.preloader-letter:nth-child(3){animation-delay:.3s}
+.preloader-letter:nth-child(4){animation-delay:.4s}
+.preloader-letter:nth-child(5){animation-delay:.5s}
+.preloader-letter:nth-child(6){animation-delay:.6s}
+.preloader-letter:nth-child(7){animation-delay:.7s}
+@keyframes letterAppear{0%{opacity:0;transform:translateY(20px) scale(.5)}60%{transform:translateY(-5px) scale(1.1)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.preloader-badge{display:inline-block;font-size:.8rem;font-weight:900;letter-spacing:3px;padding:4px 12px;border-radius:8px;background:linear-gradient(135deg,var(--cyan),var(--magenta));color:#000;box-shadow:0 0 20px rgba(0,229,255,.6);animation:preloaderBadgePulse 1.5s ease-in-out infinite;opacity:0;animation:letterAppear .6s ease .8s forwards,preloaderBadgePulse 1.5s ease-in-out 1.4s infinite}
+@keyframes preloaderBadgePulse{0%,100%{box-shadow:0 0 20px rgba(0,229,255,.6)}50%{box-shadow:0 0 40px rgba(255,0,229,.8)}}
+.preloader-bar{width:220px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.preloader-bar-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--magenta));border-radius:2px;width:0%;animation:preloaderProgress 1.8s ease forwards;box-shadow:0 0 10px rgba(0,229,255,.5)}
+@keyframes preloaderProgress{0%{width:0%}50%{width:70%}100%{width:100%}}
+.preloader-text{font-size:.8rem;color:var(--text-secondary);letter-spacing:2px;text-transform:uppercase;animation:preloaderTextPulse 1.5s ease-in-out infinite}
+@keyframes preloaderTextPulse{0%,100%{opacity:.5}50%{opacity:1}}
+
+/* ============================================
+   RIPPLE ЭФФЕКТ
+============================================ */
+.ripple{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.4) 0%,rgba(0,229,255,.2) 100%);transform:scale(0);animation:rippleAnimation .6s ease-out;pointer-events:none;z-index:1}
+@keyframes rippleAnimation{to{transform:scale(4);opacity:0}}
+
+/* ============================================
+   GLASSMORPHISM (матовое стекло)
+============================================ */
+.about-card,
+.community-intro,
+.contact-form-container,
+.contact-intro,
+.discussions-intro,
+.discussions-container,
+.support-intro-new,
+.support-hint,
+.admin-section,
+.modal-track-card{
+background:rgba(20,25,40,.35);
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 8px 32px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+/* ============================================
+   АНИМИРОВАННЫЙ ГРАДИЕНТНЫЙ БОРДЕР + GLASS
+============================================ */
+.quick-tile,
+.release-card,
+.community-card,
+.track-item{
+position:relative;
+overflow:hidden;
+background:
+linear-gradient(rgba(20,25,40,.4),rgba(20,25,40,.4)) padding-box,
+linear-gradient(90deg,var(--cyan),var(--magenta),var(--purple),var(--cyan)) border-box;
+background-size:100% 100%,300% 100%;
+animation:borderFlow 4s linear infinite;
+border:1px solid transparent;
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+box-shadow:0 8px 32px rgba(0,0,0,.2);
+}
+@keyframes borderFlow{0%{background-position:0 0,0% 0}100%{background-position:0 0,300% 0}}
+
+.quick-tile:hover{
+box-shadow:0 12px 40px rgba(0,229,255,.2),0 0 20px rgba(0,229,255,.1);
+}
+.release-card:hover{
+box-shadow:0 12px 40px rgba(0,229,255,.2);
+}
+.community-card:hover{
+box-shadow:0 12px 40px rgba(0,229,255,.2);
+}
+.track-item:hover{
+box-shadow:0 10px 30px rgba(0,229,255,.15);
+}
+.track-item.active{
+background:
+linear-gradient(rgba(0,229,255,.1),rgba(0,229,255,.05)) padding-box,
+linear-gradient(90deg,var(--cyan),#fff,var(--cyan)) border-box;
+background-size:100% 100%,300% 100%;
+animation:borderFlow 2s linear infinite;
+box-shadow:0 0 25px rgba(0,229,255,.3);
+}
+
+/* ============================================
+   RIPPLE ПОЗИЦИОНИРОВАНИЕ ДЛЯ КНОПОК
+============================================ */
+.login-btn,
+.submit-btn,
+.admin-btn,
+.copy-btn,
+.play-btn-large,
+.mini-play-btn,
+.back-btn,
+.logout-btn,
+.modal-download-btn,
+.modal-cancel-btn,
+.discussion-send-btn,
+.featured-download-btn,
+.track-download-btn,
+.maintenance-admin-trigger,
+.admin-trigger{
+position:relative;
+overflow:hidden;
+}
+
 .maintenance-screen{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;background:linear-gradient(135deg,#0a0a1a 0%,#1a0a2e 50%,#0a0a1a 100%);padding:40px 20px;text-align:center;opacity:0;pointer-events:none;transition:opacity .6s ease}
 .maintenance-screen.active{opacity:1;pointer-events:all}
 .maintenance-icon{font-size:5rem;margin-bottom:20px;animation:maintenanceFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,170,0,.4))}
@@ -129,8 +248,8 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .tile-icon.about{background:radial-gradient(circle at 30% 25%,#ff66f5 0%,transparent 40%),radial-gradient(circle at 70% 80%,#990088 0%,transparent 50%),linear-gradient(135deg,#ff00e5 0%,#cc0099 50%,#800066 100%);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4)}
 .tile-icon>*{position:relative;z-index:2;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));transition:transform .4s ease,filter .4s ease}
 .quick-tile:hover .tile-icon>*{transform:translateZ(10px) scale(1.15);filter:drop-shadow(0 4px 10px rgba(255,255,255,.3))}
-.tile-title{font-size:.95rem;font-weight:600;margin-bottom:4px}
-.tile-desc{font-size:.75rem;color:var(--text-secondary)}
+.tile-title{font-size:.95rem;font-weight:600;margin-bottom:4px;position:relative;z-index:2}
+.tile-desc{font-size:.75rem;color:var(--text-secondary);position:relative;z-index:2}
 
 .logout-btn{display:block;margin:20px auto 0;padding:12px 30px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:transparent;color:var(--text-secondary);font-size:.8rem;font-family:'Inter',sans-serif;cursor:pointer;transition:all .3s ease;letter-spacing:1px}
 .logout-btn:hover{border-color:rgba(255,0,0,.3);color:#ff6b6b}
@@ -170,11 +289,11 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .track-cover::before{content:'';position:absolute;top:3px;left:3px;right:35%;height:35%;background:linear-gradient(135deg,rgba(255,255,255,.4),transparent);border-radius:12px 12px 50% 50%;pointer-events:none;z-index:3}
 .track-cover img{width:100%;height:100%;object-fit:cover;border-radius:12px}
 .track-item:hover .track-cover{transform:rotateX(-8deg) rotateY(10deg) scale(1.05);box-shadow:0 15px 30px rgba(0,229,255,.25),inset 0 -8px 15px rgba(0,0,0,.35)}
-.track-info{flex:1;min-width:0}
+.track-info{flex:1;min-width:0;position:relative;z-index:2}
 .track-title{font-size:1rem;font-weight:600;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .track-artist{font-size:.8rem;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.track-duration{font-size:.85rem;color:var(--text-secondary);font-weight:500;flex-shrink:0;font-family:'Orbitron',monospace;margin-right:8px}
-.track-download-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--card-border);background:rgba(20,20,40,.6);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s ease;position:relative}
+.track-duration{font-size:.85rem;color:var(--text-secondary);font-weight:500;flex-shrink:0;font-family:'Orbitron',monospace;margin-right:8px;position:relative;z-index:2}
+.track-download-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--card-border);background:rgba(20,20,40,.6);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s ease;position:relative;z-index:2}
 .track-download-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.1);transform:scale(1.05)}
 .track-download-btn:active{transform:scale(.95)}
 .track-download-btn svg{width:18px;height:18px;fill:currentColor}
@@ -199,10 +318,10 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .community-icon.bip{background:radial-gradient(circle at 30% 25%,#66f5ff 0%,transparent 40%),radial-gradient(circle at 70% 80%,#0066aa 0%,transparent 50%),linear-gradient(135deg,#00e5ff 0%,#0099ff 50%,#005588 100%);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4)}
 .community-icon.telegram{background:radial-gradient(circle at 30% 25%,#66ccff 0%,transparent 40%),radial-gradient(circle at 70% 80%,#006699 0%,transparent 50%),linear-gradient(135deg,#0088cc 0%,#00a8e8 50%,#005577 100%);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4)}
 .community-icon.instagram{background:radial-gradient(circle at 30% 25%,#ffcc66 0%,transparent 40%),radial-gradient(circle at 70% 80%,#cc2244 0%,transparent 50%),linear-gradient(135deg,#f09433 0%,#e6683c 30%,#dc2743 60%,#bc1888 100%);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4)}
-.community-info{flex:1;min-width:0}
+.community-info{flex:1;min-width:0;position:relative;z-index:2}
 .community-name{font-size:1.2rem;font-weight:700;margin-bottom:4px}
 .community-desc{font-size:.85rem;color:var(--text-secondary)}
-.community-arrow{font-size:1.5rem;color:var(--text-secondary);transition:transform .3s ease}
+.community-arrow{font-size:1.5rem;color:var(--text-secondary);transition:transform .3s ease;position:relative;z-index:2}
 .community-card:hover .community-arrow{transform:translateX(5px);color:var(--cyan)}
 .community-card.coming-soon .community-arrow{transform:none}
 .community-badge{display:inline-block;padding:4px 10px;background:rgba(255,255,255,.1);border-radius:8px;font-size:.75rem;color:var(--text-secondary);margin-top:6px}
@@ -395,6 +514,7 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .track-cover{width:70px;height:70px}
 .card-number{font-size:1.8rem}
 .ai-badge{font-size:1.1rem;padding:5px 16px}
+.preloader-logo{font-size:3.5rem}
 }
 @media(min-width:1024px){
 .quick-grid{grid-template-columns:repeat(4,1fr)}
@@ -410,10 +530,37 @@ body{padding-bottom:0}
 .ai-badge{font-size:.7rem;padding:3px 8px;letter-spacing:2px}
 .card-number{font-size:1.15rem;letter-spacing:2px;word-spacing:5px}
 .yandex-pay-card{padding:20px}
+.preloader-logo{font-size:1.8rem}
 }
 </style>
 </head>
 <body>
+
+<!-- ============================================
+     ПРЕЛОАДЕР
+============================================ -->
+<div class="preloader" id="preloader">
+<div class="preloader-orb preloader-orb-1"></div>
+<div class="preloader-orb preloader-orb-2"></div>
+<div class="preloader-orb preloader-orb-3"></div>
+<div class="preloader-content">
+<div class="preloader-logo">
+<span class="preloader-letter">E</span>
+<span class="preloader-letter">V</span>
+<span class="preloader-letter">G</span>
+<span class="preloader-letter">E</span>
+<span class="preloader-letter">N</span>
+<span class="preloader-letter">I</span>
+<span class="preloader-letter">I</span>
+<span class="preloader-badge">AI</span>
+</div>
+<div class="preloader-bar">
+<div class="preloader-bar-fill"></div>
+</div>
+<div class="preloader-text">Загрузка...</div>
+</div>
+</div>
+
 <div class="bg-effects">
 <div class="bg-orb bg-orb-1"></div>
 <div class="bg-orb bg-orb-2"></div>
@@ -652,6 +799,58 @@ var TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
 var TELEGRAM_CHAT_ID = '5129595944';
 var ADMIN_PASSWORD = 'evgenii2024';
 var isAdminLoggedIn = false;
+
+/* ============================================
+   ПРЕЛОАДЕР
+============================================ */
+function hidePreloader() {
+  var preloader = document.getElementById('preloader');
+  if (preloader && !preloader.classList.contains('hidden')) {
+    preloader.classList.add('hidden');
+    setTimeout(function() {
+      preloader.remove();
+    }, 800);
+  }
+}
+
+// Скрыть прелоадер через 2.5 секунды максимум
+setTimeout(hidePreloader, 2500);
+
+// Или когда всё загрузится
+window.addEventListener('load', function() {
+  setTimeout(hidePreloader, 500);
+});
+
+/* ============================================
+   RIPPLE ЭФФЕКТ
+============================================ */
+function createRippleOnElement(element, event) {
+  var rect = element.getBoundingClientRect();
+  var size = Math.max(rect.width, rect.height);
+  var x = event.clientX - rect.left - size / 2;
+  var y = event.clientY - rect.top - size / 2;
+  
+  var ripple = document.createElement('span');
+  ripple.className = 'ripple';
+  ripple.style.width = size + 'px';
+  ripple.style.height = size + 'px';
+  ripple.style.left = x + 'px';
+  ripple.style.top = y + 'px';
+  
+  element.appendChild(ripple);
+  
+  setTimeout(function() {
+    ripple.remove();
+  }, 600);
+}
+
+document.addEventListener('click', function(e) {
+  var selectors = '.quick-tile, .release-card, .community-card, .track-item, .login-btn, .submit-btn, .admin-btn, .copy-btn, .play-btn-large, .mini-play-btn, .back-btn, .logout-btn, .modal-download-btn, .modal-cancel-btn, .discussion-send-btn, .featured-release, .featured-download-btn, .track-download-btn, .maintenance-admin-trigger, .admin-trigger';
+  var target = e.target.closest(selectors);
+  if (target) {
+    createRippleOnElement(target, e);
+  }
+});
 
 /* ============================================
    ТЕХНИЧЕСКИЕ РАБОТЫ
