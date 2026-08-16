@@ -5,23 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EVGENII AI</title>
 
-<!-- Favicon (вкладка браузера) -->
+<!-- Favicon -->
 <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png?v=2">
 <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png?v=2">
 <link rel="shortcut icon" href="favicon-48x48.png?v=2">
-
-<!-- iPhone / iPad -->
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="EVGENII AI">
-
-<!-- Android / PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0a0a1a">
 <meta name="application-name" content="EVGENII AI">
-
-<!-- Windows -->
 <meta name="msapplication-TileColor" content="#0a0a1a">
 <meta name="msapplication-TileImage" content="favicon-144x144.png">
 
@@ -30,13 +24,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
---cyan:#00e5ff;--magenta:#ff00e5;--purple:#b000ff;
---gold:#ffb347;--green:#00ff88;--pink:#ff6b9d;
---red:#ff0040;--dark-bg:#0a0a1a;--card-bg:rgba(20,20,40,.8);
---card-border:rgba(0,229,255,.15);
---text-primary:#fff;--text-secondary:rgba(255,255,255,.6);
-}
+:root{--cyan:#00e5ff;--magenta:#ff00e5;--purple:#b000ff;--gold:#ffb347;--green:#00ff88;--pink:#ff6b9d;--red:#ff0040;--dark-bg:#0a0a1a;--card-bg:rgba(20,20,40,.8);--card-border:rgba(0,229,255,.15);--text-primary:#fff;--text-secondary:rgba(255,255,255,.6)}
 body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-primary);min-height:100vh;overflow-x:hidden}
 .bg-effects{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
 .bg-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.3;animation:orbFloat 8s ease-in-out infinite}
@@ -47,7 +35,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .page{display:none;position:relative;z-index:1;min-height:100vh;padding:20px 16px 120px;max-width:1200px;margin:0 auto}
 .page.active{display:block;animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
 .maintenance-screen{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;background:linear-gradient(135deg,#0a0a1a 0%,#1a0a2e 50%,#0a0a1a 100%);padding:40px 20px;text-align:center;opacity:0;pointer-events:none;transition:opacity .6s ease}
 .maintenance-screen.active{opacity:1;pointer-events:all}
 .maintenance-icon{font-size:5rem;margin-bottom:20px;animation:maintenanceFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,170,0,.4))}
@@ -65,7 +52,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .maintenance-admin-modal.active{opacity:1;pointer-events:all}
 .maintenance-admin-content{width:100%;max-width:400px;background:linear-gradient(180deg,#0f1525 0%,#0a0e1a 100%);border:1px solid rgba(255,170,0,.3);border-radius:24px;padding:30px 24px 24px;box-shadow:0 20px 60px rgba(255,170,0,.2)}
 .maintenance-admin-title{font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:2px;text-align:center;margin-bottom:20px;color:var(--gold)}
-
 .login-screen{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1000;background:linear-gradient(135deg,#0a0a1a 0%,#1a0a2e 50%,#0a0a1a 100%);transition:opacity .6s ease,transform .6s ease;padding:40px 20px}
 .login-screen.hidden{opacity:0;transform:scale(1.05);pointer-events:none}
 .login-container{width:100%;max-width:400px;display:flex;flex-direction:column;align-items:center}
@@ -91,7 +77,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 .login-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,229,255,.4)}
 .login-btn:active{transform:translateY(0)}
-
 .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:30px;padding-top:10px}
 .header-left{display:flex;flex-direction:column;gap:4px}
 .header-time{font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:700;background:linear-gradient(135deg,var(--cyan),#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -99,7 +84,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .header-right{text-align:right}
 .header-name{font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:3px;background:linear-gradient(135deg,var(--magenta),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .header-name-label{font-size:.7rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px}
-
 .banner{position:relative;width:100%;aspect-ratio:16/10;border-radius:24px;overflow:hidden;margin-bottom:30px;border:1px solid var(--card-border);background:linear-gradient(135deg,#0d1b2a,#1a0a2e,#0d1b2a);max-width:800px;margin-left:auto;margin-right:auto}
 .banner-content{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;background:radial-gradient(ellipse at 30% 50%,rgba(0,229,255,.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(255,0,229,.15) 0%,transparent 60%)}
 .banner-geometric{position:absolute;width:100%;height:100%;top:0;left:0}
@@ -110,7 +94,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .geo-shape-banner:nth-child(4){width:35px;height:35px;border-color:var(--cyan);bottom:25%;right:20%;border-radius:4px;animation-delay:-1s}
 .banner-title{font-family:'Orbitron',sans-serif;font-size:2.2rem;font-weight:900;letter-spacing:6px;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:2;filter:drop-shadow(0 0 15px rgba(0,229,255,.3));display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
 .banner-slogan{font-size:.85rem;color:var(--text-secondary);margin-top:12px;text-align:center;position:relative;z-index:2}
-
 .section-title{font-size:.8rem;text-transform:uppercase;letter-spacing:3px;color:var(--text-secondary);margin-bottom:16px;font-weight:600}
 .release-section{margin-bottom:30px;max-width:800px;margin-left:auto;margin-right:auto}
 .release-card{display:flex;align-items:center;gap:16px;padding:16px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;transition:transform .2s ease,box-shadow .3s ease;cursor:pointer;position:relative;overflow:hidden}
@@ -124,7 +107,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .release-label{font-size:.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-bottom:4px}
 .release-title{font-size:1.1rem;font-weight:600;margin-bottom:4px}
 .release-meta{font-size:.8rem;color:var(--text-secondary)}
-
 .quick-access-section{margin-bottom:30px;max-width:1000px;margin-left:auto;margin-right:auto}
 .quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .quick-tile{padding:20px 16px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;cursor:pointer;transition:transform .2s ease,box-shadow .3s ease,border-color .3s ease;position:relative;perspective:1000px}
@@ -152,17 +134,14 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .quick-tile:hover .tile-icon>*{transform:translateZ(10px) scale(1.15);filter:drop-shadow(0 4px 10px rgba(255,255,255,.3))}
 .tile-title{font-size:.95rem;font-weight:600;margin-bottom:4px}
 .tile-desc{font-size:.75rem;color:var(--text-secondary)}
-
 .logout-btn{display:block;margin:20px auto 0;padding:12px 30px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:transparent;color:var(--text-secondary);font-size:.8rem;font-family:'Inter',sans-serif;cursor:pointer;transition:all .3s ease;letter-spacing:1px}
 .logout-btn:hover{border-color:rgba(255,0,0,.3);color:#ff6b6b}
 .admin-trigger{display:block;margin:10px auto 0;padding:8px 16px;border:1px solid rgba(255,255,255,.05);border-radius:8px;background:transparent;color:rgba(255,255,255,.2);font-size:.7rem;font-family:'Inter',sans-serif;cursor:pointer;transition:all .3s ease;letter-spacing:1px;opacity:.3}
 .admin-trigger:hover{opacity:1;border-color:rgba(0,229,255,.3);color:var(--cyan);background:rgba(0,229,255,.05)}
-
 .page-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-top:10px}
 .back-btn{width:44px;height:44px;border-radius:14px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-primary);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s ease;flex-shrink:0}
 .back-btn:hover{border-color:var(--cyan);background:rgba(0,229,255,.1)}
 .page-title{font-size:2.2rem;font-weight:900;letter-spacing:1px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-
 .featured-release{position:relative;width:100%;max-width:600px;margin:0 auto 30px;border-radius:28px;overflow:hidden;border:1px solid var(--card-border);background:linear-gradient(180deg,#0d2030 0%,#1a0a2e 50%,#0d1020 100%);padding:30px 20px 36px;display:flex;flex-direction:column;align-items:center;cursor:pointer;perspective:1000px}
 .featured-release::before{content:'';position:absolute;top:0;left:0;right:0;height:200px;background:radial-gradient(ellipse at 50% 0%,rgba(0,229,255,.12) 0%,transparent 70%);pointer-events:none}
 .featured-cover{position:relative;width:200px;height:200px;border-radius:24px;overflow:visible;margin-bottom:20px;z-index:1;background:linear-gradient(135deg,#2a3a4a,#3a2a4a);display:flex;align-items:center;justify-content:center;font-size:4rem;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.175,.885,.32,1.275),box-shadow .4s ease;box-shadow:0 25px 50px rgba(0,0,0,.6),0 10px 20px rgba(0,0,0,.4),inset 0 -12px 20px rgba(0,0,0,.4),inset 0 12px 20px rgba(255,255,255,.15)}
@@ -181,7 +160,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .featured-download-btn{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:12px;border:1px solid var(--card-border);background:rgba(20,20,40,.8);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:all .3s ease}
 .featured-download-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.1)}
 .featured-download-btn svg{width:20px;height:20px;fill:currentColor}
-
 .tracks-list{display:flex;flex-direction:column;gap:12px;max-width:800px;margin:0 auto}
 .track-item{display:flex;align-items:center;gap:14px;padding:14px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;transition:transform .2s ease,box-shadow .3s ease,border-color .3s ease;cursor:pointer}
 .track-item:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,229,255,.08);border-color:rgba(0,229,255,.25)}
@@ -199,7 +177,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .track-download-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.1);transform:scale(1.05)}
 .track-download-btn:active{transform:scale(.95)}
 .track-download-btn svg{width:18px;height:18px;fill:currentColor}
-
 .about-content,.community-content{display:flex;flex-direction:column;gap:20px;max-width:800px;margin:0 auto}
 .about-card{background:rgba(20,25,40,.6);border:1px solid var(--card-border);border-radius:20px;padding:24px 20px;line-height:1.6;font-size:1rem}
 .about-card .highlight{color:var(--cyan);font-weight:600}
@@ -207,7 +184,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .about-quote{border-left:3px solid var(--cyan);padding-left:20px;margin:20px 0;font-style:italic;color:var(--cyan);font-size:1.05rem;line-height:1.7}
 .about-card p{margin-bottom:12px;color:var(--text-secondary)}
 .about-card p:last-child{margin-bottom:0}
-
 .community-card{background:rgba(20,25,40,.6);border:1px solid var(--card-border);border-radius:20px;padding:24px 20px;display:flex;align-items:center;gap:20px;cursor:pointer;transition:all .3s ease;text-decoration:none;color:var(--text-primary);perspective:1000px}
 .community-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,229,255,.15);border-color:rgba(0,229,255,.3)}
 .community-card.coming-soon{opacity:.6;cursor:not-allowed}
@@ -229,7 +205,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .community-badge{display:inline-block;padding:4px 10px;background:rgba(255,255,255,.1);border-radius:8px;font-size:.75rem;color:var(--text-secondary);margin-top:6px}
 .community-intro{background:rgba(20,25,40,.6);border:1px solid var(--card-border);border-radius:20px;padding:24px 20px;margin-bottom:10px}
 .community-intro p{color:var(--text-secondary);line-height:1.6;font-size:1rem}
-
 .contact-form-container{background:rgba(20,25,40,.6);border:1px solid var(--card-border);border-radius:20px;padding:24px;margin-top:0}
 .form-group{margin-bottom:16px}
 .form-label{display:block;font-size:.8rem;color:var(--text-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
@@ -249,7 +224,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .vpn-warning-icon{font-size:1.2rem;flex-shrink:0}
 .vpn-warning-text{color:var(--text-secondary);font-size:.85rem;line-height:1.4}
 .vpn-warning-text strong{color:#ffaa00}
-
 .sticky-player{position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);width:100%;max-width:600px;background:rgba(15,15,30,.95);backdrop-filter:blur(10px);border-top:1px solid var(--card-border);padding:12px 16px 20px;z-index:100;transition:transform .4s cubic-bezier(.175,.885,.32,1.275);border-radius:24px 24px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.5)}
 .sticky-player.visible{transform:translateX(-50%) translateY(0)}
 .player-top-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
@@ -270,7 +244,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .player-time-mini.end{text-align:right}
 .player-bar-container{flex:1;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;cursor:pointer}
 .player-bar-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:2px;width:0%;transition:width .1s linear}
-
 .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,15,.85);backdrop-filter:blur(8px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s ease}
 .modal-overlay.active{opacity:1;pointer-events:all}
 .modal-content{width:100%;max-width:440px;background:linear-gradient(180deg,#0f1525 0%,#0a0e1a 100%);border:1px solid var(--card-border);border-radius:28px;padding:30px 24px 24px;transform:translateY(30px) scale(.95);transition:transform .4s cubic-bezier(.175,.885,.32,1.275);max-height:90vh;overflow-y:auto}
@@ -292,7 +265,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .modal-download-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .modal-cancel-btn{width:100%;padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(20,20,40,.6);color:var(--text-secondary);font-size:1rem;font-family:'Inter',sans-serif;cursor:pointer;transition:all .3s ease}
 .modal-cancel-btn:hover{border-color:rgba(255,255,255,.2);color:var(--text-primary)}
-
 .support-wrapper{max-width:520px;margin:0 auto}
 .support-intro-new{background:rgba(20,25,40,.6);border:1px solid var(--card-border);border-radius:20px;padding:24px 20px;margin-bottom:24px;text-align:center}
 .support-intro-new p{color:var(--text-secondary);line-height:1.6;font-size:1rem}
@@ -329,7 +301,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .support-hint .hint-icon{font-size:1.2rem;margin-right:6px}
 .copy-toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);padding:14px 24px;background:linear-gradient(135deg,rgba(0,255,136,.95),rgba(0,200,100,.95));color:#000;border-radius:14px;font-weight:700;font-size:.9rem;box-shadow:0 10px 30px rgba(0,255,136,.4);opacity:0;pointer-events:none;transition:all .4s cubic-bezier(.175,.885,.32,1.275);z-index:5000;display:flex;align-items:center;gap:8px}
 .copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
 .discussions-intro{background:rgba(20,25,40,.6);border:1px solid var(--card-border);border-radius:20px;padding:24px 20px;margin-bottom:20px;max-width:800px;margin-left:auto;margin-right:auto}
 .discussions-intro p{color:var(--text-secondary);line-height:1.6;font-size:1rem}
 .discussions-container{max-width:800px;margin:0 auto;background:rgba(20,25,40,.6);border:1px solid var(--card-border);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;height:calc(100vh - 280px);min-height:500px}
@@ -369,7 +340,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .discussion-send-btn:active{transform:scale(.95)}
 .discussion-send-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .discussion-send-btn svg{width:18px;height:18px;fill:#fff}
-
 .admin-container{max-width:900px;margin:0 auto}
 .admin-section{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:24px;margin-bottom:24px}
 .admin-section-title{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
@@ -387,7 +357,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .admin-btn.warning{background:linear-gradient(135deg,var(--gold),#ff8800);color:#000;box-shadow:0 6px 20px rgba(255,170,0,.3)}
 .admin-btn.warning:hover{transform:translateY(-2px)}
 .admin-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-
 .maintenance-toggle{display:flex;align-items:center;justify-content:space-between;padding:16px;background:rgba(0,0,0,.3);border-radius:12px;margin-bottom:16px;border:1px solid var(--card-border)}
 .maintenance-toggle-info{flex:1}
 .maintenance-toggle-title{font-size:.95rem;font-weight:600;margin-bottom:4px}
@@ -396,7 +365,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .maintenance-switch.active{background:linear-gradient(135deg,var(--gold),#ff8800);box-shadow:0 0 15px rgba(255,170,0,.4)}
 .maintenance-switch::after{content:'';position:absolute;top:3px;left:3px;width:26px;height:26px;background:#fff;border-radius:50%;transition:all .3s ease;box-shadow:0 2px 8px rgba(0,0,0,.3)}
 .maintenance-switch.active::after{left:31px}
-
 .fade-in-up{opacity:0;transform:translateY(20px);animation:fadeInUp .6s ease forwards}
 @keyframes fadeInUp{to{opacity:1;transform:translateY(0)}}
 .page.active .fade-in-up:nth-child(1){animation-delay:.1s}
@@ -404,187 +372,53 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 .page.active .fade-in-up:nth-child(3){animation-delay:.3s}
 .page.active .fade-in-up:nth-child(4){animation-delay:.4s}
 .page.active .fade-in-up:nth-child(5){animation-delay:.5s}
-
-/* ============================================
-   СТИЛИ СОГЛАШЕНИЯ
-============================================ */
-.agreement-wrapper {
-    max-width: 800px;
-    margin: -15px auto 25px;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-}
-
-.agreement-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 24px;
-    border: 1px solid rgba(0, 229, 255, 0.3);
-    border-radius: 50px;
-    background: rgba(10, 10, 26, 0.8);
-    backdrop-filter: blur(10px);
-    color: var(--cyan);
-    font-size: 0.8rem;
-    font-weight: 600;
-    font-family: 'Orbitron', sans-serif;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    text-transform: uppercase;
-}
-
-.agreement-btn:hover {
-    background: rgba(0, 229, 255, 0.1);
-    border-color: var(--cyan);
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
-    transform: translateY(-2px);
-}
-
-.agreement-btn svg { width: 16px; height: 16px; fill: currentColor; }
-
-.license-modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(5, 5, 15, 0.92); backdrop-filter: blur(12px);
-    z-index: 3000; display: flex; align-items: center; justify-content: center;
-    padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-}
-.license-modal-overlay.active { opacity: 1; pointer-events: all; }
-
-.license-modal-content {
-    width: 100%; max-width: 500px;
-    background: linear-gradient(180deg, #0f1525 0%, #0a0e1a 100%);
-    border: 1px solid rgba(0, 229, 255, 0.25); border-radius: 24px;
-    padding: 30px 24px; transform: translateY(20px) scale(0.95);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    max-height: 85vh; overflow-y: auto; position: relative;
-}
-.license-modal-overlay.active .license-modal-content { transform: translateY(0) scale(1); }
-.license-modal-content::-webkit-scrollbar { width: 4px; }
-.license-modal-content::-webkit-scrollbar-thumb { background: rgba(0, 229, 255, 0.3); border-radius: 2px; }
-
-.license-close-btn {
-    position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
-    border-radius: 50%; border: 1px solid var(--card-border); background: transparent;
-    color: var(--text-secondary); font-size: 1.2rem; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
-}
-.license-close-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
-
-.license-modal-header { text-align: center; margin-bottom: 24px; padding-top: 10px; }
-.license-modal-icon { font-size: 2.5rem; margin-bottom: 12px; filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.4)); }
-.license-modal-title {
-    font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 2px;
-    background: linear-gradient(135deg, var(--cyan), var(--purple));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-
-.license-text-block {
-    background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.1);
-    border-radius: 16px; padding: 20px; margin-bottom: 20px;
-    font-size: 0.85rem; line-height: 1.7; color: var(--text-secondary);
-}
-.license-text-block h4 {
-    font-family: 'Orbitron', sans-serif; color: var(--cyan); font-size: 0.8rem;
-    font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; margin-top: 16px;
-}
-.license-text-block h4:first-child { margin-top: 0; }
-.license-text-block ul { padding-left: 18px; margin: 8px 0; }
-.license-text-block li { margin-bottom: 6px; }
-.license-text-block li::marker { color: var(--cyan); }
-.license-text-block strong { color: var(--text-primary); }
-.license-text-block blockquote {
-    border-left: 3px solid var(--cyan); padding-left: 14px; margin: 10px 0;
-    font-style: italic; color: var(--text-primary);
-}
-
-/* Сноска со статьями закона */
-.license-law-ref {
-    margin-top: 12px; padding: 10px 14px;
-    background: rgba(255, 179, 71, 0.06);
-    border-left: 3px solid var(--gold);
-    border-radius: 6px;
-    font-size: 0.75rem; font-style: italic;
-    color: rgba(255, 179, 71, 0.85);
-    line-height: 1.5;
-}
-
-/* Чекбокс */
-.license-checkbox-wrapper {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 14px 16px; margin-bottom: 16px;
-    background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.15);
-    border-radius: 12px; cursor: pointer; transition: all 0.3s ease; user-select: none;
-}
-.license-checkbox-wrapper:hover { border-color: rgba(0, 229, 255, 0.35); background: rgba(0, 229, 255, 0.05); }
-.license-checkbox-wrapper.checked { border-color: var(--green); background: rgba(0, 255, 136, 0.05); }
-.license-checkbox {
-    width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0; margin-top: 1px;
-    border: 2px solid rgba(0, 229, 255, 0.4); background: rgba(0, 0, 0, 0.3);
-    display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
-}
-.license-checkbox-wrapper.checked .license-checkbox {
-    background: var(--green); border-color: var(--green);
-    box-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
-}
-.license-checkbox svg { width: 14px; height: 14px; fill: #000; opacity: 0; transition: opacity 0.2s ease; }
-.license-checkbox-wrapper.checked .license-checkbox svg { opacity: 1; }
-.license-checkbox-label { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
-.license-checkbox-label strong { color: var(--text-primary); }
-
-.license-agree-btn {
-    width: 100%; padding: 16px; border: none; border-radius: 14px;
-    background: linear-gradient(135deg, var(--cyan), var(--purple));
-    color: #fff; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif;
-    letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.3s ease, opacity 0.3s ease;
-    box-shadow: 0 8px 25px rgba(0, 229, 255, 0.3);
-}
-.license-agree-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(0, 229, 255, 0.4); }
-.license-agree-btn:active:not(:disabled) { transform: translateY(0); }
-.license-agree-btn:disabled { opacity: 0.4; cursor: not-allowed; filter: grayscale(0.5); }
-
-@media(min-width:768px){
-.quick-grid{grid-template-columns:repeat(3,1fr);gap:16px}
-.banner-title{font-size:3rem}
-.featured-title{font-size:2.2rem}
-.featured-cover{width:250px;height:250px}
-.page-title{font-size:2.8rem}
-.login-logo{font-size:3.5rem}
-.track-item{padding:18px}
-.track-cover{width:70px;height:70px}
-.card-number{font-size:1.8rem}
-.ai-badge{font-size:1.1rem;padding:5px 16px}
-}
-@media(min-width:1024px){
-.quick-grid{grid-template-columns:repeat(4,1fr)}
-body{padding-bottom:0}
-.sticky-player{max-width:500px}
-}
-@media(max-width:380px){
-.banner-title{font-size:1.6rem;letter-spacing:4px}
-.featured-title{font-size:1.4rem}
-.featured-cover{width:160px;height:160px}
-.page-title{font-size:1.8rem}
-.login-logo{font-size:2.2rem}
-.ai-badge{font-size:.7rem;padding:3px 8px;letter-spacing:2px}
-.card-number{font-size:1.15rem;letter-spacing:2px;word-spacing:5px}
-.yandex-pay-card{padding:20px}
-}
+.agreement-wrapper{max-width:800px;margin:-15px auto 25px;text-align:center;position:relative;z-index:2}
+.agreement-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border:1px solid rgba(0,229,255,.3);border-radius:50px;background:rgba(10,10,26,.8);backdrop-filter:blur(10px);color:var(--cyan);font-size:.8rem;font-weight:600;font-family:'Orbitron',sans-serif;letter-spacing:1px;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 15px rgba(0,0,0,.3);text-transform:uppercase}
+.agreement-btn:hover{background:rgba(0,229,255,.1);border-color:var(--cyan);box-shadow:0 0 20px rgba(0,229,255,.2);transform:translateY(-2px)}
+.agreement-btn svg{width:16px;height:16px;fill:currentColor}
+.license-modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,15,.92);backdrop-filter:blur(12px);z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.license-modal-overlay.active{opacity:1;pointer-events:all}
+.license-modal-content{width:100%;max-width:500px;background:linear-gradient(180deg,#0f1525 0%,#0a0e1a 100%);border:1px solid rgba(0,229,255,.25);border-radius:24px;padding:30px 24px;transform:translateY(20px) scale(.95);transition:transform .4s cubic-bezier(.175,.885,.32,1.275);max-height:85vh;overflow-y:auto;position:relative}
+.license-modal-overlay.active .license-modal-content{transform:translateY(0) scale(1)}
+.license-modal-content::-webkit-scrollbar{width:4px}
+.license-modal-content::-webkit-scrollbar-thumb{background:rgba(0,229,255,.3);border-radius:2px}
+.license-close-btn{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:1px solid var(--card-border);background:transparent;color:var(--text-secondary);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s ease}
+.license-close-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.1)}
+.license-modal-header{text-align:center;margin-bottom:24px;padding-top:10px}
+.license-modal-icon{font-size:2.5rem;margin-bottom:12px;filter:drop-shadow(0 0 15px rgba(0,229,255,.4))}
+.license-modal-title{font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:2px;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.license-text-block{background:rgba(0,229,255,.03);border:1px solid rgba(0,229,255,.1);border-radius:16px;padding:20px;margin-bottom:20px;font-size:.85rem;line-height:1.7;color:var(--text-secondary)}
+.license-text-block h4{font-family:'Orbitron',sans-serif;color:var(--cyan);font-size:.8rem;font-weight:700;letter-spacing:1px;margin-bottom:8px;margin-top:16px}
+.license-text-block h4:first-child{margin-top:0}
+.license-text-block ul{padding-left:18px;margin:8px 0}
+.license-text-block li{margin-bottom:6px}
+.license-text-block li::marker{color:var(--cyan)}
+.license-text-block strong{color:var(--text-primary)}
+.license-text-block blockquote{border-left:3px solid var(--cyan);padding-left:14px;margin:10px 0;font-style:italic;color:var(--text-primary)}
+.license-law-ref{margin-top:12px;padding:10px 14px;background:rgba(255,179,71,.06);border-left:3px solid var(--gold);border-radius:6px;font-size:.75rem;font-style:italic;color:rgba(255,179,71,.85);line-height:1.5}
+.license-checkbox-wrapper{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;margin-bottom:16px;background:rgba(0,229,255,.03);border:1px solid rgba(0,229,255,.15);border-radius:12px;cursor:pointer;transition:all .3s ease;user-select:none}
+.license-checkbox-wrapper:hover{border-color:rgba(0,229,255,.35);background:rgba(0,229,255,.05)}
+.license-checkbox-wrapper.checked{border-color:var(--green);background:rgba(0,255,136,.05)}
+.license-checkbox{width:22px;height:22px;border-radius:6px;flex-shrink:0;margin-top:1px;border:2px solid rgba(0,229,255,.4);background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;transition:all .3s ease}
+.license-checkbox-wrapper.checked .license-checkbox{background:var(--green);border-color:var(--green);box-shadow:0 0 12px rgba(0,255,136,.4)}
+.license-checkbox svg{width:14px;height:14px;fill:#000;opacity:0;transition:opacity .2s ease}
+.license-checkbox-wrapper.checked .license-checkbox svg{opacity:1}
+.license-checkbox-label{font-size:.85rem;color:var(--text-secondary);line-height:1.5}
+.license-checkbox-label strong{color:var(--text-primary)}
+.license-agree-btn{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;font-size:.95rem;font-weight:700;font-family:'Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:transform .2s ease,box-shadow .3s ease,opacity .3s ease;box-shadow:0 8px 25px rgba(0,229,255,.3)}
+.license-agree-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 35px rgba(0,229,255,.4)}
+.license-agree-btn:active:not(:disabled){transform:translateY(0)}
+.license-agree-btn:disabled{opacity:.4;cursor:not-allowed;filter:grayscale(.5)}
+@media(min-width:768px){.quick-grid{grid-template-columns:repeat(3,1fr);gap:16px}.banner-title{font-size:3rem}.featured-title{font-size:2.2rem}.featured-cover{width:250px;height:250px}.page-title{font-size:2.8rem}.login-logo{font-size:3.5rem}.track-item{padding:18px}.track-cover{width:70px;height:70px}.card-number{font-size:1.8rem}.ai-badge{font-size:1.1rem;padding:5px 16px}}
+@media(min-width:1024px){.quick-grid{grid-template-columns:repeat(4,1fr)}body{padding-bottom:0}.sticky-player{max-width:500px}}
+@media(max-width:380px){.banner-title{font-size:1.6rem;letter-spacing:4px}.featured-title{font-size:1.4rem}.featured-cover{width:160px;height:160px}.page-title{font-size:1.8rem}.login-logo{font-size:2.2rem}.ai-badge{font-size:.7rem;padding:3px 8px;letter-spacing:2px}.card-number{font-size:1.15rem;letter-spacing:2px;word-spacing:5px}.yandex-pay-card{padding:20px}}
 </style>
 </head>
 <body>
-<div class="bg-effects">
-<div class="bg-orb bg-orb-1"></div>
-<div class="bg-orb bg-orb-2"></div>
-<div class="bg-orb bg-orb-3"></div>
-</div>
+<div class="bg-effects"><div class="bg-orb bg-orb-1"></div><div class="bg-orb bg-orb-2"></div><div class="bg-orb bg-orb-3"></div></div>
 
 <div class="maintenance-screen" id="siteMaintenanceScreen">
-<div class="maintenance-gear g1">⚙</div>
-<div class="maintenance-gear g2">⚙</div>
+<div class="maintenance-gear g1">⚙</div><div class="maintenance-gear g2">⚙</div>
 <div class="maintenance-icon">🔧</div>
 <div class="maintenance-title">Технические работы</div>
 <div class="maintenance-subtitle">Извините, сайт временно недоступен.<br>Мы работаем над улучшением.<br><br><strong>Скоро всё заработает!</strong></div>
@@ -594,183 +428,93 @@ body{padding-bottom:0}
 <div class="maintenance-admin-modal" id="maintenanceAdminModal">
 <div class="maintenance-admin-content">
 <div class="maintenance-admin-title">🔐 ВХОД ДЛЯ АДМИНА</div>
-<div class="form-group">
-<label class="form-label">Пароль администратора</label>
-<input type="password" class="form-input" id="maintenanceAdminPassword" placeholder="Введите пароль" autocomplete="off">
-</div>
-<div style="display:flex;gap:12px">
-<button class="admin-btn warning" onclick="maintenanceAdminLogin()" style="flex:1">ВОЙТИ</button>
-<button class="admin-btn danger" onclick="closeMaintenanceAdminModal()" style="flex:1">ОТМЕНА</button>
-</div>
+<div class="form-group"><label class="form-label">Пароль администратора</label><input type="password" class="form-input" id="maintenanceAdminPassword" placeholder="Введите пароль" autocomplete="off"></div>
+<div style="display:flex;gap:12px"><button class="admin-btn warning" onclick="maintenanceAdminLogin()" style="flex:1">ВОЙТИ</button><button class="admin-btn danger" onclick="closeMaintenanceAdminModal()" style="flex:1">ОТМЕНА</button></div>
 <div class="form-status" id="maintenanceAdminStatus"></div>
 </div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО СОГЛАШЕНИЯ -->
 <div class="license-modal-overlay" id="licenseModal">
 <div class="license-modal-content">
     <button class="license-close-btn" id="licenseCloseBtn" onclick="closeLicenseModal()">✕</button>
-    <div class="license-modal-header">
-        <div class="license-modal-icon">📜</div>
-        <div class="license-modal-title">СОГЛАШЕНИЕ</div>
-    </div>
+    <div class="license-modal-header"><div class="license-modal-icon">📜</div><div class="license-modal-title">СОГЛАШЕНИЕ</div></div>
     <div class="license-text-block">
         <h4>🎵 1. Авторство и концепция</h4>
         <blockquote>Все идеи и концепции принадлежат <strong>полностью автору</strong>. Тексты песен создаются автором при вспомогательном участии искусственного интеллекта, доля которого варьируется в зависимости от конкретного произведения — от ≈20% (подбор рифм, синонимов, шлифовка отдельных строк) до ≈50% (совместная проработка отдельных фрагментов). При этом автор осуществляет общее <strong>творческое руководство, отбор, редактуру и финальное утверждение</strong> текста. Вокал и аранжировка генерируются AI на основе авторских указаний. Правообладателем всего контента является автор проекта EVGENII AI.</blockquote>
-        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 1228 (автор результата интеллектуальной деятельности), ст. 1229 (исключительное право), ст. 1255, 1259 (авторские права и их объекты).</div>
-
+        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 1228, 1229, 1255, 1259.</div>
         <h4>✅ 2. Разрешено</h4>
-        <ul>
-            <li>Прослушивание всех треков онлайн</li>
-            <li>Скачивание для <strong>личного некоммерческого</strong> использования</li>
-            <li>Делиться ссылками на треки в соцсетях</li>
-            <li>Участие в обсуждениях и сообществах</li>
-        </ul>
-        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 1273 (свободное воспроизведение произведения в личных целях).</div>
-
+        <ul><li>Прослушивание всех треков онлайн</li><li>Скачивание для <strong>личного некоммерческого</strong> использования</li><li>Делиться ссылками на треки в соцсетях</li><li>Участие в обсуждениях и сообществах</li></ul>
+        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 1273.</div>
         <h4>🚫 3. Запрещено</h4>
-        <ul>
-            <li>Коммерческое использование без письменного разрешения</li>
-            <li>Загрузка на стриминговые платформы от своего имени</li>
-            <li>Использование треков для обучения сторонних AI-моделей</li>
-            <li>Присвоение авторства текстов или идей</li>
-        </ul>
-        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 1270 (исключительное право на использование произведения), ст. 1301 (ответственность за нарушение исключительного права — компенсация от 10 000 до 5 000 000 ₽), КоАП РФ ст. 7.12, УК РФ ст. 146.</div>
-
+        <ul><li>Коммерческое использование без письменного разрешения</li><li>Загрузка на стриминговые платформы от своего имени</li><li>Использование треков для обучения сторонних AI-моделей</li><li>Присвоение авторства текстов или идей</li></ul>
+        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 1270, 1301, КоАП РФ ст. 7.12, УК РФ ст. 146.</div>
         <h4>⚖️ 4. Ответственность</h4>
         <blockquote>Проект EVGENII AI носит исключительно <strong>развлекательный характер</strong> и является некоммерческим творческим проектом. Весь контент предоставляется «как есть», без каких-либо гарантий. Автор и правообладатель не несёт ответственности за возможные проблемы, убытки или последствия, возникшие в результате использования сайта, прослушивания контента или взаимодействия с сервисами проекта, за исключением случаев, прямо предусмотренных действующим законодательством.</blockquote>
-        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 15, ст. 401 (основания и условия ответственности).</div>
-
+        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 15, 401.</div>
         <h4>💬 5. Обратная связь</h4>
         <p>По вопросам лицензирования, сотрудничества или коммерческого использования — пишите через раздел «Связь» на сайте.</p>
     </div>
-
-    <!-- Чекбокс -->
     <div class="license-checkbox-wrapper" id="licenseCheckboxWrapper" onclick="toggleLicenseCheckbox()">
-        <div class="license-checkbox">
-            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
-        </div>
+        <div class="license-checkbox"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
         <div class="license-checkbox-label">Я <strong>ознакомился(ась)</strong> с условиями соглашения и принимаю их</div>
     </div>
-
     <button class="license-agree-btn" id="licenseAgreeBtn" disabled onclick="acceptLicense()">ПРИНЯТЬ И ПРОДОЛЖИТЬ</button>
 </div>
 </div>
 
 <div class="login-screen" id="loginScreen">
 <div class="login-container">
-<div class="login-banner">
-<div class="login-banner-bg"></div>
-<div class="login-geometric"><div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div></div>
-<div style="position:relative;z-index:2;text-align:center">
-<div class="login-logo">EVGENII<span class="ai-badge">AI</span></div>
-<div class="login-slogan">Где заканчиваюсь я — и начинается ИИ</div>
-</div>
+<div class="login-banner"><div class="login-banner-bg"></div><div class="login-geometric"><div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div><div class="geo-shape"></div></div>
+<div style="position:relative;z-index:2;text-align:center"><div class="login-logo">EVGENII<span class="ai-badge">AI</span></div><div class="login-slogan">Где заканчиваюсь я — и начинается ИИ</div></div>
 </div>
 <div class="login-greeting" id="loginGreeting">Добрый вечер</div>
-<form class="login-form" id="loginForm">
-<input type="text" class="login-input" id="nameInput" placeholder="Введите ваше имя" autocomplete="off" maxlength="20">
-<button type="submit" class="login-btn">ВОЙТИ</button>
-</form>
+<form class="login-form" id="loginForm"><input type="text" class="login-input" id="nameInput" placeholder="Введите ваше имя" autocomplete="off" maxlength="20"><button type="submit" class="login-btn">ВОЙТИ</button></form>
 </div>
 </div>
 
 <div class="page" id="homePage">
-<div class="header fade-in-up">
-<div class="header-left"><div class="header-time" id="headerTime">00:00</div><div class="header-greeting" id="headerGreeting">ДОБРЫЙ ДЕНЬ</div></div>
-<div class="header-right"><div class="header-name-label">ГОСТЬ</div><div class="header-name" id="headerName">ИМЯ</div></div>
-</div>
-<div class="banner fade-in-up">
-<div class="banner-content">
-<div class="banner-geometric"><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div></div>
-<div class="banner-title">EVGENII<span class="ai-badge">AI</span></div>
-<div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div>
-</div>
-</div>
-
-<!-- КНОПКА СОГЛАШЕНИЯ МЕЖДУ БАННЕРОМ И РЕЛИЗОМ -->
-<div class="agreement-wrapper fade-in-up" style="animation-delay:.25s">
-    <button class="agreement-btn" id="agreementBtn" onclick="openLicenseModal(false)">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 9h-2v2h2v-2zm0-4h-2v2h2V7zm-3 8H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm5-1V3.5L18.5 7H15z"/></svg>
-        Лицензионное соглашение
-    </button>
-</div>
-
-<div class="release-section fade-in-up">
-<div class="section-title">НОВЫЙ РЕЛИЗ</div>
-<div class="release-card" id="homeReleaseCard" onclick="playNewRelease()"></div>
-</div>
-<div class="quick-access-section fade-in-up">
-<div class="section-title">БЫСТРЫЙ ДОСТУП</div>
-<div class="quick-grid">
+<div class="header fade-in-up"><div class="header-left"><div class="header-time" id="headerTime">00:00</div><div class="header-greeting" id="headerGreeting">ДОБРЫЙ ДЕНЬ</div></div><div class="header-right"><div class="header-name-label">ГОСТЬ</div><div class="header-name" id="headerName">ИМЯ</div></div></div>
+<div class="banner fade-in-up"><div class="banner-content"><div class="banner-geometric"><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div><div class="geo-shape-banner"></div></div><div class="banner-title">EVGENII<span class="ai-badge">AI</span></div><div class="banner-slogan">Где заканчиваюсь я — и начинается ИИ</div></div></div>
+<div class="agreement-wrapper fade-in-up" style="animation-delay:.25s"><button class="agreement-btn" id="agreementBtn" onclick="openLicenseModal(false)"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 9h-2v2h2v-2zm0-4h-2v2h2V7zm-3 8H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm5-1V3.5L18.5 7H15z"/></svg> Лицензионное соглашение</button></div>
+<div class="release-section fade-in-up"><div class="section-title">НОВЫЙ РЕЛИЗ</div><div class="release-card" id="homeReleaseCard" onclick="playNewRelease()"></div></div>
+<div class="quick-access-section fade-in-up"><div class="section-title">БЫСТРЫЙ ДОСТУП</div><div class="quick-grid">
 <div class="quick-tile" onclick="navigateTo('tracksPage')"><div class="tile-icon tracks">🎵</div><div class="tile-title">Все треки</div><div class="tile-desc">Полная дискография</div></div>
 <div class="quick-tile" onclick="navigateTo('discussionsPage');loadDiscussions()"><div class="tile-icon discussions">💬</div><div class="tile-title">Обсуждения</div><div class="tile-desc">Общий чат слушателей</div></div>
 <div class="quick-tile" onclick="navigateTo('communityPage')"><div class="tile-icon community">🌐</div><div class="tile-title">Сообщества</div><div class="tile-desc">Bip &amp; Telegram</div></div>
 <div class="quick-tile" onclick="navigateTo('contactPage')"><div class="tile-icon contact">✉️</div><div class="tile-title">Связь</div><div class="tile-desc">Написать автору</div></div>
 <div class="quick-tile" onclick="navigateTo('supportPage')"><div class="tile-icon support">💜</div><div class="tile-title">Поддержать</div><div class="tile-desc">Сказать спасибо</div></div>
 <div class="quick-tile" onclick="navigateTo('aboutPage')"><div class="tile-icon about">ℹ️</div><div class="tile-title">О проекте</div><div class="tile-desc">Узнать больше</div></div>
-</div>
-</div>
-<button class="logout-btn" id="logoutBtn">ВЫЙТИ</button>
-<button class="admin-trigger" onclick="showAdminLogin()">⚙️</button>
+</div></div>
+<button class="logout-btn" id="logoutBtn">ВЫЙТИ</button><button class="admin-trigger" onclick="showAdminLogin()">⚙️</button>
 </div>
 
-<div class="page" id="adminPage">
-<div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">⚙️ Админ-панель</div></div>
+<div class="page" id="adminPage"><div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">⚙️ Админ-панель</div></div>
 <div class="admin-container">
-<div class="admin-section fade-in-up" id="adminLoginSection">
-<div class="admin-login-form">
-<h3>🔐 АВТОРИЗАЦИЯ</h3>
-<div class="form-group">
-<label class="form-label">Пароль администратора</label>
-<input type="password" class="form-input" id="adminPasswordInput" placeholder="Введите пароль" autocomplete="off">
-</div>
-<button class="admin-btn primary" onclick="adminLogin()" style="width:100%">ВОЙТИ В АДМИНКУ</button>
-<div class="form-status" id="adminLoginStatus"></div>
-</div>
-</div>
-<div id="adminContent" style="display:none">
-<div class="admin-section fade-in-up">
-<div class="admin-section-title maintenance">🔧 ТЕХНИЧЕСКИЕ РАБОТЫ</div>
-<div class="maintenance-toggle">
-<div class="maintenance-toggle-info">
-<div class="maintenance-toggle-title">🌐 Для всего сайта</div>
-<div class="maintenance-toggle-desc">Закрыть весь сайт для пользователей (админ сможет войти)</div>
-</div>
-<div class="maintenance-switch" id="siteMaintenanceSwitch" onclick="toggleSiteMaintenance()"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
+<div class="admin-section fade-in-up" id="adminLoginSection"><div class="admin-login-form"><h3>🔐 АВТОРИЗАЦИЯ</h3><div class="form-group"><label class="form-label">Пароль администратора</label><input type="password" class="form-input" id="adminPasswordInput" placeholder="Введите пароль" autocomplete="off"></div><button class="admin-btn primary" onclick="adminLogin()" style="width:100%">ВОЙТИ В АДМИНКУ</button><div class="form-status" id="adminLoginStatus"></div></div></div>
+<div id="adminContent" style="display:none"><div class="admin-section fade-in-up"><div class="admin-section-title maintenance">🔧 ТЕХНИЧЕСКИЕ РАБОТЫ</div><div class="maintenance-toggle"><div class="maintenance-toggle-info"><div class="maintenance-toggle-title">🌐 Для всего сайта</div><div class="maintenance-toggle-desc">Закрыть весь сайт для пользователей (админ сможет войти)</div></div><div class="maintenance-switch" id="siteMaintenanceSwitch" onclick="toggleSiteMaintenance()"></div></div></div></div>
+</div></div>
 
-<div class="page" id="tracksPage">
-<div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Все треки</div></div>
+<div class="page" id="tracksPage"><div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Все треки</div></div>
 <div class="featured-release fade-in-up" id="featuredRelease" onclick="playNewRelease()"></div>
 <div class="tracks-list fade-in-up" id="allTracksList"></div>
 </div>
 
-<div class="page" id="aboutPage">
-<div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">О проекте</div></div>
+<div class="page" id="aboutPage"><div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">О проекте</div></div>
 <div class="about-content fade-in-up">
 <div class="about-card"><p><span class="evgenii-title">EVGENII <span class="ai-badge">AI</span></span> — это эксперимент на стыке человеческих эмоций и искусственного интеллекта.</p><div class="about-quote">«Я придумываю текст и стиль исполнения. А выучить и воплотить в песню доверяю ИИ.»</div></div>
 <div class="about-card"><p>Искусственный интеллект становится моим <span class="highlight">голосом</span>. Он заучивает мои слова, учится чувствовать ритм, подбирать интонации.</p><p>Это не замена человеку — это <span class="highlight">новый инструмент выражения</span>.</p></div>
 <div class="about-card"><p>Вместе мы создаём что-то третье. Не совсем человеческое, не совсем машинное. Что-то среднее, где технологии усиливают эмоции, а не заменяют их.</p></div>
-</div>
-</div>
+</div></div>
 
-<div class="page" id="communityPage">
-<div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Сообщества</div></div>
+<div class="page" id="communityPage"><div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Сообщества</div></div>
 <div class="community-content fade-in-up">
 <div class="community-intro"><p>Присоединяйтесь к нашим сообществам, чтобы быть в курсе новых релизов и эксклюзивного контента</p></div>
 <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon bip">🎵</div><div class="community-info"><div class="community-name">Bip</div><div class="community-desc">Музыкальная платформа</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
 <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon telegram">✈️</div><div class="community-info"><div class="community-name">Telegram</div><div class="community-desc">Новости и обновления</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
 <a href="#" class="community-card coming-soon" onclick="event.preventDefault()"><div class="community-icon instagram">📷</div><div class="community-info"><div class="community-name">Instagram</div><div class="community-desc">Визуальный контент</div><span class="community-badge">Скоро</span></div><div class="community-arrow">→</div></a>
-</div>
-</div>
+</div></div>
 
-<div class="page" id="contactPage">
-<div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Связь</div></div>
+<div class="page" id="contactPage"><div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Связь</div></div>
 <div class="contact-intro fade-in-up"><p>Есть вопрос, предложение или хотите сотрудничать? Напишите мне — я обязательно отвечу!</p></div>
 <div class="contact-form-container fade-in-up">
 <h3 style="margin-bottom:20px;font-family:'Orbitron';letter-spacing:2px;text-align:center">НАПИСАТЬ АВТОРУ</h3>
@@ -782,51 +526,32 @@ body{padding-bottom:0}
 <button type="submit" class="submit-btn" id="submitBtn"><span>ОТПРАВИТЬ СООБЩЕНИЕ</span></button>
 <div class="form-status" id="formStatus"></div>
 </form>
-</div>
-</div>
+</div></div>
 
-<div class="page" id="supportPage">
-<div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Поддержать</div></div>
+<div class="page" id="supportPage"><div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Поддержать</div></div>
 <div class="support-wrapper">
-<div class="support-intro-new fade-in-up">
-<span class="heart-icon">💜</span>
-<p>Твоя поддержка помогает создавать новую музыку. Каждая чашка кофе, каждый рубль — это новый трек, новая эмоция, новая история.</p>
-</div>
+<div class="support-intro-new fade-in-up"><span class="heart-icon">💜</span><p>Твоя поддержка помогает создавать новую музыку. Каждая чашка кофе, каждый рубль — это новый трек, новая эмоция, новая история.</p></div>
 <div class="yandex-pay-card fade-in-up" onclick="copyCardNumber()">
-<div class="card-top-row">
-<div class="card-logo"><div class="card-logo-icon">Я</div><div class="card-logo-text"><span class="card-logo-label">Pay с помощью</span><span class="card-logo-name">YANDEX PAY</span></div></div>
-<div class="card-chip"></div>
-</div>
+<div class="card-top-row"><div class="card-logo"><div class="card-logo-icon">Я</div><div class="card-logo-text"><span class="card-logo-label">Pay с помощью</span><span class="card-logo-name">YANDEX PAY</span></div></div><div class="card-chip"></div></div>
 <div class="card-number-block"><div class="card-number-label">Номер карты</div><div class="card-number" id="cardNumber">2204 3110 0721 9604</div></div>
-<div class="card-bottom-row">
-<div class="card-holder"><span class="card-holder-label">Получатель</span><span class="card-holder-name">EVGENII</span></div>
-<button class="copy-btn" id="copyBtn" onclick="event.stopPropagation();copyCardNumber()">
-<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-<span id="copyBtnText">Копировать</span>
-</button>
+<div class="card-bottom-row"><div class="card-holder"><span class="card-holder-label">Получатель</span><span class="card-holder-name">EVGENII</span></div>
+<button class="copy-btn" id="copyBtn" onclick="event.stopPropagation();copyCardNumber()"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg><span id="copyBtnText">Копировать</span></button>
 </div>
 </div>
 <div class="support-hint fade-in-up"><span class="hint-icon">💡</span>Нажми на карту или кнопку <strong>«Копировать»</strong>, чтобы скопировать номер. Перевести можно через приложение любого банка — <strong>любая сумма</strong>.</div>
-</div>
-</div>
+</div></div>
 
-<div class="page" id="discussionsPage">
-<div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Обсуждения</div></div>
+<div class="page" id="discussionsPage"><div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">Обсуждения</div></div>
 <div class="discussions-intro fade-in-up"><p>Общее пространство для разговоров о музыке, треках и проекте. Делись впечатлениями, задавай вопросы, обсуждай с другими слушателями. Можешь прикрепить текущий играющий трек — чтобы все поняли, о чём речь 🎧</p></div>
 <div class="discussions-container fade-in-up">
-<div class="discussions-header">
-<div class="discussions-title-row"><span class="discussions-title-icon">💬</span><span class="discussions-title-text">ОБЩИЙ ЧАТ</span><span class="discussions-count" id="discussionsCount">0</span></div>
-</div>
+<div class="discussions-header"><div class="discussions-title-row"><span class="discussions-title-icon">💬</span><span class="discussions-title-text">ОБЩИЙ ЧАТ</span><span class="discussions-count" id="discussionsCount">0</span></div></div>
 <div class="discussions-list" id="discussionsList"><div class="discussions-loading">Загрузка обсуждений</div></div>
 <div class="discussion-input-area">
 <label class="discussion-attach-label"><input type="checkbox" id="discussionAttachToggle"><span id="discussionAttachText">🎵 Прикрепить текущий трек</span></label>
-<div class="discussion-input-row">
-<textarea class="discussion-input" id="discussionInput" placeholder="Написать в чат..." maxlength="500" rows="1"></textarea>
-<button class="discussion-send-btn" id="discussionSendBtn" onclick="sendDiscussion()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+<div class="discussion-input-row"><textarea class="discussion-input" id="discussionInput" placeholder="Написать в чат..." maxlength="500" rows="1"></textarea>
+<button class="discussion-send-btn" id="discussionSendBtn" onclick="sendDiscussion()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button></div>
 </div>
-</div>
-</div>
-</div>
+</div></div>
 
 <div class="copy-toast" id="copyToast"><span>✓</span><span id="copyToastText">Номер карты скопирован!</span></div>
 
@@ -835,93 +560,48 @@ body{padding-bottom:0}
 <div class="player-progress-wrapper"><span class="player-time-mini" id="playerCurrentTime">0:00</span><div class="player-bar-container" onclick="seek(event)"><div class="player-bar-fill" id="playerBarFill"></div></div><span class="player-time-mini end" id="playerTotalTime">0:00</span></div>
 </div>
 
-<div class="modal-overlay" id="downloadModal">
-<div class="modal-content">
+<div class="modal-overlay" id="downloadModal"><div class="modal-content">
 <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
 <div class="modal-track-card"><div class="modal-cover" id="modalCover">🎵</div><div class="modal-track-title" id="modalTitle">Название</div><div class="modal-track-artist" id="modalArtist">EVGENII AI</div><div class="modal-track-duration" id="modalDuration">0:00</div></div>
 <div class="modal-info-text">Трек будет загружен на ваше устройство в высоком качестве</div>
 <div class="modal-warning"><div class="modal-warning-icon">⚠</div><div><div class="modal-warning-title">Внимание!</div><div class="modal-warning-text">Скачивание происходит не сразу.<br>Пожалуйста, подождите несколько секунд.</div></div></div>
 <button class="modal-download-btn" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
 <button class="modal-cancel-btn" onclick="closeDownloadModal()">Отмена</button>
-</div>
-</div>
+</div></div>
 
 <audio id="audioPlayer" preload="metadata"></audio>
 
 <script>
-/* ============================================
-   КОНФИГУРАЦИЯ
-============================================ */
-var firebaseConfig = {
-  apiKey: "AIzaSyCw8S1fwhfKUMUtNsDFDbz-oFeSkRD_NOk",
-  authDomain: "evgenii-music-b5adf.firebaseapp.com",
-  projectId: "evgenii-music-b5adf",
-  storageBucket: "evgenii-music-b5adf.firebasestorage.app",
-  messagingSenderId: "518513745915",
-  appId: "1:518513745915:web:2d0e8dc9e1e6f37bccb55e"
-};
-
+var firebaseConfig = {apiKey:"AIzaSyCw8S1fwhfKUMUtNsDFDbz-oFeSkRD_NOk",authDomain:"evgenii-music-b5adf.firebaseapp.com",projectId:"evgenii-music-b5adf",storageBucket:"evgenii-music-b5adf.firebasestorage.app",messagingSenderId:"518513745915",appId:"1:518513745915:web:2d0e8dc9e1e6f37bccb55e"};
 var db = null;
-try {
-  firebase.initializeApp(firebaseConfig);
-  db = firebase.firestore();
-  console.log('Firebase подключён');
-} catch (e) {
-  console.error('Ошибка Firebase:', e);
-}
-
+try { firebase.initializeApp(firebaseConfig); db = firebase.firestore(); console.log('Firebase подключён'); } catch (e) { console.error('Ошибка Firebase:', e); }
 var TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
 var TELEGRAM_CHAT_ID = '5129595944';
 var ADMIN_PASSWORD = 'evgenii2024';
 var isAdminLoggedIn = false;
 
-/* ============================================
-   СОГЛАШЕНИЕ
-============================================ */
 var licenseForceMode = false;
 var licenseCheckboxChecked = false;
-
-function isLicenseAccepted() {
-  try { return localStorage.getItem('evgenii_agreement_accepted') === 'true'; } catch(e) { return false; }
-}
-
+function isLicenseAccepted() { try { return localStorage.getItem('evgenii_agreement_accepted') === 'true'; } catch(e) { return false; } }
 function openLicenseModal(force) {
   licenseForceMode = force;
   licenseCheckboxChecked = isLicenseAccepted();
-
   var wrapper = document.getElementById('licenseCheckboxWrapper');
   var agreeBtn = document.getElementById('licenseAgreeBtn');
   var closeBtn = document.getElementById('licenseCloseBtn');
-
-  if (licenseCheckboxChecked) wrapper.classList.add('checked');
-  else wrapper.classList.remove('checked');
+  if (licenseCheckboxChecked) wrapper.classList.add('checked'); else wrapper.classList.remove('checked');
   agreeBtn.disabled = !licenseCheckboxChecked;
-
   closeBtn.style.display = force ? 'none' : 'flex';
-
   document.getElementById('licenseModal').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
-
-function closeLicenseModal() {
-  if (licenseForceMode) return;
-  document.getElementById('licenseModal').classList.remove('active');
-  document.body.style.overflow = '';
-}
-
+function closeLicenseModal() { if (licenseForceMode) return; document.getElementById('licenseModal').classList.remove('active'); document.body.style.overflow = ''; }
 function toggleLicenseCheckbox() {
   licenseCheckboxChecked = !licenseCheckboxChecked;
   var wrapper = document.getElementById('licenseCheckboxWrapper');
   var agreeBtn = document.getElementById('licenseAgreeBtn');
-  if (licenseCheckboxChecked) {
-    wrapper.classList.add('checked');
-    agreeBtn.disabled = false;
-  } else {
-    wrapper.classList.remove('checked');
-    agreeBtn.disabled = true;
-  }
+  if (licenseCheckboxChecked) { wrapper.classList.add('checked'); agreeBtn.disabled = false; } else { wrapper.classList.remove('checked'); agreeBtn.disabled = true; }
 }
-
 function acceptLicense() {
   if (!licenseCheckboxChecked) return;
   try { localStorage.setItem('evgenii_agreement_accepted', 'true'); } catch(e) {}
@@ -929,74 +609,32 @@ function acceptLicense() {
   document.getElementById('licenseModal').classList.remove('active');
   document.body.style.overflow = '';
 }
+document.getElementById('licenseModal').addEventListener('click', function(e) { if (e.target === this) closeLicenseModal(); });
 
-document.getElementById('licenseModal').addEventListener('click', function(e) {
-  if (e.target === this) closeLicenseModal();
-});
-
-/* ============================================
-   ТЕХНИЧЕСКИЕ РАБОТЫ
-============================================ */
 var maintenanceUnsubscribe = null;
 var siteMaintenance = false;
-
 function loadMaintenanceSettings() {
   if (!db) return;
   if (maintenanceUnsubscribe) maintenanceUnsubscribe();
-  maintenanceUnsubscribe = db.collection('settings').doc('maintenance')
-    .onSnapshot(function(doc) {
-      if (doc.exists) {
-        siteMaintenance = doc.data().siteMode || false;
-      } else {
-        siteMaintenance = false;
-      }
-      updateMaintenanceUI();
-    }, function(error) {
-      console.error('Ошибка загрузки настроек тех работ:', error);
-    });
+  maintenanceUnsubscribe = db.collection('settings').doc('maintenance').onSnapshot(function(doc) {
+    if (doc.exists) { siteMaintenance = doc.data().siteMode || false; } else { siteMaintenance = false; }
+    updateMaintenanceUI();
+  }, function(error) { console.error('Ошибка загрузки настроек тех работ:', error); });
 }
-
 function updateMaintenanceUI() {
   var siteSwitch = document.getElementById('siteMaintenanceSwitch');
   if (siteSwitch) siteSwitch.classList.toggle('active', siteMaintenance);
   var siteScreen = document.getElementById('siteMaintenanceScreen');
-  if (siteScreen) {
-    if (siteMaintenance && !isAdminLoggedIn) {
-      siteScreen.classList.add('active');
-    } else {
-      siteScreen.classList.remove('active');
-    }
-  }
+  if (siteScreen) { if (siteMaintenance && !isAdminLoggedIn) { siteScreen.classList.add('active'); } else { siteScreen.classList.remove('active'); } }
 }
-
 function toggleSiteMaintenance() {
   if (!db) return;
   var newValue = !siteMaintenance;
-  if (newValue) {
-    var confirmed = confirm('ВНИМАНИЕ!\nЭто закроет весь сайт для всех пользователей.\nАдмин сможет войти через скрытую кнопку на экране тех работ.\nПродолжить?');
-    if (!confirmed) return;
-  }
-  db.collection('settings').doc('maintenance').set({
-    siteMode: newValue
-  }, { merge: true }).then(function() {
-    siteMaintenance = newValue;
-    updateMaintenanceUI();
-    alert(newValue ? 'Тех работы для всего сайта ВКЛЮЧЕНЫ' : 'Тех работы для всего сайта ВЫКЛЮЧЕНЫ');
-  }).catch(function(error) {
-    alert('Ошибка: ' + error.message);
-  });
+  if (newValue) { var confirmed = confirm('ВНИМАНИЕ!\nЭто закроет весь сайт для всех пользователей.\nАдмин сможет войти через скрытую кнопку на экране тех работ.\nПродолжить?'); if (!confirmed) return; }
+  db.collection('settings').doc('maintenance').set({siteMode: newValue}, {merge: true}).then(function() { siteMaintenance = newValue; updateMaintenanceUI(); alert(newValue ? 'Тех работы для всего сайта ВКЛЮЧЕНЫ' : 'Тех работы для всего сайта ВЫКЛЮЧЕНЫ'); }).catch(function(error) { alert('Ошибка: ' + error.message); });
 }
-
-function showMaintenanceAdminModal() {
-  document.getElementById('maintenanceAdminModal').classList.add('active');
-  document.getElementById('maintenanceAdminPassword').value = '';
-  document.getElementById('maintenanceAdminStatus').textContent = '';
-}
-
-function closeMaintenanceAdminModal() {
-  document.getElementById('maintenanceAdminModal').classList.remove('active');
-}
-
+function showMaintenanceAdminModal() { document.getElementById('maintenanceAdminModal').classList.add('active'); document.getElementById('maintenanceAdminPassword').value = ''; document.getElementById('maintenanceAdminStatus').textContent = ''; }
+function closeMaintenanceAdminModal() { document.getElementById('maintenanceAdminModal').classList.remove('active'); }
 function maintenanceAdminLogin() {
   var password = document.getElementById('maintenanceAdminPassword').value;
   var status = document.getElementById('maintenanceAdminStatus');
@@ -1004,28 +642,11 @@ function maintenanceAdminLogin() {
     isAdminLoggedIn = true;
     status.textContent = 'Успешный вход!';
     status.className = 'form-status success';
-    setTimeout(function() {
-      closeMaintenanceAdminModal();
-      updateMaintenanceUI();
-      var savedName = localStorage.getItem('evgenii_user') || 'Админ';
-      showMainScreen(savedName);
-      navigateTo('adminPage');
-      document.getElementById('adminLoginSection').style.display = 'none';
-      document.getElementById('adminContent').style.display = 'block';
-    }, 500);
-  } else {
-    status.textContent = 'Неверный пароль';
-    status.className = 'form-status error';
-  }
+    setTimeout(function() { closeMaintenanceAdminModal(); updateMaintenanceUI(); var savedName = localStorage.getItem('evgenii_user') || 'Админ'; showMainScreen(savedName); navigateTo('adminPage'); document.getElementById('adminLoginSection').style.display = 'none'; document.getElementById('adminContent').style.display = 'block'; }, 500);
+  } else { status.textContent = 'Неверный пароль'; status.className = 'form-status error'; }
 }
+document.getElementById('maintenanceAdminModal').addEventListener('click', function(e) { if (e.target === this) closeMaintenanceAdminModal(); });
 
-document.getElementById('maintenanceAdminModal').addEventListener('click', function(e) {
-  if (e.target === this) closeMaintenanceAdminModal();
-});
-
-/* ============================================
-   ДАННЫЕ ТРЕКОВ
-============================================ */
 var newRelease = { id: 'new-release', title: 'На Пределе.', subtitle: 'New Release', file: 'tracks/song16.mp3', duration: '3:24', cover: 'cover/cover1.png' };
 
 var allTracks = [
@@ -1037,12 +658,12 @@ var allTracks = [
   { id: 7,  title: 'Семья.', subtitle: '', file: 'tracks/song24.mp3', duration: '2:34', cover: 'cover/cover.jpg' },
   { id: 8,  title: 'Пустой код', subtitle: '', file: 'tracks/song.mp3', duration: '3:20', cover: 'cover/cover.jpg' },
   { id: 9,  title: 'А мне похуй', subtitle: '', file: 'tracks/song2.mp3', duration: '3:11', cover: 'cover/cover.jpg' },
-  { id: 10,  title: 'Нейронный Дождь', subtitle: '', file: 'tracks/song3.mp3', duration: '4:03', cover: 'cover/cover.jpg' },
-  { id: 11,  title: 'Бункер', subtitle: '', file: 'tracks/song4.mp3', duration: '3:01', cover: 'cover/cover.jpg' },
-  { id: 12,  title: 'Поезд на юг', subtitle: '', file: 'tracks/song5.mp3', duration: '3:23', cover: 'cover/cover.jpg' },
-  { id: 13,  title: 'Сгоревший экран', subtitle: '', file: 'tracks/song6.mp3', duration: '3:39', cover: 'cover/cover.jpg' },
-  { id: 14,  title: 'Ёлка горит, а мне похуй', subtitle: '', file: 'tracks/song7.mp3', duration: '2:30', cover: 'cover/cover.jpg' },
-  { id: 15,  title: '19_11', subtitle: '', file: 'tracks/song8.mp3', duration: '2:59', cover: 'cover/cover.jpg' },
+  { id: 10, title: 'Нейронный Дождь', subtitle: '', file: 'tracks/song3.mp3', duration: '4:03', cover: 'cover/cover.jpg' },
+  { id: 11, title: 'Бункер', subtitle: '', file: 'tracks/song4.mp3', duration: '3:01', cover: 'cover/cover.jpg' },
+  { id: 12, title: 'Поезд на юг', subtitle: '', file: 'tracks/song5.mp3', duration: '3:23', cover: 'cover/cover.jpg' },
+  { id: 13, title: 'Сгоревший экран', subtitle: '', file: 'tracks/song6.mp3', duration: '3:39', cover: 'cover/cover.jpg' },
+  { id: 14, title: 'Ёлка горит, а мне похуй', subtitle: '', file: 'tracks/song7.mp3', duration: '2:30', cover: 'cover/cover.jpg' },
+  { id: 15, title: '19_11', subtitle: '', file: 'tracks/song8.mp3', duration: '2:59', cover: 'cover/cover.jpg' },
   { id: 16, title: 'Маленький демон', subtitle: '', file: 'tracks/song9.mp3', duration: '4:32', cover: 'cover/cover.jpg' },
   { id: 17, title: 'Бот как поэт', subtitle: '', file: 'tracks/song10.mp3', duration: '2:34', cover: 'cover/cover.jpg' },
   { id: 18, title: 'Телефон Не Звонит', subtitle: '', file: 'tracks/song11.mp3', duration: '3:14', cover: 'cover/cover.jpg' },
@@ -1052,12 +673,9 @@ var allTracks = [
   { id: 22, title: 'Братья', subtitle: '', file: 'tracks/song1.mp3', duration: '4:19', cover: 'cover/cover.jpg' },
   { id: 23, title: 'Черная жидкость', subtitle: '', file: 'tracks/song17.mp3', duration: '4:24', cover: 'cover/cover.jpg' },
   { id: 24, title: 'Тень на стене', subtitle: '', file: 'tracks/song18.mp3', duration: '3:25', cover: 'cover/cover.jpg' },
-  { id: 25, title: 'пусто', subtitle: '', file: 'tracks/song0.mp3', duration: '0:00'', cover: 'cover/cover.jpg' }
+  { id: 25, title: 'пусто', subtitle: '', file: 'tracks/song0.mp3', duration: '0:00', cover: 'cover/cover.jpg' }
 ];
 
-/* ============================================
-   РЕНДЕР ТРЕКОВ
-============================================ */
 function renderNewRelease() {
   var h = document.getElementById('homeReleaseCard');
   if (h) {
@@ -1078,6 +696,7 @@ function renderNewRelease() {
   }
 }
 
+// 🔧 ИСПРАВЛЕНО: передаём index + 1, потому что playlist = [newRelease] + allTracks
 function renderAllTracksList() {
   var list = document.getElementById('allTracksList');
   if (!list) return;
@@ -1089,8 +708,10 @@ function renderAllTracksList() {
     var coverHtml = track.cover
       ? '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'
       : '🎵';
-    el.innerHTML = '<div class="track-cover" onclick="playTrack(allTracks[' + index + '],' + index + ')">' + coverHtml + '</div>' +
-      '<div class="track-info" onclick="playTrack(allTracks[' + index + '],' + index + ')">' +
+    // 🔧 КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: index + 1 вместо index
+    var playlistIndex = index + 1;
+    el.innerHTML = '<div class="track-cover" onclick="playTrack(allTracks[' + index + '],' + playlistIndex + ')">' + coverHtml + '</div>' +
+      '<div class="track-info" onclick="playTrack(allTracks[' + index + '],' + playlistIndex + ')">' +
       '<div class="track-title">' + escapeHtml(track.title) + '</div>' +
       '<div class="track-artist">' + escapeHtml(track.subtitle || 'EVGENII AI') + '</div></div>' +
       '<div class="track-duration">' + track.duration + '</div>' +
@@ -1100,9 +721,6 @@ function renderAllTracksList() {
   });
 }
 
-/* ============================================
-   ПЛЕЕР
-============================================ */
 var audio = document.getElementById('audioPlayer');
 var currentTrack = null;
 var isPlaying = false;
@@ -1152,14 +770,8 @@ function playNewRelease() { playTrack(newRelease, 0); }
 
 function togglePlay() {
   if (!currentTrack) return;
-  if (isPlaying) {
-    audio.pause();
-    clearInterval(simulationInterval);
-    setPlayingState(false);
-  } else {
-    audio.play().catch(function() { startSimulation(); });
-    setPlayingState(true);
-  }
+  if (isPlaying) { audio.pause(); clearInterval(simulationInterval); setPlayingState(false); }
+  else { audio.play().catch(function() { startSimulation(); }); setPlayingState(true); }
 }
 
 function setPlayingState(state) {
@@ -1195,17 +807,12 @@ function updateMediaSession() {
         artist: currentTrack.subtitle || 'EVGENII AI',
         album: 'EVGENII AI',
         artwork: currentTrack.cover ? [
-          { src: currentTrack.cover, sizes: '96x96', type: 'image/png' },
-          { src: currentTrack.cover, sizes: '128x128', type: 'image/png' },
-          { src: currentTrack.cover, sizes: '192x192', type: 'image/png' },
-          { src: currentTrack.cover, sizes: '256x256', type: 'image/png' },
-          { src: currentTrack.cover, sizes: '384x384', type: 'image/png' },
-          { src: currentTrack.cover, sizes: '512x512', type: 'image/png' }
+          {src:currentTrack.cover,sizes:'96x96',type:'image/png'},{src:currentTrack.cover,sizes:'128x128',type:'image/png'},
+          {src:currentTrack.cover,sizes:'192x192',type:'image/png'},{src:currentTrack.cover,sizes:'256x256',type:'image/png'},
+          {src:currentTrack.cover,sizes:'384x384',type:'image/png'},{src:currentTrack.cover,sizes:'512x512',type:'image/png'}
         ] : []
       });
-    } catch(e) {
-      console.log('MediaSession metadata error:', e);
-    }
+    } catch(e) { console.log('MediaSession metadata error:', e); }
   }
 }
 
@@ -1257,19 +864,12 @@ audio.addEventListener('ended', function() {
   playNextTrack();
 });
 
-/* ============================================
-   СКАЧИВАНИЕ
-============================================ */
 var downloadTrack = null;
-
 function openDownloadModal(track) {
   downloadTrack = track;
   var mc = document.getElementById('modalCover');
-  if (track.cover) {
-    mc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">';
-  } else {
-    mc.textContent = '🎵';
-  }
+  if (track.cover) { mc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; }
+  else { mc.textContent = '🎵'; }
   document.getElementById('modalTitle').textContent = track.title;
   document.getElementById('modalArtist').textContent = 'EVGENII AI';
   document.getElementById('modalDuration').textContent = track.duration;
@@ -1279,13 +879,7 @@ function openDownloadModal(track) {
   document.getElementById('downloadModal').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
-
-function closeDownloadModal() {
-  document.getElementById('downloadModal').classList.remove('active');
-  document.body.style.overflow = '';
-  downloadTrack = null;
-}
-
+function closeDownloadModal() { document.getElementById('downloadModal').classList.remove('active'); document.body.style.overflow = ''; downloadTrack = null; }
 function startDownload() {
   if (!downloadTrack) return;
   var b = document.getElementById('modalDownloadBtn');
@@ -1296,64 +890,33 @@ function startDownload() {
   l.download = downloadTrack.title + '.mp3';
   l.style.display = 'none';
   document.body.appendChild(l);
-  setTimeout(function() {
-    l.click();
-    document.body.removeChild(l);
-    b.textContent = 'ТРЕК ЗАГРУЖЕН';
-    setTimeout(function() { closeDownloadModal(); }, 1500);
-  }, 1500);
+  setTimeout(function() { l.click(); document.body.removeChild(l); b.textContent = 'ТРЕК ЗАГРУЖЕН'; setTimeout(function() { closeDownloadModal(); }, 1500); }, 1500);
 }
+document.getElementById('downloadModal').addEventListener('click', function(e) { if (e.target === this) closeDownloadModal(); });
 
-document.getElementById('downloadModal').addEventListener('click', function(e) {
-  if (e.target === this) closeDownloadModal();
-});
-
-/* ============================================
-   ОБСУЖДЕНИЯ
-============================================ */
 var discussionsUnsubscribe = null;
 var discussionsData = [];
-
-function getCurrentPlayingTrack() {
-  if (currentTrack) return currentTrack;
-  return null;
-}
-
+function getCurrentPlayingTrack() { if (currentTrack) return currentTrack; return null; }
 function updateAttachLabel() {
   var label = document.getElementById('discussionAttachText');
   var toggle = document.getElementById('discussionAttachToggle');
   if (!label || !toggle) return;
   var current = getCurrentPlayingTrack();
-  if (current) {
-    label.textContent = '🎵 Прикрепить: ' + current.title;
-    toggle.disabled = false;
-    toggle.parentElement.style.opacity = '1';
-  } else {
-    label.textContent = '🎵 Сначала включи любой трек';
-    toggle.disabled = true;
-    toggle.checked = false;
-    toggle.parentElement.style.opacity = '0.5';
-  }
+  if (current) { label.textContent = '🎵 Прикрепить: ' + current.title; toggle.disabled = false; toggle.parentElement.style.opacity = '1'; }
+  else { label.textContent = '🎵 Сначала включи любой трек'; toggle.disabled = true; toggle.checked = false; toggle.parentElement.style.opacity = '0.5'; }
 }
-
 function loadDiscussions() {
   if (!db) return;
   var list = document.getElementById('discussionsList');
   if (!list) return;
   list.innerHTML = '<div class="discussions-loading">Загрузка обсуждений</div>';
   if (discussionsUnsubscribe) discussionsUnsubscribe();
-  discussionsUnsubscribe = db.collection('discussions')
-    .orderBy('createdAt', 'desc').limit(100)
-    .onSnapshot(function(snapshot) {
-      discussionsData = [];
-      snapshot.forEach(function(doc) { discussionsData.push({ id: doc.id, ...doc.data() }); });
-      renderDiscussions();
-    }, function(error) {
-      console.error(error);
-      list.innerHTML = '<div class="discussions-empty"><div class="discussions-empty-icon">⚠️</div>Ошибка: ' + error.message + '</div>';
-    });
+  discussionsUnsubscribe = db.collection('discussions').orderBy('createdAt', 'desc').limit(100).onSnapshot(function(snapshot) {
+    discussionsData = [];
+    snapshot.forEach(function(doc) { discussionsData.push({ id: doc.id, ...doc.data() }); });
+    renderDiscussions();
+  }, function(error) { console.error(error); list.innerHTML = '<div class="discussions-empty"><div class="discussions-empty-icon">⚠️</div>Ошибка: ' + error.message + '</div>'; });
 }
-
 function renderDiscussions() {
   var list = document.getElementById('discussionsList');
   var count = document.getElementById('discussionsCount');
@@ -1368,9 +931,7 @@ function renderDiscussions() {
   list.innerHTML = reversed.map(function(d) {
     var initial = (d.userName || '?')[0].toUpperCase();
     var time = formatDiscussionTime(d.createdAt);
-    var trackHtml = d.trackTitle
-      ? '<div class="discussion-track-ref"><span class="discussion-track-icon">🎵</span><span class="discussion-track-name">' + escapeHtml(d.trackTitle) + '</span></div>'
-      : '';
+    var trackHtml = d.trackTitle ? '<div class="discussion-track-ref"><span class="discussion-track-icon">🎵</span><span class="discussion-track-name">' + escapeHtml(d.trackTitle) + '</span></div>' : '';
     return '<div class="discussion-item"><div class="discussion-avatar">' + escapeHtml(initial) + '</div>' +
       '<div class="discussion-body"><div class="discussion-header"><span class="discussion-author">' + escapeHtml(d.userName) + '</span>' +
       '<span class="discussion-time">' + time + '</span></div>' + trackHtml +
@@ -1378,7 +939,6 @@ function renderDiscussions() {
   }).join('');
   list.scrollTop = list.scrollHeight;
 }
-
 function formatDiscussionTime(timestamp) {
   if (!timestamp) return '';
   var date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
@@ -1390,7 +950,6 @@ function formatDiscussionTime(timestamp) {
   if (diff < 604800) return Math.floor(diff / 86400) + ' дн назад';
   return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
 }
-
 function sendDiscussion() {
   if (!db) return;
   var input = document.getElementById('discussionInput');
@@ -1401,43 +960,13 @@ function sendDiscussion() {
   var attachToggle = document.getElementById('discussionAttachToggle');
   btn.disabled = true;
   var data = { userName: userName, text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp() };
-  if (attachToggle && attachToggle.checked) {
-    var current = getCurrentPlayingTrack();
-    if (current) {
-      data.trackId = String(current.id);
-      data.trackTitle = current.title;
-    }
-  }
-  db.collection('discussions').add(data).then(function() {
-    input.value = '';
-    input.style.height = 'auto';
-  }).catch(function(e) {
-    alert('Ошибка: ' + e.message);
-  }).finally(function() {
-    btn.disabled = false;
-    input.focus();
-  });
+  if (attachToggle && attachToggle.checked) { var current = getCurrentPlayingTrack(); if (current) { data.trackId = String(current.id); data.trackTitle = current.title; } }
+  db.collection('discussions').add(data).then(function() { input.value = ''; input.style.height = 'auto'; }).catch(function(e) { alert('Ошибка: ' + e.message); }).finally(function() { btn.disabled = false; input.focus(); });
 }
+document.getElementById('discussionInput').addEventListener('input', function() { this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 100) + 'px'; });
+document.getElementById('discussionInput').addEventListener('keydown', function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendDiscussion(); } });
 
-document.getElementById('discussionInput').addEventListener('input', function() {
-  this.style.height = 'auto';
-  this.style.height = Math.min(this.scrollHeight, 100) + 'px';
-});
-document.getElementById('discussionInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendDiscussion(); }
-});
-
-/* ============================================
-   АДМИН-ПАНЕЛЬ
-============================================ */
-function showAdminLogin() {
-  navigateTo('adminPage');
-  document.getElementById('adminLoginSection').style.display = 'block';
-  document.getElementById('adminContent').style.display = 'none';
-  document.getElementById('adminPasswordInput').value = '';
-  document.getElementById('adminLoginStatus').textContent = '';
-}
-
+function showAdminLogin() { navigateTo('adminPage'); document.getElementById('adminLoginSection').style.display = 'block'; document.getElementById('adminContent').style.display = 'none'; document.getElementById('adminPasswordInput').value = ''; document.getElementById('adminLoginStatus').textContent = ''; }
 function adminLogin() {
   var password = document.getElementById('adminPasswordInput').value;
   var status = document.getElementById('adminLoginStatus');
@@ -1445,48 +974,16 @@ function adminLogin() {
     isAdminLoggedIn = true;
     status.textContent = 'Успешный вход!';
     status.className = 'form-status success';
-    setTimeout(function() {
-      document.getElementById('adminLoginSection').style.display = 'none';
-      document.getElementById('adminContent').style.display = 'block';
-      updateMaintenanceUI();
-    }, 500);
-  } else {
-    status.textContent = 'Неверный пароль';
-    status.className = 'form-status error';
-  }
+    setTimeout(function() { document.getElementById('adminLoginSection').style.display = 'none'; document.getElementById('adminContent').style.display = 'block'; updateMaintenanceUI(); }, 500);
+  } else { status.textContent = 'Неверный пароль'; status.className = 'form-status error'; }
 }
 
-/* ============================================
-   УТИЛИТЫ
-============================================ */
-function getGreeting(h) {
-  if (h >= 5 && h < 12) return 'ДОБРОЕ УТРО';
-  if (h >= 12 && h < 17) return 'ДОБРЫЙ ДЕНЬ';
-  if (h >= 17 && h < 22) return 'ДОБРЫЙ ВЕЧЕР';
-  return 'ДОБРОЙ НОЧИ';
-}
-function getLoginGreeting(h) {
-  if (h >= 5 && h < 12) return 'Доброе утро';
-  if (h >= 12 && h < 17) return 'Добрый день';
-  if (h >= 17 && h < 22) return 'Добрый вечер';
-  return 'Доброй ночи';
-}
-function updateTime() {
-  var n = new Date();
-  document.getElementById('headerTime').textContent = String(n.getHours()).padStart(2, '0') + ':' + String(n.getMinutes()).padStart(2, '0');
-  document.getElementById('headerGreeting').textContent = getGreeting(n.getHours());
-}
-function escapeHtml(text) {
-  var d = document.createElement('div');
-  d.textContent = text;
-  return d.innerHTML;
-}
+function getGreeting(h) { if (h >= 5 && h < 12) return 'ДОБРОЕ УТРО'; if (h >= 12 && h < 17) return 'ДОБРЫЙ ДЕНЬ'; if (h >= 17 && h < 22) return 'ДОБРЫЙ ВЕЧЕР'; return 'ДОБРОЙ НОЧИ'; }
+function getLoginGreeting(h) { if (h >= 5 && h < 12) return 'Доброе утро'; if (h >= 12 && h < 17) return 'Добрый день'; if (h >= 17 && h < 22) return 'Добрый вечер'; return 'Доброй ночи'; }
+function updateTime() { var n = new Date(); document.getElementById('headerTime').textContent = String(n.getHours()).padStart(2, '0') + ':' + String(n.getMinutes()).padStart(2, '0'); document.getElementById('headerGreeting').textContent = getGreeting(n.getHours()); }
+function escapeHtml(text) { var d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
 
-/* ============================================
-   НАВИГАЦИЯ
-============================================ */
 var currentPage = 'homePage';
-
 function navigateTo(pageId) {
   if (currentPage === pageId) return;
   var ce = document.getElementById(currentPage);
@@ -1498,56 +995,33 @@ function navigateTo(pageId) {
   if (pageId === 'discussionsPage') loadDiscussions();
   if (pageId === 'adminPage' && !isAdminLoggedIn) showAdminLogin();
 }
-
 function goBack() { navigateTo('homePage'); }
 
-/* ============================================
-   ВХОД НА САЙТ
-============================================ */
 var loginScreen = document.getElementById('loginScreen');
 var loginForm = document.getElementById('loginForm');
 var nameInput = document.getElementById('nameInput');
 var loginGreeting = document.getElementById('loginGreeting');
 var headerName = document.getElementById('headerName');
 var logoutBtn = document.getElementById('logoutBtn');
-
 loginGreeting.textContent = getLoginGreeting(new Date().getHours());
-
-loginScreen.addEventListener('transitionend', function() {
-  if (loginScreen.classList.contains('hidden')) {
-    loginScreen.style.display = 'none';
-  }
-});
-
+loginScreen.addEventListener('transitionend', function() { if (loginScreen.classList.contains('hidden')) { loginScreen.style.display = 'none'; } });
 var savedName = null;
 try { savedName = localStorage.getItem('evgenii_user'); } catch(e) {}
-if (savedName) {
-  showMainScreen(savedName);
-  if (!isLicenseAccepted()) {
-    setTimeout(function() { openLicenseModal(true); }, 400);
-  }
-}
+if (savedName) { showMainScreen(savedName); if (!isLicenseAccepted()) { setTimeout(function() { openLicenseModal(true); }, 400); } }
 loadMaintenanceSettings();
-
 loginForm.addEventListener('submit', function(e) {
   e.preventDefault();
   var name = nameInput.value.trim();
   if (name) {
     try { localStorage.setItem('evgenii_user', name); } catch(err) {}
     showMainScreen(name);
-    if (!isLicenseAccepted()) {
-      setTimeout(function() { openLicenseModal(true); }, 400);
-    }
+    if (!isLicenseAccepted()) { setTimeout(function() { openLicenseModal(true); }, 400); }
   } else {
     nameInput.style.borderColor = '#ff4444';
     nameInput.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.2)';
-    setTimeout(function() {
-      nameInput.style.borderColor = '';
-      nameInput.style.boxShadow = '';
-    }, 1500);
+    setTimeout(function() { nameInput.style.borderColor = ''; nameInput.style.boxShadow = ''; }, 1500);
   }
 });
-
 function showMainScreen(name) {
   loginScreen.classList.add('hidden');
   loginScreen.style.display = 'none';
@@ -1558,14 +1032,10 @@ function showMainScreen(name) {
   renderAllTracksList();
   updateAttachLabel();
 }
-
 logoutBtn.addEventListener('click', function() {
   try { localStorage.removeItem('evgenii_user'); } catch(e) {}
   var pages = ['homePage','tracksPage','aboutPage','communityPage','contactPage','supportPage','discussionsPage','adminPage'];
-  pages.forEach(function(p) {
-    var el = document.getElementById(p);
-    if (el) el.classList.remove('active');
-  });
+  pages.forEach(function(p) { var el = document.getElementById(p); if (el) el.classList.remove('active'); });
   currentPage = 'homePage';
   loginScreen.style.display = 'flex';
   loginScreen.classList.remove('hidden');
@@ -1576,17 +1046,12 @@ logoutBtn.addEventListener('click', function() {
   if (maintenanceUnsubscribe) { maintenanceUnsubscribe(); maintenanceUnsubscribe = null; }
   isAdminLoggedIn = false;
 });
-
 setInterval(updateTime, 1000);
 updateTime();
 
-/* ============================================
-   ФОРМА КОНТАКТОВ
-============================================ */
 var contactForm = document.getElementById('contactForm');
 var formSubmitBtn = document.getElementById('submitBtn');
 var formStatus = document.getElementById('formStatus');
-
 if (contactForm) {
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -1598,60 +1063,31 @@ if (contactForm) {
     formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
     formStatus.textContent = '';
     formStatus.className = 'form-status';
-    var message = '📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n' +
-      '👤 <b>Имя:</b> ' + name + '\n' +
-      '📧 <b>Контакт:</b> ' + contact + '\n' +
-      '💬 <b>Сообщение:</b>\n' + messageText + '\n' +
-      '⏰ <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
+    var message = '📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n' + '👤 <b>Имя:</b> ' + name + '\n' + '📧 <b>Контакт:</b> ' + contact + '\n' + '💬 <b>Сообщение:</b>\n' + messageText + '\n' + '⏰ <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
     var telegramURL = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
-    fetch(telegramURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
-    }).then(function(response) {
-      return response.json();
-    }).then(function(data) {
-      if (data.ok) {
-        formStatus.textContent = 'Сообщение отправлено! Я отвечу вам скоро.';
-        formStatus.className = 'form-status success';
-        contactForm.reset();
-      } else {
-        throw new Error(data.description || 'Ошибка Telegram API');
-      }
-    }).catch(function(error) {
-      console.error(error);
-      formStatus.textContent = 'Ошибка: ' + error.message;
-      formStatus.className = 'form-status error';
-    }).finally(function() {
-      formSubmitBtn.disabled = false;
-      formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>';
-    });
+    fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) })
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+      if (data.ok) { formStatus.textContent = 'Сообщение отправлено! Я отвечу вам скоро.'; formStatus.className = 'form-status success'; contactForm.reset(); }
+      else { throw new Error(data.description || 'Ошибка Telegram API'); }
+    }).catch(function(error) { console.error(error); formStatus.textContent = 'Ошибка: ' + error.message; formStatus.className = 'form-status error'; })
+    .finally(function() { formSubmitBtn.disabled = false; formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>'; });
   });
 }
 
-/* ============================================
-   КОПИРОВАНИЕ НОМЕРА КАРТЫ
-============================================ */
 var CARD_NUMBER = '2204311007219604';
 var copyTimeout = null;
-
 function copyCardNumber() {
   var btn = document.getElementById('copyBtn');
   var btnText = document.getElementById('copyBtnText');
   var toast = document.getElementById('copyToast');
-
   function showCopySuccess() {
     btn.classList.add('copied');
     btnText.textContent = 'Скопировано!';
     toast.classList.add('show');
     if (copyTimeout) clearTimeout(copyTimeout);
-    copyTimeout = setTimeout(function() {
-      btn.classList.remove('copied');
-      btnText.textContent = 'Копировать';
-      toast.classList.remove('show');
-    }, 2500);
+    copyTimeout = setTimeout(function() { btn.classList.remove('copied'); btnText.textContent = 'Копировать'; toast.classList.remove('show'); }, 2500);
   }
-
   function fallbackCopy() {
     var textarea = document.createElement('textarea');
     textarea.value = CARD_NUMBER;
@@ -1659,27 +1095,13 @@ function copyCardNumber() {
     textarea.style.opacity = '0';
     document.body.appendChild(textarea);
     textarea.select();
-    try {
-      document.execCommand('copy');
-      showCopySuccess();
-    } catch (err) {
-      console.error(err);
-      alert('Номер карты: ' + CARD_NUMBER);
-    }
+    try { document.execCommand('copy'); showCopySuccess(); }
+    catch (err) { console.error(err); alert('Номер карты: ' + CARD_NUMBER); }
     document.body.removeChild(textarea);
   }
-
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(CARD_NUMBER).then(function() {
-      showCopySuccess();
-    }).catch(function() {
-      fallbackCopy();
-    });
-  } else {
-    fallbackCopy();
-  }
+  if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(CARD_NUMBER).then(function() { showCopySuccess(); }).catch(function() { fallbackCopy(); }); }
+  else { fallbackCopy(); }
 }
-
 updateAttachLabel();
 </script>
 </body>
