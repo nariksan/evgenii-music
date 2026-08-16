@@ -500,6 +500,17 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
     font-style: italic; color: var(--text-primary);
 }
 
+/* Сноска со статьями закона */
+.license-law-ref {
+    margin-top: 12px; padding: 10px 14px;
+    background: rgba(255, 179, 71, 0.06);
+    border-left: 3px solid var(--gold);
+    border-radius: 6px;
+    font-size: 0.75rem; font-style: italic;
+    color: rgba(255, 179, 71, 0.85);
+    line-height: 1.5;
+}
+
 /* Чекбокс */
 .license-checkbox-wrapper {
     display: flex; align-items: flex-start; gap: 12px;
@@ -605,7 +616,8 @@ body{padding-bottom:0}
     </div>
     <div class="license-text-block">
         <h4>🎵 1. Авторство и концепция</h4>
-        <blockquote>Все идеи и концепции принадлежат <strong>полностью автору</strong>. Тексты песен создаются автором самостоятельно; искусственный интеллект используется лишь как вспомогательный инструмент (≈20%) — для подбора рифм, синонимов или шлифовки отдельных строк. Вокал и аранжировка генерируются AI на основе авторских указаний. Правообладателем всего контента является автор проекта EVGENII AI.</blockquote>
+        <blockquote>Все идеи и концепции принадлежат <strong>полностью автору</strong>. Тексты песен создаются автором при вспомогательном участии искусственного интеллекта, доля которого варьируется в зависимости от конкретного произведения — от ≈20% (подбор рифм, синонимов, шлифовка отдельных строк) до ≈50% (совместная проработка отдельных фрагментов). При этом автор осуществляет общее <strong>творческое руководство, отбор, редактуру и финальное утверждение</strong> текста. Вокал и аранжировка генерируются AI на основе авторских указаний. Правообладателем всего контента является автор проекта EVGENII AI.</blockquote>
+        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 1228 (автор результата интеллектуальной деятельности), ст. 1229 (исключительное право), ст. 1255, 1259 (авторские права и их объекты).</div>
 
         <h4>✅ 2. Разрешено</h4>
         <ul>
@@ -614,6 +626,7 @@ body{padding-bottom:0}
             <li>Делиться ссылками на треки в соцсетях</li>
             <li>Участие в обсуждениях и сообществах</li>
         </ul>
+        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 1273 (свободное воспроизведение произведения в личных целях).</div>
 
         <h4>🚫 3. Запрещено</h4>
         <ul>
@@ -622,9 +635,11 @@ body{padding-bottom:0}
             <li>Использование треков для обучения сторонних AI-моделей</li>
             <li>Присвоение авторства текстов или идей</li>
         </ul>
+        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 1270 (исключительное право на использование произведения), ст. 1301 (ответственность за нарушение исключительного права — компенсация от 10 000 до 5 000 000 ₽), КоАП РФ ст. 7.12, УК РФ ст. 146.</div>
 
         <h4>⚖️ 4. Ответственность</h4>
-        <blockquote>Проект EVGENII AI носит исключительно <strong>развлекательный характер</strong>. Весь контент предоставляется «как есть», без каких-либо гарантий. Автор и правообладатель не несёт никакой ответственности за возможные проблемы, убытки или последствия, возникшие в результате использования сайта, прослушивания контента или взаимодействия с сервисами проекта.</blockquote>
+        <blockquote>Проект EVGENII AI носит исключительно <strong>развлекательный характер</strong> и является некоммерческим творческим проектом. Весь контент предоставляется «как есть», без каких-либо гарантий. Автор и правообладатель не несёт ответственности за возможные проблемы, убытки или последствия, возникшие в результате использования сайта, прослушивания контента или взаимодействия с сервисами проекта, за исключением случаев, прямо предусмотренных действующим законодательством.</blockquote>
+        <div class="license-law-ref">📌 Правовая основа: ГК РФ ст. 15, ст. 401 (основания и условия ответственности).</div>
 
         <h4>💬 5. Обратная связь</h4>
         <p>По вопросам лицензирования, сотрудничества или коммерческого использования — пишите через раздел «Связь» на сайте.</p>
@@ -863,7 +878,7 @@ var isAdminLoggedIn = false;
 /* ============================================
    СОГЛАШЕНИЕ
 ============================================ */
-var licenseForceMode = false;      // true = нельзя закрыть без принятия (первый вход)
+var licenseForceMode = false;
 var licenseCheckboxChecked = false;
 
 function isLicenseAccepted() {
@@ -878,12 +893,10 @@ function openLicenseModal(force) {
   var agreeBtn = document.getElementById('licenseAgreeBtn');
   var closeBtn = document.getElementById('licenseCloseBtn');
 
-  // Если уже принято — чекбокс стоит, кнопка активна
   if (licenseCheckboxChecked) wrapper.classList.add('checked');
   else wrapper.classList.remove('checked');
   agreeBtn.disabled = !licenseCheckboxChecked;
 
-  // В режиме первого входа крестик прячем
   closeBtn.style.display = force ? 'none' : 'flex';
 
   document.getElementById('licenseModal').classList.add('active');
@@ -891,7 +904,6 @@ function openLicenseModal(force) {
 }
 
 function closeLicenseModal() {
-  // В режиме первого входа закрыть нельзя
   if (licenseForceMode) return;
   document.getElementById('licenseModal').classList.remove('active');
   document.body.style.overflow = '';
@@ -918,7 +930,6 @@ function acceptLicense() {
   document.body.style.overflow = '';
 }
 
-// Клик по фону закрывает только если не первый вход
 document.getElementById('licenseModal').addEventListener('click', function(e) {
   if (e.target === this) closeLicenseModal();
 });
@@ -1034,9 +1045,9 @@ var allTracks = [
   { id: 15, title: 'Лишний', subtitle: '', file: 'tracks/song13.mp3', duration: '4:04', cover: 'cover/cover.jpg' },
   { id: 16, title: 'Тишина', subtitle: '', file: 'tracks/song14.mp3', duration: '4:48', cover: 'cover/cover.jpg' },
   { id: 17, title: 'Братья', subtitle: '', file: 'tracks/song1.mp3', duration: '4:19', cover: 'cover/cover.jpg' },
-  { id: 18, title: 'пусто', subtitle: '', file: 'tracks/song0.mp3', duration: '0:00', cover: 'cover/cover.jpg' },
-  { id: 19, title: 'пусто', subtitle: '', file: 'tracks/song0.mp3', duration: '0:00', cover: 'cover/cover.jpg' },
-  { id: 20, title: 'пусто', subtitle: '', file: 'tracks/song0.mp3', duration: '0:00', cover: 'cover/cover.jpg' }
+  { id: 18, title: 'Черная жидкость', subtitle: '', file: 'tracks/song17.mp3', duration: '4:24', cover: 'cover/cover.jpg' },
+  { id: 19, title: 'Тень на стене', subtitle: '', file: 'tracks/song18.mp3', duration: '3:25', cover: 'cover/cover.jpg' },
+  { id: 20, title: 'Тихий ток', subtitle: '', file: 'tracks/song19.mp3', duration: '3:47', cover: 'cover/cover.jpg' }
 ];
 
 /* ============================================
@@ -1507,7 +1518,6 @@ var savedName = null;
 try { savedName = localStorage.getItem('evgenii_user'); } catch(e) {}
 if (savedName) {
   showMainScreen(savedName);
-  // Если соглашение ещё не принято — открываем принудительно
   if (!isLicenseAccepted()) {
     setTimeout(function() { openLicenseModal(true); }, 400);
   }
@@ -1520,7 +1530,6 @@ loginForm.addEventListener('submit', function(e) {
   if (name) {
     try { localStorage.setItem('evgenii_user', name); } catch(err) {}
     showMainScreen(name);
-    // После входа: если соглашение не принято — открываем принудительно
     if (!isLicenseAccepted()) {
       setTimeout(function() { openLicenseModal(true); }, 400);
     }
