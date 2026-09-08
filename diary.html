@@ -485,6 +485,49 @@ nav {
   font-size: 1rem;
 }
 
+/* ===== КНОПКА "ЧИТАТЬ ДАЛЕЕ" ===== */
+.read-more-btn {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.read-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+}
+
+.read-more-btn:active {
+  transform: translateY(0);
+}
+
+/* Анимация появления полного текста */
+.full-text {
+  animation: fadeInText 0.4s ease;
+}
+
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .post-footer {
   padding: 0 20px 20px;
   display: flex;
@@ -1317,17 +1360,17 @@ footer {
     </div>
 
     <div class="form-hint" id="moderationHint">
-      ⚠️ <b>Внимание:</b> После публикации запись отправится на модерацию. Она появится на сайте после одобрения администратора.
+      ️ <b>Внимание:</b> После публикации запись отправится на модерацию. Она появится на сайте после одобрения администратора.
     </div>
 
     <div class="form-grid">
       <div class="form-group">
         <label class="form-label">Категория</label>
         <select class="form-select" id="postCategory">
-          <option value="thoughts"> Мысль</option>
+          <option value="thoughts">💭 Мысль</option>
           <option value="songs">🎵 Песня</option>
           <option value="stories">📖 История</option>
-          <option value="photos"> Фото</option>
+          <option value="photos">📸 Фото</option>
         </select>
       </div>
 
@@ -1366,7 +1409,7 @@ footer {
 
     <div class="form-actions">
       <button class="btn" onclick="closeCreateModal()">Отмена</button>
-      <button class="btn btn-primary" id="saveBtn" onclick="savePost()">📤 Отправить на модерацию</button>
+      <button class="btn btn-primary" id="saveBtn" onclick="savePost()"> Отправить на модерацию</button>
     </div>
   </div>
 </div>
@@ -1376,7 +1419,7 @@ footer {
   <div class="modal-content wide">
     <div class="modal-title" style="justify-content:space-between;">
       <span>⚙️ Панель модерации</span>
-      <button class="btn" onclick="closeAdminPanel()">✕ Закрыть</button>
+      <button class="btn" onclick="closeAdminPanel()"> Закрыть</button>
     </div>
 
     <div class="admin-tabs">
@@ -1411,9 +1454,9 @@ footer {
         <label class="form-label">Категория</label>
         <select class="form-select" id="adminEditCategory">
           <option value="thoughts">💭 Мысль</option>
-          <option value="songs"> Песня</option>
+          <option value="songs">🎵 Песня</option>
           <option value="stories">📖 История</option>
-          <option value="photos">📸 Фото</option>
+          <option value="photos"> Фото</option>
         </select>
       </div>
 
@@ -1845,7 +1888,7 @@ function renderPosts(filter = 'all') {
     
     let statusBar = '';
     if (canEdit && post.status === 'pending') {
-      statusBar = '<div class="post-status-bar pending"> На модерации</div>';
+      statusBar = '<div class="post-status-bar pending">⏳ На модерации</div>';
     } else if (canEdit && post.status === 'rejected') {
       statusBar = `<div class="post-status-bar rejected">❌ Отклонено${post.adminNote ? ': ' + escapeHtml(post.adminNote) : ''}</div>`;
     }
@@ -1856,9 +1899,13 @@ function renderPosts(filter = 'all') {
       <button class="post-edit-btn" onclick="editPost('${post.id}')" title="Редактировать">✏️</button>
       <button class="post-edit-btn delete" onclick="deletePost('${post.id}')" title="Удалить">🗑️</button>
     ` : '';
+    
+    // Обрезаем текст для превью (максимум 300 символов)
+    const previewText = post.text.length > 300 ? post.text.substring(0, 300) + '...' : post.text;
+    const hasMoreText = post.text.length > 300;
 
     return `
-      <article class="post-card" data-category="${post.category}">
+      <article class="post-card" data-category="${post.category}" data-post-id="${post.id}">
         ${imageHtml}
         ${statusBar}
         <div class="post-author">
@@ -1871,7 +1918,9 @@ function renderPosts(filter = 'all') {
         </div>
         <div class="post-content">
           <h3 class="post-title">${escapeHtml(post.title)}</h3>
-          <p class="post-text ${categoryTextClass[post.category]}">${escapeHtml(post.text)}</p>
+          <p class="post-text ${categoryTextClass[post.category]}" id="preview-${post.id}">${escapeHtml(previewText)}</p>
+          ${hasMoreText ? `<p class="post-text ${categoryTextClass[post.category]} full-text" id="full-${post.id}" style="display:none;">${escapeHtml(post.text)}</p>` : ''}
+          ${hasMoreText ? `<button class="read-more-btn" onclick="togglePost('${post.id}')">Читать далее →</button>` : ''}
         </div>
         <div class="post-footer">
           <div class="post-tags">${tagsHtml}</div>
@@ -1885,6 +1934,29 @@ function renderPosts(filter = 'all') {
       </article>
     `;
   }).join('');
+}
+
+// ===== ФУНКЦИЯ ДЛЯ РАСКРЫТИЯ/СКРЫТИЯ ПОЛНОГО ТЕКСТА =====
+function togglePost(postId) {
+  const preview = document.getElementById(`preview-${postId}`);
+  const fullText = document.getElementById(`full-${postId}`);
+  const btn = event.target;
+  
+  if (fullText && preview) {
+    if (fullText.style.display === 'none') {
+      // Показываем полный текст
+      preview.style.display = 'none';
+      fullText.style.display = 'block';
+      btn.textContent = 'Свернуть ↑';
+      // Прокручиваем к началу поста
+      document.querySelector(`[data-post-id="${postId}"]`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      // Скрываем полный текст
+      preview.style.display = 'block';
+      fullText.style.display = 'none';
+      btn.textContent = 'Читать далее →';
+    }
+  }
 }
 
 function escapeHtml(str) {
@@ -1991,7 +2063,7 @@ function openCreateModal() {
     document.getElementById('saveBtn').textContent = '🚀 Опубликовать';
     document.getElementById('moderationHint').style.display = 'none';
   } else {
-    document.getElementById('saveBtn').textContent = ' Отправить на модерацию';
+    document.getElementById('saveBtn').textContent = '📤 Отправить на модерацию';
     document.getElementById('moderationHint').style.display = 'block';
   }
   
@@ -2085,7 +2157,7 @@ function editPost(id) {
     document.getElementById('saveBtn').textContent = '💾 Сохранить';
     document.getElementById('moderationHint').style.display = 'none';
   } else {
-    document.getElementById('saveBtn').textContent = ' Отправить на модерацию';
+    document.getElementById('saveBtn').textContent = '📤 Отправить на модерацию';
     document.getElementById('moderationHint').style.display = 'block';
   }
   
@@ -2151,7 +2223,7 @@ function renderAdminPosts() {
   }
   
   if (filtered.length === 0) {
-    list.innerHTML = '<div class="empty-state"><div class="emoji">📭</div><h3>Нет записей</h3></div>';
+    list.innerHTML = '<div class="empty-state"><div class="emoji"></div><h3>Нет записей</h3></div>';
     return;
   }
   
@@ -2169,7 +2241,7 @@ function renderAdminPosts() {
           <span class="status-badge ${post.status}">${statusLabels[post.status]}</span>
         </div>
         <div class="admin-post-meta">
-          <span> ${escapeHtml(post.author || 'Аноним')}</span>
+          <span>✍️ ${escapeHtml(post.author || 'Аноним')}</span>
           <span>📅 ${post.date}</span>
           <span>📂 ${categoryNames[post.category]}</span>
           <span>♡ ${post.likes || 0}</span>
@@ -2178,9 +2250,9 @@ function renderAdminPosts() {
         <div class="admin-post-text">${escapeHtml(post.text)}</div>
         <div class="admin-post-actions">
           ${post.status !== 'approved' ? `<button class="btn btn-success" onclick="approvePost('${post.id}')">✅ Одобрить</button>` : ''}
-          ${post.status !== 'rejected' ? `<button class="btn btn-danger" onclick="rejectPost('${post.id}')"> Отклонить</button>` : ''}
+          ${post.status !== 'rejected' ? `<button class="btn btn-danger" onclick="rejectPost('${post.id}')">❌ Отклонить</button>` : ''}
           <button class="btn btn-warning" onclick="openAdminEdit('${post.id}')">✏️ Редактировать</button>
-          <button class="btn btn-danger" onclick="adminDeletePost('${post.id}')">🗑️ Удалить</button>
+          <button class="btn btn-danger" onclick="adminDeletePost('${post.id}')">️ Удалить</button>
         </div>
       </div>
     `;
