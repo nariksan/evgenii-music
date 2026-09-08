@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Профиль автора — EVGENII AI</title>
+<link rel="icon" type="image/png" href="favicon-48x48.png">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0f;
+  --bg-2: #12121a;
+  --card: rgba(255,255,255,0.03);
+  --card-2: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.08);
+  --text: #e8e8e8;
+  --text-dim: rgba(255,255,255,0.5);
+  --accent-1: #ff6b6b;
+  --accent-2: #4ecdc4;
+  --accent-3: #ffe66d;
+  --accent-4: #a8e6cf;
+  --danger: #ff6b6b;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.bg-gradient {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(circle at 15% 20%, rgba(255,107,107,0.06), transparent 50%),
+              radial-gradient(circle at 85% 80%, rgba(78,205,196,0.06), transparent 50%);
+}
+
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  backdrop-filter: blur(20px); background: rgba(10,10,15,0.9);
+  border-bottom: 1px solid var(--border); padding: 15px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.back-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px; border-radius: 20px;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  color: var(--text); font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all 0.3s; text-decoration: none;
+}
+.back-btn:hover { background: rgba(255,255,255,0.1); transform: translateX(-3px); }
+
+.nav-logo {
+  font-size: 1.2rem; font-weight: 900; letter-spacing: 0.1em;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.author-hero {
+  position: relative; z-index: 1;
+  padding: 120px 20px 60px;
+  text-align: center;
+  max-width: 800px; margin: 0 auto;
+}
+
+.author-avatar-large {
+  width: 100px; height: 100px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; font-weight: 900; color: #fff;
+  margin: 0 auto 20px;
+  box-shadow: 0 10px 40px rgba(255,107,107,0.3);
+}
+
+.author-name {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900; margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--text), var(--accent-2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.author-stats {
+  display: flex; gap: 40px; justify-content: center; margin-top: 30px;
+}
+
+.stat-item { text-align: center; }
+.stat-num {
+  font-size: 2rem; font-weight: 900; color: var(--accent-2);
+}
+.stat-label {
+  font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+.posts-section {
+  position: relative; z-index: 1; padding: 0 20px 100px;
+  max-width: 1400px; margin: 0 auto;
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.post-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 24px; overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+  display: flex; flex-direction: column;
+  animation: fadeIn 0.6s ease both;
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.post-card:hover {
+  transform: translateY(-8px); border-color: rgba(255,255,255,0.15);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.post-card[data-category="thoughts"] { --cat-color: var(--accent-1); }
+.post-card[data-category="songs"] { --cat-color: var(--accent-2); }
+.post-card[data-category="stories"] { --cat-color: var(--accent-3); }
+.post-card[data-category="photos"] { --cat-color: var(--accent-4); }
+
+.post-image {
+  width: 100%; height: 200px; background-size: cover; background-position: center;
+  position: relative;
+}
+.post-image::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, var(--bg));
+}
+
+.post-header { padding: 15px 20px 0; display: flex; justify-content: space-between; align-items: center; }
+.post-category {
+  padding: 6px 14px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em; background: var(--cat-color); color: var(--bg);
+}
+.post-date { font-size: 0.75rem; color: var(--text-dim); }
+
+.post-content { padding: 20px; flex: 1; }
+.post-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
+.post-text {
+  color: var(--text-dim); font-size: 0.9rem; line-height: 1.7;
+  white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.post-footer {
+  padding: 0 20px 20px; display: flex; justify-content: space-between; align-items: center; margin-top: auto;
+}
+.post-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.post-tag {
+  padding: 4px 10px; border-radius: 12px; font-size: 0.7rem;
+  background: rgba(255,255,255,0.05); color: var(--text-dim);
+}
+.post-likes {
+  font-size: 0.85rem; color: var(--text-dim); display: flex; align-items: center; gap: 5px;
+}
+
+.empty-state {
+  text-align: center; padding: 80px 20px; color: var(--text-dim); grid-column: 1 / -1;
+}
+.empty-state .emoji { font-size: 4rem; margin-bottom: 20px; }
+
+.error-state {
+  text-align: center; padding: 80px 20px; color: var(--danger); grid-column: 1 / -1;
+}
+.error-state .emoji { font-size: 4rem; margin-bottom: 20px; }
+.error-state pre {
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  font-size: 0.8rem;
+  text-align: left;
+  overflow-x: auto;
+}
+
+@media (max-width: 600px) {
+  .author-stats { gap: 20px; }
+  .stat-num { font-size: 1.5rem; }
+  .posts-grid { grid-template-columns: 1fr; }
+  .nav-logo { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-gradient"></div>
+
+<nav>
+  <a href="diary.html" class="back-btn">← Назад к дневнику</a>
+  <div class="nav-logo">EVGENII AI</div>
+</nav>
+
+<section class="author-hero">
+  <div class="author-avatar-large" id="authorAvatar">?</div>
+  <h1 class="author-name" id="authorName">Загрузка...</h1>
+  <p style="color: var(--text-dim); max-width: 500px; margin: 0 auto;">
+    Все опубликованные мысли, песни, истории и фото этого автора в одном месте.
+  </p>
+  
+  <div class="author-stats">
+    <div class="stat-item">
+      <div class="stat-num" id="totalPosts">0</div>
+      <div class="stat-label">Записей</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="totalLikes">0</div>
+      <div class="stat-label">Лайков</div>
+    </div>
+  </div>
+</section>
+
+<section class="posts-section">
+  <div class="posts-grid" id="postsGrid">
+    <div class="empty-state">
+      <div class="emoji">⏳</div>
+      <h3>Загрузка записей...</h3>
+    </div>
+  </div>
+</section>
+
+<script>
+console.log('🚀 Author page loading...');
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCw8S1fwhfKUMUtNsDFDbz-oFeSkRD_NOk",
+  authDomain: "evgenii-music-b5adf.firebaseapp.com",
+  projectId: "evgenii-music-b5adf",
+  storageBucket: "evgenii-music-b5adf.firebasestorage.app",
+  messagingSenderId: "518513745915",
+  appId: "1:518513745915:web:2d0e8dc9e1e6f37bccb55e"
+};
+
+let db = null;
+try {
+  console.log(' Initializing Firebase...');
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.firestore();
+  console.log('✅ Firebase подключён успешно');
+} catch (e) { 
+  console.error(' Ошибка Firebase:', e);
+  showError('Ошибка инициализации Firebase: ' + e.message);
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const authorName = urlParams.get('name') || 'Аноним';
+
+console.log('👤 Author name from URL:', authorName);
+
+document.getElementById('authorName').textContent = authorName;
+document.getElementById('authorAvatar').textContent = authorName[0].toUpperCase();
+document.title = `${authorName} — EVGENII AI`;
+
+function showError(message, details = '') {
+  console.error('❌ Error:', message, details);
+  document.getElementById('postsGrid').innerHTML = `
+    <div class="error-state">
+      <div class="emoji">⚠️</div>
+      <h3>${message}</h3>
+      ${details ? `<pre>${escapeHtml(details)}</pre>` : ''}
+      <p style="margin-top: 10px; font-size: 0.9rem;">Попробуйте обновить страницу или проверьте консоль (F12)</p>
+    </div>`;
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+async function loadAuthorPosts() {
+  console.log('📥 Загрузка постов для автора:', authorName);
+  
+  if (!db) {
+    showError('База данных не подключена');
+    return;
+  }
+
+  try {
+    console.log('🔍 Выполняем запрос к Firestore...');
+    
+    // Сначала получаем ВСЕ посты (без фильтра по автору для отладки)
+    const allPostsSnapshot = await db.collection('diary_posts')
+      .orderBy('createdAt', 'desc')
+      .get();
+    
+    console.log(`📊 Всего постов в базе: ${allPostsSnapshot.size}`);
+    
+    // Фильтруем посты по автору на клиенте
+    const posts = [];
+    let totalLikes = 0;
+    let foundAuthorPosts = 0;
+    
+    allPostsSnapshot.forEach(doc => {
+      const data = doc.data();
+      const post = { id: doc.id, ...data };
+      
+      console.log(`📝 Пост: ${data.title}, автор: ${data.author}, статус: ${data.status || 'нет статуса'}`);
+      
+      if (data.author === authorName) {
+        foundAuthorPosts++;
+        // ОБРАТНАЯ СОВМЕСТИМОСТЬ: если статуса нет, считаем пост одобренным
+        const status = data.status || 'approved';
+        console.log(`✅ Пост автора найден! Статус: ${status}`);
+        
+        if (status === 'approved') {
+          posts.push(post);
+          totalLikes += (data.likes || 0);
+          console.log(`➕ Добавлен пост. Всего: ${posts.length}, лайков: ${totalLikes}`);
+        } else {
+          console.log(`⏭️ Пропущен пост со статусом: ${status}`);
+        }
+      }
+    });
+    
+    console.log(`📈 Итог: найдено ${foundAuthorPosts} постов автора, одобрено: ${posts.length}`);
+
+    document.getElementById('totalPosts').textContent = posts.length;
+    document.getElementById('totalLikes').textContent = totalLikes;
+
+    if (posts.length === 0) {
+      if (foundAuthorPosts === 0) {
+        document.getElementById('postsGrid').innerHTML = `
+          <div class="empty-state">
+            <div class="emoji">📝</div>
+            <h3>Пока нет опубликованных записей</h3>
+            <p>Автор ещё не опубликовал ни одной работы, или они находятся на модерации.</p>
+            <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-dim);">
+              Всего постов в базе: ${allPostsSnapshot.size}
+            </p>
+          </div>`;
+      } else {
+        document.getElementById('postsGrid').innerHTML = `
+          <div class="empty-state">
+            <div class="emoji">⏳</div>
+            <h3>Записи на модерации</h3>
+            <p>Автор создал ${foundAuthorPosts} записей, но они ещё не одобрены администратором.</p>
+          </div>`;
+      }
+      return;
+    }
+
+    const categoryNames = { thoughts: 'Мысль', songs: 'Песня', stories: 'История', photos: 'Фото' };
+    
+    document.getElementById('postsGrid').innerHTML = posts.map(post => {
+      const tagsHtml = (post.tags || []).map(t => `<span class="post-tag">#${t}</span>`).join('');
+      const imageHtml = post.image ? `<div class="post-image" style="background-image:url('${post.image}')"></div>` : '';
+      
+      const previewText = post.text.length > 200 ? post.text.substring(0, 200) + '...' : post.text;
+
+      return `
+        <article class="post-card" data-category="${post.category}">
+          ${imageHtml}
+          <div class="post-header">
+            <span class="post-category">${categoryNames[post.category] || 'Запись'}</span>
+            <span class="post-date">${post.date}</span>
+          </div>
+          <div class="post-content">
+            <h3 class="post-title">${escapeHtml(post.title)}</h3>
+            <p class="post-text">${escapeHtml(previewText)}</p>
+          </div>
+          <div class="post-footer">
+            <div class="post-tags">${tagsHtml}</div>
+            <div class="post-likes">♡ ${post.likes || 0}</div>
+          </div>
+        </article>
+      `;
+    }).join('');
+    
+    console.log('✅ Посты успешно отображены');
+    
+  } catch (error) {
+    console.error('❌ Ошибка загрузки:', error);
+    showError('Ошибка загрузки записей', error.message + '\n' + error.stack);
+  }
+}
+
+// Запускаем загрузку при загрузке страницы
+window.addEventListener('load', () => {
+  console.log(' Page loaded, starting posts load...');
+  loadAuthorPosts();
+});
+</script>
+
+</body>
+</html>
