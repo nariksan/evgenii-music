@@ -1304,7 +1304,7 @@ footer {
       Читать дневник может любой — регистрация нужна только для создания записей.
     </div>
     <div class="auth-choice-buttons">
-      <button class="auth-choice-btn login-btn" onclick="showAuthForm('login')"> Вход</button>
+      <button class="auth-choice-btn login-btn" onclick="showAuthForm('login')">🔑 Вход</button>
       <button class="auth-choice-btn register-btn" onclick="showAuthForm('register')">📝 Регистрация</button>
     </div>
     <div class="auth-close-hint" onclick="closeAuthChoice()">✕ Закрыть и продолжить чтение</div>
@@ -1360,7 +1360,7 @@ footer {
     </div>
 
     <div class="form-hint" id="moderationHint">
-      ️ <b>Внимание:</b> После публикации запись отправится на модерацию. Она появится на сайте после одобрения администратора.
+      ⚠️ <b>Внимание:</b> После публикации запись отправится на модерацию. Она появится на сайте после одобрения администратора.
     </div>
 
     <div class="form-grid">
@@ -1409,7 +1409,7 @@ footer {
 
     <div class="form-actions">
       <button class="btn" onclick="closeCreateModal()">Отмена</button>
-      <button class="btn btn-primary" id="saveBtn" onclick="savePost()"> Отправить на модерацию</button>
+      <button class="btn btn-primary" id="saveBtn" onclick="savePost()">📤 Отправить на модерацию</button>
     </div>
   </div>
 </div>
@@ -1419,7 +1419,7 @@ footer {
   <div class="modal-content wide">
     <div class="modal-title" style="justify-content:space-between;">
       <span>⚙️ Панель модерации</span>
-      <button class="btn" onclick="closeAdminPanel()"> Закрыть</button>
+      <button class="btn" onclick="closeAdminPanel()">✕ Закрыть</button>
     </div>
 
     <div class="admin-tabs">
@@ -1456,7 +1456,7 @@ footer {
           <option value="thoughts">💭 Мысль</option>
           <option value="songs">🎵 Песня</option>
           <option value="stories">📖 История</option>
-          <option value="photos"> Фото</option>
+          <option value="photos">📸 Фото</option>
         </select>
       </div>
 
@@ -1502,8 +1502,9 @@ footer {
 
 <script>
 // ===== FIREBASE =====
+// 🔧 ИСПРАВЛЕНО: вставлен правильный API ключ, который вы скопировали из консоли
 const firebaseConfig = {
-  apiKey: "AIzaSyCw8S1fwhfKUMUtNsDFDbz-oFeSkRD_NOk",
+  apiKey: "AIzaSyCw8S1fghfKUMUtNsDFDbz-oFeSkRD_NOk",
   authDomain: "evgenii-music-b5adf.firebaseapp.com",
   projectId: "evgenii-music-b5adf",
   storageBucket: "evgenii-music-b5adf.firebasestorage.app",
@@ -1515,8 +1516,10 @@ let db = null;
 try {
   firebase.initializeApp(firebaseConfig);
   db = firebase.firestore();
-  console.log('Firebase подключён');
-} catch (e) { console.error('Ошибка Firebase:', e); }
+  console.log('✅ Firebase подключён успешно');
+} catch (e) { 
+  console.error('❌ Ошибка Firebase:', e); 
+}
 
 // ===== КОНСТАНТЫ =====
 const USERS_COLLECTION = 'diary_users';
@@ -1572,7 +1575,7 @@ async function ensureOwnerExists() {
         ...OWNER_DATA,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
-      console.log('Владелец создан в базе');
+      console.log('✅ Владелец создан в базе');
     }
   } catch (error) {
     console.error('Ошибка проверки владельца:', error);
@@ -1795,12 +1798,13 @@ function loadPostsFromFirebase() {
         allPosts.push({ id: doc.id, ...doc.data() });
       });
       
-      console.log('Загружено постов:', allPosts.length);
+      console.log('✅ Загружено постов:', allPosts.length);
       renderPosts();
       updateStats();
       if (currentUser && currentUser.isAdmin) renderAdminPosts();
     }, error => {
-      console.error('Ошибка загрузки постов:', error);
+      console.error('❌ Ошибка загрузки постов:', error);
+      showToast('Ошибка подключения к базе данных', 'error');
     });
 }
 
@@ -1993,15 +1997,6 @@ document.getElementById('filterButtons').addEventListener('click', (e) => {
   currentFilter = btn.dataset.filter;
   renderPosts(currentFilter);
 });
-
-function filterPosts(cat) {
-  document.querySelectorAll('.filter-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.filter === cat);
-  });
-  currentFilter = cat;
-  renderPosts(cat);
-  showMainView();
-}
 
 function showMainView() {
   document.getElementById('mainView').style.display = 'block';
@@ -2223,7 +2218,7 @@ function renderAdminPosts() {
   }
   
   if (filtered.length === 0) {
-    list.innerHTML = '<div class="empty-state"><div class="emoji"></div><h3>Нет записей</h3></div>';
+    list.innerHTML = '<div class="empty-state"><div class="emoji">📭</div><h3>Нет записей</h3></div>';
     return;
   }
   
@@ -2252,7 +2247,7 @@ function renderAdminPosts() {
           ${post.status !== 'approved' ? `<button class="btn btn-success" onclick="approvePost('${post.id}')">✅ Одобрить</button>` : ''}
           ${post.status !== 'rejected' ? `<button class="btn btn-danger" onclick="rejectPost('${post.id}')">❌ Отклонить</button>` : ''}
           <button class="btn btn-warning" onclick="openAdminEdit('${post.id}')">✏️ Редактировать</button>
-          <button class="btn btn-danger" onclick="adminDeletePost('${post.id}')">️ Удалить</button>
+          <button class="btn btn-danger" onclick="adminDeletePost('${post.id}')">🗑️ Удалить</button>
         </div>
       </div>
     `;
