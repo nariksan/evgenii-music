@@ -19,9 +19,11 @@
 <meta name="msapplication-TileColor" content="#0a0a1a">
 <meta name="msapplication-TileImage" content="favicon-144x144.png">
 
+<!-- 🔧 Подключены скрипты Firebase (Compat версия для работы в обычном HTML) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -426,7 +428,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 <button class="maintenance-admin-trigger" onclick="showMaintenanceAdminModal()">⚙️</button>
 </div>
 
-<!-- 🔧 ОБНОВЛЕНО: добавлено поле Email -->
 <div class="maintenance-admin-modal" id="maintenanceAdminModal">
 <div class="maintenance-admin-content">
 <div class="maintenance-admin-title">🔐 ВХОД ДЛЯ АДМИНА</div>
@@ -508,7 +509,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 <div class="page" id="adminPage"><div class="page-header fade-in-up"><button class="back-btn" onclick="goBack()">←</button><div class="page-title">⚙️ Админ-панель</div></div>
 <div class="admin-container">
 
-<!-- 🔧 ОБНОВЛЕНО: добавлено поле Email -->
 <div class="admin-section fade-in-up" id="adminLoginSection">
     <div class="admin-login-form">
         <h3>🔐 АВТОРИЗАЦИЯ</h3>
@@ -642,12 +642,27 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 <audio id="audioPlayer" preload="auto" playsinline></audio>
 
 <script>
-var firebaseConfig = {apiKey:"AIzaSyCw8S1fwhfKUMUtNsDFDbz-oFeSkRD_NOk",authDomain:"evgenii-music-b5adf.firebaseapp.com",projectId:"evgenii-music-b5adf",storageBucket:"evgenii-music-b5adf.firebasestorage.app",messagingSenderId:"518513745915",appId:"1:518513745915:web:2d0e8dc9e1e6f37bccb55e"};
+// 🔧 ВАШ НОВЫЙ, ПРАВИЛЬНЫЙ КОНФИГ FIREBASE (адаптирован под compat-версию)
+var firebaseConfig = {
+  apiKey: "AIzaSyCw8S1fghfKUMUtNsDFDbz-oFeSkRD_NOk",
+  authDomain: "evgenii-music-b5adf.firebaseapp.com",
+  projectId: "evgenii-music-b5adf",
+  storageBucket: "evgenii-music-b5adf.firebasestorage.app",
+  messagingSenderId: "518513745915",
+  appId: "1:518513745915:web:2d0e8dc9e1e6f37bccb55e"
+};
+
 var db = null;
-try { firebase.initializeApp(firebaseConfig); db = firebase.firestore(); console.log('Firebase подключён'); } catch (e) { console.error('Ошибка Firebase:', e); }
+try { 
+  firebase.initializeApp(firebaseConfig); 
+  db = firebase.firestore(); 
+  console.log('Firebase подключён успешно!'); 
+} catch (e) { 
+  console.error('Ошибка инициализации Firebase:', e); 
+}
+
 var TELEGRAM_BOT_TOKEN = '8620797853:AAGE9OaW5GIun46NFaGxxGMIUL8LRxPvTrY';
 var TELEGRAM_CHAT_ID = '5129595944';
-// 🔧 ПАРОЛЬ УДАЛЁН ИЗ КОДА — теперь используется Firebase Authentication
 var isAdminLoggedIn = false;
 
 var licenseForceMode = false;
@@ -711,7 +726,6 @@ function showMaintenanceAdminModal() {
 }
 function closeMaintenanceAdminModal() { document.getElementById('maintenanceAdminModal').classList.remove('active'); }
 
-// 🔧 ОБНОВЛЕНО: вход через Firebase Authentication
 function maintenanceAdminLogin() {
   var email = document.getElementById('maintenanceAdminEmail').value.trim();
   var password = document.getElementById('maintenanceAdminPassword').value;
@@ -744,7 +758,7 @@ function maintenanceAdminLogin() {
     .catch(function(error) {
       console.error('Ошибка входа:', error);
       var msg = '❌ Ошибка входа';
-      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
         msg = '❌ Неверный email или пароль';
       } else if (error.code === 'auth/too-many-requests') {
         msg = '❌ Слишком много попыток. Попробуйте позже';
@@ -755,7 +769,6 @@ function maintenanceAdminLogin() {
 }
 document.getElementById('maintenanceAdminModal').addEventListener('click', function(e) { if (e.target === this) closeMaintenanceAdminModal(); });
 
-// 🔧 СИСТЕМА УПРАВЛЕНИЯ ТРЕКАМИ ЧЕРЕЗ FIRESTORE
 var tracksData = [];
 
 function loadTracksFromFirestore() {
@@ -1219,7 +1232,6 @@ document.getElementById('discussionInput').addEventListener('keydown', function(
 
 function showAdminLogin() { navigateTo('adminPage'); document.getElementById('adminLoginSection').style.display = 'block'; document.getElementById('adminContent').style.display = 'none'; document.getElementById('adminEmailInput').value = ''; document.getElementById('adminPasswordInput').value = ''; document.getElementById('adminLoginStatus').textContent = ''; }
 
-// 🔧 ОБНОВЛЕНО: вход через Firebase Authentication
 function adminLogin() {
   var email = document.getElementById('adminEmailInput').value.trim();
   var password = document.getElementById('adminPasswordInput').value;
@@ -1248,7 +1260,7 @@ function adminLogin() {
     .catch(function(error) {
       console.error('Ошибка входа:', error);
       var msg = '❌ Ошибка входа';
-      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
         msg = '❌ Неверный email или пароль';
       } else if (error.code === 'auth/too-many-requests') {
         msg = '❌ Слишком много попыток. Попробуйте позже';
@@ -1313,7 +1325,6 @@ function showMainScreen(name) {
   updateAttachLabel();
 }
 logoutBtn.addEventListener('click', function() {
-  // 🔧 ДОБАВЛЕНО: выход из Firebase Auth при выходе с сайта
   firebase.auth().signOut().catch(function(){});
   try { localStorage.removeItem('evgenii_user'); } catch(e) {}
   var pages = ['homePage','tracksPage','aboutPage','communityPage','contactPage','supportPage','discussionsPage','adminPage'];
@@ -1385,67 +1396,6 @@ function copyCardNumber() {
   else { fallbackCopy(); }
 }
 updateAttachLabel();
-
-/* 
-================================================================================
-🔧 СКРИПТ ДЛЯ ЕДИНОВРЕМЕННОЙ МИГРАЦИИ СТАРЫХ ТРЕКОВ В БАЗУ ДАННЫХ
-Как использовать:
-1. Откройте сайт в браузере.
-2. Войдите в админ-панель (используя email и пароль из Firebase Authentication).
-3. Откройте консоль разработчика (F12 -> вкладка Console).
-4. Скопируйте весь этот блок кода, вставьте в консоль и нажмите Enter.
-5. После сообщения "✅ Миграция успешно завершена!" этот блок кода можно удалить.
-================================================================================
-*/
-/*
-var oldTracks = [
-  { title: 'Я хоче домой', subtitle: '', file: 'tracks/song23.mp3', duration: '3:41', cover: 'cover/cover2.png' },
-  { title: 'Мужчина прав', subtitle: '', file: 'tracks/song15.mp3', duration: '3:35', cover: 'cover/cover00.png' },
-  { title: 'Корпоративный сад', subtitle: '', file: 'tracks/song20.mp3', duration: '4:09', cover: 'cover/cover.jpg' },
-  { title: 'Последний трек.', subtitle: '', file: 'tracks/song21.mp3', duration: '4:18', cover: 'cover/cover.jpg' },
-  { title: 'Воздух Густеет.', subtitle: '', file: 'tracks/song22.mp3', duration: '3:23', cover: 'cover/cover.jpg' },
-  { title: 'Тихий ток.', subtitle: '', file: 'tracks/song19.mp3', duration: '3:47', cover: 'cover/cover.jpg' },
-  { title: 'На Пределе.', subtitle: '', file: 'tracks/song16.mp3', duration: '3:24', cover: 'cover/cover1.png' },
-  { title: 'Пустой код', subtitle: '', file: 'tracks/song.mp3', duration: '3:20', cover: 'cover/cover.jpg' },
-  { title: 'А мне похуй', subtitle: '', file: 'tracks/song2.mp3', duration: '3:11', cover: 'cover/cover.jpg' },
-  { title: 'Нейронный Дождь', subtitle: '', file: 'tracks/song3.mp3', duration: '4:03', cover: 'cover/cover.jpg' },
-  { title: 'Бункер', subtitle: '', file: 'tracks/song4.mp3', duration: '3:01', cover: 'cover/cover.jpg' },
-  { title: 'Поезд на юг', subtitle: '', file: 'tracks/song5.mp3', duration: '3:23', cover: 'cover/cover.jpg' },
-  { title: 'Сгоревший экран', subtitle: '', file: 'tracks/song6.mp3', duration: '3:39', cover: 'cover/cover.jpg' },
-  { title: 'Ёлка горит, а мне похуй', subtitle: '', file: 'tracks/song7.mp3', duration: '2:30', cover: 'cover/cover.jpg' },
-  { title: '19_11', subtitle: '', file: 'tracks/song8.mp3', duration: '2:59', cover: 'cover/cover.jpg' },
-  { title: 'Маленький демон', subtitle: '', file: 'tracks/song9.mp3', duration: '4:32', cover: 'cover/cover.jpg' },
-  { title: 'Бот как поэт', subtitle: '', file: 'tracks/song10.mp3', duration: '2:34', cover: 'cover/cover.jpg' },
-  { title: 'Телефон Не Звонит', subtitle: '', file: 'tracks/song11.mp3', duration: '3:14', cover: 'cover/cover.jpg' },
-  { title: 'Белая ткань', subtitle: '', file: 'tracks/song12.mp3', duration: '3:28', cover: 'cover/cover.jpg' },
-  { title: 'Лишний', subtitle: '', file: 'tracks/song13.mp3', duration: '4:04', cover: 'cover/cover.jpg' },
-  { title: 'Тишина', subtitle: '', file: 'tracks/song14.mp3', duration: '4:48', cover: 'cover/cover.jpg' },
-  { title: 'Братья', subtitle: '', file: 'tracks/song1.mp3', duration: '4:19', cover: 'cover/cover.jpg' },
-  { title: 'Черная жидкость', subtitle: '', file: 'tracks/song17.mp3', duration: '4:24', cover: 'cover/cover.jpg' },
-  { title: 'Тень на стене', subtitle: '', file: 'tracks/song18.mp3', duration: '3:25', cover: 'cover/cover.jpg' },
-  { title: '......', subtitle: '', file: 'tracks/song25.mp3', duration: '0:00', cover: 'cover/cover.jpg' }
-];
-
-console.log('Начинаю миграцию ' + oldTracks.length + ' треков...');
-var batch = db.batch();
-oldTracks.forEach(function(track) {
-    var ref = db.collection('tracks').doc();
-    batch.set(ref, {
-        title: track.title,
-        subtitle: track.subtitle || 'EVGENII AI',
-        file: track.file,
-        duration: track.duration,
-        cover: track.cover,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-});
-
-batch.commit().then(function() {
-    console.log('✅ Миграция успешно завершена! Все треки теперь в базе данных.');
-}).catch(function(error) {
-    console.error('❌ Ошибка миграции:', error);
-});
-*/
 </script>
 </body>
 </html>
