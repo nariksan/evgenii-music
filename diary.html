@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>EVGENII AI — Творческий дневник</title>
 <link rel="icon" type="image/png" href="favicon-48x48.png">
+<!-- 🔧 ДОБАВЛЕНА БИБЛИОТЕКА FIREBASE AUTHENTICATION -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -512,20 +514,13 @@ nav {
   transform: translateY(0);
 }
 
-/* Анимация появления полного текста */
 .full-text {
   animation: fadeInText 0.4s ease;
 }
 
 @keyframes fadeInText {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .post-footer {
@@ -1034,192 +1029,45 @@ footer {
 }
 
 @media (max-width: 600px) {
-  .nav-top {
-    padding: 10px 15px 6px;
-    gap: 8px;
-  }
-  
-  .logo {
-    font-size: 1.1rem;
-  }
-  
-  .logo-ai {
-    font-size: 0.7rem;
-    padding: 2px 8px;
-  }
-  
-  .nav-slogan {
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-  }
-  
-  .nav-bottom {
-    padding: 6px 10px 10px;
-    gap: 6px;
-  }
-  
-  .nav-menu {
-    gap: 5px;
-    justify-content: flex-start;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    width: 100%;
-    padding-bottom: 4px;
-  }
+  .nav-top { padding: 10px 15px 6px; gap: 8px; }
+  .logo { font-size: 1.1rem; }
+  .logo-ai { font-size: 0.7rem; padding: 2px 8px; }
+  .nav-slogan { font-size: 0.7rem; letter-spacing: 0.1em; }
+  .nav-bottom { padding: 6px 10px 10px; gap: 6px; }
+  .nav-menu { gap: 5px; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; width: 100%; padding-bottom: 4px; }
   .nav-menu::-webkit-scrollbar { display: none; }
-  
-  .nav-link {
-    padding: 5px 10px;
-    font-size: 0.72rem;
-    flex-shrink: 0;
-  }
-  
-  .user-badge {
-    padding: 4px 10px;
-    font-size: 0.7rem;
-    flex-shrink: 0;
-  }
-  
-  .user-avatar {
-    width: 20px;
-    height: 20px;
-    font-size: 0.6rem;
-  }
-  
-  .hero {
-    padding: 120px 15px 40px;
-  }
-  
-  .hero-title {
-    font-size: clamp(2.5rem, 12vw, 4rem);
-  }
-  
-  .hero-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 30px;
-  }
-  
-  .hero-badge {
-    font-size: 0.8rem;
-    padding: 8px 18px;
-    margin-bottom: 20px;
-  }
-  
-  .hero-stats {
-    gap: 25px;
-  }
-  
-  .stat-num {
-    font-size: 2rem;
-  }
-  
-  .stat-label {
-    font-size: 0.7rem;
-  }
-  
-  .categories {
-    padding: 30px 15px;
-  }
-  
-  .filter-btn {
-    padding: 8px 14px;
-    font-size: 0.78rem;
-  }
-  
-  .posts-section {
-    padding: 0 15px 80px;
-  }
-  
-  .posts-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-  
-  .post-title {
-    font-size: 1.15rem;
-  }
-  
-  .post-text {
-    font-size: 0.9rem;
-  }
-  
-  .modal-content {
-    padding: 20px 15px;
-    border-radius: 20px;
-  }
-  
-  .modal-content.small {
-    max-width: 100%;
-  }
-  
-  .modal-title {
-    font-size: 1.15rem;
-  }
-  
-  .auth-choice-buttons {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .auth-warning-icon {
-    font-size: 2.5rem;
-  }
-  
-  .auth-warning-text {
-    font-size: 0.9rem;
-  }
-  
-  .form-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  
-  .form-actions {
-    flex-direction: column;
-  }
-  
-  .form-actions .btn {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .admin-tabs {
-    gap: 6px;
-  }
-  
-  .admin-tab {
-    padding: 7px 12px;
-    font-size: 0.72rem;
-  }
-  
-  .admin-post-item {
-    padding: 14px;
-  }
-  
-  .admin-post-actions {
-    flex-direction: column;
-  }
-  
-  .admin-post-actions .btn {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .fab {
-    width: 52px;
-    height: 52px;
-    bottom: 20px;
-    right: 20px;
-    font-size: 1.3rem;
-  }
-  
-  .toast {
-    bottom: 20px;
-    right: 15px;
-    left: 15px;
-    max-width: none;
-  }
+  .nav-link { padding: 5px 10px; font-size: 0.72rem; flex-shrink: 0; }
+  .user-badge { padding: 4px 10px; font-size: 0.7rem; flex-shrink: 0; }
+  .user-avatar { width: 20px; height: 20px; font-size: 0.6rem; }
+  .hero { padding: 120px 15px 40px; }
+  .hero-title { font-size: clamp(2.5rem, 12vw, 4rem); }
+  .hero-subtitle { font-size: 0.95rem; margin-bottom: 30px; }
+  .hero-badge { font-size: 0.8rem; padding: 8px 18px; margin-bottom: 20px; }
+  .hero-stats { gap: 25px; }
+  .stat-num { font-size: 2rem; }
+  .stat-label { font-size: 0.7rem; }
+  .categories { padding: 30px 15px; }
+  .filter-btn { padding: 8px 14px; font-size: 0.78rem; }
+  .posts-section { padding: 0 15px 80px; }
+  .posts-grid { grid-template-columns: 1fr; gap: 15px; }
+  .post-title { font-size: 1.15rem; }
+  .post-text { font-size: 0.9rem; }
+  .modal-content { padding: 20px 15px; border-radius: 20px; }
+  .modal-content.small { max-width: 100%; }
+  .modal-title { font-size: 1.15rem; }
+  .auth-choice-buttons { flex-direction: column; gap: 10px; }
+  .auth-warning-icon { font-size: 2.5rem; }
+  .auth-warning-text { font-size: 0.9rem; }
+  .form-grid { grid-template-columns: 1fr; gap: 10px; }
+  .form-actions { flex-direction: column; }
+  .form-actions .btn { width: 100%; justify-content: center; }
+  .admin-tabs { gap: 6px; }
+  .admin-tab { padding: 7px 12px; font-size: 0.72rem; }
+  .admin-post-item { padding: 14px; }
+  .admin-post-actions { flex-direction: column; }
+  .admin-post-actions .btn { width: 100%; justify-content: center; }
+  .fab { width: 52px; height: 52px; bottom: 20px; right: 20px; font-size: 1.3rem; }
+  .toast { bottom: 20px; right: 15px; left: 15px; max-width: none; }
 }
 
 @media (max-width: 360px) {
@@ -1320,7 +1168,8 @@ footer {
       <div class="auth-back-btn" onclick="backToChoice()">← Назад к выбору</div>
       <div class="modal-title" style="justify-content:center;">🔑 Вход</div>
       <form class="auth-form" onsubmit="handleLogin(event)">
-        <input type="text" class="auth-input" id="loginPhone" placeholder="Последние 4 цифры телефона" maxlength="4" pattern="[0-9]{4}" required>
+        <!-- 🔧 ИЗМЕНЕНО: Email вместо телефона для безопасности Firebase Auth -->
+        <input type="email" class="auth-input" id="loginEmail" placeholder="Ваш Email" required>
         <input type="text" class="auth-input" id="loginName" placeholder="Ваше имя" required>
         <input type="password" class="auth-input" id="loginPassword" placeholder="Пароль" required>
         <div class="auth-error" id="loginError"></div>
@@ -1336,10 +1185,11 @@ footer {
       <div class="auth-back-btn" onclick="backToChoice()">← Назад к выбору</div>
       <div class="modal-title" style="justify-content:center;">📝 Регистрация</div>
       <form class="auth-form" onsubmit="handleRegister(event)">
-        <input type="text" class="auth-input" id="regPhone" placeholder="Последние 4 цифры телефона" maxlength="4" pattern="[0-9]{4}" required>
+        <!-- 🔧 ИЗМЕНЕНО: Email вместо телефона для безопасности Firebase Auth -->
+        <input type="email" class="auth-input" id="regEmail" placeholder="Ваш Email" required>
         <input type="text" class="auth-input" id="regName" placeholder="Ваше имя" required>
-        <input type="password" class="auth-input" id="regPassword" placeholder="Придумайте пароль (мин. 4 символа)" minlength="4" required>
-        <input type="password" class="auth-input" id="regPasswordConfirm" placeholder="Повторите пароль" minlength="4" required>
+        <input type="password" class="auth-input" id="regPassword" placeholder="Придумайте пароль (мин. 6 символов)" minlength="6" required>
+        <input type="password" class="auth-input" id="regPasswordConfirm" placeholder="Повторите пароль" minlength="6" required>
         <div class="auth-error" id="regError"></div>
         <button type="submit" class="auth-submit-btn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
       </form>
@@ -1394,7 +1244,6 @@ footer {
         <input type="text" class="form-input" id="postTags" placeholder="ночь, город, лирика">
       </div>
 
-      <!-- ПОЛЕ ДЛЯ ФОТО (ТОЛЬКО ДЛЯ ВЛАДЕЛЬЦА) -->
       <div class="form-group full" id="imageField" style="display:none;">
         <label class="form-label">📸 Ссылка на фото</label>
         <div class="form-hint owner">
@@ -1501,8 +1350,7 @@ footer {
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== FIREBASE =====
-// 🔧 ИСПРАВЛЕНО: вставлен правильный API ключ, который вы скопировали из консоли
+// ===== FIREBASE CONFIG =====
 const firebaseConfig = {
   apiKey: "AIzaSyCw8S1fghfKUMUtNsDFDbz-oFeSkRD_NOk",
   authDomain: "evgenii-music-b5adf.firebaseapp.com",
@@ -1525,6 +1373,9 @@ try {
 const USERS_COLLECTION = 'diary_users';
 const POSTS_COLLECTION = 'diary_posts';
 
+// 🔧 БЕЗОПАСНАЯ НАСТРОЙКА АДМИНА: Укажи здесь свой реальный email!
+const ADMIN_EMAIL = "evgenii-admin@example.com"; // <-- ЗАМЕНИ НА СВОЙ EMAIL
+
 // ===== СОСТОЯНИЕ =====
 let currentUser = null;
 let allPosts = [];
@@ -1534,53 +1385,38 @@ let adminEditingId = null;
 let currentFilter = 'all';
 let currentAdminTab = 'pending';
 
-// ===== ДАННЫЕ ВЛАДЕЛЬЦА =====
-const OWNER_DATA = {
-  phoneLast4: '3734',
-  name: 'Евгений',
-  password: 'N130289s',
-  isAdmin: true
-};
-
-// ===== ПРИ ЗАГРУЗКЕ =====
-window.addEventListener('load', async () => {
-  await ensureOwnerExists();
-  
-  const savedUser = localStorage.getItem('diary_current_user');
-  if (savedUser) {
+// ===== ПРИ ЗАГРУЗКЕ: СЛУШАТЕЛЬ СОСТОЯНИЯ АВТОРИЗАЦИИ =====
+firebase.auth().onAuthStateChanged(async (user) => {
+  if (user) {
+    // Пользователь вошёл через Firebase Auth. Получаем его профиль из Firestore
     try {
-      currentUser = JSON.parse(savedUser);
+      const doc = await db.collection(USERS_COLLECTION).doc(user.uid).get();
+      if (doc.exists) {
+        currentUser = { uid: user.uid, email: user.email, ...doc.data() };
+      } else {
+        // Если профиля нет (редкий случай), создаём базовый
+        currentUser = { 
+          uid: user.uid, 
+          email: user.email, 
+          name: user.email.split('@')[0], 
+          isAdmin: (user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) 
+        };
+      }
       updateUserUI();
-    } catch(e) {
-      localStorage.removeItem('diary_current_user');
+    } catch (error) {
+      console.error("Ошибка загрузки профиля:", error);
     }
+  } else {
+    // Пользователь вышел
+    currentUser = null;
+    updateUserUI();
   }
-  
+});
+
+window.addEventListener('load', () => {
   loadPostsFromFirebase();
   setTodayDate();
 });
-
-// ===== СОЗДАНИЕ ВЛАДЕЛЬЦА В БАЗЕ =====
-async function ensureOwnerExists() {
-  if (!db) return;
-  
-  try {
-    const snapshot = await db.collection(USERS_COLLECTION)
-      .where('phoneLast4', '==', OWNER_DATA.phoneLast4)
-      .where('name', '==', OWNER_DATA.name)
-      .get();
-    
-    if (snapshot.empty) {
-      await db.collection(USERS_COLLECTION).add({
-        ...OWNER_DATA,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      console.log('✅ Владелец создан в базе');
-    }
-  } catch (error) {
-    console.error('Ошибка проверки владельца:', error);
-  }
-}
 
 // ===== ОБНОВЛЕНИЕ UI ПОЛЬЗОВАТЕЛЯ =====
 function updateUserUI() {
@@ -1591,7 +1427,7 @@ function updateUserUI() {
     document.getElementById('logoutNavBtn').style.display = 'inline-flex';
     document.getElementById('fabBtn').classList.add('visible');
     
-    // Показываем кнопку Админ и поле для фото только для владельца
+    // Показываем кнопку Админ и поле для фото только если email совпадает с ADMIN_EMAIL
     if (currentUser.isAdmin) {
       document.getElementById('adminNavBtn').style.display = 'inline-flex';
       document.getElementById('imageField').style.display = 'flex';
@@ -1640,10 +1476,10 @@ function showAuthForm(type) {
   
   if (type === 'login') {
     document.getElementById('loginFormContainer').classList.add('active');
-    setTimeout(() => document.getElementById('loginPhone').focus(), 100);
+    setTimeout(() => document.getElementById('loginEmail').focus(), 100);
   } else {
     document.getElementById('registerFormContainer').classList.add('active');
-    setTimeout(() => document.getElementById('regPhone').focus(), 100);
+    setTimeout(() => document.getElementById('regEmail').focus(), 100);
   }
 }
 
@@ -1654,17 +1490,17 @@ function backToChoice() {
   document.getElementById('regError').textContent = '';
 }
 
-// ===== РЕГИСТРАЦИЯ =====
+// ===== РЕГИСТРАЦИЯ (ЧЕРЕЗ FIREBASE AUTH) =====
 async function handleRegister(e) {
   e.preventDefault();
-  const phone = document.getElementById('regPhone').value.trim();
+  const email = document.getElementById('regEmail').value.trim().toLowerCase();
   const name = document.getElementById('regName').value.trim();
   const password = document.getElementById('regPassword').value;
   const passwordConfirm = document.getElementById('regPasswordConfirm').value;
   const errorEl = document.getElementById('regError');
   
-  if (phone.length !== 4 || !/^\d{4}$/.test(phone)) {
-    errorEl.textContent = 'Введите ровно 4 цифры телефона';
+  if (!email.includes('@')) {
+    errorEl.textContent = 'Введите корректный Email';
     return;
   }
   
@@ -1673,8 +1509,8 @@ async function handleRegister(e) {
     return;
   }
   
-  if (password.length < 4) {
-    errorEl.textContent = 'Пароль должен быть минимум 4 символа';
+  if (password.length < 6) {
+    errorEl.textContent = 'Пароль должен быть минимум 6 символов';
     return;
   }
   
@@ -1684,53 +1520,39 @@ async function handleRegister(e) {
   }
   
   try {
-    const snapshot = await db.collection(USERS_COLLECTION)
-      .where('phoneLast4', '==', phone)
-      .where('name', '==', name)
-      .get();
+    // 1. Создаём пользователя в Firebase Authentication (пароль безопасно хешируется Google)
+    const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+    const user = userCredential.user;
     
-    if (!snapshot.empty) {
-      errorEl.textContent = 'Пользователь с такими данными уже существует. Войдите.';
-      return;
-    }
-    
-    const userData = {
-      phoneLast4: phone,
+    // 2. Сохраняем профиль пользователя в Firestore, привязывая к его уникальному UID
+    await db.collection(USERS_COLLECTION).doc(user.uid).set({
       name: name,
-      password: password,
-      isAdmin: false,
+      email: email,
+      isAdmin: (email === ADMIN_EMAIL.toLowerCase()), // Безопасное определение админа
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
-    
-    const docRef = await db.collection(USERS_COLLECTION).add(userData);
-    
-    currentUser = {
-      id: docRef.id,
-      phoneLast4: phone,
-      name: name,
-      password: password,
-      isAdmin: false
-    };
-    
-    localStorage.setItem('diary_current_user', JSON.stringify(currentUser));
-    updateUserUI();
+    });
     
     document.getElementById('authFormModal').classList.remove('active');
     document.body.style.overflow = '';
     
     showToast('✅ Регистрация успешна! Теперь вы можете писать.', 'success');
     setTimeout(() => openCreateModal(), 500);
+    // onAuthStateChanged автоматически обновит currentUser
   } catch (error) {
     console.error(error);
-    errorEl.textContent = 'Ошибка: ' + error.message;
+    if (error.code === 'auth/email-already-in-use') {
+      errorEl.textContent = 'Этот Email уже зарегистрирован. Попробуйте войти.';
+    } else {
+      errorEl.textContent = 'Ошибка: ' + error.message;
+    }
   }
 }
 
-// ===== ВХОД =====
+// ===== ВХОД (ЧЕРЕЗ FIREBASE AUTH) =====
 async function handleLogin(e) {
   e.preventDefault();
-  const phone = document.getElementById('loginPhone').value.trim();
-  const name = document.getElementById('loginName').value.trim();
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const name = document.getElementById('loginName').value.trim(); // Оставляем для совместимости UI, но проверка идёт по email
   const password = document.getElementById('loginPassword').value;
   const errorEl = document.getElementById('loginError');
   
@@ -1740,45 +1562,37 @@ async function handleLogin(e) {
   }
   
   try {
-    const snapshot = await db.collection(USERS_COLLECTION)
-      .where('phoneLast4', '==', phone)
-      .where('name', '==', name)
-      .where('password', '==', password)
-      .get();
-    
-    if (snapshot.empty) {
-      errorEl.textContent = 'Неверные данные. Проверьте телефон, имя и пароль.';
-      return;
-    }
-    
-    const doc = snapshot.docs[0];
-    currentUser = {
-      id: doc.id,
-      ...doc.data()
-    };
-    
-    localStorage.setItem('diary_current_user', JSON.stringify(currentUser));
-    updateUserUI();
+    // Firebase сам проверит email и пароль безопасно
+    await firebase.auth().signInWithEmailAndPassword(email, password);
     
     document.getElementById('authFormModal').classList.remove('active');
     document.body.style.overflow = '';
     
-    showToast('👋 Добро пожаловать, ' + currentUser.name + '!', 'success');
-    setTimeout(() => openCreateModal(), 500);
+    // Небольшая задержка, чтобы onAuthStateChanged успел сработать и загрузить имя
+    setTimeout(() => {
+        showToast('👋 Добро пожаловать!', 'success');
+        openCreateModal();
+    }, 300);
+    
   } catch (error) {
     console.error(error);
-    errorEl.textContent = 'Ошибка: ' + error.message;
+    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+      errorEl.textContent = 'Неверный Email или пароль.';
+    } else {
+      errorEl.textContent = 'Ошибка: ' + error.message;
+    }
   }
 }
 
 // ===== ВЫХОД =====
-function handleLogout() {
+async function handleLogout() {
   if (!confirm('Выйти из аккаунта?')) return;
-  currentUser = null;
-  localStorage.removeItem('diary_current_user');
-  updateUserUI();
-  renderPosts();
-  showToast('Вы вышли из аккаунта', 'success');
+  try {
+    await firebase.auth().signOut();
+    showToast('Вы вышли из аккаунта', 'success');
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // ===== ЗАГРУЗКА ПОСТОВ =====
@@ -1798,7 +1612,6 @@ function loadPostsFromFirebase() {
         allPosts.push({ id: doc.id, ...doc.data() });
       });
       
-      console.log('✅ Загружено постов:', allPosts.length);
       renderPosts();
       updateStats();
       if (currentUser && currentUser.isAdmin) renderAdminPosts();
@@ -1861,7 +1674,7 @@ const categoryTextClass = { thoughts: '', songs: 'lyrics', stories: 'story', pho
 function getVisiblePosts() {
   return allPosts.filter(post => {
     if (post.status === 'approved') return true;
-    if (currentUser && post.authorId === currentUser.id) return true;
+    if (currentUser && post.authorId === currentUser.uid) return true; // 🔧 ИЗМЕНЕНО: authorId теперь это uid
     return false;
   });
 }
@@ -1887,8 +1700,7 @@ function renderPosts(filter = 'all') {
     const tagsHtml = (post.tags || []).map(t => `<span class="post-tag">#${t}</span>`).join('');
     const authorInitial = (post.author || '?')[0].toUpperCase();
     
-    // Владелец может редактировать/удалять любой пост
-    const canEdit = currentUser && (currentUser.isAdmin || post.authorId === currentUser.id);
+    const canEdit = currentUser && (currentUser.isAdmin || post.authorId === currentUser.uid); // 🔧 ИЗМЕНЕНО
     
     let statusBar = '';
     if (canEdit && post.status === 'pending') {
@@ -1904,7 +1716,6 @@ function renderPosts(filter = 'all') {
       <button class="post-edit-btn delete" onclick="deletePost('${post.id}')" title="Удалить">🗑️</button>
     ` : '';
     
-    // Обрезаем текст для превью (максимум 300 символов)
     const previewText = post.text.length > 300 ? post.text.substring(0, 300) + '...' : post.text;
     const hasMoreText = post.text.length > 300;
 
@@ -1940,7 +1751,6 @@ function renderPosts(filter = 'all') {
   }).join('');
 }
 
-// ===== ФУНКЦИЯ ДЛЯ РАСКРЫТИЯ/СКРЫТИЯ ПОЛНОГО ТЕКСТА =====
 function togglePost(postId) {
   const preview = document.getElementById(`preview-${postId}`);
   const fullText = document.getElementById(`full-${postId}`);
@@ -1948,14 +1758,11 @@ function togglePost(postId) {
   
   if (fullText && preview) {
     if (fullText.style.display === 'none') {
-      // Показываем полный текст
       preview.style.display = 'none';
       fullText.style.display = 'block';
       btn.textContent = 'Свернуть ↑';
-      // Прокручиваем к началу поста
       document.querySelector(`[data-post-id="${postId}"]`).scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
-      // Скрываем полный текст
       preview.style.display = 'block';
       fullText.style.display = 'none';
       btn.textContent = 'Читать далее →';
@@ -1988,7 +1795,6 @@ function updateStats() {
   `;
 }
 
-// ===== ФИЛЬТРЫ =====
 document.getElementById('filterButtons').addEventListener('click', (e) => {
   const btn = e.target.closest('.filter-btn');
   if (!btn) return;
@@ -1997,11 +1803,6 @@ document.getElementById('filterButtons').addEventListener('click', (e) => {
   currentFilter = btn.dataset.filter;
   renderPosts(currentFilter);
 });
-
-function showMainView() {
-  document.getElementById('mainView').style.display = 'block';
-  window.scrollTo(0, 0);
-}
 
 function goToHome() {
   window.location.href = 'index.html';
@@ -2053,7 +1854,6 @@ function openCreateModal() {
   document.getElementById('modalIcon').textContent = '✨';
   document.getElementById('modalTitleText').textContent = 'Новая запись';
   
-  // Для владельца - сразу публикация, для остальных - на модерацию
   if (currentUser.isAdmin) {
     document.getElementById('saveBtn').textContent = '🚀 Опубликовать';
     document.getElementById('moderationHint').style.display = 'none';
@@ -2102,8 +1902,6 @@ async function savePost() {
   }
 
   const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
-
-  // Владелец публикует сразу, остальные - на модерацию
   const status = currentUser.isAdmin ? 'approved' : 'pending';
 
   if (editingId) {
@@ -2127,7 +1925,7 @@ async function savePost() {
       image: image || null,
       likes: 0,
       author: currentUser.name,
-      authorId: currentUser.id,
+      authorId: currentUser.uid, // 🔧 ИЗМЕНЕНО: используем безопасный uid
       status: status,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
@@ -2330,7 +2128,6 @@ async function adminDeletePost(id) {
   if (success) showToast('🗑️ Запись удалена', 'success');
 }
 
-// ===== ЗАКРЫТИЕ МОДАЛОК ПО КЛИКУ НА ФОН =====
 document.querySelectorAll('.modal-overlay').forEach(modal => {
   modal.addEventListener('click', (e) => {
     if (e.target === modal) {
@@ -2340,7 +2137,6 @@ document.querySelectorAll('.modal-overlay').forEach(modal => {
   });
 });
 
-// ===== TOAST =====
 function showToast(message, type = 'success') {
   const toast = document.getElementById('toast');
   toast.textContent = message;
