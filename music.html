@@ -19,11 +19,9 @@
 <meta name="msapplication-TileColor" content="#0a0a1a">
 <meta name="msapplication-TileImage" content="favicon-144x144.png">
 
-<!-- 🔧 Подключены скрипты Firebase (Compat версия для работы в обычном HTML) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -538,9 +536,9 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
     </div>
 
     <div class="admin-section fade-in-up">
-        <div class="admin-section-title" style="color:var(--cyan)">🎵 ДОБАВИТЬ НОВЫЙ РЕЛИЗ</div>
+        <div class="admin-section-title" style="color:var(--cyan)">🎵 УПРАВЛЕНИЕ РЕЛИЗАМИ</div>
         <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px;">
-            Сначала загрузите .mp3 и картинку обложки на хостинг. Затем укажите пути к ним ниже. Предыдущий новый релиз автоматически сместится в общий список.
+            Сначала загрузите .mp3 и картинку обложки на хостинг. Затем укажите пути к ним ниже.
         </p>
         <div class="admin-form">
             <input type="text" id="adminTrackTitle" class="form-input" placeholder="Название трека (обязательно)">
@@ -548,14 +546,15 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
             <input type="text" id="adminTrackFile" class="form-input" placeholder="Путь к файлу (например: tracks/song26.mp3)">
             <input type="text" id="adminTrackDuration" class="form-input" placeholder="Длительность (например: 3:45)">
             <input type="text" id="adminTrackCover" class="form-input" placeholder="Путь к обложке (например: cover/cover26.png)">
-            <button class="admin-btn primary" onclick="addNewRelease()">🚀 ОПУБЛИКОВАТЬ КАК НОВЫЙ РЕЛИЗ</button>
+            <button class="admin-btn primary" id="submitTrackBtn" onclick="addNewRelease()">🚀 ОПУБЛИКОВАТЬ КАК НОВЫЙ РЕЛИЗ</button>
+            <button class="admin-btn secondary" id="cancelEditBtn" onclick="cancelEditTrack()" style="display:none; width:100%; margin-top:10px;">❌ ОТМЕНИТЬ РЕДАКТИРОВАНИЕ</button>
             <div class="form-status" id="adminTrackStatus"></div>
         </div>
     </div>
 
     <div class="admin-section fade-in-up">
-        <div class="admin-section-title" style="color:var(--red)">🗑️ УПРАВЛЕНИЕ ТРЕКАМИ</div>
-        <div id="adminTracksList" style="display:flex;flex-direction:column;gap:10px;max-height:300px;overflow-y:auto;">
+        <div class="admin-section-title" style="color:var(--red)">📋 СПИСОК ВСЕХ ТРЕКОВ</div>
+        <div id="adminTracksList" style="display:flex;flex-direction:column;gap:10px;max-height:400px;overflow-y:auto;">
             <div style="text-align:center;color:var(--text-secondary);padding:20px;">Загрузка списка...</div>
         </div>
     </div>
@@ -642,7 +641,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-p
 <audio id="audioPlayer" preload="auto" playsinline></audio>
 
 <script>
-// 🔧 ВАШ НОВЫЙ, ПРАВИЛЬНЫЙ КОНФИГ FIREBASE (адаптирован под compat-версию)
 var firebaseConfig = {
   apiKey: "AIzaSyCw8S1fghfKUMUtNsDFDbz-oFeSkRD_NOk",
   authDomain: "evgenii-music-b5adf.firebaseapp.com",
@@ -770,6 +768,7 @@ function maintenanceAdminLogin() {
 document.getElementById('maintenanceAdminModal').addEventListener('click', function(e) { if (e.target === this) closeMaintenanceAdminModal(); });
 
 var tracksData = [];
+var currentEditingTrackId = null;
 
 function loadTracksFromFirestore() {
     if (!db) return;
@@ -812,17 +811,90 @@ function addNewRelease() {
         cover: cover,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     }).then(function() {
-        status.textContent = '✅ Новый релиз успешно добавлен! Предыдущий сместился в общий список.';
+        status.textContent = '✅ Новый релиз успешно добавлен!';
         status.className = 'form-status success';
-        document.getElementById('adminTrackTitle').value = '';
-        document.getElementById('adminTrackSubtitle').value = '';
-        document.getElementById('adminTrackFile').value = '';
-        document.getElementById('adminTrackDuration').value = '';
-        document.getElementById('adminTrackCover').value = '';
+        cancelEditTrack();
     }).catch(function(error) {
         status.textContent = '❌ Ошибка: ' + error.message;
         status.className = 'form-status error';
     });
+}
+
+function editTrack(trackId) {
+    var track = tracksData.find(t => t.id === trackId);
+    if (!track) return;
+
+    currentEditingTrackId = trackId;
+    
+    document.getElementById('adminTrackTitle').value = track.title || '';
+    document.getElementById('adminTrackSubtitle').value = track.subtitle === 'EVGENII AI' ? '' : (track.subtitle || '');
+    document.getElementById('adminTrackFile').value = track.file || '';
+    document.getElementById('adminTrackDuration').value = track.duration || '';
+    document.getElementById('adminTrackCover').value = track.cover || '';
+
+    var submitBtn = document.getElementById('submitTrackBtn');
+    submitBtn.textContent = '💾 СОХРАНИТЬ ИЗМЕНЕНИЯ';
+    submitBtn.onclick = function() { updateTrack(trackId); };
+    
+    document.getElementById('cancelEditBtn').style.display = 'block';
+    document.getElementById('adminTrackTitle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    var status = document.getElementById('adminTrackStatus');
+    status.textContent = '✏️ Режим редактирования: ' + track.title;
+    status.className = 'form-status';
+}
+
+function cancelEditTrack() {
+    currentEditingTrackId = null;
+    document.getElementById('adminTrackTitle').value = '';
+    document.getElementById('adminTrackSubtitle').value = '';
+    document.getElementById('adminTrackFile').value = '';
+    document.getElementById('adminTrackDuration').value = '';
+    document.getElementById('adminTrackCover').value = '';
+
+    var submitBtn = document.getElementById('submitTrackBtn');
+    submitBtn.textContent = '🚀 ОПУБЛИКОВАТЬ КАК НОВЫЙ РЕЛИЗ';
+    submitBtn.onclick = addNewRelease;
+    
+    document.getElementById('cancelEditBtn').style.display = 'none';
+    document.getElementById('adminTrackStatus').textContent = '';
+}
+
+function updateTrack(trackId) {
+    var title = document.getElementById('adminTrackTitle').value.trim();
+    var subtitle = document.getElementById('adminTrackSubtitle').value.trim();
+    var file = document.getElementById('adminTrackFile').value.trim();
+    var duration = document.getElementById('adminTrackDuration').value.trim();
+    var cover = document.getElementById('adminTrackCover').value.trim();
+    var status = document.getElementById('adminTrackStatus');
+
+    if (!title || !file || !duration) {
+        status.textContent = '⚠️ Заполните название, путь к файлу и длительность!';
+        status.className = 'form-status error';
+        return;
+    }
+
+    status.textContent = '⏳ Сохранение изменений...';
+    status.className = 'form-status';
+
+    var updateData = {
+        title: title,
+        subtitle: subtitle || 'EVGENII AI',
+        file: file,
+        duration: duration,
+        cover: cover
+    };
+
+    db.collection('tracks').doc(trackId).update(updateData)
+        .then(function() {
+            status.textContent = '✅ Трек успешно обновлен!';
+            status.className = 'form-status success';
+            cancelEditTrack();
+        })
+        .catch(function(error) {
+            status.textContent = '❌ Ошибка: ' + error.message;
+            status.className = 'form-status error';
+        });
 }
 
 function deleteTrack(trackId) {
@@ -846,8 +918,10 @@ function renderAdminTracksList() {
         return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(0,0,0,0.2);border-radius:8px;border:1px solid var(--card-border);">' +
             '<div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:0.9rem;">' + escapeHtml(track.title) + isNew + '</div>' +
             '<div style="font-size:0.75rem;color:var(--text-secondary);">' + escapeHtml(track.file) + '</div></div>' +
-            '<button class="admin-btn danger" style="padding:6px 12px;font-size:0.75rem;margin-left:10px;" onclick="deleteTrack(\'' + track.id + '\')">Удалить</button>' +
-            '</div>';
+            '<div style="display:flex;gap:5px;">' +
+            '<button class="admin-btn secondary" style="padding:6px 10px;font-size:0.75rem;" onclick="editTrack(\'' + track.id + '\')" title="Редактировать">✏️</button>' +
+            '<button class="admin-btn danger" style="padding:6px 10px;font-size:0.75rem;" onclick="deleteTrack(\'' + track.id + '\')" title="Удалить">🗑️</button>' +
+            '</div></div>';
     }).join('');
 }
 
