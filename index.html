@@ -66,7 +66,7 @@ body {
 }
 
 .login-screen, .project-selector {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -74,8 +74,9 @@ body {
   animation: fadeInUp 0.8s ease;
 }
 
-.project-selector { display: none; }
-.project-selector.active { display: flex; }
+.login-screen.active, .project-selector.active { 
+  display: flex; 
+}
 
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -180,28 +181,6 @@ body {
   gap: 20px;
   position: relative;
   z-index: 1;
-}
-
-.login-input {
-  width: 100%;
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid rgba(0, 243, 255, 0.3);
-  background: rgba(10, 10, 20, 0.6);
-  color: #fff;
-  font-size: 1.1rem;
-  text-align: center;
-  outline: none;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s;
-  font-family: 'Inter', sans-serif;
-}
-
-.login-input::placeholder { color: rgba(255, 255, 255, 0.4); }
-.login-input:focus {
-  border-color: var(--neon-cyan);
-  box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
-  background: rgba(10, 10, 20, 0.8);
 }
 
 .login-btn {
@@ -368,6 +347,7 @@ body {
   justify-content: center;
   height: 100%;
   position: relative;
+  text-decoration: none;
 }
 
 .project-card:hover {
@@ -729,19 +709,20 @@ body {
 
 <div class="main-container">
   
+  <!-- ЭКРАН 1: ВХОД (Без поля имени) -->
   <div class="login-screen" id="loginScreen">
     <div class="login-banner">
       <h1 class="banner-logo">EVGENII<span class="banner-ai-badge">AI</span></h1>
       <div class="banner-tagline">Музыка · Мысли · Творчество</div>
       <div class="banner-divider"></div>
       
-      <form class="login-form" id="loginForm">
-        <input type="text" class="login-input" id="nameInput" placeholder="Введите ваше имя" required autocomplete="off">
-        <button type="submit" class="login-btn">ВОЙТИ В СИСТЕМУ</button>
-      </form>
+      <div class="login-form">
+        <button type="button" class="login-btn" onclick="handleLoginClick()">ВОЙТИ В СИСТЕМУ</button>
+      </div>
     </div>
   </div>
 
+  <!-- ЭКРАН 2: ВЫБОР ПРОЕКТА -->
   <div class="project-selector" id="projectSelector">
     
     <div class="project-banner">
@@ -755,7 +736,6 @@ body {
       <div class="project-banner-divider"></div>
       <p class="project-banner-subtitle">
         <h1 class="selector-title">ОДИН ПРОЕКТ — ДВЕ ВСЕЛЕННЫЕ</h1>
-        
       </p>
     </div>
     
@@ -787,9 +767,10 @@ body {
   <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
 </div>
 
+<!-- МОДАЛКА АДМИНА -->
 <div class="modal-overlay" id="adminLoginModal">
   <div class="modal-content">
-    <h2 class="modal-title">🔐 ВХОД ДЛЯ АДМИНА</h2>
+    <h2 class="modal-title"> ВХОД ДЛЯ АДМИНА</h2>
     <p style="color: rgba(255,255,255,0.6); margin-bottom: 20px; font-size: 0.9rem;">Введите пароль для доступа к панели управления</p>
     <input type="password" class="modal-input" id="adminPassword" placeholder="Пароль администратора" autocomplete="off">
     <button class="modal-btn" onclick="checkAdminPassword()">ВОЙТИ</button>
@@ -799,11 +780,11 @@ body {
 
 <div class="modal-overlay" id="adminPanelModal">
   <div class="modal-content">
-    <h2 class="modal-title">⚙️ ПАНЕЛЬ УПРАВЛЕНИЯ</h2>
+    <h2 class="modal-title">️ ПАНЕЛЬ УПРАВЛЕНИЯ</h2>
     
     <div class="toggle-container">
       <div class="toggle-info">
-        <div class="toggle-title">🎵 Музыка</div>
+        <div class="toggle-title"> Музыка</div>
         <div class="toggle-desc">Закрыть раздел музыки</div>
       </div>
       <div class="toggle-switch" id="musicToggle" onclick="toggleSection('music')"></div>
@@ -825,6 +806,7 @@ body {
   </div>
 </div>
 
+<!-- МОДАЛКА СОГЛАШЕНИЯ -->
 <div class="license-modal" id="licenseModal">
   <div class="license-content">
     <h2 class="license-title">ЛИЦЕНЗИОННОЕ СОГЛАШЕНИЕ</h2>
@@ -843,7 +825,7 @@ body {
 
 <script>
 const firebaseConfig = {
-  apiKey: "AIzaSyCw8S1fwhfKUMUtNsDFDbz-oFeSkRD_NOk",
+  apiKey: "AIzaSyCw8S1fghfKUMUtNsDFDbz-oFeSkRD_NOk",
   authDomain: "evgenii-music-b5adf.firebaseapp.com",
   projectId: "evgenii-music-b5adf",
   storageBucket: "evgenii-music-b5adf.firebasestorage.app",
@@ -861,24 +843,53 @@ const ADMIN_PASSWORD = 'N130289s';
 let sectionStatus = { music: false, diary: false };
 let isLicenseChecked = false;
 
-const userName = localStorage.getItem('evgenii_user');
+// Проверяем, было ли уже принято соглашение
 const licenseAccepted = localStorage.getItem('evgenii_agreement_accepted') === 'true';
 
-if (userName && licenseAccepted) {
-  document.getElementById('loginScreen').style.display = 'none';
+// При загрузке страницы
+window.addEventListener('load', () => {
+  if (licenseAccepted) {
+    showProjectSelector();
+  } else {
+    document.getElementById('loginScreen').classList.add('active');
+  }
+});
+
+// 1. Нажатие на кнопку "ВОЙТИ В СИСТЕМУ"
+function handleLoginClick() {
+  loadLicense();
+  document.getElementById('licenseModal').classList.add('active');
+}
+
+// 2. Принятие соглашения
+function acceptLicense() {
+  if (!isLicenseChecked) return;
+  localStorage.setItem('evgenii_agreement_accepted', 'true');
+  document.getElementById('licenseModal').classList.remove('active');
+  showProjectSelector();
+}
+
+// 3. Показать выбор проекта
+function showProjectSelector() {
+  document.getElementById('loginScreen').classList.remove('active');
   document.getElementById('projectSelector').classList.add('active');
   loadSectionStatus();
 }
 
-document.getElementById('loginForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = document.getElementById('nameInput').value.trim();
-  if (name) {
-    localStorage.setItem('evgenii_user', name);
-    loadLicense();
-    document.getElementById('licenseModal').classList.add('active');
+// 4. Выход из системы
+function logout() {
+  if (confirm('Вы уверены, что хотите выйти?\n\nПри следующем входе нужно будет снова принять соглашение.')) {
+    localStorage.removeItem('evgenii_agreement_accepted');
+    sectionStatus = { music: false, diary: false };
+    isLicenseChecked = false;
+    document.getElementById('licenseCheckbox').classList.remove('checked');
+    document.getElementById('licenseBtn').classList.remove('active');
+    
+    document.getElementById('projectSelector').classList.remove('active');
+    document.getElementById('loginScreen').classList.add('active');
+    window.scrollTo(0, 0);
   }
-});
+}
 
 function toggleLicense() {
   isLicenseChecked = !isLicenseChecked;
@@ -894,24 +905,15 @@ function toggleLicense() {
   }
 }
 
-function acceptLicense() {
-  if (!isLicenseChecked) return;
-  localStorage.setItem('evgenii_agreement_accepted', 'true');
-  document.getElementById('licenseModal').classList.remove('active');
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('projectSelector').classList.add('active');
-  loadSectionStatus();
-}
-
 function loadLicense() {
   const defaultText = `
     <h4>🎵 1. Авторство и концепция</h4>
     <p>Все идеи и концепции принадлежат <strong>полностью автору</strong>. Тексты песен создаются автором при вспомогательном участии искусственного интеллекта, доля которого варьируется в зависимости от конкретного произведения — от ≈20% (подбор рифм, синонимов, шлифовка отдельных строк) до ≈50% (совместная проработка отдельных фрагментов). При этом автор осуществляет общее <strong>творческое руководство, отбор, редактуру и финальное утверждение</strong> текста. Вокал и аранжировка генерируются AI на основе авторских указаний. Правообладателем всего контента является автор проекта EVGENII AI.</p>
     <div class="law-ref">📌 Правовая основа: ГК РФ ст. 1228, 1229, 1255, 1259.</div>
     
-    <h4>️ 2. Ответственность</h4>
+    <h4>⚖️ 2. Ответственность</h4>
     <p>Проект EVGENII AI носит исключительно <strong>развлекательный характер</strong> и является некоммерческим творческим проектом. Весь контент предоставляется «как есть», без каких-либо гарантий. Автор и правообладатель не несёт ответственности за возможные проблемы, убытки или последствия, возникшие в результате использования сайта, прослушивания контента или взаимодействия с сервисами проекта, за исключением случаев, прямо предусмотренных действующим законодательством.</p>
-    <div class="law-ref">📌 Правовая основа: ГК РФ ст. 15, 401.</div>
+    <div class="law-ref"> Правовая основа: ГК РФ ст. 15, 401.</div>
     
     <h4>✅ 3. Разрешено</h4>
     <ul>
@@ -920,9 +922,9 @@ function loadLicense() {
       <li>Делиться ссылками на треки в соцсетях</li>
       <li>Участие в обсуждениях и сообществах</li>
     </ul>
-    <div class="law-ref">📌 Правовая основа: ГК РФ ст. 1273.</div>
+    <div class="law-ref"> Правовая основа: ГК РФ ст. 1273.</div>
     
-    <h4> 4. Запрещено</h4>
+    <h4>🚫 4. Запрещено</h4>
     <ul>
       <li>Коммерческое использование без письменного разрешения</li>
       <li>Загрузка на стриминговые платформы от своего имени</li>
@@ -937,7 +939,7 @@ function loadLicense() {
   
   if (db) {
     db.collection('settings').doc('license').get().then(doc => {
-      document.getElementById('licenseText').innerHTML = defaultText; 
+      document.getElementById('licenseText').innerHTML = doc.data()?.text || defaultText; 
     }).catch(() => {
       document.getElementById('licenseText').innerHTML = defaultText;
     });
@@ -953,21 +955,6 @@ function selectProject(project) {
   }
   if (project === 'music') window.location.href = 'music.html';
   if (project === 'diary') window.location.href = 'diary.html';
-}
-
-function logout() {
-  if (confirm('Вы уверены, что хотите выйти?\n\nВам нужно будет снова ввести имя для входа.')) {
-    localStorage.removeItem('evgenii_user');
-    localStorage.removeItem('evgenii_agreement_accepted');
-    sectionStatus = { music: false, diary: false };
-    document.getElementById('projectSelector').classList.remove('active');
-    document.getElementById('loginScreen').style.display = 'flex';
-    document.getElementById('nameInput').value = '';
-    isLicenseChecked = false;
-    document.getElementById('licenseCheckbox').classList.remove('checked');
-    document.getElementById('licenseBtn').classList.remove('active');
-    window.scrollTo(0, 0);
-  }
 }
 
 function loadSectionStatus() {
