@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>EVGENII AI — Творческий дневник</title>
-<link rel="icon" type="image/png" href="favicon-48x48.png">
-<!-- 🔧 ДОБАВЛЕНА БИБЛИОТЕКА FIREBASE AUTHENTICATION -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -16,1274 +14,481 @@
 
 :root {
   --bg: #0a0a0f;
-  --bg-2: #12121a;
-  --card: rgba(255,255,255,0.03);
-  --card-2: rgba(255,255,255,0.05);
-  --border: rgba(255,255,255,0.08);
-  --text: #e8e8e8;
-  --text-dim: rgba(255,255,255,0.5);
-  --accent-1: #ff6b6b;
-  --accent-2: #4ecdc4;
-  --accent-3: #ffe66d;
-  --accent-4: #a8e6cf;
-  --success: #4ecdc4;
-  --danger: #ff6b6b;
-  --warning: #ffb347;
+  --bg-2: #15151f;
+  --card: rgba(255, 255, 255, 0.04);
+  --card-2: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #ffffff;
+  --text-dim: #94a3b8;
+  --accent: #a78bfa;
+  --accent2: #ec4899;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
   line-height: 1.6;
 }
 
-a { color: inherit; text-decoration: none; }
-
-.bg-gradient {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at 15% 20%, rgba(255,107,107,0.06), transparent 50%),
-              radial-gradient(circle at 85% 80%, rgba(78,205,196,0.06), transparent 50%);
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1;
+  background: radial-gradient(circle at 20% 30%, rgba(167, 139, 250, 0.15), transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.12), transparent 50%);
+  animation: bgShift 20s ease-in-out infinite alternate;
 }
+@keyframes bgShift { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+
+a { color: inherit; text-decoration: none; }
 
 /* ===== НАВИГАЦИЯ ===== */
 nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  backdrop-filter: blur(20px);
-  background: rgba(10,10,15,0.9);
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  backdrop-filter: blur(16px); background: rgba(10, 10, 15, 0.7);
   border-bottom: 1px solid var(--border);
 }
-
 .nav-top {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 20px 8px;
-  gap: 12px;
-  flex-wrap: wrap;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2rem; flex-wrap: wrap; gap: 1rem;
 }
-
 .logo {
-  font-size: 1.4rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  white-space: nowrap;
-  flex-shrink: 0;
+  font-size: 1.2rem; font-weight: 800; letter-spacing: 0.1rem; cursor: pointer;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
 }
+.nav-actions { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
 
-.logo-ai {
-  font-size: 0.9rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  padding: 3px 10px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  color: #fff;
-  -webkit-text-fill-color: #fff;
-  vertical-align: middle;
-  margin-left: 4px;
+.btn-small {
+  padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--border);
+  background: transparent; color: var(--text); font-size: 0.85rem; cursor: pointer; transition: all 0.3s;
 }
-
-.nav-slogan {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-dim);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  white-space: nowrap;
+.btn-small:hover { border-color: var(--accent); color: var(--accent); }
+.btn-primary {
+  padding: 0.6rem 1.2rem; border-radius: 8px; border: none;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  color: #fff; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: transform 0.3s;
 }
-
-.nav-slogan .dot {
-  color: var(--accent-2);
-  margin: 0 6px;
-}
-
-.nav-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 20px 12px;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.nav-menu {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.nav-link {
-  padding: 8px 18px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.nav-link:hover {
-  background: rgba(255,255,255,0.08);
-  color: var(--text);
-  border-color: rgba(255,255,255,0.15);
-}
-
-.nav-link.primary {
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  border-color: transparent;
-  color: #fff;
-}
-.nav-link.primary:hover {
-  box-shadow: 0 0 20px rgba(255,107,107,0.4);
-  transform: translateY(-1px);
-}
-
-.nav-link.home {
-  border-color: rgba(255,230,109,0.3);
-  color: var(--accent-3);
-}
-.nav-link.home:hover {
-  background: rgba(255,230,109,0.1);
-}
-
-.nav-link.admin {
-  border-color: rgba(255,179,71,0.3);
-  color: var(--warning);
-}
-.nav-link.admin:hover {
-  background: rgba(255,179,71,0.1);
-}
-
-.nav-link.logout {
-  border-color: rgba(255,107,107,0.3);
-  color: var(--danger);
-}
-.nav-link.logout:hover {
-  background: rgba(255,107,107,0.1);
-}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(167, 139, 250, 0.4); }
 
 .user-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  font-size: 0.8rem;
-  color: var(--text);
-  font-weight: 600;
-  white-space: nowrap;
+  display: none; align-items: center; gap: 0.5rem; padding: 0.4rem 0.8rem;
+  border-radius: 20px; background: var(--card); border: 1px solid var(--border);
+  font-size: 0.85rem; color: var(--accent); font-weight: 600;
 }
-
 .user-avatar {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #fff;
-  flex-shrink: 0;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700; color: #fff;
 }
 
 /* ===== HERO ===== */
 .hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 140px 20px 60px;
+  min-height: 60vh; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; text-align: center; padding: 120px 20px 40px;
 }
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 24px;
-  border-radius: 30px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  font-size: 0.9rem;
-  color: var(--text-dim);
-  margin-bottom: 30px;
-  letter-spacing: 0.05em;
-}
-
 .hero-title {
-  font-size: clamp(3rem, 10vw, 7rem);
-  font-weight: 900;
-  letter-spacing: 0.05em;
-  line-height: 1;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-4));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% 200%;
-  animation: gradientShift 8s ease infinite;
+  font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; margin-bottom: 1rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
 .hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.3rem);
-  color: var(--text-dim);
-  max-width: 700px;
-  margin-bottom: 50px;
-  line-height: 1.6;
+  font-size: 1.1rem; color: var(--text-dim); max-width: 600px; line-height: 1.6;
 }
 
-.hero-stats {
-  display: flex;
-  gap: 60px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.stat { text-align: center; }
-.stat-num {
-  font-size: 3rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.stat-label {
-  font-size: 0.8rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-top: 5px;
-}
-
-/* ===== CATEGORIES ===== */
-.categories {
-  position: relative;
-  z-index: 1;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-.categories-title {
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  margin-bottom: 25px;
-}
-
-.filter-buttons {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
+/* ===== ФИЛЬТРЫ ===== */
+.categories { padding: 20px 20px 40px; text-align: center; }
+.filter-buttons { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
 .filter-btn {
-  padding: 10px 20px;
-  border-radius: 50px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  padding: 0.6rem 1.2rem; border-radius: 50px; background: var(--card);
+  border: 1px solid var(--border); color: var(--text-dim); font-size: 0.9rem;
+  font-weight: 600; cursor: pointer; transition: all 0.3s;
 }
-.filter-btn:hover { background: rgba(255,255,255,0.06); color: var(--text); transform: translateY(-2px); }
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
 .filter-btn.active {
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  color: #fff;
-  border-color: transparent;
-}
-.filter-count { font-size: 0.7rem; opacity: 0.7; }
-
-/* ===== POSTS ===== */
-.posts-section {
-  position: relative;
-  z-index: 1;
-  padding: 0 20px 100px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  color: #fff; border-color: transparent;
 }
 
+/* ===== ПОСТЫ ===== */
+.posts-section { padding: 0 20px 100px; }
 .posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  max-width: 1400px;
-  margin: 0 auto;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem; max-width: 1200px; margin: 0 auto;
 }
-
 .post-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 0.6s ease both;
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+  overflow: hidden; transition: all 0.4s; display: flex; flex-direction: column;
+  animation: fadeIn 0.5s ease both;
 }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.post-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 15px 40px rgba(167, 139, 250, 0.15); }
 
-.post-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(255,255,255,0.15);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-}
-
-.post-card[data-category="thoughts"] { --cat-color: var(--accent-1); }
-.post-card[data-category="songs"] { --cat-color: var(--accent-2); }
-.post-card[data-category="stories"] { --cat-color: var(--accent-3); }
-.post-card[data-category="photos"] { --cat-color: var(--accent-4); }
-
-.post-image {
-  width: 100%;
-  height: 250px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.post-image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 60%, var(--bg));
-}
+.post-image { width: 100%; height: 200px; background-size: cover; background-position: center; position: relative; }
+.post-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, var(--bg)); }
 
 .post-status-bar {
-  padding: 8px 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  padding: 0.5rem 1.2rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
 }
+.post-status-bar.pending { background: rgba(245, 158, 11, 0.15); color: var(--warning); border-bottom: 1px solid rgba(245, 158, 11, 0.2); }
+.post-status-bar.rejected { background: rgba(239, 68, 68, 0.15); color: var(--danger); border-bottom: 1px solid rgba(239, 68, 68, 0.2); }
 
-.post-status-bar.pending {
-  background: rgba(255,179,71,0.15);
-  color: var(--warning);
-  border-bottom: 1px solid rgba(255,179,71,0.2);
-}
-
-.post-status-bar.rejected {
-  background: rgba(255,107,107,0.15);
-  color: var(--danger);
-  border-bottom: 1px solid rgba(255,107,107,0.2);
-}
-
-.post-author {
-  padding: 15px 20px 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.8rem;
-  color: var(--text-dim);
-}
-
-.post-author-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #fff;
-  flex-shrink: 0;
-}
-
-.post-author-name { font-weight: 600; color: var(--text); }
-
-.post-header {
-  padding: 15px 20px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
+.post-header { padding: 1.2rem 1.2rem 0; display: flex; justify-content: space-between; align-items: center; }
 .post-category {
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  background: var(--cat-color);
-  color: var(--bg);
+  padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; background: rgba(167, 139, 250, 0.2); color: var(--accent);
 }
+.post-date { font-size: 0.8rem; color: var(--text-dim); }
 
-.post-date { font-size: 0.75rem; color: var(--text-dim); }
+.post-content { padding: 1.2rem; flex: 1; }
+.post-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.8rem; }
+.post-text { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1rem; white-space: pre-wrap; }
+.post-text.lyrics { font-style: italic; border-left: 3px solid var(--accent); padding-left: 1rem; color: var(--text); }
 
-.post-content { padding: 20px; flex: 1; }
-
-.post-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  line-height: 1.3;
-}
-
-.post-text {
-  color: var(--text-dim);
-  font-size: 0.95rem;
-  line-height: 1.7;
-  margin-bottom: 15px;
-  white-space: pre-wrap;
-}
-
-.post-text.lyrics {
-  font-style: italic;
-  border-left: 3px solid var(--cat-color);
-  padding-left: 15px;
-  color: var(--text);
-}
-
-.post-text.story {
-  font-family: 'Georgia', serif;
-  font-size: 1rem;
-}
-
-/* ===== КНОПКА "ЧИТАТЬ ДАЛЕЕ" ===== */
 .read-more-btn {
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2)); border: none; border-radius: 8px;
+  padding: 0.6rem 1.2rem; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.5rem;
 }
+.read-more-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(167, 139, 250, 0.4); }
+.full-text { animation: fadeIn 0.4s ease; }
 
-.read-more-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(255,107,107,0.4);
-}
+.post-footer { padding: 0 1.2rem 1.2rem; display: flex; justify-content: space-between; align-items: center; margin-top: auto; flex-wrap: wrap; gap: 0.8rem; }
+.post-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.post-tag { padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.75rem; background: rgba(255,255,255,0.05); color: var(--text-dim); }
 
-.read-more-btn:active {
-  transform: translateY(0);
-}
-
-.full-text {
-  animation: fadeInText 0.4s ease;
-}
-
-@keyframes fadeInText {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.post-footer {
-  padding: 0 20px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.post-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-.post-tag {
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  background: rgba(255,255,255,0.05);
-  color: var(--text-dim);
-}
-
-.post-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
+.post-actions { display: flex; gap: 0.8rem; align-items: center; }
 .post-likes {
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  transition: color 0.3s;
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.03);
+  font-size: 0.9rem; color: var(--text-dim); cursor: pointer; transition: color 0.3s;
+  padding: 0.4rem 0.8rem; border-radius: 20px; background: rgba(255,255,255,0.03);
 }
-.post-likes:hover { color: var(--accent-1); background: rgba(255,107,107,0.1); }
-.post-likes.liked { color: var(--accent-1); background: rgba(255,107,107,0.15); }
+.post-likes:hover, .post-likes.liked { color: var(--accent2); background: rgba(236, 72, 153, 0.1); }
 
 .post-edit-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  transition: all 0.3s;
+  width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border); color: var(--text-dim); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all 0.3s;
 }
-.post-edit-btn:hover { color: var(--accent-2); border-color: var(--accent-2); }
+.post-edit-btn:hover { color: var(--accent); border-color: var(--accent); }
 .post-edit-btn.delete:hover { color: var(--danger); border-color: var(--danger); }
 
-.empty-state {
-  text-align: center;
-  padding: 80px 20px;
-  color: var(--text-dim);
-  grid-column: 1 / -1;
-}
-.empty-state .emoji { font-size: 4rem; margin-bottom: 20px; }
-
-/* ===== FOOTER ===== */
-footer {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 50px 20px;
-  border-top: 1px solid var(--border);
-}
-.footer-logo {
-  font-size: 1.5rem;
-  font-weight: 900;
-  letter-spacing: 0.15em;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 15px;
-}
-.footer-text { font-size: 0.85rem; color: var(--text-dim); }
+.empty-state { text-align: center; padding: 4rem 20px; color: var(--text-dim); grid-column: 1 / -1; }
+.empty-state .emoji { font-size: 3rem; margin-bottom: 1rem; }
 
 /* ===== FAB ===== */
 .fab {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  border: none;
-  color: #fff;
-  font-size: 1.4rem;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(255,107,107,0.4);
-  transition: all 0.3s;
-  z-index: 100;
-  display: none;
-  align-items: center;
-  justify-content: center;
+  position: fixed; bottom: 2rem; right: 2rem; width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none;
+  color: #fff; font-size: 1.5rem; cursor: pointer; box-shadow: 0 10px 30px rgba(167, 139, 250, 0.4);
+  transition: all 0.3s; z-index: 100; display: none; align-items: center; justify-content: center;
 }
 .fab.visible { display: flex; }
-.fab:hover {
-  transform: translateY(-5px) scale(1.1);
-  box-shadow: 0 15px 40px rgba(255,107,107,0.6);
-}
+.fab:hover { transform: translateY(-5px) scale(1.1); }
 
-/* ===== MODAL ===== */
+/* ===== МОДАЛКИ ===== */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(5,5,15,0.95);
-  backdrop-filter: blur(20px);
-  z-index: 2000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  overflow-y: auto;
+  position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+  z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1rem;
 }
 .modal-overlay.active { display: flex; }
-
 .modal-content {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 25px;
-  max-width: 600px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
+  background: var(--bg-2); border: 1px solid var(--border); border-radius: 20px;
+  padding: 2rem; max-width: 500px; width: 100%; position: relative;
+  box-shadow: 0 0 60px rgba(167, 139, 250, 0.1); animation: slideUp 0.4s; max-height: 90vh; overflow-y: auto;
 }
+.modal-content.wide { max-width: 700px; }
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-.modal-content.wide { max-width: 900px; }
-.modal-content.small { max-width: 420px; }
+.modal-close {
+  position: absolute; top: 1rem; right: 1rem; background: none; border: none;
+  color: var(--text-dim); font-size: 1.5rem; cursor: pointer; transition: color 0.3s;
+}
+.modal-close:hover { color: var(--accent2); }
 
-.modal-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+.modal-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
 
-/* ===== AUTH MODAL ===== */
-.auth-warning-icon {
-  font-size: 3rem;
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.auth-warning-text {
-  text-align: center;
-  color: var(--text-dim);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 25px;
-}
-
-.auth-warning-text strong {
-  color: var(--text);
-}
-
-.auth-choice-buttons {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 15px;
-}
-
-.auth-choice-btn {
-  flex: 1;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--text);
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-align: center;
-}
-
-.auth-choice-btn:hover {
-  background: var(--card-2);
-  transform: translateY(-2px);
-}
-
-.auth-choice-btn.login-btn {
-  border-color: var(--accent-2);
-  color: var(--accent-2);
-}
-.auth-choice-btn.login-btn:hover {
-  background: rgba(78,205,196,0.1);
-}
-
-.auth-choice-btn.register-btn {
-  border-color: var(--accent-1);
-  color: var(--accent-1);
-}
-.auth-choice-btn.register-btn:hover {
-  background: rgba(255,107,107,0.1);
-}
-
-.auth-close-hint {
-  text-align: center;
-  font-size: 0.8rem;
-  color: var(--text-dim);
-  cursor: pointer;
-  padding: 10px;
-  transition: color 0.3s;
-}
-.auth-close-hint:hover { color: var(--text); }
-
-/* ===== AUTH FORMS ===== */
+/* ===== АВТОРИЗАЦИЯ ===== */
 .auth-form-container { display: none; }
 .auth-form-container.active { display: block; }
-
 .auth-back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  cursor: pointer;
-  margin-bottom: 15px;
-  transition: color 0.3s;
+  display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-dim);
+  font-size: 0.85rem; cursor: pointer; margin-bottom: 1rem; transition: color 0.3s;
 }
 .auth-back-btn:hover { color: var(--text); }
 
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
+.auth-form { display: flex; flex-direction: column; gap: 1rem; }
 .auth-input {
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--text);
-  font-size: 0.95rem;
-  font-family: inherit;
-  transition: border-color 0.3s;
+  padding: 0.9rem 1rem; border-radius: 10px; background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border); color: var(--text); font-size: 0.95rem; outline: none; transition: border-color 0.3s;
 }
-.auth-input:focus { outline: none; border-color: var(--accent-2); }
+.auth-input:focus { border-color: var(--accent); }
 .auth-input::placeholder { color: var(--text-dim); }
 
 .auth-submit-btn {
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 5px;
+  padding: 0.9rem; border-radius: 10px; border: none;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.5rem;
 }
-.auth-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,107,107,0.3); }
+.auth-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3); }
 
-.auth-error {
-  color: var(--danger);
-  font-size: 0.85rem;
-  text-align: center;
-  min-height: 20px;
-}
+.auth-error { color: var(--danger); font-size: 0.85rem; text-align: center; min-height: 20px; }
+.auth-switch-hint { text-align: center; font-size: 0.85rem; color: var(--text-dim); margin-top: 1rem; }
+.auth-switch-hint a { color: var(--accent); cursor: pointer; text-decoration: underline; }
 
-.auth-switch-hint {
-  text-align: center;
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  margin-top: 15px;
+.auth-choice-buttons { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+.auth-choice-btn {
+  padding: 1rem; border-radius: 12px; border: 1px solid var(--border); background: var(--card);
+  color: var(--text); font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; text-align: center;
 }
+.auth-choice-btn:hover { background: var(--card-2); transform: translateY(-2px); }
+.auth-choice-btn.login-btn { border-color: var(--accent); color: var(--accent); }
+.auth-choice-btn.register-btn { border-color: var(--accent2); color: var(--accent2); }
+.auth-close-hint { text-align: center; font-size: 0.8rem; color: var(--text-dim); cursor: pointer; margin-top: 1.5rem; padding: 0.5rem; }
+.auth-close-hint:hover { color: var(--text); }
 
-.auth-switch-hint a {
-  color: var(--accent-2);
-  cursor: pointer;
-  text-decoration: none;
-}
-.auth-switch-hint a:hover { text-decoration: underline; }
-
-/* ===== FORM ===== */
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.form-group { display: flex; flex-direction: column; gap: 6px; }
+/* ===== ФОРМЫ ===== */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 .form-group.full { grid-column: 1 / -1; }
-
-.form-label {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 600;
-}
-
+.form-label { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05rem; font-weight: 600; }
 .form-input, .form-select, .form-textarea {
-  padding: 11px 14px;
-  border-radius: 12px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--text);
-  font-size: 0.9rem;
-  font-family: inherit;
-  transition: border-color 0.3s;
+  padding: 0.8rem 1rem; border-radius: 10px; background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border); color: var(--text); font-size: 0.95rem; outline: none; font-family: inherit;
 }
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-  outline: none;
-  border-color: var(--accent-2);
-}
-.form-textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
-
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); }
+.form-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
 .form-hint {
-  font-size: 0.8rem;
-  color: var(--text-dim);
-  line-height: 1.5;
-  background: rgba(255,179,71,0.05);
-  padding: 12px;
-  border-radius: 8px;
-  border-left: 3px solid var(--warning);
-  margin-bottom: 15px;
+  font-size: 0.8rem; color: var(--warning); line-height: 1.5; background: rgba(245, 158, 11, 0.1);
+  padding: 1rem; border-radius: 10px; border-left: 3px solid var(--warning); margin-bottom: 1rem;
 }
 
-.form-hint.owner {
-  background: rgba(78,205,196,0.05);
-  border-left-color: var(--accent-2);
-}
-
-.form-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
-
+.form-actions { display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: flex-end; flex-wrap: wrap; }
 .btn {
-  padding: 10px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--text);
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  padding: 0.8rem 1.5rem; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--card); color: var(--text); font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;
 }
 .btn:hover { background: var(--card-2); transform: translateY(-1px); }
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  border-color: transparent;
-  color: #fff;
-}
-.btn-primary:hover { box-shadow: 0 10px 30px rgba(255,107,107,0.3); }
+.btn-primary { background: linear-gradient(90deg, var(--accent), var(--accent2)); border-color: transparent; color: #fff; }
+.btn-primary:hover { box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3); }
 .btn-danger { border-color: var(--danger); color: var(--danger); }
-.btn-danger:hover { background: rgba(255,107,107,0.15); }
+.btn-danger:hover { background: rgba(239, 68, 68, 0.15); }
 .btn-success { border-color: var(--success); color: var(--success); }
-.btn-success:hover { background: rgba(78,205,196,0.15); }
-.btn-warning { border-color: var(--warning); color: var(--warning); }
-.btn-warning:hover { background: rgba(255,179,71,0.15); }
+.btn-success:hover { background: rgba(16, 185, 129, 0.15); }
 
-/* ===== ADMIN PANEL ===== */
-.admin-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
+/* ===== АДМИН ===== */
+.admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .admin-tab {
-  padding: 8px 16px;
-  border-radius: 12px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  padding: 0.6rem 1rem; border-radius: 10px; background: var(--card); border: 1px solid var(--border);
+  color: var(--text-dim); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s;
 }
 .admin-tab:hover { background: var(--card-2); }
-.admin-tab.active {
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  color: #fff;
-  border-color: transparent;
-}
-
-.admin-tab .count {
-  background: rgba(255,255,255,0.2);
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.7rem;
-}
+.admin-tab.active { background: linear-gradient(90deg, var(--accent), var(--accent2)); color: #fff; border-color: transparent; }
+.admin-tab .count { background: rgba(255,255,255,0.2); padding: 0.1rem 0.5rem; border-radius: 8px; font-size: 0.75rem; margin-left: 0.3rem; }
 
 .admin-post-item {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px;
-  margin-bottom: 12px;
-  transition: all 0.3s;
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 1.2rem; margin-bottom: 1rem; transition: all 0.3s;
 }
 .admin-post-item:hover { border-color: rgba(255,255,255,0.15); }
-
-.admin-post-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.admin-post-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  flex: 1;
-}
-
-.admin-post-meta {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  margin-bottom: 10px;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.admin-post-text {
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  line-height: 1.6;
-  margin-bottom: 12px;
-  max-height: 80px;
-  overflow: hidden;
-  position: relative;
-}
-
-.admin-post-actions {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
+.admin-post-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.8rem; }
+.admin-post-title { font-size: 1.05rem; font-weight: 700; flex: 1; }
+.admin-post-meta { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.8rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+.admin-post-text { color: var(--text-dim); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem; max-height: 60px; overflow: hidden; }
+.admin-post-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
 .status-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
 }
-.status-badge.pending { background: rgba(255,179,71,0.15); color: var(--warning); }
-.status-badge.approved { background: rgba(78,205,196,0.15); color: var(--success); }
-.status-badge.rejected { background: rgba(255,107,107,0.15); color: var(--danger); }
+.status-badge.pending { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+.status-badge.approved { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+.status-badge.rejected { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
 
 /* ===== TOAST ===== */
 .toast {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  padding: 12px 20px;
-  border-radius: 12px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  color: var(--text);
-  font-weight: 600;
-  font-size: 0.9rem;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  transform: translateY(100px);
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
-  z-index: 3000;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: calc(100% - 50px);
+  position: fixed; bottom: 2rem; right: 2rem; padding: 1rem 1.5rem; border-radius: 12px;
+  background: var(--bg-2); border: 1px solid var(--border); color: var(--text);
+  font-weight: 600; font-size: 0.9rem; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  transform: translateY(100px); opacity: 0; transition: all 0.4s; z-index: 3000;
 }
 .toast.show { transform: translateY(0); opacity: 1; }
 .toast.success { border-color: var(--success); }
 .toast.error { border-color: var(--danger); }
 
-/* ===== АДАПТИВНОСТЬ ===== */
-@media (max-width: 900px) {
-  .hero-stats { gap: 40px; }
-  .stat-num { font-size: 2.5rem; }
-  .posts-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-}
+footer { text-align: center; padding: 3rem 20px; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.85rem; }
 
 @media (max-width: 600px) {
-  .nav-top { padding: 10px 15px 6px; gap: 8px; }
-  .logo { font-size: 1.1rem; }
-  .logo-ai { font-size: 0.7rem; padding: 2px 8px; }
-  .nav-slogan { font-size: 0.7rem; letter-spacing: 0.1em; }
-  .nav-bottom { padding: 6px 10px 10px; gap: 6px; }
-  .nav-menu { gap: 5px; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; width: 100%; padding-bottom: 4px; }
-  .nav-menu::-webkit-scrollbar { display: none; }
-  .nav-link { padding: 5px 10px; font-size: 0.72rem; flex-shrink: 0; }
-  .user-badge { padding: 4px 10px; font-size: 0.7rem; flex-shrink: 0; }
-  .user-avatar { width: 20px; height: 20px; font-size: 0.6rem; }
-  .hero { padding: 120px 15px 40px; }
-  .hero-title { font-size: clamp(2.5rem, 12vw, 4rem); }
-  .hero-subtitle { font-size: 0.95rem; margin-bottom: 30px; }
-  .hero-badge { font-size: 0.8rem; padding: 8px 18px; margin-bottom: 20px; }
-  .hero-stats { gap: 25px; }
-  .stat-num { font-size: 2rem; }
-  .stat-label { font-size: 0.7rem; }
-  .categories { padding: 30px 15px; }
-  .filter-btn { padding: 8px 14px; font-size: 0.78rem; }
-  .posts-section { padding: 0 15px 80px; }
-  .posts-grid { grid-template-columns: 1fr; gap: 15px; }
-  .post-title { font-size: 1.15rem; }
-  .post-text { font-size: 0.9rem; }
-  .modal-content { padding: 20px 15px; border-radius: 20px; }
-  .modal-content.small { max-width: 100%; }
-  .modal-title { font-size: 1.15rem; }
-  .auth-choice-buttons { flex-direction: column; gap: 10px; }
-  .auth-warning-icon { font-size: 2.5rem; }
-  .auth-warning-text { font-size: 0.9rem; }
-  .form-grid { grid-template-columns: 1fr; gap: 10px; }
-  .form-actions { flex-direction: column; }
-  .form-actions .btn { width: 100%; justify-content: center; }
-  .admin-tabs { gap: 6px; }
-  .admin-tab { padding: 7px 12px; font-size: 0.72rem; }
-  .admin-post-item { padding: 14px; }
-  .admin-post-actions { flex-direction: column; }
-  .admin-post-actions .btn { width: 100%; justify-content: center; }
-  .fab { width: 52px; height: 52px; bottom: 20px; right: 20px; font-size: 1.3rem; }
-  .toast { bottom: 20px; right: 15px; left: 15px; max-width: none; }
-}
-
-@media (max-width: 360px) {
-  .logo { font-size: 1rem; }
-  .logo-ai { font-size: 0.65rem; padding: 2px 6px; }
-  .nav-slogan { font-size: 0.65rem; }
-  .nav-link { padding: 4px 8px; font-size: 0.68rem; }
-  .hero-title { font-size: clamp(2rem, 12vw, 3rem); }
+  .form-grid { grid-template-columns: 1fr; }
+  .nav-top { padding: 1rem; }
+  .hero { padding: 100px 15px 30px; }
 }
 </style>
 </head>
 <body>
 
-<div class="bg-gradient"></div>
-
-<!-- ===== НАВИГАЦИЯ ===== -->
 <nav>
   <div class="nav-top">
-    <div class="logo">EVGENII<span class="logo-ai">AI</span></div>
-    <div class="nav-slogan">
-      МУЗЫКА<span class="dot">·</span>МЫСЛИ<span class="dot">·</span>ТВОРЧЕСТВО
-    </div>
-  </div>
-  
-  <div class="nav-bottom">
-    <div class="nav-menu">
-      <button class="nav-link home" onclick="goToHome()">🏠 На главную</button>
-      <button class="nav-link primary" id="writeNavBtn" onclick="onWriteClick()">✏️ Написать</button>
-      <button class="nav-link admin" id="adminNavBtn" onclick="openAdminPanel()" style="display:none;">⚙️ Админ</button>
-      <div class="user-badge" id="userBadge" style="display:none;">
+    <div class="logo" onclick="window.location.href='index.html'">EVGENII AI · ДНЕВНИК</div>
+    <div class="nav-actions">
+      <button class="btn-small" onclick="goToHome()">🏠 На главную</button>
+      <button class="btn-small" id="adminNavBtn" style="display: none;" onclick="openAdminPanel()">⚙️ Админ</button>
+      <div class="user-badge" id="userBadge">
         <div class="user-avatar" id="userAvatar">?</div>
         <span id="userNameDisplay">Гость</span>
       </div>
-      <button class="nav-link logout" id="logoutNavBtn" onclick="handleLogout()" style="display:none;">🚪 Выйти</button>
+      <button class="btn-small" id="logoutNavBtn" style="display: none;" onclick="handleLogout()">🚪 Выйти</button>
+      <button class="btn-primary" id="authBtn" onclick="openAuthChoice()">🔑 Войти</button>
     </div>
   </div>
 </nav>
 
-<!-- ===== MAIN VIEW ===== -->
-<div id="mainView">
-  <section class="hero">
-    <div class="hero-badge">✨ Творческий дневник</div>
-    <h1 class="hero-title">EVGENII AI</h1>
-    <p class="hero-subtitle">
-      Место, где рождаются мысли, звучат песни, оживают истории и застывают моменты.
-      Мой личный космос идей и вдохновения.
-    </p>
-    <div class="hero-stats" id="stats"></div>
-  </section>
+<section class="hero">
+  <h1 class="hero-title">✨ Творческий <span style="-webkit-text-fill-color: var(--text);">дневник</span></h1>
+  <p class="hero-subtitle">Место, где рождаются мысли, звучат песни, оживают истории и застывают моменты. Мой личный космос идей и вдохновения.</p>
+</section>
 
-  <div class="categories">
-    <div class="categories-title">Фильтр по категориям</div>
-    <div class="filter-buttons" id="filterButtons">
-      <button class="filter-btn active" data-filter="all">Всё <span class="filter-count" id="count-all">0</span></button>
-      <button class="filter-btn" data-filter="thoughts">💭 Мысли <span class="filter-count" id="count-thoughts">0</span></button>
-      <button class="filter-btn" data-filter="songs">🎵 Песни <span class="filter-count" id="count-songs">0</span></button>
-      <button class="filter-btn" data-filter="stories">📖 Истории <span class="filter-count" id="count-stories">0</span></button>
-      <button class="filter-btn" data-filter="photos">📸 Фото <span class="filter-count" id="count-photos">0</span></button>
-    </div>
+<section class="categories">
+  <div class="filter-buttons" id="filterButtons">
+    <button class="filter-btn active" data-filter="all">Всё <span class="filter-count" id="count-all">0</span></button>
+    <button class="filter-btn" data-filter="thoughts">💭 Мысли <span class="filter-count" id="count-thoughts">0</span></button>
+    <button class="filter-btn" data-filter="songs">🎵 Песни <span class="filter-count" id="count-songs">0</span></button>
+    <button class="filter-btn" data-filter="stories">📖 Истории <span class="filter-count" id="count-stories">0</span></button>
+    <button class="filter-btn" data-filter="photos">📸 Фото <span class="filter-count" id="count-photos">0</span></button>
   </div>
+</section>
 
-  <section class="posts-section">
-    <div class="posts-grid" id="postsGrid"></div>
-  </section>
+<section class="posts-section">
+  <div class="posts-grid" id="postsGrid">
+    <div class="empty-state"><div class="emoji">⏳</div><h3>Загрузка записей...</h3></div>
+  </div>
+</section>
 
-  <footer>
-    <div class="footer-logo">EVGENII AI</div>
-    <p class="footer-text">© 2026 · Творческий дневник · Все мысли, песни и истории — наши</p>
-  </footer>
-</div>
+<button class="fab" id="fabBtn" onclick="onWriteClick()" title="Новая запись">✏️</button>
 
-<!-- ===== FAB ===== -->
-<button class="fab" id="fabBtn" onclick="onWriteClick()" title="Создать запись">✏️</button>
+<footer>© 2026 · EVGENII AI · Творческий дневник · Все мысли, песни и истории — наши</footer>
 
-<!-- ===== МОДАЛКА: ВЫБОР ВХОД/РЕГИСТРАЦИЯ ===== -->
+<!-- ===== МОДАЛКА ВЫБОРА АВТОРИЗАЦИИ ===== -->
 <div class="modal-overlay" id="authChoiceModal">
   <div class="modal-content small">
-    <div class="auth-warning-icon">🔐</div>
-    <div class="modal-title" style="justify-content:center; margin-bottom:15px;">Только для авторов</div>
-    <div class="auth-warning-text">
-      <strong>Писать и публиковать</strong> могут только зарегистрированные пользователи.<br><br>
-      Читать дневник может любой — регистрация нужна только для создания записей.
+    <button class="modal-close" onclick="closeAuthChoice()">✕</button>
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">🔐</div>
+      <h3 style="margin-bottom: 0.5rem;">Только для авторов</h3>
+      <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.5;">Писать и публиковать могут только зарегистрированные пользователи. Читать дневник может любой.</p>
     </div>
     <div class="auth-choice-buttons">
       <button class="auth-choice-btn login-btn" onclick="showAuthForm('login')">🔑 Вход</button>
       <button class="auth-choice-btn register-btn" onclick="showAuthForm('register')">📝 Регистрация</button>
     </div>
-    <div class="auth-close-hint" onclick="closeAuthChoice()">✕ Закрыть и продолжить чтение</div>
+    <div class="auth-close-hint" onclick="closeAuthChoice()">Закрыть и продолжить чтение</div>
   </div>
 </div>
 
-<!-- ===== МОДАЛКА: ФОРМЫ АВТОРИЗАЦИИ ===== -->
+<!-- ===== МОДАЛКА ФОРМ АВТОРИЗАЦИИ ===== -->
 <div class="modal-overlay" id="authFormModal">
   <div class="modal-content small">
+    <button class="modal-close" onclick="closeAuthChoice(); document.getElementById('authFormModal').classList.remove('active');">✕</button>
     
-    <!-- ФОРМА ВХОДА -->
+    <!-- ВХОД (ТОЛЬКО EMAIL И ПАРОЛЬ) -->
     <div class="auth-form-container" id="loginFormContainer">
       <div class="auth-back-btn" onclick="backToChoice()">← Назад к выбору</div>
-      <div class="modal-title" style="justify-content:center;">🔑 Вход</div>
+      <div class="modal-title">🔑 Вход</div>
       <form class="auth-form" onsubmit="handleLogin(event)">
-        <!-- 🔧 ИЗМЕНЕНО: Email вместо телефона для безопасности Firebase Auth -->
-        <input type="email" class="auth-input" id="loginEmail" placeholder="Ваш Email" required>
-        <input type="text" class="auth-input" id="loginName" placeholder="Ваше имя" required>
+        <input type="email" class="auth-input" id="loginEmail" placeholder="Email" required>
         <input type="password" class="auth-input" id="loginPassword" placeholder="Пароль" required>
         <div class="auth-error" id="loginError"></div>
         <button type="submit" class="auth-submit-btn">ВОЙТИ</button>
       </form>
-      <div class="auth-switch-hint">
-        Нет аккаунта? <a onclick="showAuthForm('register')">Зарегистрироваться</a>
-      </div>
+      <div class="auth-switch-hint">Нет аккаунта? <a onclick="showAuthForm('register')">Зарегистрироваться</a></div>
     </div>
-    
-    <!-- ФОРМА РЕГИСТРАЦИИ -->
+
+    <!-- РЕГИСТРАЦИЯ (С ПОЛЕМ ИМЯ) -->
     <div class="auth-form-container" id="registerFormContainer">
       <div class="auth-back-btn" onclick="backToChoice()">← Назад к выбору</div>
-      <div class="modal-title" style="justify-content:center;">📝 Регистрация</div>
+      <div class="modal-title">📝 Регистрация</div>
       <form class="auth-form" onsubmit="handleRegister(event)">
-        <!-- 🔧 ИЗМЕНЕНО: Email вместо телефона для безопасности Firebase Auth -->
-        <input type="email" class="auth-input" id="regEmail" placeholder="Ваш Email" required>
         <input type="text" class="auth-input" id="regName" placeholder="Ваше имя" required>
-        <input type="password" class="auth-input" id="regPassword" placeholder="Придумайте пароль (мин. 6 символов)" minlength="6" required>
-        <input type="password" class="auth-input" id="regPasswordConfirm" placeholder="Повторите пароль" minlength="6" required>
+        <input type="email" class="auth-input" id="regEmail" placeholder="Email" required>
+        <input type="password" class="auth-input" id="regPassword" placeholder="Пароль (мин. 6 символов)" required minlength="6">
+        <input type="password" class="auth-input" id="regPasswordConfirm" placeholder="Подтвердите пароль" required>
         <div class="auth-error" id="regError"></div>
         <button type="submit" class="auth-submit-btn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
       </form>
-      <div class="auth-switch-hint">
-        Уже есть аккаунт? <a onclick="showAuthForm('login')">Войти</a>
-      </div>
+      <div class="auth-switch-hint">Уже есть аккаунт? <a onclick="showAuthForm('login')">Войти</a></div>
     </div>
-    
   </div>
 </div>
 
 <!-- ===== МОДАЛКА СОЗДАНИЯ/РЕДАКТИРОВАНИЯ ===== -->
 <div class="modal-overlay" id="createModal">
-  <div class="modal-content">
-    <div class="modal-title">
-      <span id="modalIcon">✨</span>
-      <span id="modalTitleText">Новая запись</span>
-    </div>
-
+  <div class="modal-content wide">
+    <button class="modal-close" onclick="closeCreateModal()">✕</button>
+    <div class="modal-title"><span id="modalIcon">✨</span><span id="modalTitleText">Новая запись</span></div>
+    
     <div class="form-hint" id="moderationHint">
-      ⚠️ <b>Внимание:</b> После публикации запись отправится на модерацию. Она появится на сайте после одобрения администратора.
+      ⚠️ <strong>Внимание:</strong> После публикации запись отправится на модерацию. Она появится на сайте после одобрения администратора.
     </div>
 
-    <div class="form-grid">
-      <div class="form-group">
-        <label class="form-label">Категория</label>
-        <select class="form-select" id="postCategory">
-          <option value="thoughts">💭 Мысль</option>
-          <option value="songs">🎵 Песня</option>
-          <option value="stories">📖 История</option>
-          <option value="photos">📸 Фото</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Дата</label>
-        <input type="text" class="form-input" id="postDate" placeholder="4 сентября 2026">
-      </div>
-
-      <div class="form-group full">
-        <label class="form-label">Заголовок</label>
-        <input type="text" class="form-input" id="postTitle" placeholder="Название записи">
-      </div>
-
-      <div class="form-group full">
-        <label class="form-label">Текст</label>
-        <textarea class="form-textarea" id="postText" placeholder="Твой текст, стихи, фрагмент истории..."></textarea>
-      </div>
-
-      <div class="form-group full">
-        <label class="form-label">Теги (через запятую)</label>
-        <input type="text" class="form-input" id="postTags" placeholder="ночь, город, лирика">
-      </div>
-
-      <div class="form-group full" id="imageField" style="display:none;">
-        <label class="form-label">📸 Ссылка на фото</label>
-        <div class="form-hint owner">
-          💡 <b>Как добавить фото:</b><br>
-          1. Загрузи фото в папку <code>images</code> в своём репозитории GitHub.<br>
-          2. Открой файл, нажми кнопку <b>Raw</b> и скопируй ссылку.<br>
-          3. Вставь ссылку сюда.
+    <form id="postForm" onsubmit="event.preventDefault(); savePost();">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Категория</label>
+          <select class="form-select" id="postCategory" required>
+            <option value="thoughts">💭 Мысль</option>
+            <option value="songs">🎵 Песня</option>
+            <option value="stories">📖 История</option>
+            <option value="photos">📸 Фото</option>
+          </select>
         </div>
-        <input type="url" class="form-input" id="postImage" placeholder="https://raw.githubusercontent.com/...">
+        <div class="form-group">
+          <label class="form-label">Дата</label>
+          <input type="text" class="form-input" id="postDate" required>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Заголовок</label>
+          <input type="text" class="form-input" id="postTitle" required placeholder="Краткая суть">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Текст</label>
+          <textarea class="form-textarea" id="postText" required placeholder="Ваши мысли, текст песни или история..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Теги (через запятую)</label>
+          <input type="text" class="form-input" id="postTags" placeholder="вдохновение, ночь, ai">
+        </div>
+        <div class="form-group full" id="imageField" style="display: none;">
+          <label class="form-label">📸 Ссылка на фото</label>
+          <input type="url" class="form-input" id="postImage" placeholder="https://raw.githubusercontent.com/...">
+          <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.5rem; line-height: 1.4;">
+            💡 <strong>Как добавить фото:</strong> Загрузи фото в репозиторий GitHub, открой файл, нажми кнопку <strong>Raw</strong> и скопируй ссылку.
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div class="form-actions">
-      <button class="btn" onclick="closeCreateModal()">Отмена</button>
-      <button class="btn btn-primary" id="saveBtn" onclick="savePost()">📤 Отправить на модерацию</button>
-    </div>
+      <div class="form-actions">
+        <button type="button" class="btn" onclick="closeCreateModal()">Отмена</button>
+        <button type="submit" class="btn btn-primary" id="saveBtn">📤 Отправить на модерацию</button>
+      </div>
+    </form>
   </div>
 </div>
 
 <!-- ===== АДМИН-ПАНЕЛЬ ===== -->
 <div class="modal-overlay" id="adminPanelModal">
   <div class="modal-content wide">
-    <div class="modal-title" style="justify-content:space-between;">
-      <span>⚙️ Панель модерации</span>
-      <button class="btn" onclick="closeAdminPanel()">✕ Закрыть</button>
-    </div>
-
+    <button class="modal-close" onclick="closeAdminPanel()">✕</button>
+    <div class="modal-title">⚙️ Панель модерации</div>
+    
     <div class="admin-tabs">
-      <div class="admin-tab active" data-tab="pending" onclick="switchAdminTab('pending')">
-        ⏳ На модерации <span class="count" id="pendingCount">0</span>
-      </div>
-      <div class="admin-tab" data-tab="approved" onclick="switchAdminTab('approved')">
-        ✅ Опубликовано <span class="count" id="approvedCount">0</span>
-      </div>
-      <div class="admin-tab" data-tab="rejected" onclick="switchAdminTab('rejected')">
-        ❌ Отклонено <span class="count" id="rejectedCount">0</span>
-      </div>
-      <div class="admin-tab" data-tab="all" onclick="switchAdminTab('all')">
-        📋 Все <span class="count" id="allCount">0</span>
-      </div>
+      <div class="admin-tab active" data-tab="pending" onclick="switchAdminTab('pending')">⏳ На модерации <span class="count" id="pendingCount">0</span></div>
+      <div class="admin-tab" data-tab="approved" onclick="switchAdminTab('approved')">✅ Опубликовано <span class="count" id="approvedCount">0</span></div>
+      <div class="admin-tab" data-tab="rejected" onclick="switchAdminTab('rejected')">❌ Отклонено <span class="count" id="rejectedCount">0</span></div>
+      <div class="admin-tab" data-tab="all" onclick="switchAdminTab('all')">📋 Все <span class="count" id="allCount">0</span></div>
     </div>
 
     <div id="adminPostsList"></div>
@@ -1292,11 +497,9 @@ footer {
 
 <!-- ===== МОДАЛКА РЕДАКТИРОВАНИЯ АДМИНОМ ===== -->
 <div class="modal-overlay" id="adminEditModal">
-  <div class="modal-content">
-    <div class="modal-title">
-      <span>✏️</span>
-      <span>Редактирование записи</span>
-    </div>
+  <div class="modal-content wide">
+    <button class="modal-close" onclick="closeAdminEdit()">✕</button>
+    <div class="modal-title">✏️ Редактирование записи</div>
 
     <div class="form-grid">
       <div class="form-group">
@@ -1308,32 +511,26 @@ footer {
           <option value="photos">📸 Фото</option>
         </select>
       </div>
-
       <div class="form-group">
         <label class="form-label">Дата</label>
         <input type="text" class="form-input" id="adminEditDate">
       </div>
-
       <div class="form-group full">
         <label class="form-label">Заголовок</label>
         <input type="text" class="form-input" id="adminEditTitle">
       </div>
-
       <div class="form-group full">
         <label class="form-label">Текст</label>
         <textarea class="form-textarea" id="adminEditText" style="min-height:200px;"></textarea>
       </div>
-
       <div class="form-group full">
         <label class="form-label">Теги (через запятую)</label>
         <input type="text" class="form-input" id="adminEditTags">
       </div>
-
       <div class="form-group full">
         <label class="form-label">Ссылка на фото</label>
         <input type="url" class="form-input" id="adminEditImage" placeholder="https://raw.githubusercontent.com/...">
       </div>
-
       <div class="form-group full">
         <label class="form-label">Комментарий модератора (необязательно)</label>
         <input type="text" class="form-input" id="adminEditNote" placeholder="Например: Исправьте орфографию">
@@ -1372,9 +569,7 @@ try {
 // ===== КОНСТАНТЫ =====
 const USERS_COLLECTION = 'diary_users';
 const POSTS_COLLECTION = 'diary_posts';
-
-// 🔧 БЕЗОПАСНАЯ НАСТРОЙКА АДМИНА: Укажи здесь свой реальный email!
-const ADMIN_EMAIL = "eo.efimenko@mail.ru"; // <-- ЗАМЕНИ НА СВОЙ EMAIL
+const ADMIN_EMAIL = "eo.efimenko@mail.ru"; // ЗАМЕНИ НА СВОЙ EMAIL, ЕСЛИ НУЖНО
 
 // ===== СОСТОЯНИЕ =====
 let currentUser = null;
@@ -1388,13 +583,12 @@ let currentAdminTab = 'pending';
 // ===== ПРИ ЗАГРУЗКЕ: СЛУШАТЕЛЬ СОСТОЯНИЯ АВТОРИЗАЦИИ =====
 firebase.auth().onAuthStateChanged(async (user) => {
   if (user) {
-    // Пользователь вошёл через Firebase Auth. Получаем его профиль из Firestore
     try {
       const doc = await db.collection(USERS_COLLECTION).doc(user.uid).get();
       if (doc.exists) {
         currentUser = { uid: user.uid, email: user.email, ...doc.data() };
       } else {
-        // Если профиля нет (редкий случай), создаём базовый
+        // Резервный вариант, если профиль не создан
         currentUser = { 
           uid: user.uid, 
           email: user.email, 
@@ -1407,7 +601,6 @@ firebase.auth().onAuthStateChanged(async (user) => {
       console.error("Ошибка загрузки профиля:", error);
     }
   } else {
-    // Пользователь вышел
     currentUser = null;
     updateUserUI();
   }
@@ -1418,16 +611,16 @@ window.addEventListener('load', () => {
   setTodayDate();
 });
 
-// ===== ОБНОВЛЕНИЕ UI ПОЛЬЗОВАТЕЛЯ =====
+// ===== ОБНОВЛЕНИЕ UI =====
 function updateUserUI() {
   if (currentUser) {
     document.getElementById('userBadge').style.display = 'inline-flex';
-    document.getElementById('userAvatar').textContent = currentUser.name[0].toUpperCase();
-    document.getElementById('userNameDisplay').textContent = currentUser.name;
+    document.getElementById('userAvatar').textContent = currentUser.name ? currentUser.name[0].toUpperCase() : '?';
+    document.getElementById('userNameDisplay').textContent = currentUser.name || 'Пользователь';
     document.getElementById('logoutNavBtn').style.display = 'inline-flex';
+    document.getElementById('authBtn').style.display = 'none';
     document.getElementById('fabBtn').classList.add('visible');
     
-    // Показываем кнопку Админ и поле для фото только если email совпадает с ADMIN_EMAIL
     if (currentUser.isAdmin) {
       document.getElementById('adminNavBtn').style.display = 'inline-flex';
       document.getElementById('imageField').style.display = 'flex';
@@ -1439,21 +632,18 @@ function updateUserUI() {
     document.getElementById('userBadge').style.display = 'none';
     document.getElementById('logoutNavBtn').style.display = 'none';
     document.getElementById('adminNavBtn').style.display = 'none';
+    document.getElementById('authBtn').style.display = 'inline-flex';
     document.getElementById('fabBtn').classList.remove('visible');
     document.getElementById('imageField').style.display = 'none';
   }
 }
 
-// ===== КНОПКА "НАПИСАТЬ" =====
+// ===== МОДАЛКИ АВТОРИЗАЦИИ =====
 function onWriteClick() {
-  if (currentUser) {
-    openCreateModal();
-  } else {
-    openAuthChoice();
-  }
+  if (currentUser) { openCreateModal(); } 
+  else { openAuthChoice(); }
 }
 
-// ===== МОДАЛКА ВЫБОРА =====
 function openAuthChoice() {
   document.getElementById('authChoiceModal').classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -1461,16 +651,15 @@ function openAuthChoice() {
 
 function closeAuthChoice() {
   document.getElementById('authChoiceModal').classList.remove('active');
+  document.getElementById('authFormModal').classList.remove('active');
   document.body.style.overflow = '';
 }
 
 function showAuthForm(type) {
   document.getElementById('authChoiceModal').classList.remove('active');
   document.getElementById('authFormModal').classList.add('active');
-  
   document.getElementById('loginFormContainer').classList.remove('active');
   document.getElementById('registerFormContainer').classList.remove('active');
-  
   document.getElementById('loginError').textContent = '';
   document.getElementById('regError').textContent = '';
   
@@ -1479,7 +668,7 @@ function showAuthForm(type) {
     setTimeout(() => document.getElementById('loginEmail').focus(), 100);
   } else {
     document.getElementById('registerFormContainer').classList.add('active');
-    setTimeout(() => document.getElementById('regEmail').focus(), 100);
+    setTimeout(() => document.getElementById('regName').focus(), 100);
   }
 }
 
@@ -1490,54 +679,36 @@ function backToChoice() {
   document.getElementById('regError').textContent = '';
 }
 
-// ===== РЕГИСТРАЦИЯ (ЧЕРЕЗ FIREBASE AUTH) =====
+// ===== РЕГИСТРАЦИЯ (С ПОЛЕМ ИМЯ) =====
 async function handleRegister(e) {
   e.preventDefault();
-  const email = document.getElementById('regEmail').value.trim().toLowerCase();
   const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim().toLowerCase();
   const password = document.getElementById('regPassword').value;
   const passwordConfirm = document.getElementById('regPasswordConfirm').value;
   const errorEl = document.getElementById('regError');
   
-  if (!email.includes('@')) {
-    errorEl.textContent = 'Введите корректный Email';
-    return;
-  }
-  
-  if (password !== passwordConfirm) {
-    errorEl.textContent = 'Пароли не совпадают';
-    return;
-  }
-  
-  if (password.length < 6) {
-    errorEl.textContent = 'Пароль должен быть минимум 6 символов';
-    return;
-  }
-  
-  if (!db) {
-    errorEl.textContent = 'База данных недоступна';
-    return;
-  }
+  if (!name) { errorEl.textContent = 'Введите ваше имя'; return; }
+  if (!email.includes('@')) { errorEl.textContent = 'Введите корректный Email'; return; }
+  if (password !== passwordConfirm) { errorEl.textContent = 'Пароли не совпадают'; return; }
+  if (password.length < 6) { errorEl.textContent = 'Пароль должен быть минимум 6 символов'; return; }
+  if (!db) { errorEl.textContent = 'База данных недоступна'; return; }
   
   try {
-    // 1. Создаём пользователя в Firebase Authentication (пароль безопасно хешируется Google)
     const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
     const user = userCredential.user;
     
-    // 2. Сохраняем профиль пользователя в Firestore, привязывая к его уникальному UID
+    // Сохраняем имя, email и статус админа в базу данных
     await db.collection(USERS_COLLECTION).doc(user.uid).set({
       name: name,
       email: email,
-      isAdmin: (email === ADMIN_EMAIL.toLowerCase()), // Безопасное определение админа
+      isAdmin: (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()),
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
     
-    document.getElementById('authFormModal').classList.remove('active');
-    document.body.style.overflow = '';
-    
-    showToast('✅ Регистрация успешна! Теперь вы можете писать.', 'success');
+    closeAuthChoice();
+    showToast('✅ Регистрация успешна! Добро пожаловать, ' + name + '.', 'success');
     setTimeout(() => openCreateModal(), 500);
-    // onAuthStateChanged автоматически обновит currentUser
   } catch (error) {
     console.error(error);
     if (error.code === 'auth/email-already-in-use') {
@@ -1548,32 +719,22 @@ async function handleRegister(e) {
   }
 }
 
-// ===== ВХОД (ЧЕРЕЗ FIREBASE AUTH) =====
+// ===== ВХОД (ТОЛЬКО EMAIL И ПАРОЛЬ) =====
 async function handleLogin(e) {
   e.preventDefault();
   const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-  const name = document.getElementById('loginName').value.trim(); // Оставляем для совместимости UI, но проверка идёт по email
   const password = document.getElementById('loginPassword').value;
   const errorEl = document.getElementById('loginError');
   
-  if (!db) {
-    errorEl.textContent = 'База данных недоступна';
-    return;
-  }
+  if (!db) { errorEl.textContent = 'База данных недоступна'; return; }
   
   try {
-    // Firebase сам проверит email и пароль безопасно
     await firebase.auth().signInWithEmailAndPassword(email, password);
-    
-    document.getElementById('authFormModal').classList.remove('active');
-    document.body.style.overflow = '';
-    
-    // Небольшая задержка, чтобы onAuthStateChanged успел сработать и загрузить имя
+    closeAuthChoice();
     setTimeout(() => {
-        showToast('👋 Добро пожаловать!', 'success');
-        openCreateModal();
+      showToast('👋 С возвращением, ' + (currentUser ? currentUser.name : 'друг') + '!', 'success');
+      openCreateModal();
     }, 300);
-    
   } catch (error) {
     console.error(error);
     if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
@@ -1590,28 +751,19 @@ async function handleLogout() {
   try {
     await firebase.auth().signOut();
     showToast('Вы вышли из аккаунта', 'success');
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) { console.error(error); }
 }
 
 // ===== ЗАГРУЗКА ПОСТОВ =====
 function loadPostsFromFirebase() {
-  if (!db) {
-    console.error('Firebase не подключён');
-    return;
-  }
-
+  if (!db) { console.error('Firebase не подключён'); return; }
   if (unsubscribePosts) unsubscribePosts();
 
   unsubscribePosts = db.collection(POSTS_COLLECTION)
     .orderBy('createdAt', 'desc')
     .onSnapshot(snapshot => {
       allPosts = [];
-      snapshot.forEach(doc => {
-        allPosts.push({ id: doc.id, ...doc.data() });
-      });
-      
+      snapshot.forEach(doc => { allPosts.push({ id: doc.id, ...doc.data() }); });
       renderPosts();
       updateStats();
       if (currentUser && currentUser.isAdmin) renderAdminPosts();
@@ -1623,10 +775,7 @@ function loadPostsFromFirebase() {
 
 // ===== FIREBASE ОПЕРАЦИИ =====
 async function savePostToFirebase(post) {
-  if (!db) {
-    showToast('❌ База данных недоступна', 'error');
-    return null;
-  }
+  if (!db) { showToast('❌ База данных недоступна', 'error'); return null; }
   try {
     const docRef = await db.collection(POSTS_COLLECTION).add(post);
     return docRef.id;
@@ -1638,10 +787,7 @@ async function savePostToFirebase(post) {
 }
 
 async function updatePostInFirebase(postId, postData) {
-  if (!db) {
-    showToast('❌ База данных недоступна', 'error');
-    return false;
-  }
+  if (!db) { showToast('❌ База данных недоступна', 'error'); return false; }
   try {
     await db.collection(POSTS_COLLECTION).doc(postId).update(postData);
     return true;
@@ -1653,10 +799,7 @@ async function updatePostInFirebase(postId, postData) {
 }
 
 async function deletePostFromFirebase(postId) {
-  if (!db) {
-    showToast('❌ База данных недоступна', 'error');
-    return false;
-  }
+  if (!db) { showToast('❌ База данных недоступна', 'error'); return false; }
   try {
     await db.collection(POSTS_COLLECTION).doc(postId).delete();
     return true;
@@ -1674,7 +817,7 @@ const categoryTextClass = { thoughts: '', songs: 'lyrics', stories: 'story', pho
 function getVisiblePosts() {
   return allPosts.filter(post => {
     if (post.status === 'approved') return true;
-    if (currentUser && post.authorId === currentUser.uid) return true; // 🔧 ИЗМЕНЕНО: authorId теперь это uid
+    if (currentUser && post.authorId === currentUser.uid) return true;
     return false;
   });
 }
@@ -1686,31 +829,23 @@ function renderPosts(filter = 'all') {
   const filtered = filter === 'all' ? visiblePosts : visiblePosts.filter(p => p.category === filter);
 
   if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state">
-        <div class="emoji">📝</div>
-        <h3>Пока тут пусто</h3>
-        <p>${currentUser ? 'Нажми кнопку "✏️ Написать" и создай первую запись!' : 'Зарегистрируйтесь, чтобы писать свои записи.'}</p>
-      </div>`;
+    grid.innerHTML = `<div class="empty-state"><div class="emoji">📝</div><h3>Пока тут пусто</h3><p>${currentUser ? 'Нажми кнопку "✏️" и создай первую запись!' : 'Зарегистрируйтесь, чтобы писать свои записи.'}</p></div>`;
     return;
   }
 
   grid.innerHTML = filtered.map(post => {
     const isLiked = liked.includes(post.id);
     const tagsHtml = (post.tags || []).map(t => `<span class="post-tag">#${t}</span>`).join('');
-    const authorInitial = (post.author || '?')[0].toUpperCase();
-    
-    const canEdit = currentUser && (currentUser.isAdmin || post.authorId === currentUser.uid); // 🔧 ИЗМЕНЕНО
+    // Отображаем имя автора из базы данных
+    const authorName = post.author || 'Аноним';
+    const authorInitial = authorName[0].toUpperCase();
+    const canEdit = currentUser && (currentUser.isAdmin || post.authorId === currentUser.uid);
     
     let statusBar = '';
-    if (canEdit && post.status === 'pending') {
-      statusBar = '<div class="post-status-bar pending">⏳ На модерации</div>';
-    } else if (canEdit && post.status === 'rejected') {
-      statusBar = `<div class="post-status-bar rejected">❌ Отклонено${post.adminNote ? ': ' + escapeHtml(post.adminNote) : ''}</div>`;
-    }
+    if (canEdit && post.status === 'pending') statusBar = '<div class="post-status-bar pending">⏳ На модерации</div>';
+    else if (canEdit && post.status === 'rejected') statusBar = `<div class="post-status-bar rejected">❌ Отклонено${post.adminNote ? ': ' + escapeHtml(post.adminNote) : ''}</div>`;
     
     const imageHtml = post.image ? `<div class="post-image" style="background-image:url('${post.image}')"></div>` : '';
-    
     const editButtons = canEdit && post.status !== 'pending' ? `
       <button class="post-edit-btn" onclick="editPost('${post.id}')" title="Редактировать">✏️</button>
       <button class="post-edit-btn delete" onclick="deletePost('${post.id}')" title="Удалить">🗑️</button>
@@ -1723,16 +858,16 @@ function renderPosts(filter = 'all') {
       <article class="post-card" data-category="${post.category}" data-post-id="${post.id}">
         ${imageHtml}
         ${statusBar}
-        <div class="post-author">
-          <div class="post-author-avatar">${authorInitial}</div>
-          <span class="post-author-name">${escapeHtml(post.author || 'Аноним')}</span>
-        </div>
         <div class="post-header">
           <span class="post-category">${categoryNames[post.category]}</span>
           <span class="post-date">${post.date}</span>
         </div>
         <div class="post-content">
           <h3 class="post-title">${escapeHtml(post.title)}</h3>
+          <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.8rem; font-size:0.85rem; color:var(--text-dim);">
+            <div style="width:20px; height:20px; border-radius:50%; background:linear-gradient(135deg, var(--accent), var(--accent2)); display:flex; align-items:center; justify-content:center; font-size:0.6rem; font-weight:700; color:#fff;">${authorInitial}</div>
+            <span>${escapeHtml(authorName)}</span>
+          </div>
           <p class="post-text ${categoryTextClass[post.category]}" id="preview-${post.id}">${escapeHtml(previewText)}</p>
           ${hasMoreText ? `<p class="post-text ${categoryTextClass[post.category]} full-text" id="full-${post.id}" style="display:none;">${escapeHtml(post.text)}</p>` : ''}
           ${hasMoreText ? `<button class="read-more-btn" onclick="togglePost('${post.id}')">Читать далее →</button>` : ''}
@@ -1755,25 +890,17 @@ function togglePost(postId) {
   const preview = document.getElementById(`preview-${postId}`);
   const fullText = document.getElementById(`full-${postId}`);
   const btn = event.target;
-  
   if (fullText && preview) {
     if (fullText.style.display === 'none') {
-      preview.style.display = 'none';
-      fullText.style.display = 'block';
-      btn.textContent = 'Свернуть ↑';
-      document.querySelector(`[data-post-id="${postId}"]`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      preview.style.display = 'none'; fullText.style.display = 'block'; btn.textContent = 'Свернуть ↑';
     } else {
-      preview.style.display = 'block';
-      fullText.style.display = 'none';
-      btn.textContent = 'Читать далее →';
+      preview.style.display = 'block'; fullText.style.display = 'none'; btn.textContent = 'Читать далее →';
     }
   }
 }
 
 function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str || '';
-  return div.innerHTML;
+  const div = document.createElement('div'); div.textContent = str || ''; return div.innerHTML;
 }
 
 function updateStats() {
@@ -1786,13 +913,6 @@ function updateStats() {
   document.getElementById('count-songs').textContent = counts.songs;
   document.getElementById('count-stories').textContent = counts.stories;
   document.getElementById('count-photos').textContent = counts.photos;
-
-  document.getElementById('stats').innerHTML = `
-    <div class="stat"><div class="stat-num">${counts.thoughts}</div><div class="stat-label">Мысли</div></div>
-    <div class="stat"><div class="stat-num">${counts.songs}</div><div class="stat-label">Песни</div></div>
-    <div class="stat"><div class="stat-num">${counts.stories}</div><div class="stat-label">Истории</div></div>
-    <div class="stat"><div class="stat-num">${counts.photos}</div><div class="stat-label">Фото</div></div>
-  `;
 }
 
 document.getElementById('filterButtons').addEventListener('click', (e) => {
@@ -1804,56 +924,36 @@ document.getElementById('filterButtons').addEventListener('click', (e) => {
   renderPosts(currentFilter);
 });
 
-function goToHome() {
-  window.location.href = 'index.html';
-}
+function goToHome() { window.location.href = 'index.html'; }
 
 // ===== ЛАЙКИ =====
 function getLikedPosts() {
   const data = localStorage.getItem('evgenii_liked_posts');
   return data ? JSON.parse(data) : [];
 }
-
-function saveLikedPosts(liked) {
-  localStorage.setItem('evgenii_liked_posts', JSON.stringify(liked));
-}
+function saveLikedPosts(liked) { localStorage.setItem('evgenii_liked_posts', JSON.stringify(liked)); }
 
 async function toggleLike(postId) {
-  if (!currentUser) {
-    showToast('Войдите, чтобы ставить лайки', 'error');
-    return;
-  }
-  
+  if (!currentUser) { showToast('Войдите, чтобы ставить лайки', 'error'); return; }
   const liked = getLikedPosts();
   const post = allPosts.find(p => p.id === postId);
   if (!post) return;
 
   const idx = liked.indexOf(postId);
   let newLikes = post.likes || 0;
-
-  if (idx > -1) {
-    liked.splice(idx, 1);
-    newLikes = Math.max(0, newLikes - 1);
-  } else {
-    liked.push(postId);
-    newLikes += 1;
-  }
+  if (idx > -1) { liked.splice(idx, 1); newLikes = Math.max(0, newLikes - 1); } 
+  else { liked.push(postId); newLikes += 1; }
 
   saveLikedPosts(liked);
   await updatePostInFirebase(postId, { likes: newLikes });
 }
 
-// ===== МОДАЛКА СОЗДАНИЯ =====
+// ===== СОЗДАНИЕ / РЕДАКТИРОВАНИЕ =====
 function openCreateModal() {
-  if (!currentUser) {
-    openAuthChoice();
-    return;
-  }
-  
+  if (!currentUser) { openAuthChoice(); return; }
   editingId = null;
   document.getElementById('modalIcon').textContent = '✨';
   document.getElementById('modalTitleText').textContent = 'Новая запись';
-  
   if (currentUser.isAdmin) {
     document.getElementById('saveBtn').textContent = '🚀 Опубликовать';
     document.getElementById('moderationHint').style.display = 'none';
@@ -1861,7 +961,6 @@ function openCreateModal() {
     document.getElementById('saveBtn').textContent = '📤 Отправить на модерацию';
     document.getElementById('moderationHint').style.display = 'block';
   }
-  
   resetForm();
   document.getElementById('createModal').classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -1896,38 +995,27 @@ async function savePost() {
   const tagsRaw = document.getElementById('postTags').value.trim();
   const image = document.getElementById('postImage').value.trim();
 
-  if (!title || !text) {
-    showToast('Заполни заголовок и текст!', 'error');
-    return;
-  }
+  if (!title || !text) { showToast('Заполни заголовок и текст!', 'error'); return; }
 
   const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
   const status = currentUser.isAdmin ? 'approved' : 'pending';
 
   if (editingId) {
-    const postData = { 
-      category, date, title, text, tags, image,
-      status: currentUser.isAdmin ? 'approved' : 'pending',
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
+    const postData = { category, date, title, text, tags, image, status: currentUser.isAdmin ? 'approved' : 'pending', updatedAt: firebase.firestore.FieldValue.serverTimestamp() };
     const success = await updatePostInFirebase(editingId, postData);
     if (success) {
       showToast(currentUser.isAdmin ? '✅ Запись обновлена и опубликована' : '✅ Запись отправлена на повторную модерацию', 'success');
       closeCreateModal();
     }
   } else {
-    const newPost = {
-      category,
-      date,
-      title,
-      text,
-      tags,
-      image: image || null,
-      likes: 0,
-      author: currentUser.name,
-      authorId: currentUser.uid, // 🔧 ИЗМЕНЕНО: используем безопасный uid
-      status: status,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    const newPost = { 
+      category, date, title, text, tags, 
+      image: image || null, 
+      likes: 0, 
+      author: currentUser.name, // Сохраняем имя из профиля
+      authorId: currentUser.uid, 
+      status: status, 
+      createdAt: firebase.firestore.FieldValue.serverTimestamp() 
     };
     const postId = await savePostToFirebase(newPost);
     if (postId) {
@@ -1937,15 +1025,12 @@ async function savePost() {
   }
 }
 
-// ===== РЕДАКТИРОВАНИЕ ПОЛЬЗОВАТЕЛЕМ =====
 function editPost(id) {
   const post = allPosts.find(p => p.id === id);
   if (!post) return;
-
   editingId = id;
   document.getElementById('modalIcon').textContent = '✏️';
   document.getElementById('modalTitleText').textContent = 'Редактирование';
-  
   if (currentUser.isAdmin) {
     document.getElementById('saveBtn').textContent = '💾 Сохранить';
     document.getElementById('moderationHint').style.display = 'none';
@@ -1953,14 +1038,12 @@ function editPost(id) {
     document.getElementById('saveBtn').textContent = '📤 Отправить на модерацию';
     document.getElementById('moderationHint').style.display = 'block';
   }
-  
   document.getElementById('postCategory').value = post.category;
   document.getElementById('postDate').value = post.date;
   document.getElementById('postTitle').value = post.title;
   document.getElementById('postText').value = post.text;
   document.getElementById('postTags').value = (post.tags || []).join(', ');
   document.getElementById('postImage').value = post.image || '';
-
   document.getElementById('createModal').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
@@ -1968,18 +1051,12 @@ function editPost(id) {
 async function deletePost(id) {
   if (!confirm('Удалить эту запись?')) return;
   const success = await deletePostFromFirebase(id);
-  if (success) {
-    showToast('🗑️ Запись удалена', 'success');
-  }
+  if (success) showToast('🗑️ Запись удалена', 'success');
 }
 
 // ===== АДМИН-ПАНЕЛЬ =====
 function openAdminPanel() {
-  if (!currentUser || !currentUser.isAdmin) {
-    showToast('Доступ запрещён', 'error');
-    return;
-  }
-  
+  if (!currentUser || !currentUser.isAdmin) { showToast('Доступ запрещён', 'error'); return; }
   document.getElementById('adminPanelModal').classList.add('active');
   document.body.style.overflow = 'hidden';
   currentAdminTab = 'pending';
@@ -2000,7 +1077,6 @@ function switchAdminTab(tab) {
 
 function renderAdminPosts() {
   const list = document.getElementById('adminPostsList');
-  
   const pending = allPosts.filter(p => p.status === 'pending');
   const approved = allPosts.filter(p => p.status === 'approved');
   const rejected = allPosts.filter(p => p.status === 'rejected');
@@ -2011,9 +1087,7 @@ function renderAdminPosts() {
   document.getElementById('allCount').textContent = allPosts.length;
   
   let filtered = allPosts;
-  if (currentAdminTab !== 'all') {
-    filtered = allPosts.filter(p => p.status === currentAdminTab);
-  }
+  if (currentAdminTab !== 'all') filtered = allPosts.filter(p => p.status === currentAdminTab);
   
   if (filtered.length === 0) {
     list.innerHTML = '<div class="empty-state"><div class="emoji">📭</div><h3>Нет записей</h3></div>';
@@ -2021,12 +1095,7 @@ function renderAdminPosts() {
   }
   
   list.innerHTML = filtered.map(post => {
-    const statusLabels = {
-      pending: '⏳ На модерации',
-      approved: '✅ Опубликовано',
-      rejected: '❌ Отклонено'
-    };
-    
+    const statusLabels = { pending: '⏳ На модерации', approved: '✅ Опубликовано', rejected: '❌ Отклонено' };
     return `
       <div class="admin-post-item">
         <div class="admin-post-header">
@@ -2037,14 +1106,13 @@ function renderAdminPosts() {
           <span>✍️ ${escapeHtml(post.author || 'Аноним')}</span>
           <span>📅 ${post.date}</span>
           <span>📂 ${categoryNames[post.category]}</span>
-          <span>♡ ${post.likes || 0}</span>
           ${post.adminNote ? `<span style="color:var(--warning);">💬 ${escapeHtml(post.adminNote)}</span>` : ''}
         </div>
         <div class="admin-post-text">${escapeHtml(post.text)}</div>
         <div class="admin-post-actions">
           ${post.status !== 'approved' ? `<button class="btn btn-success" onclick="approvePost('${post.id}')">✅ Одобрить</button>` : ''}
           ${post.status !== 'rejected' ? `<button class="btn btn-danger" onclick="rejectPost('${post.id}')">❌ Отклонить</button>` : ''}
-          <button class="btn btn-warning" onclick="openAdminEdit('${post.id}')">✏️ Редактировать</button>
+          <button class="btn" onclick="openAdminEdit('${post.id}')">✏️ Редактировать</button>
           <button class="btn btn-danger" onclick="adminDeletePost('${post.id}')">🗑️ Удалить</button>
         </div>
       </div>
@@ -2054,32 +1122,20 @@ function renderAdminPosts() {
 
 async function approvePost(id) {
   const note = prompt('Комментарий модератора (необязательно):') || '';
-  const success = await updatePostInFirebase(id, { 
-    status: 'approved',
-    adminNote: note,
-    approvedAt: firebase.firestore.FieldValue.serverTimestamp()
-  });
+  const success = await updatePostInFirebase(id, { status: 'approved', adminNote: note, approvedAt: firebase.firestore.FieldValue.serverTimestamp() });
   if (success) showToast('✅ Запись одобрена и опубликована', 'success');
 }
 
 async function rejectPost(id) {
   const note = prompt('Причина отклонения (обязательно):');
-  if (!note) {
-    showToast('Укажите причину отклонения', 'error');
-    return;
-  }
-  const success = await updatePostInFirebase(id, { 
-    status: 'rejected',
-    adminNote: note,
-    rejectedAt: firebase.firestore.FieldValue.serverTimestamp()
-  });
+  if (!note) { showToast('Укажите причину отклонения', 'error'); return; }
+  const success = await updatePostInFirebase(id, { status: 'rejected', adminNote: note, rejectedAt: firebase.firestore.FieldValue.serverTimestamp() });
   if (success) showToast('❌ Запись отклонена', 'success');
 }
 
 function openAdminEdit(id) {
   const post = allPosts.find(p => p.id === id);
   if (!post) return;
-  
   adminEditingId = id;
   document.getElementById('adminEditCategory').value = post.category;
   document.getElementById('adminEditDate').value = post.date;
@@ -2088,7 +1144,6 @@ function openAdminEdit(id) {
   document.getElementById('adminEditTags').value = (post.tags || []).join(', ');
   document.getElementById('adminEditImage').value = post.image || '';
   document.getElementById('adminEditNote').value = post.adminNote || '';
-  
   document.getElementById('adminEditModal').classList.add('active');
 }
 
@@ -2106,20 +1161,11 @@ async function saveAdminEdit() {
   const image = document.getElementById('adminEditImage').value.trim();
   const note = document.getElementById('adminEditNote').value.trim();
   
-  if (!title || !text) {
-    showToast('Заголовок и текст обязательны', 'error');
-    return;
-  }
-  
+  if (!title || !text) { showToast('Заголовок и текст обязательны', 'error'); return; }
   const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
-  
   const postData = { category, date, title, text, tags, image, adminNote: note };
-  
   const success = await updatePostInFirebase(adminEditingId, postData);
-  if (success) {
-    showToast('✅ Запись обновлена', 'success');
-    closeAdminEdit();
-  }
+  if (success) { showToast('✅ Запись обновлена', 'success'); closeAdminEdit(); }
 }
 
 async function adminDeletePost(id) {
@@ -2128,12 +1174,10 @@ async function adminDeletePost(id) {
   if (success) showToast('🗑️ Запись удалена', 'success');
 }
 
+// ===== УТИЛИТЫ =====
 document.querySelectorAll('.modal-overlay').forEach(modal => {
   modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    if (e.target === modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
   });
 });
 
@@ -2148,6 +1192,5 @@ document.addEventListener('visibilitychange', () => {
   if (!document.hidden) loadPostsFromFirebase();
 });
 </script>
-
 </body>
 </html>
