@@ -202,12 +202,26 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 .user-greeting { display: block; font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
 .user-name { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--accent-cyan); }
 
+/* === МИНИМАЛИСТИЧНАЯ ШАПКА === */
 .hero-banner {
-  position: relative; padding: 40px 24px; text-align: center; overflow: hidden; margin-bottom: 32px;
+  position: relative;
+  padding: 32px 24px;
+  text-align: center;
+  margin-bottom: 32px;
   background: linear-gradient(135deg, rgba(0, 240, 255, 0.05), rgba(157, 0, 255, 0.05));
 }
-.hero-title { font-size: 2rem; font-weight: 900; margin-bottom: 12px; }
-.hero-slogan { color: var(--text-secondary); margin-bottom: 24px; font-size: 0.95rem; }
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.hero-slogan {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
 
 .bento-grid {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 32px;
@@ -302,10 +316,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 .release-hero::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: radial-gradient(circle at 30% 50%, rgba(0, 240, 255, 0.1) 0%, transparent 50%),
               radial-gradient(circle at 70% 80%, rgba(255, 0, 170, 0.1) 0%, transparent 50%);
   pointer-events: none;
@@ -496,31 +507,25 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   transform: translateY(-2px);
 }
 
-/* Адаптивность для Hero */
 @media (max-width: 768px) {
   .release-hero {
     padding: 32px 24px;
   }
-  
   .release-hero-content {
     grid-template-columns: 1fr;
     gap: 24px;
     text-align: center;
   }
-  
   .release-hero-cover {
     max-width: 240px;
     margin: 0 auto;
   }
-  
   .release-hero-title {
     font-size: 2rem;
   }
-  
   .release-hero-description {
     margin: 0 auto 24px;
   }
-  
   .release-hero-actions {
     justify-content: center;
   }
@@ -530,11 +535,9 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   .release-hero {
     padding: 24px 16px;
   }
-  
   .release-hero-title {
     font-size: 1.6rem;
   }
-  
   .btn-hero-play, .btn-hero-secondary {
     width: 100%;
     justify-content: center;
@@ -784,11 +787,9 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 
 @media (min-width: 768px) {
   .bento-grid { grid-template-columns: repeat(3, 1fr); }
-  .hero-title { font-size: 2.8rem; }
   .page { padding: 40px 24px 140px; }
 }
 @media (max-width: 380px) {
-  .hero-title { font-size: 1.6rem; }
   .card-number { font-size: 1.1rem; letter-spacing: 2px; }
 }
 
@@ -812,7 +813,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 
 <!-- Maintenance Screen -->
 <div class="maintenance-screen" id="siteMaintenanceScreen">
-  <div class="maintenance-icon">🔧</div>
+  <div class="maintenance-icon"></div>
   <div class="maintenance-title">ТЕХНИЧЕСКИЕ РАБОТЫ</div>
   <div class="maintenance-subtitle">Извините, сайт временно недоступен.<br>Мы работаем над улучшением.<br><br><strong style="color:var(--accent-gold)">Скоро всё заработает!</strong></div>
   <button class="btn-text" onclick="showMaintenanceAdminModal()" style="font-size: 1.5rem; opacity: 0.3;">⚙️</button>
@@ -856,7 +857,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
       </ul>
       <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">⚖️ Правовая основа: ГК РФ ст. 1273.</div>
 
-      <h4 style="color:var(--error);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;"> 3. Запрещено</h4>
+      <h4 style="color:var(--error);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">🚫 3. Запрещено</h4>
       <ul style="margin-bottom:8px;padding-left:20px;">
         <li style="margin-bottom:4px;">Коммерческое использование без письменного разрешения</li>
         <li style="margin-bottom:4px;">Загрузка на стриминговые платформы от своего имени</li>
@@ -906,14 +907,14 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     </div>
   </header>
 
+  <!-- МИНИМАЛИСТИЧНАЯ ШАПКА -->
   <div class="hero-banner glass-panel">
     <h1 class="hero-title">EVGENII<span class="ai-badge">AI</span></h1>
     <p class="hero-slogan">Где заканчиваюсь я — и начинается ИИ</p>
-    <button class="btn-primary" onclick="playNewRelease()" style="max-width:280px;margin:0 auto;">▶ СЛУШАТЬ НОВЫЙ РЕЛИЗ</button>
   </div>
 
   <div style="text-align:center;margin-bottom:32px;">
-    <button class="btn-ghost" id="agreementBtn" onclick="openLicenseModal(false)"> Лицензионное соглашение</button>
+    <button class="btn-ghost" id="agreementBtn" onclick="openLicenseModal(false)">📜 Лицензионное соглашение</button>
   </div>
 
   <section class="section">
@@ -975,7 +976,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
         <div class="bento-text"><h3>Поддержать</h3><p>Сказать спасибо</p></div>
       </div>
       <div class="bento-item glass-panel" onclick="navigateTo('aboutPage')">
-        <div class="bento-icon">ℹ️️</div>
+        <div class="bento-icon">ℹ️</div>
         <div class="bento-text"><h3>О проекте</h3><p>Узнать больше</p></div>
       </div>
     </div>
@@ -983,7 +984,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 
   <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:40px;">
     <button class="btn-ghost danger" id="logoutBtn">ВЫЙТИ</button>
-    <button class="btn-text" onclick="showAdminLogin()" style="margin-top:8px;">⚙️ Админ</button>
+    <button class="btn-text" onclick="showAdminLogin()" style="margin-top:8px;">️ Админ</button>
   </div>
 </div>
 
@@ -991,7 +992,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 <div class="page" id="adminPage">
   <header class="main-header glass-panel" style="margin-bottom:24px;">
     <button class="btn-ghost" onclick="goBack()" style="padding:8px 16px;">← Назад</button>
-    <div class="header-brand">️ АДМИН-ПАНЕЛЬ</div>
+    <div class="header-brand">⚙️ АДМИН-ПАНЕЛЬ</div>
   </header>
 
   <div id="adminLoginSection" class="glass-panel" style="padding:32px;max-width:400px;margin:0 auto;">
@@ -1010,7 +1011,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 
   <div id="adminContent" style="display:none;">
     <div class="glass-panel" style="padding:24px;margin-bottom:24px;">
-      <h3 style="color:var(--accent-gold);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;"> ТЕХНИЧЕСКИЕ РАБОТЫ</h3>
+      <h3 style="color:var(--accent-gold);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;">🔧 ТЕХНИЧЕСКИЕ РАБОТЫ</h3>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;background:rgba(0,0,0,0.2);border-radius:12px;border:1px solid var(--glass-border);">
         <div>
           <div style="font-weight:600;font-size:0.95rem;">🌐 Для всего сайта</div>
@@ -1023,7 +1024,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     </div>
 
     <div class="glass-panel" style="padding:24px;margin-bottom:24px;">
-      <h3 style="color:var(--accent-cyan);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;"> УПРАВЛЕНИЕ РЕЛИЗАМИ</h3>
+      <h3 style="color:var(--accent-cyan);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;">🎵 УПРАВЛЕНИЕ РЕЛИЗАМИ</h3>
       <div style="display:flex;flex-direction:column;gap:12px;">
         <input type="text" id="adminTrackTitle" class="form-input" placeholder="Название трека *">
         <input type="text" id="adminTrackSubtitle" class="form-input" placeholder="Подзаголовок (по умолчанию: EVGENII AI)">
@@ -1032,14 +1033,14 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
         <input type="text" id="adminTrackCover" class="form-input" placeholder="Путь к обложке (URL)">
         <textarea id="adminTrackDescription" class="form-textarea" placeholder="Краткое описание или история создания трека..." style="min-height: 80px;"></textarea>
         
-        <button class="btn-primary" id="submitTrackBtn" onclick="addNewRelease()">🚀 ОПУБЛИКОВАТЬ</button>
-        <button class="btn-ghost" id="cancelEditBtn" onclick="cancelEditTrack()" style="display:none;width:100%;">❌ ОТМЕНИТЬ РЕДАКТИРОВАНИЕ</button>
+        <button class="btn-primary" id="submitTrackBtn" onclick="addNewRelease()"> ОПУБЛИКОВАТЬ</button>
+        <button class="btn-ghost" id="cancelEditBtn" onclick="cancelEditTrack()" style="display:none;width:100%;"> ОТМЕНИТЬ РЕДАКТИРОВАНИЕ</button>
         <div class="form-status" id="adminTrackStatus"></div>
       </div>
     </div>
 
     <div class="glass-panel" style="padding:24px;">
-      <h3 style="color:var(--error);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;">📋 СПИСОК ТРЕКОВ</h3>
+      <h3 style="color:var(--error);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;"> СПИСОК ТРЕКОВ</h3>
       <div id="adminTracksList" style="display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto;"></div>
     </div>
   </div>
@@ -1125,7 +1126,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <div class="header-brand">ПОДДЕРЖАТЬ</div>
   </header>
   <div style="text-align:center;margin-bottom:24px;color:var(--text-secondary);font-size:0.95rem;">
-    <div style="font-size:2.5rem;margin-bottom:12px;animation:float 2s ease-in-out infinite;">💜</div>
+    <div style="font-size:2.5rem;margin-bottom:12px;animation:float 2s ease-in-out infinite;"></div>
     <p>Твоя поддержка помогает создавать новую музыку. Каждая чашка кофе — это новый трек.</p>
   </div>
   
@@ -1169,7 +1170,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   </header>
   <div class="discussions-container glass-panel">
     <div style="padding:16px;border-bottom:1px solid var(--glass-border);display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-family:'Orbitron';font-size:0.8rem;font-weight:700;letter-spacing:2px;color:var(--accent-cyan);"> ОБЩИЙ ЧАТ</span>
+      <span style="font-family:'Orbitron';font-size:0.8rem;font-weight:700;letter-spacing:2px;color:var(--accent-cyan);">💬 ОБЩИЙ ЧАТ</span>
       <span id="discussionsCount" style="font-size:0.7rem;padding:2px 8px;background:rgba(0,240,255,0.1);color:var(--accent-cyan);border-radius:10px;">0</span>
     </div>
     <div class="discussions-list" id="discussionsList">
@@ -1408,7 +1409,7 @@ function maintenanceAdminLogin() {
   var password = document.getElementById('maintenanceAdminPassword').value;
   var status = document.getElementById('maintenanceAdminStatus');
 
-  if (!email || !password) { status.textContent = '️ Введите email и пароль'; status.className = 'form-status error'; return; }
+  if (!email || !password) { status.textContent = '⚠️ Введите email и пароль'; status.className = 'form-status error'; return; }
   status.textContent = '⏳ Проверка данных...'; status.className = 'form-status';
 
   firebase.auth().signInWithEmailAndPassword(email, password)
@@ -1426,9 +1427,9 @@ function maintenanceAdminLogin() {
       }, 500);
     })
     .catch(function(error) {
-      var msg = ' Ошибка входа';
-      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') msg = '❌ Неверный email или пароль';
-      else if (error.code === 'auth/too-many-requests') msg = ' Слишком много попыток. Попробуйте позже';
+      var msg = '❌ Ошибка входа';
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') msg = ' Неверный email или пароль';
+      else if (error.code === 'auth/too-many-requests') msg = '❌ Слишком много попыток. Попробуйте позже';
       status.textContent = msg; status.className = 'form-status error';
     });
 }
@@ -1515,7 +1516,7 @@ function updateTrack(trackId) {
     var description = document.getElementById('adminTrackDescription').value.trim();
     var status = document.getElementById('adminTrackStatus');
 
-    if (!title || !file || !duration) { status.textContent = '⚠️ Заполните обязательные поля!'; status.className = 'form-status error'; return; }
+    if (!title || !file || !duration) { status.textContent = '️ Заполните обязательные поля!'; status.className = 'form-status error'; return; }
     status.textContent = '⏳ Сохранение...'; status.className = 'form-status';
 
     db.collection('tracks').doc(trackId).update({
@@ -1542,7 +1543,7 @@ function renderAdminTracksList() {
             '<div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:0.9rem;">' + escapeHtml(track.title) + isNew + hasDesc + '</div>' +
             '<div style="font-size:0.75rem;color:var(--text-secondary);">' + escapeHtml(track.file) + '</div></div>' +
             '<div style="display:flex;gap:5px;">' +
-            '<button class="btn-ghost" style="padding:6px 10px;font-size:0.75rem;" onclick="editTrack(\'' + track.id + '\')">️</button>' +
+            '<button class="btn-ghost" style="padding:6px 10px;font-size:0.75rem;" onclick="editTrack(\'' + track.id + '\')">✏️</button>' +
             '<button class="btn-ghost danger" style="padding:6px 10px;font-size:0.75rem;" onclick="deleteTrack(\'' + track.id + '\')">🗑️</button>' +
             '</div></div>';
     }).join('');
@@ -1628,7 +1629,7 @@ function renderAllTracksList() {
           '</div>' +
           '<div class="track-duration">' + track.duration + '</div>' +
           '<div class="track-actions">' +
-            '<button class="track-info-btn" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[' + index + '])" title="Полная история трека">ℹ️</button>' +
+            '<button class="track-info-btn" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[' + index + '])" title="Полная история трека">️</button>' +
             '<button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(tracksData[' + index + '])">' +
               '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>' +
             '</button>' +
@@ -1661,7 +1662,7 @@ function playTrack(track, index) {
   document.getElementById('playerTitle').textContent = track.title;
   document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII AI';
   var pc = document.getElementById('playerCover');
-  if (track.cover) { pc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'\'">'; } else { pc.textContent = '🎵'; }
+  if (track.cover) { pc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; } else { pc.textContent = '🎵'; }
   document.getElementById('playerTotalTime').textContent = track.duration;
   document.getElementById('stickyPlayer').classList.add('visible');
   document.querySelectorAll('.track-item').forEach(function(el) { el.classList.remove('active'); });
@@ -1771,7 +1772,7 @@ document.getElementById('downloadModal').addEventListener('click', function(e) {
 function openTrackInfoModal(track) {
   if (!track) return;
   var mc = document.getElementById('modalInfoCover');
-  if (track.cover) { mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'\'">'; } else { mc.textContent = '🎵'; }
+  if (track.cover) { mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; } else { mc.textContent = '🎵'; }
   document.getElementById('modalInfoTitle').textContent = track.title;
   document.getElementById('modalInfoArtist').textContent = track.subtitle || 'EVGENII AI';
   
@@ -1797,7 +1798,7 @@ function updateAttachLabel() {
   if (!label || !toggle) return;
   var current = getCurrentPlayingTrack();
   if (current) { label.textContent = '🎵 Прикрепить: ' + current.title; toggle.disabled = false; toggle.parentElement.style.opacity = '1'; }
-  else { label.textContent = ' Сначала включи любой трек'; toggle.disabled = true; toggle.checked = false; toggle.parentElement.style.opacity = '0.5'; }
+  else { label.textContent = '🎵 Сначала включи любой трек'; toggle.disabled = true; toggle.checked = false; toggle.parentElement.style.opacity = '0.5'; }
 }
 function loadDiscussions() {
   if (!db) return;
@@ -1856,7 +1857,7 @@ function adminLogin() {
   var email = document.getElementById('adminEmailInput').value.trim();
   var password = document.getElementById('adminPasswordInput').value;
   var status = document.getElementById('adminLoginStatus');
-  if (!email || !password) { status.textContent = '️ Введите email и пароль'; status.className = 'form-status error'; return; }
+  if (!email || !password) { status.textContent = '⚠️ Введите email и пароль'; status.className = 'form-status error'; return; }
   status.textContent = '⏳ Проверка...'; status.className = 'form-status';
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(function() {
