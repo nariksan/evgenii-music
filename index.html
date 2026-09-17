@@ -238,7 +238,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   transform: translateY(-4px);
 }
 .bento-diary::before {
-  content: '📔';
+  content: '';
   position: absolute;
   top: -20px;
   right: -15px;
@@ -285,67 +285,319 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   50% { box-shadow: 0 0 0 6px rgba(255, 204, 0, 0); }
 }
 
-.release-card {
-  display: flex; align-items: center; gap: 16px; padding: 16px; cursor: pointer;
+/* === HERO RELEASE CARD === */
+.release-hero {
+  position: relative;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(157, 0, 255, 0.15));
+  border-radius: 32px;
+  padding: 48px;
+  margin-bottom: 40px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.release-cover {
-  width: 64px; height: 64px; border-radius: 14px; background: linear-gradient(135deg, #1a1a2e, #2a1a3a);
-  display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;
-  position: relative; overflow: hidden; border: 1px solid var(--glass-border);
-}
-.release-cover img { width: 100%; height: 100%; object-fit: cover; }
-.release-badge {
-  position: absolute; top: 6px; left: 6px; background: var(--accent-cyan); color: #000;
-  font-size: 0.6rem; font-weight: 800; padding: 2px 6px; border-radius: 4px;
-}
-.release-info { flex: 1; }
-.release-label { font-size: 0.65rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 4px; }
-.release-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
-.release-meta { font-size: 0.8rem; color: var(--text-secondary); }
 
-.track-item {
-  display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer;
+.release-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(0, 240, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(255, 0, 170, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  animation: heroPulse 4s ease-in-out infinite;
+}
+
+@keyframes heroPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.release-hero:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 80px rgba(0, 240, 255, 0.2), 0 0 60px rgba(157, 0, 255, 0.15);
+  border-color: var(--accent-cyan);
+}
+
+.release-hero-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.release-hero-cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: rotate(-3deg);
+  transition: transform 0.4s;
+}
+
+.release-hero:hover .release-hero-cover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.release-hero-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.release-hero-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a2e, #2a1a3a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+}
+
+.release-hero-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--accent-gold), #ff9500);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  box-shadow: 0 8px 25px rgba(255, 204, 0, 0.4);
+  z-index: 2;
+  animation: badgeGlow 2s ease-in-out infinite;
+}
+
+@keyframes badgeGlow {
+  0%, 100% { box-shadow: 0 8px 25px rgba(255, 204, 0, 0.4); }
+  50% { box-shadow: 0 8px 35px rgba(255, 204, 0, 0.7); }
+}
+
+.release-hero-info h2 {
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.release-hero-info h2::before {
+  content: '●';
+  color: var(--accent-magenta);
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.release-hero-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #fff, var(--accent-cyan), var(--accent-magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.release-hero-artist {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+
+.release-hero-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 32px;
+  max-width: 600px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.release-hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-hero-play {
+  padding: 16px 32px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  color: #000;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.4);
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-hero-play:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 240, 255, 0.6);
+}
+
+.btn-hero-play svg {
+  width: 24px;
+  height: 24px;
+  fill: #000;
+}
+
+.btn-hero-secondary {
+  padding: 16px 28px;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   transition: all 0.3s;
 }
-.track-item:hover { background: rgba(255, 255, 255, 0.05); }
-.track-item.active { border-color: var(--accent-cyan); background: rgba(0, 240, 255, 0.05); }
+
+.btn-hero-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  transform: translateY(-2px);
+}
+
+/* Адаптивность для Hero */
+@media (max-width: 768px) {
+  .release-hero {
+    padding: 32px 24px;
+  }
+  
+  .release-hero-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    text-align: center;
+  }
+  
+  .release-hero-cover {
+    max-width: 240px;
+    margin: 0 auto;
+  }
+  
+  .release-hero-title {
+    font-size: 2rem;
+  }
+  
+  .release-hero-description {
+    margin: 0 auto 24px;
+  }
+  
+  .release-hero-actions {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .release-hero {
+    padding: 24px 16px;
+  }
+  
+  .release-hero-title {
+    font-size: 1.6rem;
+  }
+  
+  .btn-hero-play, .btn-hero-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.track-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.track-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.track-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+.track-item:hover::before { opacity: 1; }
+
+.track-item.active {
+  border-color: var(--accent-cyan);
+  background: rgba(0, 240, 255, 0.05);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+}
+.track-item.active::before { opacity: 1; }
+
 .track-cover {
-  width: 50px; height: 50px; border-radius: 10px; background: linear-gradient(135deg, #1a1a2e, #2a1a3a);
+  width: 60px; height: 60px; border-radius: 12px; background: linear-gradient(135deg, #1a1a2e, #2a1a3a);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;
-  margin-top: 2px;
+  border: 1px solid var(--glass-border);
 }
 .track-cover img { width: 100%; height: 100%; object-fit: cover; }
 
-/* НОВОЕ: Обёртка для информации о треке (название + артист + описание) */
-.track-info-wrapper { flex: 1; min-width: 0; }
-.track-info { min-width: 0; }
-.track-title { font-size: 0.95rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.track-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.track-title { font-size: 1rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .track-artist { font-size: 0.8rem; color: var(--text-secondary); }
 
-/* НОВОЕ: Превью описания трека */
 .track-description-preview {
-  margin-top: 6px;
   font-size: 0.8rem;
   color: var(--text-secondary);
-  line-height: 1.5;
   font-style: italic;
-  opacity: 0.85;
-  word-wrap: break-word;
+  line-height: 1.4;
+  margin-top: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-.track-description-preview::before {
-  content: '«';
-  color: var(--accent-gold);
-  font-weight: 700;
-  margin-right: 2px;
-}
-.track-description-preview::after {
-  content: '»';
-  color: var(--accent-gold);
-  font-weight: 700;
-  margin-left: 2px;
-}
+.track-description-preview::before { content: '«'; color: var(--accent-gold); font-weight: 700; }
+.track-description-preview::after { content: '»'; color: var(--accent-gold); font-weight: 700; }
 
-/* НОВОЕ: Ссылка "Читать далее" */
 .track-read-more {
   display: inline-flex;
   align-items: center;
@@ -353,11 +605,10 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   margin-top: 6px;
   font-size: 0.75rem;
   color: var(--accent-gold);
-  cursor: pointer;
   font-weight: 600;
-  letter-spacing: 0.5px;
+  cursor: pointer;
   transition: all 0.2s;
-  padding: 2px 0;
+  width: fit-content;
 }
 .track-read-more:hover {
   color: #fff;
@@ -367,8 +618,8 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: rgba(255, 204, 0, 0.15);
   border: 1px solid var(--accent-gold);
@@ -381,9 +632,16 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   color: var(--text-secondary); 
   font-family: 'Orbitron', monospace; 
   flex-shrink: 0;
-  margin-top: 16px;
+  margin-top: 4px;
 }
-.track-actions { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; margin-top: 2px; }
+
+.track-actions { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 8px; 
+  flex-shrink: 0; 
+}
 
 .track-download-btn, .track-info-btn {
   width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--glass-border);
@@ -394,7 +652,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 .track-download-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
 .track-download-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-.track-info-btn { color: var(--accent-gold); font-size: 1.1rem; }
+.track-info-btn { color: var(--accent-gold); font-size: 1rem; }
 .track-info-btn:hover { border-color: var(--accent-gold); background: rgba(255, 204, 0, 0.1); }
 
 .sticky-player {
@@ -529,15 +787,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   .hero-title { font-size: 2.8rem; }
   .page { padding: 40px 24px 140px; }
 }
-@media (max-width: 480px) {
-  .track-item { padding: 12px; gap: 10px; }
-  .track-cover { width: 44px; height: 44px; }
-  .track-duration { display: none; }
-  .track-actions { gap: 4px; }
-  .track-download-btn, .track-info-btn { width: 32px; height: 32px; }
-  .track-description-preview { font-size: 0.75rem; }
-  .track-read-more { font-size: 0.7rem; }
-}
 @media (max-width: 380px) {
   .hero-title { font-size: 1.6rem; }
   .card-number { font-size: 1.1rem; letter-spacing: 2px; }
@@ -607,7 +856,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
       </ul>
       <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">⚖️ Правовая основа: ГК РФ ст. 1273.</div>
 
-      <h4 style="color:var(--error);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">🚫 3. Запрещено</h4>
+      <h4 style="color:var(--error);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;"> 3. Запрещено</h4>
       <ul style="margin-bottom:8px;padding-left:20px;">
         <li style="margin-bottom:4px;">Коммерческое использование без письменного разрешения</li>
         <li style="margin-bottom:4px;">Загрузка на стриминговые платформы от своего имени</li>
@@ -664,13 +913,33 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   </div>
 
   <div style="text-align:center;margin-bottom:32px;">
-    <button class="btn-ghost" id="agreementBtn" onclick="openLicenseModal(false)">📜 Лицензионное соглашение</button>
+    <button class="btn-ghost" id="agreementBtn" onclick="openLicenseModal(false)"> Лицензионное соглашение</button>
   </div>
 
   <section class="section">
-    <h2 class="section-title">НОВЫЙ РЕЛИЗ</h2>
-    <div class="release-card glass-panel" id="homeReleaseCard" onclick="playNewRelease()">
-      <div class="release-info"><div class="release-title">Загрузка...</div></div>
+    <h2 class="section-title">✨ НОВЫЙ РЕЛИЗ</h2>
+    <div class="release-hero" id="releaseHero">
+      <div class="release-hero-content">
+        <div class="release-hero-cover" id="heroCover">
+          <span class="release-hero-badge">NEW RELEASE</span>
+          <div class="release-hero-cover-placeholder">🎵</div>
+        </div>
+        <div class="release-hero-info">
+          <h2>★ ПРЕМЬЕРА</h2>
+          <h1 class="release-hero-title" id="heroTitle">Загрузка...</h1>
+          <div class="release-hero-artist" id="heroArtist">EVGENII AI</div>
+          <p class="release-hero-description" id="heroDescription">Новый трек уже доступен для прослушивания</p>
+          <div class="release-hero-actions">
+            <button class="btn-hero-play" onclick="event.stopPropagation(); playNewRelease()">
+              <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              СЛУШАТЬ СЕЙЧАС
+            </button>
+            <button class="btn-hero-secondary" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[0])">
+              ℹ️ История создания
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -722,7 +991,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 <div class="page" id="adminPage">
   <header class="main-header glass-panel" style="margin-bottom:24px;">
     <button class="btn-ghost" onclick="goBack()" style="padding:8px 16px;">← Назад</button>
-    <div class="header-brand">⚙️ АДМИН-ПАНЕЛЬ</div>
+    <div class="header-brand">️ АДМИН-ПАНЕЛЬ</div>
   </header>
 
   <div id="adminLoginSection" class="glass-panel" style="padding:32px;max-width:400px;margin:0 auto;">
@@ -741,7 +1010,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 
   <div id="adminContent" style="display:none;">
     <div class="glass-panel" style="padding:24px;margin-bottom:24px;">
-      <h3 style="color:var(--accent-gold);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;">🔧 ТЕХНИЧЕСКИЕ РАБОТЫ</h3>
+      <h3 style="color:var(--accent-gold);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;"> ТЕХНИЧЕСКИЕ РАБОТЫ</h3>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;background:rgba(0,0,0,0.2);border-radius:12px;border:1px solid var(--glass-border);">
         <div>
           <div style="font-weight:600;font-size:0.95rem;">🌐 Для всего сайта</div>
@@ -754,7 +1023,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     </div>
 
     <div class="glass-panel" style="padding:24px;margin-bottom:24px;">
-      <h3 style="color:var(--accent-cyan);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;">🎵 УПРАВЛЕНИЕ РЕЛИЗАМИ</h3>
+      <h3 style="color:var(--accent-cyan);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;"> УПРАВЛЕНИЕ РЕЛИЗАМИ</h3>
       <div style="display:flex;flex-direction:column;gap:12px;">
         <input type="text" id="adminTrackTitle" class="form-input" placeholder="Название трека *">
         <input type="text" id="adminTrackSubtitle" class="form-input" placeholder="Подзаголовок (по умолчанию: EVGENII AI)">
@@ -782,7 +1051,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <button class="btn-ghost" onclick="goBack()" style="padding:8px 16px;">← Назад</button>
     <div class="header-brand">ВСЕ ТРЕКИ</div>
   </header>
-  <div class="release-card glass-panel" id="featuredRelease" onclick="playNewRelease()" style="margin-bottom:24px;padding:24px;"></div>
   <div id="allTracksList"></div>
 </div>
 
@@ -901,7 +1169,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   </header>
   <div class="discussions-container glass-panel">
     <div style="padding:16px;border-bottom:1px solid var(--glass-border);display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-family:'Orbitron';font-size:0.8rem;font-weight:700;letter-spacing:2px;color:var(--accent-cyan);">💬 ОБЩИЙ ЧАТ</span>
+      <span style="font-family:'Orbitron';font-size:0.8rem;font-weight:700;letter-spacing:2px;color:var(--accent-cyan);"> ОБЩИЙ ЧАТ</span>
       <span id="discussionsCount" style="font-size:0.7rem;padding:2px 8px;background:rgba(0,240,255,0.1);color:var(--accent-cyan);border-radius:10px;">0</span>
     </div>
     <div class="discussions-list" id="discussionsList">
@@ -973,7 +1241,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 <!-- Track Info Modal -->
 <div class="modal-overlay" id="trackInfoModal">
   <div class="modal-content">
-    <button class="btn-text" onclick="closeTrackInfoModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
+    <button class="btn-text" onclick="closeTrackInfoModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;"></button>
     <div class="modal-header">ИСТОРИЯ СОЗДАНИЯ</div>
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
       <div id="modalInfoCover" style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);display:flex;align-items:center;justify-content:center;font-size:1.5rem;overflow:hidden;flex-shrink:0;">🎵</div>
@@ -1140,7 +1408,7 @@ function maintenanceAdminLogin() {
   var password = document.getElementById('maintenanceAdminPassword').value;
   var status = document.getElementById('maintenanceAdminStatus');
 
-  if (!email || !password) { status.textContent = '⚠️ Введите email и пароль'; status.className = 'form-status error'; return; }
+  if (!email || !password) { status.textContent = '️ Введите email и пароль'; status.className = 'form-status error'; return; }
   status.textContent = '⏳ Проверка данных...'; status.className = 'form-status';
 
   firebase.auth().signInWithEmailAndPassword(email, password)
@@ -1158,9 +1426,9 @@ function maintenanceAdminLogin() {
       }, 500);
     })
     .catch(function(error) {
-      var msg = '❌ Ошибка входа';
+      var msg = ' Ошибка входа';
       if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') msg = '❌ Неверный email или пароль';
-      else if (error.code === 'auth/too-many-requests') msg = '❌ Слишком много попыток. Попробуйте позже';
+      else if (error.code === 'auth/too-many-requests') msg = ' Слишком много попыток. Попробуйте позже';
       status.textContent = msg; status.className = 'form-status error';
     });
 }
@@ -1232,7 +1500,7 @@ function cancelEditTrack() {
     document.getElementById('adminTrackCover').value = '';
     document.getElementById('adminTrackDescription').value = '';
     var submitBtn = document.getElementById('submitTrackBtn');
-    submitBtn.textContent = '🚀 ОПУБЛИКОВАТЬ';
+    submitBtn.textContent = ' ОПУБЛИКОВАТЬ';
     submitBtn.onclick = addNewRelease;
     document.getElementById('cancelEditBtn').style.display = 'none';
     document.getElementById('adminTrackStatus').textContent = '';
@@ -1274,40 +1542,56 @@ function renderAdminTracksList() {
             '<div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:0.9rem;">' + escapeHtml(track.title) + isNew + hasDesc + '</div>' +
             '<div style="font-size:0.75rem;color:var(--text-secondary);">' + escapeHtml(track.file) + '</div></div>' +
             '<div style="display:flex;gap:5px;">' +
-            '<button class="btn-ghost" style="padding:6px 10px;font-size:0.75rem;" onclick="editTrack(\'' + track.id + '\')">✏️</button>' +
+            '<button class="btn-ghost" style="padding:6px 10px;font-size:0.75rem;" onclick="editTrack(\'' + track.id + '\')">️</button>' +
             '<button class="btn-ghost danger" style="padding:6px 10px;font-size:0.75rem;" onclick="deleteTrack(\'' + track.id + '\')">🗑️</button>' +
             '</div></div>';
     }).join('');
 }
 
 function renderNewRelease() {
-    var h = document.getElementById('homeReleaseCard');
-    var f = document.getElementById('featuredRelease');
+    var hero = document.getElementById('releaseHero');
+    if (!hero) return;
+    
     if (tracksData.length === 0) {
-        if (h) h.innerHTML = '<div class="release-info"><div class="release-title">Пока нет релизов</div></div>';
+        hero.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-secondary);"><div style="font-size:3rem;margin-bottom:16px;">🎵</div><div>Пока нет релизов</div></div>';
         return;
     }
+    
     var latestTrack = tracksData[0];
-    if (h) {
-        h.innerHTML = '<div class="release-cover"><span class="release-badge">NEW</span>' + (latestTrack.cover ? '<img src="' + latestTrack.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">' : '') + '</div>' +
-            '<div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">' + escapeHtml(latestTrack.title) + '</div><div class="release-meta">' + escapeHtml(latestTrack.subtitle).toUpperCase() + ' · ' + latestTrack.duration + '</div></div>';
-    }
-    if (f) {
-        f.innerHTML = '<div class="release-cover" style="width:80px;height:80px;margin-right:16px;">' + (latestTrack.cover ? '<img src="' + latestTrack.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">' : '') + '</div>' +
-            '<div class="release-info"><div class="release-label">★ НОВЫЙ РЕЛИЗ</div><div class="release-title" style="font-size:1.2rem;">' + escapeHtml(latestTrack.title) + '</div><div class="release-meta">' + escapeHtml(latestTrack.subtitle) + ' · ' + latestTrack.duration + '</div></div>' +
-            '<button class="ctrl-btn play-btn" onclick="event.stopPropagation();playTrack(tracksData[0], 0)" style="margin-left:auto;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:#000;"><polygon points="5,3 19,12 5,21"/></svg></button>';
-    }
+    var coverHtml = latestTrack.cover 
+        ? '<img src="' + latestTrack.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<div class=\'release-hero-cover-placeholder\'>🎵</div>\';">'
+        : '<div class="release-hero-cover-placeholder">🎵</div>';
+    
+    hero.innerHTML = 
+      '<div class="release-hero-content" onclick="playNewRelease()">' +
+        '<div class="release-hero-cover">' +
+          '<span class="release-hero-badge">NEW RELEASE</span>' +
+          coverHtml +
+        '</div>' +
+        '<div class="release-hero-info">' +
+          '<h2>★ ПРЕМЬЕРА</h2>' +
+          '<h1 class="release-hero-title">' + escapeHtml(latestTrack.title) + '</h1>' +
+          '<div class="release-hero-artist">' + escapeHtml(latestTrack.subtitle || 'EVGENII AI') + ' · ' + latestTrack.duration + '</div>' +
+          (latestTrack.description ? '<p class="release-hero-description">' + escapeHtml(latestTrack.description) + '</p>' : '') +
+          '<div class="release-hero-actions">' +
+            '<button class="btn-hero-play" onclick="event.stopPropagation(); playNewRelease()">' +
+              '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>' +
+              'СЛУШАТЬ СЕЙЧАС' +
+            '</button>' +
+            '<button class="btn-hero-secondary" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[0])">' +
+              'ℹ️ История создания' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
 }
 
-// === НОВОЕ: Функция для получения превью описания ===
 function getDescriptionPreview(text, maxLength) {
   if (!text) return { preview: '', isLong: false };
-  // Убираем лишние переносы строк для превью
   var cleanText = text.replace(/\s+/g, ' ').trim();
   if (cleanText.length <= maxLength) {
     return { preview: cleanText, isLong: false };
   }
-  // Обрезаем по последнему пробелу, чтобы не рвать слова
   var cut = cleanText.substring(0, maxLength);
   var lastSpace = cut.lastIndexOf(' ');
   if (lastSpace > maxLength * 0.6) {
@@ -1326,7 +1610,6 @@ function renderAllTracksList() {
         el.dataset.id = track.id;
         var coverHtml = track.cover ? '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">' : '🎵';
         
-        // НОВОЕ: Формируем превью описания
         var descPreview = getDescriptionPreview(track.description, 80);
         var descHtml = '';
         if (descPreview.preview) {
@@ -1336,21 +1619,21 @@ function renderAllTracksList() {
           }
         }
         
-        el.innerHTML = '<div class="track-cover" onclick="playTrack(tracksData[' + index + '],' + index + ')">' + coverHtml + '</div>' +
-            '<div class="track-info-wrapper">' +
-              '<div class="track-info" onclick="playTrack(tracksData[' + index + '],' + index + ')">' +
-                '<div class="track-title">' + escapeHtml(track.title) + '</div>' +
-                '<div class="track-artist">' + escapeHtml(track.subtitle || 'EVGENII AI') + '</div>' +
-              '</div>' +
-              descHtml +
-            '</div>' +
-            '<div class="track-duration">' + track.duration + '</div>' +
-            '<div class="track-actions">' +
-              '<button class="track-info-btn" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[' + index + '])" title="Полная история трека">ℹ️</button>' +
-              '<button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(tracksData[' + index + '])">' +
-                '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>' +
-              '</button>' +
-            '</div>';
+        el.innerHTML = 
+          '<div class="track-cover" onclick="playTrack(tracksData[' + index + '],' + index + ')">' + coverHtml + '</div>' +
+          '<div class="track-info" onclick="playTrack(tracksData[' + index + '],' + index + ')">' +
+            '<div class="track-title">' + escapeHtml(track.title) + '</div>' +
+            '<div class="track-artist">' + escapeHtml(track.subtitle || 'EVGENII AI') + '</div>' +
+            descHtml +
+          '</div>' +
+          '<div class="track-duration">' + track.duration + '</div>' +
+          '<div class="track-actions">' +
+            '<button class="track-info-btn" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[' + index + '])" title="Полная история трека">ℹ️</button>' +
+            '<button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(tracksData[' + index + '])">' +
+              '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>' +
+            '</button>' +
+          '</div>';
+        
         list.appendChild(el);
     });
 }
@@ -1378,7 +1661,7 @@ function playTrack(track, index) {
   document.getElementById('playerTitle').textContent = track.title;
   document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII AI';
   var pc = document.getElementById('playerCover');
-  if (track.cover) { pc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; } else { pc.textContent = '🎵'; }
+  if (track.cover) { pc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'\'">'; } else { pc.textContent = '🎵'; }
   document.getElementById('playerTotalTime').textContent = track.duration;
   document.getElementById('stickyPlayer').classList.add('visible');
   document.querySelectorAll('.track-item').forEach(function(el) { el.classList.remove('active'); });
@@ -1486,8 +1769,9 @@ document.getElementById('downloadModal').addEventListener('click', function(e) {
 
 // === TRACK INFO MODAL ===
 function openTrackInfoModal(track) {
+  if (!track) return;
   var mc = document.getElementById('modalInfoCover');
-  if (track.cover) { mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; } else { mc.textContent = '🎵'; }
+  if (track.cover) { mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'\'">'; } else { mc.textContent = '🎵'; }
   document.getElementById('modalInfoTitle').textContent = track.title;
   document.getElementById('modalInfoArtist').textContent = track.subtitle || 'EVGENII AI';
   
@@ -1513,7 +1797,7 @@ function updateAttachLabel() {
   if (!label || !toggle) return;
   var current = getCurrentPlayingTrack();
   if (current) { label.textContent = '🎵 Прикрепить: ' + current.title; toggle.disabled = false; toggle.parentElement.style.opacity = '1'; }
-  else { label.textContent = '🎵 Сначала включи любой трек'; toggle.disabled = true; toggle.checked = false; toggle.parentElement.style.opacity = '0.5'; }
+  else { label.textContent = ' Сначала включи любой трек'; toggle.disabled = true; toggle.checked = false; toggle.parentElement.style.opacity = '0.5'; }
 }
 function loadDiscussions() {
   if (!db) return;
@@ -1572,7 +1856,7 @@ function adminLogin() {
   var email = document.getElementById('adminEmailInput').value.trim();
   var password = document.getElementById('adminPasswordInput').value;
   var status = document.getElementById('adminLoginStatus');
-  if (!email || !password) { status.textContent = '⚠️ Введите email и пароль'; status.className = 'form-status error'; return; }
+  if (!email || !password) { status.textContent = '️ Введите email и пароль'; status.className = 'form-status error'; return; }
   status.textContent = '⏳ Проверка...'; status.className = 'form-status';
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(function() {
