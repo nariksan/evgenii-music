@@ -191,6 +191,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   font-family: 'Inter', sans-serif; outline: none; transition: all 0.3s ease; margin-bottom: 16px; text-align: center;
 }
 .login-input:focus { border-color: var(--accent-cyan); box-shadow: 0 0 20px rgba(0, 240, 255, 0.15); }
+.login-input::placeholder { color: var(--text-secondary); }
 
 .main-header {
   display: flex; justify-content: space-between; align-items: center;
@@ -303,26 +304,98 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 .release-meta { font-size: 0.8rem; color: var(--text-secondary); }
 
 .track-item {
-  display: flex; align-items: center; gap: 14px; padding: 12px 16px; margin-bottom: 8px; cursor: pointer;
+  display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer;
+  transition: all 0.3s;
 }
 .track-item:hover { background: rgba(255, 255, 255, 0.05); }
 .track-item.active { border-color: var(--accent-cyan); background: rgba(0, 240, 255, 0.05); }
 .track-cover {
   width: 50px; height: 50px; border-radius: 10px; background: linear-gradient(135deg, #1a1a2e, #2a1a3a);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;
+  margin-top: 2px;
 }
 .track-cover img { width: 100%; height: 100%; object-fit: cover; }
-.track-info { flex: 1; min-width: 0; }
+
+/* НОВОЕ: Обёртка для информации о треке (название + артист + описание) */
+.track-info-wrapper { flex: 1; min-width: 0; }
+.track-info { min-width: 0; }
 .track-title { font-size: 0.95rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .track-artist { font-size: 0.8rem; color: var(--text-secondary); }
-.track-duration { font-size: 0.85rem; color: var(--text-secondary); font-family: 'Orbitron', monospace; margin-right: 12px; }
-.track-download-btn {
+
+/* НОВОЕ: Превью описания трека */
+.track-description-preview {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-style: italic;
+  opacity: 0.85;
+  word-wrap: break-word;
+}
+.track-description-preview::before {
+  content: '«';
+  color: var(--accent-gold);
+  font-weight: 700;
+  margin-right: 2px;
+}
+.track-description-preview::after {
+  content: '»';
+  color: var(--accent-gold);
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+/* НОВОЕ: Ссылка "Читать далее" */
+.track-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: var(--accent-gold);
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+  padding: 2px 0;
+}
+.track-read-more:hover {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+}
+.track-read-more .info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255, 204, 0, 0.15);
+  border: 1px solid var(--accent-gold);
+  font-size: 0.65rem;
+  font-style: normal;
+}
+
+.track-duration { 
+  font-size: 0.85rem; 
+  color: var(--text-secondary); 
+  font-family: 'Orbitron', monospace; 
+  flex-shrink: 0;
+  margin-top: 16px;
+}
+.track-actions { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; margin-top: 2px; }
+
+.track-download-btn, .track-info-btn {
   width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--glass-border);
-  background: transparent; color: var(--text-secondary); cursor: pointer; display: flex;
+  background: transparent; cursor: pointer; display: flex;
   align-items: center; justify-content: center; transition: all 0.2s;
 }
+.track-download-btn { color: var(--text-secondary); }
 .track-download-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
 .track-download-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+.track-info-btn { color: var(--accent-gold); font-size: 1.1rem; }
+.track-info-btn:hover { border-color: var(--accent-gold); background: rgba(255, 204, 0, 0.1); }
 
 .sticky-player {
   position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(150%);
@@ -367,6 +440,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   width: 100%; max-width: 500px; background: var(--bg-secondary); border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg); padding: 28px 24px; transform: translateY(20px) scale(0.95);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto;
+  position: relative;
 }
 .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
 .modal-header { text-align: center; font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 3px; margin-bottom: 24px; color: var(--accent-cyan); }
@@ -455,6 +529,15 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   .hero-title { font-size: 2.8rem; }
   .page { padding: 40px 24px 140px; }
 }
+@media (max-width: 480px) {
+  .track-item { padding: 12px; gap: 10px; }
+  .track-cover { width: 44px; height: 44px; }
+  .track-duration { display: none; }
+  .track-actions { gap: 4px; }
+  .track-download-btn, .track-info-btn { width: 32px; height: 32px; }
+  .track-description-preview { font-size: 0.75rem; }
+  .track-read-more { font-size: 0.7rem; }
+}
 @media (max-width: 380px) {
   .hero-title { font-size: 1.6rem; }
   .card-number { font-size: 1.1rem; letter-spacing: 2px; }
@@ -509,12 +592,11 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 <div class="modal-overlay" id="licenseModal">
   <div class="modal-content">
     <button class="btn-text" id="licenseCloseBtn" onclick="closeLicenseModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
-    <div class="modal-header"> СОГЛАШЕНИЕ</div>
+    <div class="modal-header">📜 СОГЛАШЕНИЕ</div>
     <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7;margin-bottom:20px;max-height:55vh;overflow-y:auto;padding-right:8px;">
-      
       <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">🎵 1. Авторство и концепция</h4>
       <p style="margin-bottom:8px;">Все идеи и концепции принадлежат полностью автору. Тексты песен создаются автором при вспомогательном участии искусственного интеллекта, доля которого варьируется в зависимости от конкретного произведения — от ≈20% (подбор рифм, синонимов, шлифовка отдельных строк) до ≈50% (совместная проработка отдельных фрагментов). При этом автор осуществляет общее творческое руководство, отбор, редактуру и финальное утверждение текста. Вокал и аранжировка генерируются AI на основе авторских указаний. Правообладателем всего контента является автор проекта EVGENII AI.</p>
-      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;"> Правовая основа: ГК РФ ст. 1228, 1229, 1255, 1259.</div>
+      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">⚖️ Правовая основа: ГК РФ ст. 1228, 1229, 1255, 1259.</div>
 
       <h4 style="color:var(--success);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">✅ 2. Разрешено</h4>
       <ul style="margin-bottom:8px;padding-left:20px;">
@@ -523,9 +605,9 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
         <li style="margin-bottom:4px;">Делиться ссылками на треки в соцсетях</li>
         <li style="margin-bottom:4px;">Участие в обсуждениях и сообществах</li>
       </ul>
-      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;"> Правовая основа: ГК РФ ст. 1273.</div>
+      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">⚖️ Правовая основа: ГК РФ ст. 1273.</div>
 
-      <h4 style="color:var(--error);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;"> 3. Запрещено</h4>
+      <h4 style="color:var(--error);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">🚫 3. Запрещено</h4>
       <ul style="margin-bottom:8px;padding-left:20px;">
         <li style="margin-bottom:4px;">Коммерческое использование без письменного разрешения</li>
         <li style="margin-bottom:4px;">Загрузка на стриминговые платформы от своего имени</li>
@@ -534,7 +616,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
       </ul>
       <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">📌 Правовая основа: ГК РФ ст. 1270, 1301, КоАП РФ ст. 7.12, УК РФ ст. 146.</div>
 
-      <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">️ 4. Ответственность</h4>
+      <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">⚠️ 4. Ответственность</h4>
       <p style="margin-bottom:8px;">Проект EVGENII AI носит исключительно развлекательный характер и является некоммерческим творческим проектом. Весь контент предоставляется «как есть», без каких-либо гарантий. Автор и правообладатель не несёт ответственности за возможные проблемы, убытки или последствия, возникшие в результате использования сайта, прослушивания контента или взаимодействия с сервисами проекта, за исключением случаев, прямо предусмотренных действующим законодательством.</p>
       <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">📌 Правовая основа: ГК РФ ст. 15, 401.</div>
 
@@ -679,6 +761,8 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
         <input type="text" id="adminTrackFile" class="form-input" placeholder="Путь к файлу (MP3) *">
         <input type="text" id="adminTrackDuration" class="form-input" placeholder="Длительность (например: 3:45) *">
         <input type="text" id="adminTrackCover" class="form-input" placeholder="Путь к обложке (URL)">
+        <textarea id="adminTrackDescription" class="form-textarea" placeholder="Краткое описание или история создания трека..." style="min-height: 80px;"></textarea>
+        
         <button class="btn-primary" id="submitTrackBtn" onclick="addNewRelease()">🚀 ОПУБЛИКОВАТЬ</button>
         <button class="btn-ghost" id="cancelEditBtn" onclick="cancelEditTrack()" style="display:none;width:100%;">❌ ОТМЕНИТЬ РЕДАКТИРОВАНИЕ</button>
         <div class="form-status" id="adminTrackStatus"></div>
@@ -870,6 +954,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 <!-- Download Modal -->
 <div class="modal-overlay" id="downloadModal">
   <div class="modal-content" style="text-align:center;">
+    <button class="btn-text" onclick="closeDownloadModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
     <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
     <div class="glass-panel" style="padding:24px;margin-bottom:20px;">
       <div id="modalCover" style="width:120px;height:120px;border-radius:16px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden;">🎵</div>
@@ -882,7 +967,23 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
       Скачивание происходит не сразу. Пожалуйста, подождите несколько секунд.
     </div>
     <button class="btn-primary" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
-    <button class="btn-ghost" onclick="closeDownloadModal()" style="width:100%;margin-top:12px;">Отмена</button>
+  </div>
+</div>
+
+<!-- Track Info Modal -->
+<div class="modal-overlay" id="trackInfoModal">
+  <div class="modal-content">
+    <button class="btn-text" onclick="closeTrackInfoModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
+    <div class="modal-header">ИСТОРИЯ СОЗДАНИЯ</div>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+      <div id="modalInfoCover" style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);display:flex;align-items:center;justify-content:center;font-size:1.5rem;overflow:hidden;flex-shrink:0;">🎵</div>
+      <div>
+        <div id="modalInfoTitle" style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">Название</div>
+        <div id="modalInfoArtist" style="font-family:'Orbitron';font-size:0.75rem;color:var(--text-secondary);letter-spacing:1px;">EVGENII AI</div>
+      </div>
+    </div>
+    <div id="modalInfoDesc" style="color:var(--text-secondary);line-height:1.7;font-size:0.95rem;white-space:pre-wrap;background:rgba(255,255,255,0.03);padding:16px;border-radius:12px;border:1px solid var(--glass-border);min-height:80px;"></div>
+    <button class="btn-primary" style="margin-top:24px;" onclick="closeTrackInfoModal()">ЗАКРЫТЬ</button>
   </div>
 </div>
 
@@ -954,10 +1055,8 @@ function closeLicenseModal() {
   document.body.style.overflow = ''; 
 }
 
-// ✅ ИСПРАВЛЕННАЯ ФУНКЦИЯ — теперь галочка работает!
 function toggleLicenseCheckbox() {
   licenseCheckboxChecked = !licenseCheckboxChecked;
-  
   var wrapper = document.getElementById('licenseCheckboxWrapper');
   var checkbox = document.getElementById('licenseCheckbox');
   var icon = document.getElementById('licenseCheckIcon');
@@ -1089,13 +1188,14 @@ function addNewRelease() {
     var file = document.getElementById('adminTrackFile').value.trim();
     var duration = document.getElementById('adminTrackDuration').value.trim();
     var cover = document.getElementById('adminTrackCover').value.trim();
+    var description = document.getElementById('adminTrackDescription').value.trim();
     var status = document.getElementById('adminTrackStatus');
 
     if (!title || !file || !duration) { status.textContent = '⚠️ Заполните название, путь к файлу и длительность!'; status.className = 'form-status error'; return; }
     status.textContent = '⏳ Добавление...'; status.className = 'form-status';
 
     db.collection('tracks').add({
-        title: title, subtitle: subtitle || 'EVGENII AI', file: file, duration: duration, cover: cover,
+        title: title, subtitle: subtitle || 'EVGENII AI', file: file, duration: duration, cover: cover, description: description,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     }).then(function() {
         status.textContent = '✅ Новый релиз успешно добавлен!'; status.className = 'form-status success';
@@ -1112,6 +1212,7 @@ function editTrack(trackId) {
     document.getElementById('adminTrackFile').value = track.file || '';
     document.getElementById('adminTrackDuration').value = track.duration || '';
     document.getElementById('adminTrackCover').value = track.cover || '';
+    document.getElementById('adminTrackDescription').value = track.description || '';
 
     var submitBtn = document.getElementById('submitTrackBtn');
     submitBtn.textContent = '💾 СОХРАНИТЬ ИЗМЕНЕНИЯ';
@@ -1129,6 +1230,7 @@ function cancelEditTrack() {
     document.getElementById('adminTrackFile').value = '';
     document.getElementById('adminTrackDuration').value = '';
     document.getElementById('adminTrackCover').value = '';
+    document.getElementById('adminTrackDescription').value = '';
     var submitBtn = document.getElementById('submitTrackBtn');
     submitBtn.textContent = '🚀 ОПУБЛИКОВАТЬ';
     submitBtn.onclick = addNewRelease;
@@ -1142,13 +1244,14 @@ function updateTrack(trackId) {
     var file = document.getElementById('adminTrackFile').value.trim();
     var duration = document.getElementById('adminTrackDuration').value.trim();
     var cover = document.getElementById('adminTrackCover').value.trim();
+    var description = document.getElementById('adminTrackDescription').value.trim();
     var status = document.getElementById('adminTrackStatus');
 
-    if (!title || !file || !duration) { status.textContent = '️ Заполните обязательные поля!'; status.className = 'form-status error'; return; }
+    if (!title || !file || !duration) { status.textContent = '⚠️ Заполните обязательные поля!'; status.className = 'form-status error'; return; }
     status.textContent = '⏳ Сохранение...'; status.className = 'form-status';
 
     db.collection('tracks').doc(trackId).update({
-        title: title, subtitle: subtitle || 'EVGENII AI', file: file, duration: duration, cover: cover
+        title: title, subtitle: subtitle || 'EVGENII AI', file: file, duration: duration, cover: cover, description: description
     }).then(function() {
         status.textContent = '✅ Трек успешно обновлен!'; status.className = 'form-status success';
         cancelEditTrack();
@@ -1166,8 +1269,9 @@ function renderAdminTracksList() {
     if (tracksData.length === 0) { list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:20px;">Треков пока нет</div>'; return; }
     list.innerHTML = tracksData.map(function(track, index) {
         var isNew = index === 0 ? '<span style="color:var(--accent-cyan);font-size:0.7rem;margin-left:8px;">[NEW]</span>' : '';
+        var hasDesc = track.description ? ' <span style="color:var(--accent-gold);font-size:0.7rem;">📝</span>' : '';
         return '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(0,0,0,0.2);border-radius:8px;border:1px solid var(--glass-border);">' +
-            '<div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:0.9rem;">' + escapeHtml(track.title) + isNew + '</div>' +
+            '<div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:0.9rem;">' + escapeHtml(track.title) + isNew + hasDesc + '</div>' +
             '<div style="font-size:0.75rem;color:var(--text-secondary);">' + escapeHtml(track.file) + '</div></div>' +
             '<div style="display:flex;gap:5px;">' +
             '<button class="btn-ghost" style="padding:6px 10px;font-size:0.75rem;" onclick="editTrack(\'' + track.id + '\')">✏️</button>' +
@@ -1195,6 +1299,23 @@ function renderNewRelease() {
     }
 }
 
+// === НОВОЕ: Функция для получения превью описания ===
+function getDescriptionPreview(text, maxLength) {
+  if (!text) return { preview: '', isLong: false };
+  // Убираем лишние переносы строк для превью
+  var cleanText = text.replace(/\s+/g, ' ').trim();
+  if (cleanText.length <= maxLength) {
+    return { preview: cleanText, isLong: false };
+  }
+  // Обрезаем по последнему пробелу, чтобы не рвать слова
+  var cut = cleanText.substring(0, maxLength);
+  var lastSpace = cut.lastIndexOf(' ');
+  if (lastSpace > maxLength * 0.6) {
+    cut = cut.substring(0, lastSpace);
+  }
+  return { preview: cut + '...', isLong: true };
+}
+
 function renderAllTracksList() {
     var list = document.getElementById('allTracksList');
     if (!list) return;
@@ -1204,13 +1325,32 @@ function renderAllTracksList() {
         el.className = 'track-item glass-panel';
         el.dataset.id = track.id;
         var coverHtml = track.cover ? '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">' : '🎵';
+        
+        // НОВОЕ: Формируем превью описания
+        var descPreview = getDescriptionPreview(track.description, 80);
+        var descHtml = '';
+        if (descPreview.preview) {
+          descHtml = '<div class="track-description-preview">' + escapeHtml(descPreview.preview) + '</div>';
+          if (descPreview.isLong) {
+            descHtml += '<div class="track-read-more" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[' + index + '])">Читать далее <span class="info-icon">ℹ️</span> тут</div>';
+          }
+        }
+        
         el.innerHTML = '<div class="track-cover" onclick="playTrack(tracksData[' + index + '],' + index + ')">' + coverHtml + '</div>' +
-            '<div class="track-info" onclick="playTrack(tracksData[' + index + '],' + index + ')">' +
-            '<div class="track-title">' + escapeHtml(track.title) + '</div>' +
-            '<div class="track-artist">' + escapeHtml(track.subtitle || 'EVGENII AI') + '</div></div>' +
+            '<div class="track-info-wrapper">' +
+              '<div class="track-info" onclick="playTrack(tracksData[' + index + '],' + index + ')">' +
+                '<div class="track-title">' + escapeHtml(track.title) + '</div>' +
+                '<div class="track-artist">' + escapeHtml(track.subtitle || 'EVGENII AI') + '</div>' +
+              '</div>' +
+              descHtml +
+            '</div>' +
             '<div class="track-duration">' + track.duration + '</div>' +
-            '<button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(tracksData[' + index + '])">' +
-            '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>';
+            '<div class="track-actions">' +
+              '<button class="track-info-btn" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[' + index + '])" title="Полная история трека">ℹ️</button>' +
+              '<button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(tracksData[' + index + '])">' +
+                '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>' +
+              '</button>' +
+            '</div>';
         list.appendChild(el);
     });
 }
@@ -1245,7 +1385,11 @@ function playTrack(track, index) {
   var ae = document.querySelector('.track-item[data-id="' + track.id + '"]');
   if (ae) ae.classList.add('active');
   audio.src = track.file;
-  audio.play().then(function() { setPlayingState(true); updateAttachLabel(); updateMediaSession(); }).catch(function() { startSimulation(); updateAttachLabel(); });
+  audio.play().then(function() { setPlayingState(true); updateAttachLabel(); updateMediaSession(); }).catch(function(error) { 
+    console.error("Ошибка аудио:", error);
+    alert("⚠️ Не удалось воспроизвести трек!\n\nПричина: " + error.message + "\n\nПроверьте, что ссылка на файл является ПРЯМОЙ ссылкой на .mp3");
+    setPlayingState(false);
+  });
 }
 
 function playNewRelease() { if (tracksData.length > 0) playTrack(tracksData[0], 0); }
@@ -1253,7 +1397,11 @@ function playNewRelease() { if (tracksData.length > 0) playTrack(tracksData[0], 
 function togglePlay() {
   if (!currentTrack) return;
   if (isPlaying) { audio.pause(); clearInterval(simulationInterval); setPlayingState(false); } 
-  else { audio.play().catch(function() { startSimulation(); }); setPlayingState(true); }
+  else { audio.play().catch(function(error) { 
+      console.error("Ошибка аудио:", error);
+      alert("⚠️ Не удалось воспроизвести трек!\n\nПричина: " + error.message);
+      setPlayingState(false);
+  }); setPlayingState(true); }
 }
 
 function setPlayingState(state) {
@@ -1336,6 +1484,25 @@ function startDownload() {
 }
 document.getElementById('downloadModal').addEventListener('click', function(e) { if (e.target === this) closeDownloadModal(); });
 
+// === TRACK INFO MODAL ===
+function openTrackInfoModal(track) {
+  var mc = document.getElementById('modalInfoCover');
+  if (track.cover) { mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; } else { mc.textContent = '🎵'; }
+  document.getElementById('modalInfoTitle').textContent = track.title;
+  document.getElementById('modalInfoArtist').textContent = track.subtitle || 'EVGENII AI';
+  
+  var desc = track.description ? escapeHtml(track.description) : 'Описание или история создания этого трека пока не добавлены.';
+  document.getElementById('modalInfoDesc').textContent = desc;
+  
+  document.getElementById('trackInfoModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeTrackInfoModal() { 
+  document.getElementById('trackInfoModal').classList.remove('active'); 
+  document.body.style.overflow = ''; 
+}
+document.getElementById('trackInfoModal').addEventListener('click', function(e) { if (e.target === this) closeTrackInfoModal(); });
+
 // === DISCUSSIONS ===
 var discussionsUnsubscribe = null;
 var discussionsData = [];
@@ -1414,7 +1581,7 @@ function adminLogin() {
     })
     .catch(function(error) {
       var msg = '❌ Ошибка входа';
-      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') msg = ' Неверный email или пароль';
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') msg = 'Неверный email или пароль';
       status.textContent = msg; status.className = 'form-status error';
     });
 }
@@ -1498,7 +1665,7 @@ if (contactForm) {
     var formData = new FormData(this);
     var name = formData.get('name'); var contact = formData.get('contact'); var messageText = formData.get('message');
     formSubmitBtn.disabled = true; formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>'; formStatus.textContent = ''; formStatus.className = 'form-status';
-    var message = ' <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n👤 <b>Имя:</b> ' + name + '\n📧 <b>Контакт:</b> ' + contact + '\n💬 <b>Сообщение:</b>\n' + messageText + '\n⏰ <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
+    var message = '📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n👤 <b>Имя:</b> ' + name + '\n📧 <b>Контакт:</b> ' + contact + '\n💬 <b>Сообщение:</b>\n' + messageText + '\n⏰ <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
     var telegramURL = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
     fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) })
     .then(function(response) { return response.json(); })
