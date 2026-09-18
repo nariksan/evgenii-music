@@ -192,7 +192,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 .login-input:focus { border-color: var(--accent-cyan); box-shadow: 0 0 20px rgba(0, 240, 255, 0.15); }
 .login-input::placeholder { color: var(--text-secondary); }
 
-/* === ШАПКА С КРАСИВЫМ ПРИВЕТСТВИЕМ === */
 .main-header {
   display: flex; justify-content: space-between; align-items: center;
   padding: 16px 20px; margin-bottom: 24px; position: sticky; top: 10px; z-index: 50;
@@ -227,7 +226,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   letter-spacing: 1px;
 }
 
-/* === БАННЕР === */
 .hero-banner {
   position: relative;
   padding: 48px 32px;
@@ -263,7 +261,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   z-index: 1;
 }
 
-/* === ЖИВОЙ ТЕКСТ — ИСПРАВЛЕННЫЙ ПЕРЕНОС === */
 .hero-slogan {
   color: var(--text-secondary);
   font-size: 1.05rem;
@@ -321,7 +318,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   transform: translateY(0);
 }
 
-/* На мобильных разрешаем перенос, но ключевые фразы остаются вместе */
 @media (max-width: 600px) {
   .hero-slogan .live-text {
     white-space: normal;
@@ -330,6 +326,128 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     font-size: 0.95rem;
     line-height: 1.6;
   }
+}
+
+/* === РЕЛИЗЫ ОТ ПОДПИСЧИКОВ === */
+.subscriber-releases {
+  margin-bottom: 40px;
+}
+
+.subscriber-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .subscriber-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+.subscriber-card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.subscriber-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-magenta));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.subscriber-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-gold);
+  box-shadow: 0 8px 24px rgba(255, 204, 0, 0.15);
+}
+
+.subscriber-card:hover::before {
+  opacity: 1;
+}
+
+.subscriber-card-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-align: center;
+  border: 1px dashed var(--glass-border);
+  border-radius: var(--radius-md);
+}
+
+.subscriber-cover {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #1a1a2e, #2a1a3a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  position: relative;
+}
+
+.subscriber-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.subscriber-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: linear-gradient(135deg, var(--accent-gold), #ff9500);
+  color: #000;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+}
+
+.subscriber-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subscriber-artist {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.subscriber-desc {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .bento-grid {
@@ -664,6 +782,19 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 }
 .track-item:hover::before { opacity: 1; }
 
+.track-item.subscriber-track {
+  border-left: 3px solid var(--accent-gold);
+  background: rgba(255, 204, 0, 0.03);
+}
+
+.track-item.subscriber-track::before {
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+
+.track-item.subscriber-track:hover {
+  background: rgba(255, 204, 0, 0.08);
+}
+
 .track-item.active {
   border-color: var(--accent-cyan);
   background: rgba(0, 240, 255, 0.05);
@@ -681,6 +812,19 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 .track-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .track-title { font-size: 1rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .track-artist { font-size: 0.8rem; color: var(--text-secondary); }
+
+.track-subscriber-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, var(--accent-gold), #ff9500);
+  color: #000;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+  width: fit-content;
+}
 
 .track-description-preview {
   font-size: 0.8rem;
@@ -857,13 +1001,26 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 
 .form-group { margin-bottom: 16px; }
 .form-label { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
-.form-input, .form-textarea {
+.form-input, .form-textarea, .form-select {
   width: 100%; padding: 14px 16px; border: 1px solid var(--glass-border); border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.03); color: var(--text-primary); font-family: 'Inter'; font-size: 0.95rem;
   outline: none; transition: all 0.3s;
 }
-.form-input:focus, .form-textarea:focus { border-color: var(--accent-cyan); }
+.form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--accent-cyan); }
 .form-textarea { min-height: 120px; resize: vertical; }
+.form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+.form-select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
 .form-status { margin-top: 12px; text-align: center; font-size: 0.85rem; min-height: 20px; }
 .form-status.success { color: var(--success); }
 .form-status.error { color: var(--error); }
@@ -911,7 +1068,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   <div class="maintenance-icon">🔧</div>
   <div class="maintenance-title">ТЕХНИЧЕСКИЕ РАБОТЫ</div>
   <div class="maintenance-subtitle">Извините, сайт временно недоступен.<br>Мы работаем над улучшением.<br><br><strong style="color:var(--accent-gold)">Скоро всё заработает!</strong></div>
-  <button class="btn-text" onclick="showMaintenanceAdminModal()" style="font-size: 1.5rem; opacity: 0.3;">️</button>
+  <button class="btn-text" onclick="showMaintenanceAdminModal()" style="font-size: 1.5rem; opacity: 0.3;">⚙️</button>
 </div>
 
 <div class="modal-overlay" id="maintenanceAdminModal">
@@ -939,7 +1096,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <button class="btn-text" id="licenseCloseBtn" onclick="closeLicenseModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
     <div class="modal-header">📜 СОГЛАШЕНИЕ</div>
     <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7;margin-bottom:20px;max-height:55vh;overflow-y:auto;padding-right:8px;">
-      <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">🎵 1. Авторство и концепция</h4>
+      <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;"> 1. Авторство и концепция</h4>
       <p style="margin-bottom:8px;">Все идеи и концепции принадлежат полностью автору. Тексты песен создаются автором при вспомогательном участии искусственного интеллекта. Правообладателем всего контента является автор проекта EVGENII AI.</p>
       <h4 style="color:var(--success);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">✅ 2. Разрешено</h4>
       <ul style="margin-bottom:8px;padding-left:20px;">
@@ -987,7 +1144,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     </div>
   </header>
 
-  <!-- БАННЕР: ЛОГОТИП + МЕНЯЮЩИЙСЯ ТЕКСТ -->
   <div class="hero-banner glass-panel">
     <h1 class="hero-title">EVGENII<span class="ai-badge">AI</span></h1>
     <p class="hero-slogan" id="heroSlogan">
@@ -1017,12 +1173,21 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
               <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
               СЛУШАТЬ СЕЙЧАС
             </button>
-            <button class="btn-hero-secondary" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[0])">
+            <button class="btn-hero-secondary" onclick="event.stopPropagation(); openTrackInfoModalById('main')">
               ℹ️ История создания
             </button>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- РЕЛИЗЫ ОТ ПОДПИСЧИКОВ -->
+  <section class="section subscriber-releases">
+    <h2 class="section-title"> РЕЛИЗЫ ОТ ПОДПИСЧИКОВ</h2>
+    <div class="subscriber-grid" id="subscriberGrid">
+      <div class="subscriber-card-empty">Загрузка...</div>
+      <div class="subscriber-card-empty">Загрузка...</div>
     </div>
   </section>
 
@@ -1066,7 +1231,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 
   <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:40px;">
     <button class="btn-ghost danger" id="logoutBtn">ВЫЙТИ</button>
-    <button class="btn-text" onclick="showAdminLogin()" style="margin-top:8px;">⚙️ Админ</button>
+    <button class="btn-text" onclick="showAdminLogin()" style="margin-top:8px;">️ Админ</button>
   </div>
 </div>
 
@@ -1096,7 +1261,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
       <h3 style="color:var(--accent-gold);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;">🔧 ТЕХНИЧЕСКИЕ РАБОТЫ</h3>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;background:rgba(0,0,0,0.2);border-radius:12px;border:1px solid var(--glass-border);">
         <div>
-          <div style="font-weight:600;font-size:0.95rem;"> Для всего сайта</div>
+          <div style="font-weight:600;font-size:0.95rem;">🌐 Для всего сайта</div>
           <div style="font-size:0.8rem;color:var(--text-secondary);">Закрыть сайт для пользователей</div>
         </div>
         <div class="glass-panel" id="siteMaintenanceSwitch" onclick="toggleSiteMaintenance()" style="width:50px;height:28px;border-radius:14px;position:relative;cursor:pointer;transition:all 0.3s;background:rgba(255,255,255,0.1);">
@@ -1114,6 +1279,16 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
         <input type="text" id="adminTrackDuration" class="form-input" placeholder="Длительность (например: 3:45) *">
         <input type="text" id="adminTrackCover" class="form-input" placeholder="Путь к обложке (URL)">
         <textarea id="adminTrackDescription" class="form-textarea" placeholder="Краткое описание или история создания трека..." style="min-height: 80px;"></textarea>
+        
+        <!-- Выбор типа релиза -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label">Тип релиза *</label>
+          <select id="adminTrackType" class="form-select">
+            <option value="main">🎵 Основной проект EVGENII AI</option>
+            <option value="subscriber">👥 Релиз от подписчика</option>
+          </select>
+        </div>
+        
         <button class="btn-primary" id="submitTrackBtn" onclick="addNewRelease()">🚀 ОПУБЛИКОВАТЬ</button>
         <button class="btn-ghost" id="cancelEditBtn" onclick="cancelEditTrack()" style="display:none;width:100%;">❌ ОТМЕНИТЬ РЕДАКТИРОВАНИЕ</button>
         <div class="form-status" id="adminTrackStatus"></div>
@@ -1207,7 +1382,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <div class="header-brand">ПОДДЕРЖАТЬ</div>
   </header>
   <div style="text-align:center;margin-bottom:24px;color:var(--text-secondary);font-size:0.95rem;">
-    <div style="font-size:2.5rem;margin-bottom:12px;animation:float 2s ease-in-out infinite;"></div>
+    <div style="font-size:2.5rem;margin-bottom:12px;animation:float 2s ease-in-out infinite;">💜</div>
     <p>Твоя поддержка помогает создавать новую музыку. Каждая чашка кофе — это новый трек.</p>
   </div>
   <div class="yandex-pay-card" onclick="copyCardNumber()">
@@ -1258,7 +1433,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <div class="discussion-input-area">
       <label style="font-size:0.75rem;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;gap:6px;margin-bottom:8px;width:100%;">
         <input type="checkbox" id="discussionAttachToggle" style="accent-color:var(--accent-cyan);">
-        <span id="discussionAttachText">🎵 Сначала включи любой трек</span>
+        <span id="discussionAttachText"> Сначала включи любой трек</span>
       </label>
       <div style="display:flex;gap:10px;width:100%;">
         <textarea class="discussion-input" id="discussionInput" placeholder="Написать в чат..." maxlength="500" rows="1"></textarea>
@@ -1302,7 +1477,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 <!-- Download Modal -->
 <div class="modal-overlay" id="downloadModal">
   <div class="modal-content" style="text-align:center;">
-    <button class="btn-text" onclick="closeDownloadModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
+    <button class="btn-text" onclick="closeDownloadModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;"></button>
     <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
     <div class="glass-panel" style="padding:24px;margin-bottom:20px;">
       <div id="modalCover" style="width:120px;height:120px;border-radius:16px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden;"></div>
@@ -1311,7 +1486,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
       <div id="modalDuration" style="font-family:'Orbitron';color:var(--accent-cyan);">0:00</div>
     </div>
     <div style="background:rgba(255,51,102,0.08);border:1px solid rgba(255,51,102,0.2);border-radius:12px;padding:16px;margin-bottom:20px;text-align:left;font-size:0.85rem;color:var(--text-secondary);">
-      <strong style="color:var(--error);display:block;margin-bottom:4px;">⚠ Внимание!</strong>
+      <strong style="color:var(--error);display:block;margin-bottom:4px;"> Внимание!</strong>
       Скачивание происходит не сразу. Пожалуйста, подождите несколько секунд.
     </div>
     <button class="btn-primary" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
@@ -1324,7 +1499,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <button class="btn-text" onclick="closeTrackInfoModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
     <div class="modal-header">ИСТОРИЯ СОЗДАНИЯ</div>
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
-      <div id="modalInfoCover" style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);display:flex;align-items:center;justify-content:center;font-size:1.5rem;overflow:hidden;flex-shrink:0;">🎵</div>
+      <div id="modalInfoCover" style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);display:flex;align-items:center;justify-content:center;font-size:1.5rem;overflow:hidden;flex-shrink:0;"></div>
       <div>
         <div id="modalInfoTitle" style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">Название</div>
         <div id="modalInfoArtist" style="font-family:'Orbitron';font-size:0.75rem;color:var(--text-secondary);letter-spacing:1px;">EVGENII AI</div>
@@ -1365,8 +1540,7 @@ var isAdminLoggedIn = false;
 var licenseForceMode = false;
 var licenseCheckboxChecked = false;
 
-// === ЖИВОЙ ТЕКСТ В БАННЕРЕ (БЕЗ ПРИВЕТСТВИЯ) ===
-// Используется &nbsp; внутри highlight-частей, чтобы они не разрывались
+// === ЖИВОЙ ТЕКСТ В БАННЕРЕ ===
 var livePhrases = [
   'Где заканчиваюсь я — и начинается <span class="highlight">ИИ</span>',
   'Сегодня премьера — <span class="highlight-gold">не&nbsp;пропусти</span> ↓',
@@ -1571,12 +1745,28 @@ document.getElementById('maintenanceAdminModal').addEventListener('click', funct
 var tracksData = [];
 var currentEditingTrackId = null;
 
+// Вспомогательная функция: найти трек по ID
+function findTrackById(id) {
+  return tracksData.find(function(t) { return t.id === id; });
+}
+
+// Вспомогательная функция: найти индекс трека в массиве
+function findTrackIndex(id) {
+  return tracksData.findIndex(function(t) { return t.id === id; });
+}
+
 function loadTracksFromFirestore() {
     if (!db) return;
     db.collection('tracks').orderBy('createdAt', 'desc').onSnapshot(function(snapshot) {
         tracksData = [];
-        snapshot.forEach(function(doc) { tracksData.push({ id: doc.id, ...doc.data() }); });
+        snapshot.forEach(function(doc) { 
+          var data = doc.data();
+          // Если тип не указан (старые треки), считаем основным
+          if (!data.type) data.type = 'main';
+          tracksData.push({ id: doc.id, ...data }); 
+        });
         renderNewRelease();
+        renderSubscriberReleases();
         renderAllTracksList();
         renderAdminTracksList();
         updateAttachLabel();
@@ -1590,23 +1780,40 @@ function addNewRelease() {
     var duration = document.getElementById('adminTrackDuration').value.trim();
     var cover = document.getElementById('adminTrackCover').value.trim();
     var description = document.getElementById('adminTrackDescription').value.trim();
+    var type = document.getElementById('adminTrackType').value;
     var status = document.getElementById('adminTrackStatus');
 
-    if (!title || !file || !duration) { status.textContent = '⚠️ Заполните название, путь к файлу и длительность!'; status.className = 'form-status error'; return; }
-    status.textContent = '⏳ Добавление...'; status.className = 'form-status';
+    if (!title || !file || !duration) { 
+      status.textContent = '⚠️ Заполните название, путь к файлу и длительность!'; 
+      status.className = 'form-status error'; 
+      return; 
+    }
+    status.textContent = '⏳ Добавление...'; 
+    status.className = 'form-status';
 
     db.collection('tracks').add({
-        title: title, subtitle: subtitle || 'EVGENII AI', file: file, duration: duration, cover: cover, description: description,
+        title: title, 
+        subtitle: subtitle || 'EVGENII AI', 
+        file: file, 
+        duration: duration, 
+        cover: cover, 
+        description: description,
+        type: type,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     }).then(function() {
-        status.textContent = '✅ Новый релиз успешно добавлен!'; status.className = 'form-status success';
+        status.textContent = '✅ Новый релиз успешно добавлен!'; 
+        status.className = 'form-status success';
         cancelEditTrack();
-    }).catch(function(error) { status.textContent = '❌ Ошибка: ' + error.message; status.className = 'form-status error'; });
+    }).catch(function(error) { 
+      status.textContent = '❌ Ошибка: ' + error.message; 
+      status.className = 'form-status error'; 
+    });
 }
 
 function editTrack(trackId) {
-    var track = tracksData.find(t => t.id === trackId);
+    var track = findTrackById(trackId);
     if (!track) return;
+    
     currentEditingTrackId = trackId;
     document.getElementById('adminTrackTitle').value = track.title || '';
     document.getElementById('adminTrackSubtitle').value = track.subtitle === 'EVGENII AI' ? '' : (track.subtitle || '');
@@ -1614,14 +1821,18 @@ function editTrack(trackId) {
     document.getElementById('adminTrackDuration').value = track.duration || '';
     document.getElementById('adminTrackCover').value = track.cover || '';
     document.getElementById('adminTrackDescription').value = track.description || '';
+    document.getElementById('adminTrackType').value = track.type || 'main';
 
     var submitBtn = document.getElementById('submitTrackBtn');
     submitBtn.textContent = '💾 СОХРАНИТЬ ИЗМЕНЕНИЯ';
     submitBtn.onclick = function() { updateTrack(trackId); };
     document.getElementById('cancelEditBtn').style.display = 'block';
     document.getElementById('adminTrackTitle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
     var status = document.getElementById('adminTrackStatus');
-    status.textContent = '✏️ Режим редактирования: ' + track.title; status.className = 'form-status';
+    var typeLabel = track.type === 'subscriber' ? ' (от подписчика)' : ' (основной)';
+    status.textContent = '✏️ Режим редактирования: ' + track.title + typeLabel; 
+    status.className = 'form-status';
 }
 
 function cancelEditTrack() {
@@ -1632,6 +1843,8 @@ function cancelEditTrack() {
     document.getElementById('adminTrackDuration').value = '';
     document.getElementById('adminTrackCover').value = '';
     document.getElementById('adminTrackDescription').value = '';
+    document.getElementById('adminTrackType').value = 'main';
+    
     var submitBtn = document.getElementById('submitTrackBtn');
     submitBtn.textContent = '🚀 ОПУБЛИКОВАТЬ';
     submitBtn.onclick = addNewRelease;
@@ -1646,34 +1859,76 @@ function updateTrack(trackId) {
     var duration = document.getElementById('adminTrackDuration').value.trim();
     var cover = document.getElementById('adminTrackCover').value.trim();
     var description = document.getElementById('adminTrackDescription').value.trim();
+    var type = document.getElementById('adminTrackType').value;
     var status = document.getElementById('adminTrackStatus');
 
-    if (!title || !file || !duration) { status.textContent = '⚠️ Заполните обязательные поля!'; status.className = 'form-status error'; return; }
-    status.textContent = '⏳ Сохранение...'; status.className = 'form-status';
+    if (!title || !file || !duration) { 
+      status.textContent = '⚠️ Заполните обязательные поля!'; 
+      status.className = 'form-status error'; 
+      return; 
+    }
+    status.textContent = '⏳ Сохранение...'; 
+    status.className = 'form-status';
 
     db.collection('tracks').doc(trackId).update({
-        title: title, subtitle: subtitle || 'EVGENII AI', file: file, duration: duration, cover: cover, description: description
+        title: title, 
+        subtitle: subtitle || 'EVGENII AI', 
+        file: file, 
+        duration: duration, 
+        cover: cover, 
+        description: description,
+        type: type
     }).then(function() {
-        status.textContent = '✅ Трек успешно обновлен!'; status.className = 'form-status success';
+        status.textContent = '✅ Трек успешно обновлен!'; 
+        status.className = 'form-status success';
         cancelEditTrack();
-    }).catch(function(error) { status.textContent = '❌ Ошибка: ' + error.message; status.className = 'form-status error'; });
+    }).catch(function(error) { 
+      status.textContent = '❌ Ошибка: ' + error.message; 
+      status.className = 'form-status error'; 
+    });
 }
 
 function deleteTrack(trackId) {
-    if (!confirm('Вы уверены, что хотите удалить этот трек?')) return;
-    db.collection('tracks').doc(trackId).delete().then(function() { alert('Трек удален'); }).catch(function(error) { alert('Ошибка: ' + error.message); });
+    var track = findTrackById(trackId);
+    if (!track) return;
+    
+    var typeLabel = track.type === 'subscriber' ? 'от подписчика' : 'основной';
+    if (!confirm('Вы уверены, что хотите удалить трек "' + track.title + '" (' + typeLabel + ')?\n\nЭто действие нельзя отменить.')) return;
+    
+    db.collection('tracks').doc(trackId).delete()
+      .then(function() { 
+        alert('✅ Трек "' + track.title + '" удалён'); 
+      })
+      .catch(function(error) { 
+        alert('❌ Ошибка: ' + error.message); 
+      });
 }
 
 function renderAdminTracksList() {
     var list = document.getElementById('adminTracksList');
     if (!list) return;
-    if (tracksData.length === 0) { list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:20px;">Треков пока нет</div>'; return; }
+    if (tracksData.length === 0) { 
+      list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:20px;">Треков пока нет</div>'; 
+      return; 
+    }
+    
     list.innerHTML = tracksData.map(function(track, index) {
         var isNew = index === 0 ? '<span style="color:var(--accent-cyan);font-size:0.7rem;margin-left:8px;">[NEW]</span>' : '';
         var hasDesc = track.description ? ' <span style="color:var(--accent-gold);font-size:0.7rem;">📝</span>' : '';
+        
+        // Бейдж типа трека
+        var typeBadge = '';
+        if (track.type === 'subscriber') {
+          typeBadge = ' <span style="color:var(--accent-gold);font-size:0.7rem;background:rgba(255,204,0,0.1);padding:2px 6px;border-radius:4px;">👥 ПОДПИСЧИК</span>';
+        } else {
+          typeBadge = ' <span style="color:var(--accent-cyan);font-size:0.7rem;background:rgba(0,240,255,0.1);padding:2px 6px;border-radius:4px;">🎵 ОСНОВНОЙ</span>';
+        }
+        
         return '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(0,0,0,0.2);border-radius:8px;border:1px solid var(--glass-border);">' +
-            '<div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:0.9rem;">' + escapeHtml(track.title) + isNew + hasDesc + '</div>' +
-            '<div style="font-size:0.75rem;color:var(--text-secondary);">' + escapeHtml(track.file) + '</div></div>' +
+            '<div style="flex:1;min-width:0;">' +
+              '<div style="font-weight:600;font-size:0.9rem;margin-bottom:4px;">' + escapeHtml(track.title) + isNew + typeBadge + hasDesc + '</div>' +
+              '<div style="font-size:0.75rem;color:var(--text-secondary);">' + escapeHtml(track.subtitle || 'EVGENII AI') + ' · ' + track.duration + '</div>' +
+            '</div>' +
             '<div style="display:flex;gap:5px;">' +
             '<button class="btn-ghost" style="padding:6px 10px;font-size:0.75rem;" onclick="editTrack(\'' + track.id + '\')">✏️</button>' +
             '<button class="btn-ghost danger" style="padding:6px 10px;font-size:0.75rem;" onclick="deleteTrack(\'' + track.id + '\')">🗑️</button>' +
@@ -1681,42 +1936,86 @@ function renderAdminTracksList() {
     }).join('');
 }
 
+// === НОВЫЙ РЕЛИЗ (только основной проект) ===
 function renderNewRelease() {
     var hero = document.getElementById('releaseHero');
     if (!hero) return;
     
-    if (tracksData.length === 0) {
+    // Фильтруем только основные релизы
+    var mainReleases = tracksData.filter(function(t) { return t.type !== 'subscriber'; });
+    
+    if (mainReleases.length === 0) {
         hero.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-secondary);"><div style="font-size:3rem;margin-bottom:16px;">🎵</div><div>Пока нет релизов</div></div>';
         return;
     }
     
-    var latestTrack = tracksData[0];
+    var latestTrack = mainReleases[0];
+    var trackIndex = findTrackIndex(latestTrack.id);
+    
     var coverHtml = latestTrack.cover 
-        ? '<img src="' + latestTrack.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<div class=\'release-hero-cover-placeholder\'>🎵</div>\';">'
+        ? '<img src="' + latestTrack.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<div class=\\\'release-hero-cover-placeholder\\\'>🎵</div>\';">'
         : '<div class="release-hero-cover-placeholder">🎵</div>';
     
     hero.innerHTML = 
-      '<div class="release-hero-content" onclick="playNewRelease()">' +
-        '<div class="release-hero-cover">' +
+      '<div class="release-hero-content">' +
+        '<div class="release-hero-cover" onclick="playTrackById(\'' + latestTrack.id + '\')">' +
           '<span class="release-hero-badge">NEW RELEASE</span>' +
           coverHtml +
         '</div>' +
         '<div class="release-hero-info">' +
           '<h2>★ ПРЕМЬЕРА</h2>' +
-          '<h1 class="release-hero-title">' + escapeHtml(latestTrack.title) + '</h1>' +
+          '<h1 class="release-hero-title" onclick="playTrackById(\'' + latestTrack.id + '\')">' + escapeHtml(latestTrack.title) + '</h1>' +
           '<div class="release-hero-artist">' + escapeHtml(latestTrack.subtitle || 'EVGENII AI') + ' · ' + latestTrack.duration + '</div>' +
           (latestTrack.description ? '<p class="release-hero-description">' + escapeHtml(latestTrack.description) + '</p>' : '') +
           '<div class="release-hero-actions">' +
-            '<button class="btn-hero-play" onclick="event.stopPropagation(); playNewRelease()">' +
+            '<button class="btn-hero-play" onclick="event.stopPropagation(); playTrackById(\'' + latestTrack.id + '\')">' +
               '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>' +
               'СЛУШАТЬ СЕЙЧАС' +
             '</button>' +
-            '<button class="btn-hero-secondary" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[0])">' +
+            '<button class="btn-hero-secondary" onclick="event.stopPropagation(); openTrackInfoModalById(\'' + latestTrack.id + '\')">' +
               'ℹ️ История создания' +
             '</button>' +
           '</div>' +
         '</div>' +
       '</div>';
+}
+
+// === РЕЛИЗЫ ОТ ПОДПИСЧИКОВ ===
+function renderSubscriberReleases() {
+    var grid = document.getElementById('subscriberGrid');
+    if (!grid) return;
+    
+    // Фильтруем только релизы от подписчиков (последние 2)
+    var subscriberReleases = tracksData.filter(function(t) { return t.type === 'subscriber'; }).slice(0, 2);
+    
+    if (subscriberReleases.length === 0) {
+        grid.innerHTML = '<div class="subscriber-card-empty">Пока нет релизов от подписчиков</div><div class="subscriber-card-empty">Будьте первым!</div>';
+        return;
+    }
+    
+    var html = '';
+    for (var i = 0; i < 2; i++) {
+        if (i < subscriberReleases.length) {
+            var track = subscriberReleases[i];
+            var coverHtml = track.cover 
+                ? '<img src="' + track.cover + '" onerror="this.parentElement.innerHTML=\'🎵\'">'
+                : '🎵';
+            
+            html += '<div class="subscriber-card" onclick="playTrackById(\'' + track.id + '\')">' +
+                '<div class="subscriber-cover">' +
+                    '<span class="subscriber-badge">SUB</span>' +
+                    coverHtml +
+                '</div>' +
+                '<div class="subscriber-title">' + escapeHtml(track.title) + '</div>' +
+                '<div class="subscriber-artist">' + escapeHtml(track.subtitle || 'EVGENII AI') + ' · ' + track.duration + '</div>' +
+                (track.description ? '<div class="subscriber-desc">' + escapeHtml(track.description) + '</div>' : '') +
+            '</div>';
+        } else {
+            html += '<div class="subscriber-card-empty">Скоро здесь будет новый релиз</div>';
+        }
+    }
+    
+    grid.innerHTML = html;
 }
 
 function getDescriptionPreview(text, maxLength) {
@@ -1733,42 +2032,70 @@ function getDescriptionPreview(text, maxLength) {
   return { preview: cut + '...', isLong: true };
 }
 
+// === ВСЕ ТРЕКИ (с выделением подписческих) ===
 function renderAllTracksList() {
     var list = document.getElementById('allTracksList');
     if (!list) return;
     list.innerHTML = '';
+    
     tracksData.forEach(function(track, index) {
         var el = document.createElement('div');
-        el.className = 'track-item glass-panel';
+        el.className = 'track-item glass-panel' + (track.type === 'subscriber' ? ' subscriber-track' : '');
         el.dataset.id = track.id;
-        var coverHtml = track.cover ? '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'\'">' : '🎵';
+        
+        var coverHtml = track.cover 
+          ? '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">' 
+          : '🎵';
         
         var descPreview = getDescriptionPreview(track.description, 80);
         var descHtml = '';
         if (descPreview.preview) {
           descHtml = '<div class="track-description-preview">' + escapeHtml(descPreview.preview) + '</div>';
           if (descPreview.isLong) {
-            descHtml += '<div class="track-read-more" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[' + index + '])">Читать далее <span class="info-icon">ℹ️</span> тут</div>';
+            descHtml += '<div class="track-read-more" onclick="event.stopPropagation(); openTrackInfoModalById(\'' + track.id + '\')">Читать далее <span class="info-icon">ℹ️</span> тут</div>';
           }
         }
         
+        var subscriberBadge = track.type === 'subscriber' ? '<div class="track-subscriber-badge">👥 ОТ ПОДПИСЧИКА</div>' : '';
+        
         el.innerHTML = 
-          '<div class="track-cover" onclick="playTrack(tracksData[' + index + '],' + index + ')">' + coverHtml + '</div>' +
-          '<div class="track-info" onclick="playTrack(tracksData[' + index + '],' + index + ')">' +
+          '<div class="track-cover" onclick="playTrackById(\'' + track.id + '\')">' + coverHtml + '</div>' +
+          '<div class="track-info" onclick="playTrackById(\'' + track.id + '\')">' +
             '<div class="track-title">' + escapeHtml(track.title) + '</div>' +
             '<div class="track-artist">' + escapeHtml(track.subtitle || 'EVGENII AI') + '</div>' +
+            subscriberBadge +
             descHtml +
           '</div>' +
           '<div class="track-duration">' + track.duration + '</div>' +
           '<div class="track-actions">' +
-            '<button class="track-info-btn" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[' + index + '])" title="Полная история трека">ℹ️</button>' +
-            '<button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(tracksData[' + index + '])">' +
+            '<button class="track-info-btn" onclick="event.stopPropagation(); openTrackInfoModalById(\'' + track.id + '\')" title="Полная история трека">ℹ️</button>' +
+            '<button class="track-download-btn" onclick="event.stopPropagation();openDownloadModalById(\'' + track.id + '\')">' +
               '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>' +
             '</button>' +
           '</div>';
         
         list.appendChild(el);
     });
+}
+
+// === НОВЫЕ ФУНКЦИИ ДЛЯ РАБОТЫ ПО ID ===
+function playTrackById(trackId) {
+  var track = findTrackById(trackId);
+  if (!track) return;
+  var index = findTrackIndex(trackId);
+  playTrack(track, index);
+}
+
+function openTrackInfoModalById(trackId) {
+  var track = trackId === 'main' ? tracksData[0] : findTrackById(trackId);
+  if (!track) return;
+  openTrackInfoModal(track);
+}
+
+function openDownloadModalById(trackId) {
+  var track = findTrackById(trackId);
+  if (!track) return;
+  openDownloadModal(track);
 }
 
 // === AUDIO PLAYER ===
@@ -1791,13 +2118,21 @@ function stopPlayer() {
 }
 
 function playTrack(track, index) {
+  if (!track) return;
   stopPlayer();
   currentTrack = track;
-  currentTrackIndex = (index !== undefined && index >= 0) ? index : tracksData.findIndex(function(t) { return t.id === track.id; });
+  currentTrackIndex = index >= 0 ? index : findTrackIndex(track.id);
+  
   document.getElementById('playerTitle').textContent = track.title;
   document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII AI';
+  
   var pc = document.getElementById('playerCover');
-  if (track.cover) { pc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'\'">'; } else { pc.textContent = ''; }
+  if (track.cover) { 
+    pc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; 
+  } else { 
+    pc.textContent = ''; 
+  }
+  
   document.getElementById('playerTotalTime').textContent = track.duration;
   document.getElementById('stickyPlayer').classList.add('visible');
   
@@ -1821,7 +2156,13 @@ function playTrack(track, index) {
   });
 }
 
-function playNewRelease() { if (tracksData.length > 0) playTrack(tracksData[0], 0); }
+function playNewRelease() { 
+    var mainReleases = tracksData.filter(function(t) { return t.type !== 'subscriber'; });
+    if (mainReleases.length > 0) {
+        var latestTrack = mainReleases[0];
+        playTrackById(latestTrack.id);
+    }
+}
 
 function togglePlay() {
   if (!currentTrack) return;
@@ -1843,8 +2184,12 @@ function togglePlay() {
 
 function setPlayingState(state) {
   isPlaying = state;
-  document.getElementById('miniPlayIcon').innerHTML = state ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' : '<polygon points="5,3 19,12 5,21"/>';
-  if ('mediaSession' in navigator) { try { navigator.mediaSession.playbackState = state ? 'playing' : 'paused'; } catch(e) {} }
+  document.getElementById('miniPlayIcon').innerHTML = state 
+    ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>' 
+    : '<polygon points="5,3 19,12 5,21"/>';
+  if ('mediaSession' in navigator) { 
+    try { navigator.mediaSession.playbackState = state ? 'playing' : 'paused'; } catch(e) {} 
+  }
 }
 
 function skipForward() { playNextTrack(); }
@@ -1870,7 +2215,11 @@ function seek(event) {
 function updateMediaSession() {
   if ('mediaSession' in navigator && currentTrack) {
     try {
-      navigator.mediaSession.metadata = new MediaMetadata({ title: currentTrack.title, artist: currentTrack.subtitle || 'EVGENII AI', album: 'EVGENII AI' });
+      navigator.mediaSession.metadata = new MediaMetadata({ 
+        title: currentTrack.title, 
+        artist: currentTrack.subtitle || 'EVGENII AI', 
+        album: 'EVGENII AI' 
+      });
       navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
     } catch(e) {}
   }
@@ -1953,30 +2302,58 @@ audio.addEventListener('pause', function() { if (!isHandlingTrackEnd) setPlaying
 // === DOWNLOAD ===
 var downloadTrack = null;
 function openDownloadModal(track) {
+  if (!track) return;
   downloadTrack = track;
   var mc = document.getElementById('modalCover');
-  if (track.cover) { mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; } else { mc.textContent = '🎵'; }
+  if (track.cover) { 
+    mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; 
+  } else { 
+    mc.textContent = '🎵'; 
+  }
   document.getElementById('modalTitle').textContent = track.title;
-  document.getElementById('modalArtist').textContent = 'EVGENII AI';
+  document.getElementById('modalArtist').textContent = track.subtitle || 'EVGENII AI';
   document.getElementById('modalDuration').textContent = track.duration;
-  var b = document.getElementById('modalDownloadBtn'); b.textContent = 'СКАЧАТЬ ТРЕК'; b.disabled = false;
-  document.getElementById('downloadModal').classList.add('active'); document.body.style.overflow = 'hidden';
+  var b = document.getElementById('modalDownloadBtn'); 
+  b.textContent = 'СКАЧАТЬ ТРЕК'; 
+  b.disabled = false;
+  document.getElementById('downloadModal').classList.add('active'); 
+  document.body.style.overflow = 'hidden';
 }
-function closeDownloadModal() { document.getElementById('downloadModal').classList.remove('active'); document.body.style.overflow = ''; downloadTrack = null; }
+function closeDownloadModal() { 
+  document.getElementById('downloadModal').classList.remove('active'); 
+  document.body.style.overflow = ''; 
+  downloadTrack = null; 
+}
 function startDownload() {
   if (!downloadTrack) return;
-  var b = document.getElementById('modalDownloadBtn'); b.textContent = 'ЗАГРУЗКА...'; b.disabled = true;
-  var l = document.createElement('a'); l.href = downloadTrack.file; l.download = downloadTrack.title + '.mp3'; l.style.display = 'none';
+  var b = document.getElementById('modalDownloadBtn'); 
+  b.textContent = 'ЗАГРУЗКА...'; 
+  b.disabled = true;
+  var l = document.createElement('a'); 
+  l.href = downloadTrack.file; 
+  l.download = downloadTrack.title + '.mp3'; 
+  l.style.display = 'none';
   document.body.appendChild(l);
-  setTimeout(function() { l.click(); document.body.removeChild(l); b.textContent = 'ТРЕК ЗАГРУЖЕН'; setTimeout(function() { closeDownloadModal(); }, 1500); }, 1500);
+  setTimeout(function() { 
+    l.click(); 
+    document.body.removeChild(l); 
+    b.textContent = 'ТРЕК ЗАГРУЖЕН'; 
+    setTimeout(function() { closeDownloadModal(); }, 1500); 
+  }, 1500);
 }
-document.getElementById('downloadModal').addEventListener('click', function(e) { if (e.target === this) closeDownloadModal(); });
+document.getElementById('downloadModal').addEventListener('click', function(e) { 
+  if (e.target === this) closeDownloadModal(); 
+});
 
 // === TRACK INFO MODAL ===
 function openTrackInfoModal(track) {
   if (!track) return;
   var mc = document.getElementById('modalInfoCover');
-  if (track.cover) { mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; } else { mc.textContent = '🎵'; }
+  if (track.cover) { 
+    mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; 
+  } else { 
+    mc.textContent = '🎵'; 
+  }
   document.getElementById('modalInfoTitle').textContent = track.title;
   document.getElementById('modalInfoArtist').textContent = track.subtitle || 'EVGENII AI';
   
@@ -1990,7 +2367,9 @@ function closeTrackInfoModal() {
   document.getElementById('trackInfoModal').classList.remove('active'); 
   document.body.style.overflow = ''; 
 }
-document.getElementById('trackInfoModal').addEventListener('click', function(e) { if (e.target === this) closeTrackInfoModal(); });
+document.getElementById('trackInfoModal').addEventListener('click', function(e) { 
+  if (e.target === this) closeTrackInfoModal(); 
+});
 
 // === DISCUSSIONS ===
 var discussionsUnsubscribe = null;
@@ -2001,8 +2380,16 @@ function updateAttachLabel() {
   var toggle = document.getElementById('discussionAttachToggle');
   if (!label || !toggle) return;
   var current = getCurrentPlayingTrack();
-  if (current) { label.textContent = '🎵 Прикрепить: ' + current.title; toggle.disabled = false; toggle.parentElement.style.opacity = '1'; }
-  else { label.textContent = '🎵 Сначала включи любой трек'; toggle.disabled = true; toggle.checked = false; toggle.parentElement.style.opacity = '0.5'; }
+  if (current) { 
+    label.textContent = '🎵 Прикрепить: ' + current.title; 
+    toggle.disabled = false; 
+    toggle.parentElement.style.opacity = '1'; 
+  } else { 
+    label.textContent = '🎵 Сначала включи любой трек'; 
+    toggle.disabled = true; 
+    toggle.checked = false; 
+    toggle.parentElement.style.opacity = '0.5'; 
+  }
 }
 function loadDiscussions() {
   if (!db) return;
@@ -2014,13 +2401,20 @@ function loadDiscussions() {
     discussionsData = [];
     snapshot.forEach(function(doc) { discussionsData.push({ id: doc.id, ...doc.data() }); });
     renderDiscussions();
-  }, function(error) { console.error(error); list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:40px 20px;">Ошибка загрузки</div>'; });
+  }, function(error) { 
+    console.error(error); 
+    list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:40px 20px;">Ошибка загрузки</div>'; 
+  });
 }
 function renderDiscussions() {
   var list = document.getElementById('discussionsList');
   var count = document.getElementById('discussionsCount');
   if (!list) return;
-  if (discussionsData.length === 0) { list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:40px 20px;">💬 Пока нет сообщений.<br>Будь первым!</div>'; if (count) count.textContent = '0'; return; }
+  if (discussionsData.length === 0) { 
+    list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:40px 20px;"> Пока нет сообщений.<br>Будь первым!</div>'; 
+    if (count) count.textContent = '0'; 
+    return; 
+  }
   if (count) count.textContent = discussionsData.length;
   var reversed = discussionsData.slice().reverse();
   list.innerHTML = reversed.map(function(d) {
@@ -2037,55 +2431,124 @@ function formatDiscussionTime(timestamp) {
   if (!timestamp) return '';
   var date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
   var diff = Math.floor((new Date() - date) / 1000);
-  if (diff < 60) return 'только что'; if (diff < 3600) return Math.floor(diff / 60) + ' мин назад';
-  if (diff < 86400) return Math.floor(diff / 3600) + ' ч назад'; return Math.floor(diff / 86400) + ' дн назад';
+  if (diff < 60) return 'только что'; 
+  if (diff < 3600) return Math.floor(diff / 60) + ' мин назад';
+  if (diff < 86400) return Math.floor(diff / 3600) + ' ч назад'; 
+  return Math.floor(diff / 86400) + ' дн назад';
 }
 function sendDiscussion() {
   if (!db) return;
   var input = document.getElementById('discussionInput');
-  var text = input.value.trim(); if (!text) return;
+  var text = input.value.trim(); 
+  if (!text) return;
   var userName = localStorage.getItem('evgenii_user') || 'Гость';
   var btn = document.getElementById('discussionSendBtn');
   var attachToggle = document.getElementById('discussionAttachToggle');
   btn.disabled = true;
-  var data = { userName: userName, text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp() };
-  if (attachToggle && attachToggle.checked) { var current = getCurrentPlayingTrack(); if (current) { data.trackId = String(current.id); data.trackTitle = current.title; } }
-  db.collection('discussions').add(data).then(function() { input.value = ''; input.style.height = 'auto'; }).catch(function(e) { alert('Ошибка: ' + e.message); }).finally(function() { btn.disabled = false; input.focus(); });
+  var data = { 
+    userName: userName, 
+    text: text, 
+    createdAt: firebase.firestore.FieldValue.serverTimestamp() 
+  };
+  if (attachToggle && attachToggle.checked) { 
+    var current = getCurrentPlayingTrack(); 
+    if (current) { 
+      data.trackId = String(current.id); 
+      data.trackTitle = current.title; 
+    } 
+  }
+  db.collection('discussions').add(data)
+    .then(function() { 
+      input.value = ''; 
+      input.style.height = 'auto'; 
+    })
+    .catch(function(e) { 
+      alert('Ошибка: ' + e.message); 
+    })
+    .finally(function() { 
+      btn.disabled = false; 
+      input.focus(); 
+    });
 }
-document.getElementById('discussionInput').addEventListener('input', function() { this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 100) + 'px'; });
-document.getElementById('discussionInput').addEventListener('keydown', function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendDiscussion(); } });
+document.getElementById('discussionInput').addEventListener('input', function() { 
+  this.style.height = 'auto'; 
+  this.style.height = Math.min(this.scrollHeight, 100) + 'px'; 
+});
+document.getElementById('discussionInput').addEventListener('keydown', function(e) { 
+  if (e.key === 'Enter' && !e.shiftKey) { 
+    e.preventDefault(); 
+    sendDiscussion(); 
+  } 
+});
 
 // === ADMIN & NAVIGATION ===
-function showAdminLogin() { navigateTo('adminPage'); document.getElementById('adminLoginSection').style.display = 'block'; document.getElementById('adminContent').style.display = 'none'; document.getElementById('adminEmailInput').value = ''; document.getElementById('adminPasswordInput').value = ''; document.getElementById('adminLoginStatus').textContent = ''; }
+function showAdminLogin() { 
+  navigateTo('adminPage'); 
+  document.getElementById('adminLoginSection').style.display = 'block'; 
+  document.getElementById('adminContent').style.display = 'none'; 
+  document.getElementById('adminEmailInput').value = ''; 
+  document.getElementById('adminPasswordInput').value = ''; 
+  document.getElementById('adminLoginStatus').textContent = ''; 
+}
 function adminLogin() {
   var email = document.getElementById('adminEmailInput').value.trim();
   var password = document.getElementById('adminPasswordInput').value;
   var status = document.getElementById('adminLoginStatus');
-  if (!email || !password) { status.textContent = '⚠️ Введите email и пароль'; status.className = 'form-status error'; return; }
-  status.textContent = '⏳ Проверка...'; status.className = 'form-status';
+  if (!email || !password) { 
+    status.textContent = '⚠️ Введите email и пароль'; 
+    status.className = 'form-status error'; 
+    return; 
+  }
+  status.textContent = '⏳ Проверка...'; 
+  status.className = 'form-status';
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(function() {
-      isAdminLoggedIn = true; status.textContent = '✅ Успешный вход!'; status.className = 'form-status success';
-      setTimeout(function() { document.getElementById('adminLoginSection').style.display = 'none'; document.getElementById('adminContent').style.display = 'block'; updateMaintenanceUI(); }, 500);
+      isAdminLoggedIn = true; 
+      status.textContent = '✅ Успешный вход!'; 
+      status.className = 'form-status success';
+      setTimeout(function() { 
+        document.getElementById('adminLoginSection').style.display = 'none'; 
+        document.getElementById('adminContent').style.display = 'block'; 
+        updateMaintenanceUI(); 
+      }, 500);
     })
     .catch(function(error) {
       var msg = '❌ Ошибка входа';
-      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') msg = 'Неверный email или пароль';
-      status.textContent = msg; status.className = 'form-status error';
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') 
+        msg = 'Неверный email или пароль';
+      status.textContent = msg; 
+      status.className = 'form-status error';
     });
 }
 
-function getGreeting(h) { if (h >= 5 && h < 12) return 'ДОБРОЕ УТРО'; if (h >= 12 && h < 17) return 'ДОБРЫЙ ДЕНЬ'; if (h >= 17 && h < 22) return 'ДОБРЫЙ ВЕЧЕР'; return 'ДОБРОЙ НОЧИ'; }
-function getLoginGreeting(h) { if (h >= 5 && h < 12) return 'Доброе утро'; if (h >= 12 && h < 17) return 'Добрый день'; if (h >= 17 && h < 22) return 'Добрый вечер'; return 'Доброй ночи'; }
-function escapeHtml(text) { var d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
+function getGreeting(h) { 
+  if (h >= 5 && h < 12) return 'ДОБРОЕ УТРО'; 
+  if (h >= 12 && h < 17) return 'ДОБРЫЙ ДЕНЬ'; 
+  if (h >= 17 && h < 22) return 'ДОБРЫЙ ВЕЧЕР'; 
+  return 'ДОБРОЙ НОЧИ'; 
+}
+function getLoginGreeting(h) { 
+  if (h >= 5 && h < 12) return 'Доброе утро'; 
+  if (h >= 12 && h < 17) return 'Добрый день'; 
+  if (h >= 17 && h < 22) return 'Добрый вечер'; 
+  return 'Доброй ночи'; 
+}
+function escapeHtml(text) { 
+  if (!text) return '';
+  var d = document.createElement('div'); 
+  d.textContent = text; 
+  return d.innerHTML; 
+}
 
 var currentPage = 'homePage';
 function navigateTo(pageId) {
   if (currentPage === pageId) return;
-  var ce = document.getElementById(currentPage); var ne = document.getElementById(pageId);
+  var ce = document.getElementById(currentPage); 
+  var ne = document.getElementById(pageId);
   if (ce) ce.classList.remove('active');
   if (ne) ne.classList.add('active');
-  window.scrollTo(0, 0); currentPage = pageId;
+  window.scrollTo(0, 0); 
+  currentPage = pageId;
   if (pageId === 'discussionsPage') loadDiscussions();
   if (pageId === 'adminPage' && !isAdminLoggedIn) showAdminLogin();
 }
@@ -2100,11 +2563,16 @@ var headerName = document.getElementById('headerName');
 var logoutBtn = document.getElementById('logoutBtn');
 
 loginGreeting.textContent = getLoginGreeting(new Date().getHours());
-loginScreen.addEventListener('transitionend', function() { if (loginScreen.classList.contains('hidden')) loginScreen.style.display = 'none'; });
+loginScreen.addEventListener('transitionend', function() { 
+  if (loginScreen.classList.contains('hidden')) loginScreen.style.display = 'none'; 
+});
 
 var savedName = null;
 try { savedName = localStorage.getItem('evgenii_user'); } catch(e) {}
-if (savedName) { showMainScreen(savedName); if (!isLicenseAccepted()) setTimeout(function() { openLicenseModal(true); }, 400); }
+if (savedName) { 
+  showMainScreen(savedName); 
+  if (!isLicenseAccepted()) setTimeout(function() { openLicenseModal(true); }, 400); 
+}
 
 loadMaintenanceSettings();
 
@@ -2122,7 +2590,8 @@ loginForm.addEventListener('submit', function(e) {
 });
 
 function showMainScreen(name) {
-  loginScreen.classList.add('hidden'); loginScreen.style.display = 'none';
+  loginScreen.classList.add('hidden'); 
+  loginScreen.style.display = 'none';
   document.getElementById('homePage').classList.add('active');
   headerName.textContent = name.toUpperCase();
   document.getElementById('headerGreeting').textContent = getGreeting(new Date().getHours());
@@ -2135,14 +2604,28 @@ logoutBtn.addEventListener('click', function() {
   firebase.auth().signOut().catch(function(){});
   try { localStorage.removeItem('evgenii_user'); } catch(e) {}
   var pages = ['homePage','tracksPage','aboutPage','communityPage','contactPage','supportPage','discussionsPage','adminPage'];
-  pages.forEach(function(p) { var el = document.getElementById(p); if (el) el.classList.remove('active'); });
+  pages.forEach(function(p) { 
+    var el = document.getElementById(p); 
+    if (el) el.classList.remove('active'); 
+  });
   currentPage = 'homePage';
-  loginScreen.style.display = 'flex'; loginScreen.classList.remove('hidden');
-  nameInput.value = ''; loginGreeting.textContent = getLoginGreeting(new Date().getHours());
+  loginScreen.style.display = 'flex'; 
+  loginScreen.classList.remove('hidden');
+  nameInput.value = ''; 
+  loginGreeting.textContent = getLoginGreeting(new Date().getHours());
   stopPlayer();
-  if (discussionsUnsubscribe) { discussionsUnsubscribe(); discussionsUnsubscribe = null; }
-  if (maintenanceUnsubscribe) { maintenanceUnsubscribe(); maintenanceUnsubscribe = null; }
-  if (liveInterval) { clearInterval(liveInterval); liveInterval = null; }
+  if (discussionsUnsubscribe) { 
+    discussionsUnsubscribe(); 
+    discussionsUnsubscribe = null; 
+  }
+  if (maintenanceUnsubscribe) { 
+    maintenanceUnsubscribe(); 
+    maintenanceUnsubscribe = null; 
+  }
+  if (liveInterval) { 
+    clearInterval(liveInterval); 
+    liveInterval = null; 
+  }
   isAdminLoggedIn = false;
 });
 
@@ -2154,17 +2637,39 @@ if (contactForm) {
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     var formData = new FormData(this);
-    var name = formData.get('name'); var contact = formData.get('contact'); var messageText = formData.get('message');
-    formSubmitBtn.disabled = true; formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>'; formStatus.textContent = ''; formStatus.className = 'form-status';
-    var message = '📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n👤 <b>Имя:</b> ' + name + '\n📧 <b>Контакт:</b> ' + contact + '\n💬 <b>Сообщение:</b>\n' + messageText + '\n⏰ <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
+    var name = formData.get('name'); 
+    var contact = formData.get('contact'); 
+    var messageText = formData.get('message');
+    formSubmitBtn.disabled = true; 
+    formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>'; 
+    formStatus.textContent = ''; 
+    formStatus.className = 'form-status';
+    var message = '📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n👤 <b>Имя:</b> ' + name + '\n <b>Контакт:</b> ' + contact + '\n💬 <b>Сообщение:</b>\n' + messageText + '\n <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
     var telegramURL = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
-    fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) })
+    fetch(telegramURL, { 
+      method: 'POST', 
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) 
+    })
     .then(function(response) { return response.json(); })
     .then(function(data) {
-      if (data.ok) { formStatus.textContent = 'Сообщение отправлено! Я отвечу вам скоро.'; formStatus.className = 'form-status success'; contactForm.reset(); }
-      else { throw new Error(data.description || 'Ошибка Telegram API'); }
-    }).catch(function(error) { console.error(error); formStatus.textContent = 'Ошибка: ' + error.message; formStatus.className = 'form-status error'; })
-    .finally(function() { formSubmitBtn.disabled = false; formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>'; });
+      if (data.ok) { 
+        formStatus.textContent = 'Сообщение отправлено! Я отвечу вам скоро.'; 
+        formStatus.className = 'form-status success'; 
+        contactForm.reset(); 
+      } else { 
+        throw new Error(data.description || 'Ошибка Telegram API'); 
+      }
+    })
+    .catch(function(error) { 
+      console.error(error); 
+      formStatus.textContent = 'Ошибка: ' + error.message; 
+      formStatus.className = 'form-status error'; 
+    })
+    .finally(function() { 
+      formSubmitBtn.disabled = false; 
+      formSubmitBtn.innerHTML = '<span>ОТПРАВИТЬ СООБЩЕНИЕ</span>'; 
+    });
   });
 }
 
@@ -2176,20 +2681,41 @@ function copyCardNumber() {
   var btnText = document.getElementById('copyBtnText');
   var toast = document.getElementById('copyToast');
   function showCopySuccess() {
-    btn.classList.add('copied'); btnText.textContent = 'Скопировано!'; toast.classList.add('show');
+    btn.classList.add('copied'); 
+    btnText.textContent = 'Скопировано!'; 
+    toast.classList.add('show');
     if (copyTimeout) clearTimeout(copyTimeout);
-    copyTimeout = setTimeout(function() { btn.classList.remove('copied'); btnText.textContent = 'Копировать'; toast.classList.remove('show'); }, 2500);
+    copyTimeout = setTimeout(function() { 
+      btn.classList.remove('copied'); 
+      btnText.textContent = 'Копировать'; 
+      toast.classList.remove('show'); 
+    }, 2500);
   }
   function fallbackCopy() {
-    var textarea = document.createElement('textarea'); textarea.value = CARD_NUMBER; textarea.style.position = 'fixed'; textarea.style.opacity = '0';
-    document.body.appendChild(textarea); textarea.select();
-    try { document.execCommand('copy'); showCopySuccess(); } catch (err) { alert('Номер карты: ' + CARD_NUMBER); }
+    var textarea = document.createElement('textarea'); 
+    textarea.value = CARD_NUMBER; 
+    textarea.style.position = 'fixed'; 
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea); 
+    textarea.select();
+    try { 
+      document.execCommand('copy'); 
+      showCopySuccess(); 
+    } catch (err) { 
+      alert('Номер карты: ' + CARD_NUMBER); 
+    }
     document.body.removeChild(textarea);
   }
-  if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(CARD_NUMBER).then(function() { showCopySuccess(); }).catch(function() { fallbackCopy(); }); }
-  else { fallbackCopy(); }
+  if (navigator.clipboard && window.isSecureContext) { 
+    navigator.clipboard.writeText(CARD_NUMBER)
+      .then(function() { showCopySuccess(); })
+      .catch(function() { fallbackCopy(); }); 
+  } else { 
+    fallbackCopy(); 
+  }
 }
 updateAttachLabel();
 </script>
 </body>
 </html>
+
