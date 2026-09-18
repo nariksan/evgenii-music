@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>EVGENII AI</title>
 
-<!-- Favicon -->
 <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png?v=2">
 <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png?v=2">
 <link rel="shortcut icon" href="favicon-48x48.png?v=2">
@@ -193,21 +192,145 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 .login-input:focus { border-color: var(--accent-cyan); box-shadow: 0 0 20px rgba(0, 240, 255, 0.15); }
 .login-input::placeholder { color: var(--text-secondary); }
 
+/* === ШАПКА С КРАСИВЫМ ПРИВЕТСТВИЕМ === */
 .main-header {
   display: flex; justify-content: space-between; align-items: center;
   padding: 16px 20px; margin-bottom: 24px; position: sticky; top: 10px; z-index: 50;
 }
 .header-brand { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.1rem; }
-.header-user { text-align: right; }
-.user-greeting { display: block; font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
-.user-name { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--accent-cyan); }
+.header-user { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
 
-.hero-banner {
-  position: relative; padding: 40px 24px; text-align: center; overflow: hidden; margin-bottom: 32px;
-  background: linear-gradient(135deg, rgba(0, 240, 255, 0.05), rgba(157, 0, 255, 0.05));
+.user-greeting {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta), var(--accent-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: greetingShine 3s ease-in-out infinite;
+  background-size: 200% 200%;
 }
-.hero-title { font-size: 2rem; font-weight: 900; margin-bottom: 12px; }
-.hero-slogan { color: var(--text-secondary); margin-bottom: 24px; font-size: 0.95rem; }
+
+@keyframes greetingShine {
+  0%, 100% { background-position: 0% 50%; opacity: 1; }
+  50% { background-position: 100% 50%; opacity: 0.85; }
+}
+
+.user-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  letter-spacing: 1px;
+}
+
+/* === БАННЕР === */
+.hero-banner {
+  position: relative;
+  padding: 48px 32px;
+  text-align: center;
+  margin-bottom: 32px;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.08), rgba(157, 0, 255, 0.08));
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  overflow: hidden;
+}
+
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.05) 0%, transparent 70%);
+  animation: rotateBg 30s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotateBg {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hero-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* === ЖИВОЙ ТЕКСТ — ИСПРАВЛЕННЫЙ ПЕРЕНОС === */
+.hero-slogan {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 1;
+  min-height: 1.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  line-height: 1.5;
+}
+
+.hero-slogan .live-text {
+  display: inline;
+  white-space: nowrap;
+}
+
+.hero-slogan .typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background: var(--accent-cyan);
+  margin-left: 4px;
+  animation: cursorBlink 1s infinite;
+  vertical-align: text-bottom;
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.hero-slogan .highlight {
+  color: var(--accent-cyan);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.hero-slogan .highlight-gold {
+  color: var(--accent-gold);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.hero-slogan.fade-out {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.hero-slogan.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* На мобильных разрешаем перенос, но ключевые фразы остаются вместе */
+@media (max-width: 600px) {
+  .hero-slogan .live-text {
+    white-space: normal;
+  }
+  .hero-slogan {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
 
 .bento-grid {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 32px;
@@ -238,7 +361,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   transform: translateY(-4px);
 }
 .bento-diary::before {
-  content: '📔';
+  content: '';
   position: absolute;
   top: -20px;
   right: -15px;
@@ -285,67 +408,294 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   50% { box-shadow: 0 0 0 6px rgba(255, 204, 0, 0); }
 }
 
-.release-card {
-  display: flex; align-items: center; gap: 16px; padding: 16px; cursor: pointer;
+.release-hero {
+  position: relative;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(157, 0, 255, 0.15));
+  border-radius: 32px;
+  padding: 48px;
+  margin-bottom: 40px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.release-cover {
-  width: 64px; height: 64px; border-radius: 14px; background: linear-gradient(135deg, #1a1a2e, #2a1a3a);
-  display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;
-  position: relative; overflow: hidden; border: 1px solid var(--glass-border);
-}
-.release-cover img { width: 100%; height: 100%; object-fit: cover; }
-.release-badge {
-  position: absolute; top: 6px; left: 6px; background: var(--accent-cyan); color: #000;
-  font-size: 0.6rem; font-weight: 800; padding: 2px 6px; border-radius: 4px;
-}
-.release-info { flex: 1; }
-.release-label { font-size: 0.65rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 4px; }
-.release-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
-.release-meta { font-size: 0.8rem; color: var(--text-secondary); }
 
-.track-item {
-  display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer;
+.release-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(0, 240, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(255, 0, 170, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  animation: heroPulse 4s ease-in-out infinite;
+}
+
+@keyframes heroPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.release-hero:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 80px rgba(0, 240, 255, 0.2), 0 0 60px rgba(157, 0, 255, 0.15);
+  border-color: var(--accent-cyan);
+}
+
+.release-hero-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.release-hero-cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: rotate(-3deg);
+  transition: transform 0.4s;
+}
+
+.release-hero:hover .release-hero-cover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.release-hero-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.release-hero-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a2e, #2a1a3a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+}
+
+.release-hero-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--accent-gold), #ff9500);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  box-shadow: 0 8px 25px rgba(255, 204, 0, 0.4);
+  z-index: 2;
+  animation: badgeGlow 2s ease-in-out infinite;
+}
+
+@keyframes badgeGlow {
+  0%, 100% { box-shadow: 0 8px 25px rgba(255, 204, 0, 0.4); }
+  50% { box-shadow: 0 8px 35px rgba(255, 204, 0, 0.7); }
+}
+
+.release-hero-info h2 {
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.release-hero-info h2::before {
+  content: '●';
+  color: var(--accent-magenta);
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.release-hero-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #fff, var(--accent-cyan), var(--accent-magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.release-hero-artist {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+
+.release-hero-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 32px;
+  max-width: 600px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.release-hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-hero-play {
+  padding: 16px 32px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  color: #000;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.4);
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-hero-play:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 240, 255, 0.6);
+}
+
+.btn-hero-play svg {
+  width: 24px;
+  height: 24px;
+  fill: #000;
+}
+
+.btn-hero-secondary {
+  padding: 16px 28px;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   transition: all 0.3s;
 }
-.track-item:hover { background: rgba(255, 255, 255, 0.05); }
-.track-item.active { border-color: var(--accent-cyan); background: rgba(0, 240, 255, 0.05); }
+
+.btn-hero-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .release-hero { padding: 32px 24px; }
+  .release-hero-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    text-align: center;
+  }
+  .release-hero-cover { max-width: 240px; margin: 0 auto; }
+  .release-hero-title { font-size: 2rem; }
+  .release-hero-description { margin: 0 auto 24px; }
+  .release-hero-actions { justify-content: center; }
+  .hero-title { font-size: 1.8rem; }
+  .main-header { padding: 12px 16px; }
+  .user-greeting { font-size: 0.7rem; letter-spacing: 2px; }
+}
+
+@media (max-width: 480px) {
+  .release-hero { padding: 24px 16px; }
+  .release-hero-title { font-size: 1.6rem; }
+  .btn-hero-play, .btn-hero-secondary { width: 100%; justify-content: center; }
+  .hero-banner { padding: 32px 20px; }
+  .hero-title { font-size: 1.6rem; }
+}
+
+.track-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.track-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.track-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+.track-item:hover::before { opacity: 1; }
+
+.track-item.active {
+  border-color: var(--accent-cyan);
+  background: rgba(0, 240, 255, 0.05);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+}
+.track-item.active::before { opacity: 1; }
+
 .track-cover {
-  width: 50px; height: 50px; border-radius: 10px; background: linear-gradient(135deg, #1a1a2e, #2a1a3a);
+  width: 60px; height: 60px; border-radius: 12px; background: linear-gradient(135deg, #1a1a2e, #2a1a3a);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;
-  margin-top: 2px;
+  border: 1px solid var(--glass-border);
 }
 .track-cover img { width: 100%; height: 100%; object-fit: cover; }
 
-/* НОВОЕ: Обёртка для информации о треке (название + артист + описание) */
-.track-info-wrapper { flex: 1; min-width: 0; }
-.track-info { min-width: 0; }
-.track-title { font-size: 0.95rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.track-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.track-title { font-size: 1rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .track-artist { font-size: 0.8rem; color: var(--text-secondary); }
 
-/* НОВОЕ: Превью описания трека */
 .track-description-preview {
-  margin-top: 6px;
   font-size: 0.8rem;
   color: var(--text-secondary);
-  line-height: 1.5;
   font-style: italic;
-  opacity: 0.85;
-  word-wrap: break-word;
+  line-height: 1.4;
+  margin-top: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-.track-description-preview::before {
-  content: '«';
-  color: var(--accent-gold);
-  font-weight: 700;
-  margin-right: 2px;
-}
-.track-description-preview::after {
-  content: '»';
-  color: var(--accent-gold);
-  font-weight: 700;
-  margin-left: 2px;
-}
+.track-description-preview::before { content: '«'; color: var(--accent-gold); font-weight: 700; }
+.track-description-preview::after { content: '»'; color: var(--accent-gold); font-weight: 700; }
 
-/* НОВОЕ: Ссылка "Читать далее" */
 .track-read-more {
   display: inline-flex;
   align-items: center;
@@ -353,11 +703,10 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   margin-top: 6px;
   font-size: 0.75rem;
   color: var(--accent-gold);
-  cursor: pointer;
   font-weight: 600;
-  letter-spacing: 0.5px;
+  cursor: pointer;
   transition: all 0.2s;
-  padding: 2px 0;
+  width: fit-content;
 }
 .track-read-more:hover {
   color: #fff;
@@ -367,8 +716,8 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: rgba(255, 204, 0, 0.15);
   border: 1px solid var(--accent-gold);
@@ -381,9 +730,16 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   color: var(--text-secondary); 
   font-family: 'Orbitron', monospace; 
   flex-shrink: 0;
-  margin-top: 16px;
+  margin-top: 4px;
 }
-.track-actions { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; margin-top: 2px; }
+
+.track-actions { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 8px; 
+  flex-shrink: 0; 
+}
 
 .track-download-btn, .track-info-btn {
   width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--glass-border);
@@ -526,20 +882,9 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 
 @media (min-width: 768px) {
   .bento-grid { grid-template-columns: repeat(3, 1fr); }
-  .hero-title { font-size: 2.8rem; }
   .page { padding: 40px 24px 140px; }
 }
-@media (max-width: 480px) {
-  .track-item { padding: 12px; gap: 10px; }
-  .track-cover { width: 44px; height: 44px; }
-  .track-duration { display: none; }
-  .track-actions { gap: 4px; }
-  .track-download-btn, .track-info-btn { width: 32px; height: 32px; }
-  .track-description-preview { font-size: 0.75rem; }
-  .track-read-more { font-size: 0.7rem; }
-}
 @media (max-width: 380px) {
-  .hero-title { font-size: 1.6rem; }
   .card-number { font-size: 1.1rem; letter-spacing: 2px; }
 }
 
@@ -566,7 +911,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   <div class="maintenance-icon">🔧</div>
   <div class="maintenance-title">ТЕХНИЧЕСКИЕ РАБОТЫ</div>
   <div class="maintenance-subtitle">Извините, сайт временно недоступен.<br>Мы работаем над улучшением.<br><br><strong style="color:var(--accent-gold)">Скоро всё заработает!</strong></div>
-  <button class="btn-text" onclick="showMaintenanceAdminModal()" style="font-size: 1.5rem; opacity: 0.3;">⚙️</button>
+  <button class="btn-text" onclick="showMaintenanceAdminModal()" style="font-size: 1.5rem; opacity: 0.3;">️</button>
 </div>
 
 <div class="modal-overlay" id="maintenanceAdminModal">
@@ -595,35 +940,20 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <div class="modal-header">📜 СОГЛАШЕНИЕ</div>
     <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7;margin-bottom:20px;max-height:55vh;overflow-y:auto;padding-right:8px;">
       <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">🎵 1. Авторство и концепция</h4>
-      <p style="margin-bottom:8px;">Все идеи и концепции принадлежат полностью автору. Тексты песен создаются автором при вспомогательном участии искусственного интеллекта, доля которого варьируется в зависимости от конкретного произведения — от ≈20% (подбор рифм, синонимов, шлифовка отдельных строк) до ≈50% (совместная проработка отдельных фрагментов). При этом автор осуществляет общее творческое руководство, отбор, редактуру и финальное утверждение текста. Вокал и аранжировка генерируются AI на основе авторских указаний. Правообладателем всего контента является автор проекта EVGENII AI.</p>
-      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">⚖️ Правовая основа: ГК РФ ст. 1228, 1229, 1255, 1259.</div>
-
+      <p style="margin-bottom:8px;">Все идеи и концепции принадлежат полностью автору. Тексты песен создаются автором при вспомогательном участии искусственного интеллекта. Правообладателем всего контента является автор проекта EVGENII AI.</p>
       <h4 style="color:var(--success);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">✅ 2. Разрешено</h4>
       <ul style="margin-bottom:8px;padding-left:20px;">
         <li style="margin-bottom:4px;">Прослушивание всех треков онлайн</li>
-        <li style="margin-bottom:4px;">Скачивание для <strong style="color:var(--text-primary);">личного некоммерческого</strong> использования</li>
+        <li style="margin-bottom:4px;">Скачивание для личного некоммерческого использования</li>
         <li style="margin-bottom:4px;">Делиться ссылками на треки в соцсетях</li>
-        <li style="margin-bottom:4px;">Участие в обсуждениях и сообществах</li>
       </ul>
-      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">⚖️ Правовая основа: ГК РФ ст. 1273.</div>
-
       <h4 style="color:var(--error);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">🚫 3. Запрещено</h4>
       <ul style="margin-bottom:8px;padding-left:20px;">
-        <li style="margin-bottom:4px;">Коммерческое использование без письменного разрешения</li>
+        <li style="margin-bottom:4px;">Коммерческое использование без разрешения</li>
         <li style="margin-bottom:4px;">Загрузка на стриминговые платформы от своего имени</li>
-        <li style="margin-bottom:4px;">Использование треков для обучения сторонних AI-моделей</li>
-        <li style="margin-bottom:4px;">Присвоение авторства текстов или идей</li>
+        <li style="margin-bottom:4px;">Использование треков для обучения AI-моделей</li>
       </ul>
-      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">📌 Правовая основа: ГК РФ ст. 1270, 1301, КоАП РФ ст. 7.12, УК РФ ст. 146.</div>
-
-      <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">⚠️ 4. Ответственность</h4>
-      <p style="margin-bottom:8px;">Проект EVGENII AI носит исключительно развлекательный характер и является некоммерческим творческим проектом. Весь контент предоставляется «как есть», без каких-либо гарантий. Автор и правообладатель не несёт ответственности за возможные проблемы, убытки или последствия, возникшие в результате использования сайта, прослушивания контента или взаимодействия с сервисами проекта, за исключением случаев, прямо предусмотренных действующим законодательством.</p>
-      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">📌 Правовая основа: ГК РФ ст. 15, 401.</div>
-
-      <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">💬 5. Обратная связь</h4>
-      <p>По вопросам лицензирования, сотрудничества или коммерческого использования — пишите через раздел «Связь» на сайте.</p>
     </div>
-    
     <div class="glass-panel" style="padding:14px;border-radius:12px;margin-bottom:16px;cursor:pointer;display:flex;align-items:center;gap:12px;" id="licenseCheckboxWrapper" onclick="toggleLicenseCheckbox()">
       <div style="width:20px;height:20px;border-radius:6px;border:2px solid var(--glass-border);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" id="licenseCheckbox">
         <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#000;opacity:0;" id="licenseCheckIcon"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
@@ -657,10 +987,12 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     </div>
   </header>
 
+  <!-- БАННЕР: ЛОГОТИП + МЕНЯЮЩИЙСЯ ТЕКСТ -->
   <div class="hero-banner glass-panel">
     <h1 class="hero-title">EVGENII<span class="ai-badge">AI</span></h1>
-    <p class="hero-slogan">Где заканчиваюсь я — и начинается ИИ</p>
-    <button class="btn-primary" onclick="playNewRelease()" style="max-width:280px;margin:0 auto;">▶ СЛУШАТЬ НОВЫЙ РЕЛИЗ</button>
+    <p class="hero-slogan" id="heroSlogan">
+      <span class="live-text" id="liveText">Загрузка...</span><span class="typing-cursor"></span>
+    </p>
   </div>
 
   <div style="text-align:center;margin-bottom:32px;">
@@ -668,9 +1000,29 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   </div>
 
   <section class="section">
-    <h2 class="section-title">НОВЫЙ РЕЛИЗ</h2>
-    <div class="release-card glass-panel" id="homeReleaseCard" onclick="playNewRelease()">
-      <div class="release-info"><div class="release-title">Загрузка...</div></div>
+    <h2 class="section-title">✨ НОВЫЙ РЕЛИЗ</h2>
+    <div class="release-hero" id="releaseHero">
+      <div class="release-hero-content">
+        <div class="release-hero-cover" id="heroCover">
+          <span class="release-hero-badge">NEW RELEASE</span>
+          <div class="release-hero-cover-placeholder">🎵</div>
+        </div>
+        <div class="release-hero-info">
+          <h2>★ ПРЕМЬЕРА</h2>
+          <h1 class="release-hero-title" id="heroTitle">Загрузка...</h1>
+          <div class="release-hero-artist" id="heroArtist">EVGENII AI</div>
+          <p class="release-hero-description" id="heroDescription">Новый трек уже доступен для прослушивания</p>
+          <div class="release-hero-actions">
+            <button class="btn-hero-play" onclick="event.stopPropagation(); playNewRelease()">
+              <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              СЛУШАТЬ СЕЙЧАС
+            </button>
+            <button class="btn-hero-secondary" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[0])">
+              ℹ️ История создания
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -706,7 +1058,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
         <div class="bento-text"><h3>Поддержать</h3><p>Сказать спасибо</p></div>
       </div>
       <div class="bento-item glass-panel" onclick="navigateTo('aboutPage')">
-        <div class="bento-icon">ℹ️️</div>
+        <div class="bento-icon">ℹ️</div>
         <div class="bento-text"><h3>О проекте</h3><p>Узнать больше</p></div>
       </div>
     </div>
@@ -744,7 +1096,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
       <h3 style="color:var(--accent-gold);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;">🔧 ТЕХНИЧЕСКИЕ РАБОТЫ</h3>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;background:rgba(0,0,0,0.2);border-radius:12px;border:1px solid var(--glass-border);">
         <div>
-          <div style="font-weight:600;font-size:0.95rem;">🌐 Для всего сайта</div>
+          <div style="font-weight:600;font-size:0.95rem;"> Для всего сайта</div>
           <div style="font-size:0.8rem;color:var(--text-secondary);">Закрыть сайт для пользователей</div>
         </div>
         <div class="glass-panel" id="siteMaintenanceSwitch" onclick="toggleSiteMaintenance()" style="width:50px;height:28px;border-radius:14px;position:relative;cursor:pointer;transition:all 0.3s;background:rgba(255,255,255,0.1);">
@@ -762,7 +1114,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
         <input type="text" id="adminTrackDuration" class="form-input" placeholder="Длительность (например: 3:45) *">
         <input type="text" id="adminTrackCover" class="form-input" placeholder="Путь к обложке (URL)">
         <textarea id="adminTrackDescription" class="form-textarea" placeholder="Краткое описание или история создания трека..." style="min-height: 80px;"></textarea>
-        
         <button class="btn-primary" id="submitTrackBtn" onclick="addNewRelease()">🚀 ОПУБЛИКОВАТЬ</button>
         <button class="btn-ghost" id="cancelEditBtn" onclick="cancelEditTrack()" style="display:none;width:100%;">❌ ОТМЕНИТЬ РЕДАКТИРОВАНИЕ</button>
         <div class="form-status" id="adminTrackStatus"></div>
@@ -782,7 +1133,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <button class="btn-ghost" onclick="goBack()" style="padding:8px 16px;">← Назад</button>
     <div class="header-brand">ВСЕ ТРЕКИ</div>
   </header>
-  <div class="release-card glass-panel" id="featuredRelease" onclick="playNewRelease()" style="margin-bottom:24px;padding:24px;"></div>
   <div id="allTracksList"></div>
 </div>
 
@@ -814,7 +1164,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <span style="font-size:0.7rem;padding:4px 8px;background:rgba(255,255,255,0.1);border-radius:6px;">Скоро</span>
   </div>
   <div class="glass-panel" style="padding:20px;margin-bottom:12px;display:flex;align-items:center;gap:16px;opacity:0.6;cursor:not-allowed;">
-    <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#0088cc,#00a8e8);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">✈️</div>
+    <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#0088cc,#00a8e8);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">️</div>
     <div style="flex:1;"><div style="font-weight:600;">Telegram</div><div style="font-size:0.8rem;color:var(--text-secondary);">Новости и обновления</div></div>
     <span style="font-size:0.7rem;padding:4px 8px;background:rgba(255,255,255,0.1);border-radius:6px;">Скоро</span>
   </div>
@@ -857,10 +1207,9 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <div class="header-brand">ПОДДЕРЖАТЬ</div>
   </header>
   <div style="text-align:center;margin-bottom:24px;color:var(--text-secondary);font-size:0.95rem;">
-    <div style="font-size:2.5rem;margin-bottom:12px;animation:float 2s ease-in-out infinite;">💜</div>
+    <div style="font-size:2.5rem;margin-bottom:12px;animation:float 2s ease-in-out infinite;"></div>
     <p>Твоя поддержка помогает создавать новую музыку. Каждая чашка кофе — это новый трек.</p>
   </div>
-  
   <div class="yandex-pay-card" onclick="copyCardNumber()">
     <div class="card-top-row">
       <div class="card-logo">
@@ -887,7 +1236,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
       </button>
     </div>
   </div>
-  
   <div style="text-align:center;margin-top:20px;padding:16px;background:rgba(255,255,255,0.03);border-radius:12px;font-size:0.85rem;color:var(--text-secondary);">
     💡 Нажми на карту или кнопку <strong style="color:var(--accent-gold);">«Копировать»</strong>. Перевести можно через приложение любого банка.
   </div>
@@ -957,7 +1305,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <button class="btn-text" onclick="closeDownloadModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
     <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
     <div class="glass-panel" style="padding:24px;margin-bottom:20px;">
-      <div id="modalCover" style="width:120px;height:120px;border-radius:16px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden;">🎵</div>
+      <div id="modalCover" style="width:120px;height:120px;border-radius:16px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden;"></div>
       <div id="modalTitle" style="font-size:1.3rem;font-weight:700;margin-bottom:4px;">Название</div>
       <div id="modalArtist" style="font-family:'Orbitron';font-size:0.8rem;color:var(--text-secondary);letter-spacing:2px;margin-bottom:8px;">EVGENII AI</div>
       <div id="modalDuration" style="font-family:'Orbitron';color:var(--accent-cyan);">0:00</div>
@@ -1016,6 +1364,59 @@ var TELEGRAM_CHAT_ID = '5129595944';
 var isAdminLoggedIn = false;
 var licenseForceMode = false;
 var licenseCheckboxChecked = false;
+
+// === ЖИВОЙ ТЕКСТ В БАННЕРЕ (БЕЗ ПРИВЕТСТВИЯ) ===
+// Используется &nbsp; внутри highlight-частей, чтобы они не разрывались
+var livePhrases = [
+  'Где заканчиваюсь я — и начинается <span class="highlight">ИИ</span>',
+  'Сегодня премьера — <span class="highlight-gold">не&nbsp;пропусти</span> ↓',
+  'Музыка, рождённая на стыке <span class="highlight">человека&nbsp;и&nbsp;машины</span>',
+  'Слушай то, чего <span class="highlight-gold">ещё&nbsp;не&nbsp;было</span>',
+  'Каждый трек — это <span class="highlight">диалог&nbsp;с&nbsp;будущим</span>',
+  'Искусство, созданное <span class="highlight-gold">вместе&nbsp;с&nbsp;ИИ</span>',
+  'Твоя новая любимая песня <span class="highlight">уже&nbsp;здесь</span>',
+  'Эмоции, <span class="highlight-gold">усиленные&nbsp;технологиями</span>',
+  'Звук, который <span class="highlight">удивляет</span>',
+  'Нажми play — и <span class="highlight-gold">погрузись</span> в атмосферу'
+];
+
+var currentPhraseIndex = 0;
+var liveTextEl = null;
+var liveSubtitleEl = null;
+var liveInterval = null;
+
+function initLiveSubtitle() {
+  liveTextEl = document.getElementById('liveText');
+  liveSubtitleEl = document.getElementById('heroSlogan');
+  if (!liveTextEl || !liveSubtitleEl) return;
+  
+  if (liveInterval) clearInterval(liveInterval);
+  showPhrase(0);
+  liveInterval = setInterval(function() {
+    currentPhraseIndex = (currentPhraseIndex + 1) % livePhrases.length;
+    changePhrase();
+  }, 4000);
+}
+
+function changePhrase() {
+  if (!liveSubtitleEl) return;
+  liveSubtitleEl.classList.add('fade-out');
+  
+  setTimeout(function() {
+    showPhrase(currentPhraseIndex);
+    liveSubtitleEl.classList.remove('fade-out');
+    liveSubtitleEl.classList.add('fade-in');
+    
+    setTimeout(function() {
+      liveSubtitleEl.classList.remove('fade-in');
+    }, 500);
+  }, 500);
+}
+
+function showPhrase(index) {
+  if (!liveTextEl) return;
+  liveTextEl.innerHTML = livePhrases[index];
+}
 
 // === LICENSE ===
 function isLicenseAccepted() { try { return localStorage.getItem('evgenii_agreement_accepted') === 'true'; } catch(e) { return false; } }
@@ -1281,33 +1682,49 @@ function renderAdminTracksList() {
 }
 
 function renderNewRelease() {
-    var h = document.getElementById('homeReleaseCard');
-    var f = document.getElementById('featuredRelease');
+    var hero = document.getElementById('releaseHero');
+    if (!hero) return;
+    
     if (tracksData.length === 0) {
-        if (h) h.innerHTML = '<div class="release-info"><div class="release-title">Пока нет релизов</div></div>';
+        hero.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-secondary);"><div style="font-size:3rem;margin-bottom:16px;">🎵</div><div>Пока нет релизов</div></div>';
         return;
     }
+    
     var latestTrack = tracksData[0];
-    if (h) {
-        h.innerHTML = '<div class="release-cover"><span class="release-badge">NEW</span>' + (latestTrack.cover ? '<img src="' + latestTrack.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">' : '') + '</div>' +
-            '<div class="release-info"><div class="release-label">ПРЕМЬЕРА</div><div class="release-title">' + escapeHtml(latestTrack.title) + '</div><div class="release-meta">' + escapeHtml(latestTrack.subtitle).toUpperCase() + ' · ' + latestTrack.duration + '</div></div>';
-    }
-    if (f) {
-        f.innerHTML = '<div class="release-cover" style="width:80px;height:80px;margin-right:16px;">' + (latestTrack.cover ? '<img src="' + latestTrack.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">' : '') + '</div>' +
-            '<div class="release-info"><div class="release-label">★ НОВЫЙ РЕЛИЗ</div><div class="release-title" style="font-size:1.2rem;">' + escapeHtml(latestTrack.title) + '</div><div class="release-meta">' + escapeHtml(latestTrack.subtitle) + ' · ' + latestTrack.duration + '</div></div>' +
-            '<button class="ctrl-btn play-btn" onclick="event.stopPropagation();playTrack(tracksData[0], 0)" style="margin-left:auto;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:#000;"><polygon points="5,3 19,12 5,21"/></svg></button>';
-    }
+    var coverHtml = latestTrack.cover 
+        ? '<img src="' + latestTrack.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<div class=\'release-hero-cover-placeholder\'>🎵</div>\';">'
+        : '<div class="release-hero-cover-placeholder">🎵</div>';
+    
+    hero.innerHTML = 
+      '<div class="release-hero-content" onclick="playNewRelease()">' +
+        '<div class="release-hero-cover">' +
+          '<span class="release-hero-badge">NEW RELEASE</span>' +
+          coverHtml +
+        '</div>' +
+        '<div class="release-hero-info">' +
+          '<h2>★ ПРЕМЬЕРА</h2>' +
+          '<h1 class="release-hero-title">' + escapeHtml(latestTrack.title) + '</h1>' +
+          '<div class="release-hero-artist">' + escapeHtml(latestTrack.subtitle || 'EVGENII AI') + ' · ' + latestTrack.duration + '</div>' +
+          (latestTrack.description ? '<p class="release-hero-description">' + escapeHtml(latestTrack.description) + '</p>' : '') +
+          '<div class="release-hero-actions">' +
+            '<button class="btn-hero-play" onclick="event.stopPropagation(); playNewRelease()">' +
+              '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>' +
+              'СЛУШАТЬ СЕЙЧАС' +
+            '</button>' +
+            '<button class="btn-hero-secondary" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[0])">' +
+              'ℹ️ История создания' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
 }
 
-// === НОВОЕ: Функция для получения превью описания ===
 function getDescriptionPreview(text, maxLength) {
   if (!text) return { preview: '', isLong: false };
-  // Убираем лишние переносы строк для превью
   var cleanText = text.replace(/\s+/g, ' ').trim();
   if (cleanText.length <= maxLength) {
     return { preview: cleanText, isLong: false };
   }
-  // Обрезаем по последнему пробелу, чтобы не рвать слова
   var cut = cleanText.substring(0, maxLength);
   var lastSpace = cut.lastIndexOf(' ');
   if (lastSpace > maxLength * 0.6) {
@@ -1324,9 +1741,8 @@ function renderAllTracksList() {
         var el = document.createElement('div');
         el.className = 'track-item glass-panel';
         el.dataset.id = track.id;
-        var coverHtml = track.cover ? '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">' : '🎵';
+        var coverHtml = track.cover ? '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'\'">' : '🎵';
         
-        // НОВОЕ: Формируем превью описания
         var descPreview = getDescriptionPreview(track.description, 80);
         var descHtml = '';
         if (descPreview.preview) {
@@ -1336,21 +1752,21 @@ function renderAllTracksList() {
           }
         }
         
-        el.innerHTML = '<div class="track-cover" onclick="playTrack(tracksData[' + index + '],' + index + ')">' + coverHtml + '</div>' +
-            '<div class="track-info-wrapper">' +
-              '<div class="track-info" onclick="playTrack(tracksData[' + index + '],' + index + ')">' +
-                '<div class="track-title">' + escapeHtml(track.title) + '</div>' +
-                '<div class="track-artist">' + escapeHtml(track.subtitle || 'EVGENII AI') + '</div>' +
-              '</div>' +
-              descHtml +
-            '</div>' +
-            '<div class="track-duration">' + track.duration + '</div>' +
-            '<div class="track-actions">' +
-              '<button class="track-info-btn" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[' + index + '])" title="Полная история трека">ℹ️</button>' +
-              '<button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(tracksData[' + index + '])">' +
-                '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>' +
-              '</button>' +
-            '</div>';
+        el.innerHTML = 
+          '<div class="track-cover" onclick="playTrack(tracksData[' + index + '],' + index + ')">' + coverHtml + '</div>' +
+          '<div class="track-info" onclick="playTrack(tracksData[' + index + '],' + index + ')">' +
+            '<div class="track-title">' + escapeHtml(track.title) + '</div>' +
+            '<div class="track-artist">' + escapeHtml(track.subtitle || 'EVGENII AI') + '</div>' +
+            descHtml +
+          '</div>' +
+          '<div class="track-duration">' + track.duration + '</div>' +
+          '<div class="track-actions">' +
+            '<button class="track-info-btn" onclick="event.stopPropagation(); openTrackInfoModal(tracksData[' + index + '])" title="Полная история трека">ℹ️</button>' +
+            '<button class="track-download-btn" onclick="event.stopPropagation();openDownloadModal(tracksData[' + index + '])">' +
+              '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>' +
+            '</button>' +
+          '</div>';
+        
         list.appendChild(el);
     });
 }
@@ -1364,11 +1780,14 @@ var currentTrackIndex = -1;
 var isHandlingTrackEnd = false;
 
 function stopPlayer() {
-  audio.pause(); clearInterval(simulationInterval); setPlayingState(false);
+  audio.pause(); 
+  clearInterval(simulationInterval); 
+  setPlayingState(false);
   document.getElementById('playerBarFill').style.width = '0%';
   document.getElementById('playerCurrentTime').textContent = '0:00';
   document.getElementById('stickyPlayer').classList.remove('visible');
-  isHandlingTrackEnd = false; updateAttachLabel();
+  isHandlingTrackEnd = false; 
+  updateAttachLabel();
 }
 
 function playTrack(track, index) {
@@ -1378,16 +1797,26 @@ function playTrack(track, index) {
   document.getElementById('playerTitle').textContent = track.title;
   document.getElementById('playerArtist').textContent = track.subtitle || 'EVGENII AI';
   var pc = document.getElementById('playerCover');
-  if (track.cover) { pc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; } else { pc.textContent = '🎵'; }
+  if (track.cover) { pc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'\'">'; } else { pc.textContent = ''; }
   document.getElementById('playerTotalTime').textContent = track.duration;
   document.getElementById('stickyPlayer').classList.add('visible');
+  
   document.querySelectorAll('.track-item').forEach(function(el) { el.classList.remove('active'); });
   var ae = document.querySelector('.track-item[data-id="' + track.id + '"]');
   if (ae) ae.classList.add('active');
+  
   audio.src = track.file;
-  audio.play().then(function() { setPlayingState(true); updateAttachLabel(); updateMediaSession(); }).catch(function(error) { 
-    console.error("Ошибка аудио:", error);
-    alert("⚠️ Не удалось воспроизвести трек!\n\nПричина: " + error.message + "\n\nПроверьте, что ссылка на файл является ПРЯМОЙ ссылкой на .mp3");
+  isHandlingTrackEnd = false;
+  
+  audio.play().then(function() { 
+    setPlayingState(true); 
+    updateAttachLabel(); 
+    updateMediaSession(); 
+  }).catch(function(error) { 
+    if (error.name !== 'AbortError') {
+      console.error("Ошибка аудио:", error);
+      alert("⚠️ Не удалось воспроизвести трек!\n\nПричина: " + error.message + "\n\nПроверьте, что ссылка на файл является ПРЯМОЙ ссылкой на .mp3");
+    }
     setPlayingState(false);
   });
 }
@@ -1396,12 +1825,20 @@ function playNewRelease() { if (tracksData.length > 0) playTrack(tracksData[0], 
 
 function togglePlay() {
   if (!currentTrack) return;
-  if (isPlaying) { audio.pause(); clearInterval(simulationInterval); setPlayingState(false); } 
-  else { audio.play().catch(function(error) { 
-      console.error("Ошибка аудио:", error);
-      alert("⚠️ Не удалось воспроизвести трек!\n\nПричина: " + error.message);
+  if (isPlaying) { 
+    audio.pause(); 
+    clearInterval(simulationInterval); 
+    setPlayingState(false); 
+  } else { 
+    audio.play().catch(function(error) { 
+      if (error.name !== 'AbortError') {
+        console.error("Ошибка аудио:", error);
+        alert("️ Не удалось воспроизвести трек!\n\nПричина: " + error.message);
+      }
       setPlayingState(false);
-  }); setPlayingState(true); }
+    }); 
+    setPlayingState(true); 
+  }
 }
 
 function setPlayingState(state) {
@@ -1412,8 +1849,18 @@ function setPlayingState(state) {
 
 function skipForward() { playNextTrack(); }
 function skipBackward() { playPreviousTrack(); }
-function playNextTrack() { if (tracksData.length === 0) return; var n = currentTrackIndex < tracksData.length - 1 ? currentTrackIndex + 1 : 0; playTrack(tracksData[n], n); }
-function playPreviousTrack() { if (tracksData.length === 0) return; var n = currentTrackIndex > 0 ? currentTrackIndex - 1 : tracksData.length - 1; playTrack(tracksData[n], n); }
+
+function playNextTrack() { 
+  if (tracksData.length === 0) return; 
+  var n = currentTrackIndex < tracksData.length - 1 ? currentTrackIndex + 1 : 0; 
+  playTrack(tracksData[n], n); 
+}
+
+function playPreviousTrack() { 
+  if (tracksData.length === 0) return; 
+  var n = currentTrackIndex > 0 ? currentTrackIndex - 1 : tracksData.length - 1; 
+  playTrack(tracksData[n], n); 
+}
 
 function seek(event) {
   if (!currentTrack) return;
@@ -1431,36 +1878,77 @@ function updateMediaSession() {
 
 function startSimulation() {
   setPlayingState(true);
-  var c = 0; var d = pd(currentTrack.duration); if (d <= 0) d = 180;
+  var c = 0; 
+  var d = pd(currentTrack.duration); 
+  if (d <= 0) d = 180;
   clearInterval(simulationInterval);
   simulationInterval = setInterval(function() {
-    if (!audio.paused && audio.currentTime > 0 && !audio.ended) { clearInterval(simulationInterval); return; }
-    c++; if (c >= d) { clearInterval(simulationInterval); handleTrackEnd(); } 
-    else { document.getElementById('playerBarFill').style.width = (c / d * 100) + '%'; document.getElementById('playerCurrentTime').textContent = ft(c); }
+    if (!audio.paused && audio.currentTime > 0 && !audio.ended) { 
+      clearInterval(simulationInterval); 
+      return; 
+    }
+    c++; 
+    if (c >= d) { 
+      clearInterval(simulationInterval); 
+      handleTrackEnd(); 
+    } else { 
+      document.getElementById('playerBarFill').style.width = (c / d * 100) + '%'; 
+      document.getElementById('playerCurrentTime').textContent = ft(c); 
+    }
   }, 1000);
 }
 
 function handleTrackEnd() {
   if (isHandlingTrackEnd || !isPlaying) return;
-  isHandlingTrackEnd = true; clearInterval(simulationInterval); setPlayingState(false);
-  document.getElementById('playerBarFill').style.width = '0%'; document.getElementById('playerCurrentTime').textContent = '0:00';
-  setTimeout(function() { isHandlingTrackEnd = false; playNextTrack(); }, 200);
+  
+  isHandlingTrackEnd = true; 
+  clearInterval(simulationInterval); 
+  setPlayingState(false);
+  document.getElementById('playerBarFill').style.width = '0%'; 
+  document.getElementById('playerCurrentTime').textContent = '0:00';
+  
+  setTimeout(function() { 
+    isHandlingTrackEnd = false; 
+    playNextTrack(); 
+  }, 400);
 }
 
-function pd(s) { if (!s || s === '0:00') return 0; var p = s.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1]); }
-function ft(s) { if (isNaN(s)) return '0:00'; return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0'); }
+function pd(s) { 
+  if (!s || s === '0:00') return 0; 
+  var p = s.split(':'); 
+  return parseInt(p[0]) * 60 + parseInt(p[1]); 
+}
+
+function ft(s) { 
+  if (isNaN(s)) return '0:00'; 
+  return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0'); 
+}
+
+audio.addEventListener('ended', function() {
+  handleTrackEnd();
+});
 
 audio.addEventListener('timeupdate', function() {
   if (!currentTrack) return;
-  var d = audio.duration || pd(currentTrack.duration); if (d <= 0) return;
+  var d = audio.duration || pd(currentTrack.duration); 
+  if (d <= 0) return;
+  
   document.getElementById('playerBarFill').style.width = (audio.currentTime / d * 100) + '%';
   document.getElementById('playerCurrentTime').textContent = ft(audio.currentTime);
-  if (audio.duration && audio.currentTime >= audio.duration - 0.3 && isPlaying) handleTrackEnd();
+  
+  if (audio.duration && audio.currentTime >= audio.duration - 0.5 && isPlaying && !isHandlingTrackEnd) {
+    handleTrackEnd();
+  }
 });
-audio.addEventListener('loadedmetadata', function() { if (audio.duration && !isNaN(audio.duration)) document.getElementById('playerTotalTime').textContent = ft(audio.duration); });
+
+audio.addEventListener('loadedmetadata', function() { 
+  if (audio.duration && !isNaN(audio.duration)) {
+    document.getElementById('playerTotalTime').textContent = ft(audio.duration); 
+  }
+});
+
 audio.addEventListener('play', function() { setPlayingState(true); });
 audio.addEventListener('pause', function() { if (!isHandlingTrackEnd) setPlayingState(false); });
-audio.addEventListener('ended', function() { handleTrackEnd(); });
 
 // === DOWNLOAD ===
 var downloadTrack = null;
@@ -1486,6 +1974,7 @@ document.getElementById('downloadModal').addEventListener('click', function(e) {
 
 // === TRACK INFO MODAL ===
 function openTrackInfoModal(track) {
+  if (!track) return;
   var mc = document.getElementById('modalInfoCover');
   if (track.cover) { mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; } else { mc.textContent = '🎵'; }
   document.getElementById('modalInfoTitle').textContent = track.title;
@@ -1639,6 +2128,7 @@ function showMainScreen(name) {
   document.getElementById('headerGreeting').textContent = getGreeting(new Date().getHours());
   loadTracksFromFirestore();
   updateAttachLabel();
+  initLiveSubtitle();
 }
 
 logoutBtn.addEventListener('click', function() {
@@ -1652,6 +2142,7 @@ logoutBtn.addEventListener('click', function() {
   stopPlayer();
   if (discussionsUnsubscribe) { discussionsUnsubscribe(); discussionsUnsubscribe = null; }
   if (maintenanceUnsubscribe) { maintenanceUnsubscribe(); maintenanceUnsubscribe = null; }
+  if (liveInterval) { clearInterval(liveInterval); liveInterval = null; }
   isAdminLoggedIn = false;
 });
 
