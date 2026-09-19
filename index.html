@@ -328,7 +328,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   }
 }
 
-/* === РЕЛИЗЫ ОТ ПОДПИСЧИКОВ === */
 .subscriber-releases {
   margin-bottom: 40px;
 }
@@ -1182,7 +1181,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     </div>
   </section>
 
-  <!-- РЕЛИЗЫ ОТ ПОДПИСЧИКОВ -->
   <section class="section subscriber-releases">
     <h2 class="section-title"> РЕЛИЗЫ ОТ ПОДПИСЧИКОВ</h2>
     <div class="subscriber-grid" id="subscriberGrid">
@@ -1195,7 +1193,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <h2 class="section-title">БЫСТРЫЙ ДОСТУП</h2>
     <div class="bento-grid">
       <div class="bento-item glass-panel bento-diary" onclick="window.location.href='diary.html'">
-        <div class="bento-icon">📔</div>
+        <div class="bento-icon"></div>
         <div class="bento-text">
           <h3>Творческий дневник <span class="bento-new-badge">NEW</span></h3>
           <p>Мысли, истории, процесс создания музыки</p>
@@ -1231,7 +1229,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 
   <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:40px;">
     <button class="btn-ghost danger" id="logoutBtn">ВЫЙТИ</button>
-    <button class="btn-text" onclick="showAdminLogin()" style="margin-top:8px;">️ Админ</button>
+    <button class="btn-text" onclick="showAdminLogin()" style="margin-top:8px;">⚙️ Админ</button>
   </div>
 </div>
 
@@ -1271,7 +1269,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     </div>
 
     <div class="glass-panel" style="padding:24px;margin-bottom:24px;">
-      <h3 style="color:var(--accent-cyan);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;">🎵 УПРАВЛЕНИЕ РЕЛИЗАМИ</h3>
+      <h3 style="color:var(--accent-cyan);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;"> УПРАВЛЕНИЕ РЕЛИЗАМИ</h3>
       <div style="display:flex;flex-direction:column;gap:12px;">
         <input type="text" id="adminTrackTitle" class="form-input" placeholder="Название трека *">
         <input type="text" id="adminTrackSubtitle" class="form-input" placeholder="Подзаголовок (по умолчанию: EVGENII AI)">
@@ -1280,7 +1278,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
         <input type="text" id="adminTrackCover" class="form-input" placeholder="Путь к обложке (URL)">
         <textarea id="adminTrackDescription" class="form-textarea" placeholder="Краткое описание или история создания трека..." style="min-height: 80px;"></textarea>
         
-        <!-- Выбор типа релиза -->
         <div class="form-group" style="margin-bottom: 0;">
           <label class="form-label">Тип релиза *</label>
           <select id="adminTrackType" class="form-select">
@@ -1290,7 +1287,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
         </div>
         
         <button class="btn-primary" id="submitTrackBtn" onclick="addNewRelease()">🚀 ОПУБЛИКОВАТЬ</button>
-        <button class="btn-ghost" id="cancelEditBtn" onclick="cancelEditTrack()" style="display:none;width:100%;">❌ ОТМЕНИТЬ РЕДАКТИРОВАНИЕ</button>
+        <button class="btn-ghost" id="cancelEditBtn" onclick="cancelEditTrack()" style="display:none;width:100%;"> ОТМЕНИТЬ РЕДАКТИРОВАНИЕ</button>
         <div class="form-status" id="adminTrackStatus"></div>
       </div>
     </div>
@@ -1339,7 +1336,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <span style="font-size:0.7rem;padding:4px 8px;background:rgba(255,255,255,0.1);border-radius:6px;">Скоро</span>
   </div>
   <div class="glass-panel" style="padding:20px;margin-bottom:12px;display:flex;align-items:center;gap:16px;opacity:0.6;cursor:not-allowed;">
-    <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#0088cc,#00a8e8);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">️</div>
+    <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#0088cc,#00a8e8);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">✈️</div>
     <div style="flex:1;"><div style="font-weight:600;">Telegram</div><div style="font-size:0.8rem;color:var(--text-secondary);">Новости и обновления</div></div>
     <span style="font-size:0.7rem;padding:4px 8px;background:rgba(255,255,255,0.1);border-radius:6px;">Скоро</span>
   </div>
@@ -1433,7 +1430,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <div class="discussion-input-area">
       <label style="font-size:0.75rem;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;gap:6px;margin-bottom:8px;width:100%;">
         <input type="checkbox" id="discussionAttachToggle" style="accent-color:var(--accent-cyan);">
-        <span id="discussionAttachText"> Сначала включи любой трек</span>
+        <span id="discussionAttachText">🎵 Сначала включи любой трек</span>
       </label>
       <div style="display:flex;gap:10px;width:100%;">
         <textarea class="discussion-input" id="discussionInput" placeholder="Написать в чат..." maxlength="500" rows="1"></textarea>
@@ -1486,7 +1483,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
       <div id="modalDuration" style="font-family:'Orbitron';color:var(--accent-cyan);">0:00</div>
     </div>
     <div style="background:rgba(255,51,102,0.08);border:1px solid rgba(255,51,102,0.2);border-radius:12px;padding:16px;margin-bottom:20px;text-align:left;font-size:0.85rem;color:var(--text-secondary);">
-      <strong style="color:var(--error);display:block;margin-bottom:4px;"> Внимание!</strong>
+      <strong style="color:var(--error);display:block;margin-bottom:4px;">⚠ Внимание!</strong>
       Скачивание происходит не сразу. Пожалуйста, подождите несколько секунд.
     </div>
     <button class="btn-primary" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
@@ -1496,7 +1493,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 <!-- Track Info Modal -->
 <div class="modal-overlay" id="trackInfoModal">
   <div class="modal-content">
-    <button class="btn-text" onclick="closeTrackInfoModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
+    <button class="btn-text" onclick="closeTrackInfoModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;"></button>
     <div class="modal-header">ИСТОРИЯ СОЗДАНИЯ</div>
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
       <div id="modalInfoCover" style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);display:flex;align-items:center;justify-content:center;font-size:1.5rem;overflow:hidden;flex-shrink:0;"></div>
@@ -1745,12 +1742,10 @@ document.getElementById('maintenanceAdminModal').addEventListener('click', funct
 var tracksData = [];
 var currentEditingTrackId = null;
 
-// Вспомогательная функция: найти трек по ID
 function findTrackById(id) {
   return tracksData.find(function(t) { return t.id === id; });
 }
 
-// Вспомогательная функция: найти индекс трека в массиве
 function findTrackIndex(id) {
   return tracksData.findIndex(function(t) { return t.id === id; });
 }
@@ -1761,7 +1756,6 @@ function loadTracksFromFirestore() {
         tracksData = [];
         snapshot.forEach(function(doc) { 
           var data = doc.data();
-          // Если тип не указан (старые треки), считаем основным
           if (!data.type) data.type = 'main';
           tracksData.push({ id: doc.id, ...data }); 
         });
@@ -1824,7 +1818,7 @@ function editTrack(trackId) {
     document.getElementById('adminTrackType').value = track.type || 'main';
 
     var submitBtn = document.getElementById('submitTrackBtn');
-    submitBtn.textContent = '💾 СОХРАНИТЬ ИЗМЕНЕНИЯ';
+    submitBtn.textContent = ' СОХРАНИТЬ ИЗМЕНЕНИЯ';
     submitBtn.onclick = function() { updateTrack(trackId); };
     document.getElementById('cancelEditBtn').style.display = 'block';
     document.getElementById('adminTrackTitle').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1914,9 +1908,8 @@ function renderAdminTracksList() {
     
     list.innerHTML = tracksData.map(function(track, index) {
         var isNew = index === 0 ? '<span style="color:var(--accent-cyan);font-size:0.7rem;margin-left:8px;">[NEW]</span>' : '';
-        var hasDesc = track.description ? ' <span style="color:var(--accent-gold);font-size:0.7rem;">📝</span>' : '';
+        var hasDesc = track.description ? ' <span style="color:var(--accent-gold);font-size:0.7rem;"></span>' : '';
         
-        // Бейдж типа трека
         var typeBadge = '';
         if (track.type === 'subscriber') {
           typeBadge = ' <span style="color:var(--accent-gold);font-size:0.7rem;background:rgba(255,204,0,0.1);padding:2px 6px;border-radius:4px;">👥 ПОДПИСЧИК</span>';
@@ -1936,12 +1929,10 @@ function renderAdminTracksList() {
     }).join('');
 }
 
-// === НОВЫЙ РЕЛИЗ (только основной проект) ===
 function renderNewRelease() {
     var hero = document.getElementById('releaseHero');
     if (!hero) return;
     
-    // Фильтруем только основные релизы
     var mainReleases = tracksData.filter(function(t) { return t.type !== 'subscriber'; });
     
     if (mainReleases.length === 0) {
@@ -1950,7 +1941,6 @@ function renderNewRelease() {
     }
     
     var latestTrack = mainReleases[0];
-    var trackIndex = findTrackIndex(latestTrack.id);
     
     var coverHtml = latestTrack.cover 
         ? '<img src="' + latestTrack.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<div class=\\\'release-hero-cover-placeholder\\\'>🎵</div>\';">'
@@ -1980,12 +1970,10 @@ function renderNewRelease() {
       '</div>';
 }
 
-// === РЕЛИЗЫ ОТ ПОДПИСЧИКОВ ===
 function renderSubscriberReleases() {
     var grid = document.getElementById('subscriberGrid');
     if (!grid) return;
     
-    // Фильтруем только релизы от подписчиков (последние 2)
     var subscriberReleases = tracksData.filter(function(t) { return t.type === 'subscriber'; }).slice(0, 2);
     
     if (subscriberReleases.length === 0) {
@@ -1998,8 +1986,8 @@ function renderSubscriberReleases() {
         if (i < subscriberReleases.length) {
             var track = subscriberReleases[i];
             var coverHtml = track.cover 
-                ? '<img src="' + track.cover + '" onerror="this.parentElement.innerHTML=\'🎵\'">'
-                : '🎵';
+                ? '<img src="' + track.cover + '" onerror="this.parentElement.innerHTML=\'\'">'
+                : '';
             
             html += '<div class="subscriber-card" onclick="playTrackById(\'' + track.id + '\')">' +
                 '<div class="subscriber-cover">' +
@@ -2032,7 +2020,6 @@ function getDescriptionPreview(text, maxLength) {
   return { preview: cut + '...', isLong: true };
 }
 
-// === ВСЕ ТРЕКИ (с выделением подписческих) ===
 function renderAllTracksList() {
     var list = document.getElementById('allTracksList');
     if (!list) return;
@@ -2078,7 +2065,6 @@ function renderAllTracksList() {
     });
 }
 
-// === НОВЫЕ ФУНКЦИИ ДЛЯ РАБОТЫ ПО ID ===
 function playTrackById(trackId) {
   var track = findTrackById(trackId);
   if (!track) return;
@@ -2098,7 +2084,6 @@ function openDownloadModalById(trackId) {
   openDownloadModal(track);
 }
 
-// === AUDIO PLAYER ===
 var audio = document.getElementById('audioPlayer');
 var currentTrack = null;
 var isPlaying = false;
@@ -2128,7 +2113,7 @@ function playTrack(track, index) {
   
   var pc = document.getElementById('playerCover');
   if (track.cover) { 
-    pc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; 
+    pc.innerHTML = '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'\'">'; 
   } else { 
     pc.textContent = ''; 
   }
@@ -2174,7 +2159,7 @@ function togglePlay() {
     audio.play().catch(function(error) { 
       if (error.name !== 'AbortError') {
         console.error("Ошибка аудио:", error);
-        alert("️ Не удалось воспроизвести трек!\n\nПричина: " + error.message);
+        alert("⚠️ Не удалось воспроизвести трек!\n\nПричина: " + error.message);
       }
       setPlayingState(false);
     }); 
@@ -2299,7 +2284,6 @@ audio.addEventListener('loadedmetadata', function() {
 audio.addEventListener('play', function() { setPlayingState(true); });
 audio.addEventListener('pause', function() { if (!isHandlingTrackEnd) setPlayingState(false); });
 
-// === DOWNLOAD ===
 var downloadTrack = null;
 function openDownloadModal(track) {
   if (!track) return;
@@ -2308,7 +2292,7 @@ function openDownloadModal(track) {
   if (track.cover) { 
     mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; 
   } else { 
-    mc.textContent = '🎵'; 
+    mc.textContent = ''; 
   }
   document.getElementById('modalTitle').textContent = track.title;
   document.getElementById('modalArtist').textContent = track.subtitle || 'EVGENII AI';
@@ -2345,7 +2329,6 @@ document.getElementById('downloadModal').addEventListener('click', function(e) {
   if (e.target === this) closeDownloadModal(); 
 });
 
-// === TRACK INFO MODAL ===
 function openTrackInfoModal(track) {
   if (!track) return;
   var mc = document.getElementById('modalInfoCover');
@@ -2371,7 +2354,6 @@ document.getElementById('trackInfoModal').addEventListener('click', function(e) 
   if (e.target === this) closeTrackInfoModal(); 
 });
 
-// === DISCUSSIONS ===
 var discussionsUnsubscribe = null;
 var discussionsData = [];
 function getCurrentPlayingTrack() { if (currentTrack) return currentTrack; return null; }
@@ -2385,7 +2367,7 @@ function updateAttachLabel() {
     toggle.disabled = false; 
     toggle.parentElement.style.opacity = '1'; 
   } else { 
-    label.textContent = '🎵 Сначала включи любой трек'; 
+    label.textContent = ' Сначала включи любой трек'; 
     toggle.disabled = true; 
     toggle.checked = false; 
     toggle.parentElement.style.opacity = '0.5'; 
@@ -2411,7 +2393,7 @@ function renderDiscussions() {
   var count = document.getElementById('discussionsCount');
   if (!list) return;
   if (discussionsData.length === 0) { 
-    list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:40px 20px;"> Пока нет сообщений.<br>Будь первым!</div>'; 
+    list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:40px 20px;">💬 Пока нет сообщений.<br>Будь первым!</div>'; 
     if (count) count.textContent = '0'; 
     return; 
   }
@@ -2481,7 +2463,6 @@ document.getElementById('discussionInput').addEventListener('keydown', function(
   } 
 });
 
-// === ADMIN & NAVIGATION ===
 function showAdminLogin() { 
   navigateTo('adminPage'); 
   document.getElementById('adminLoginSection').style.display = 'block'; 
@@ -2495,7 +2476,7 @@ function adminLogin() {
   var password = document.getElementById('adminPasswordInput').value;
   var status = document.getElementById('adminLoginStatus');
   if (!email || !password) { 
-    status.textContent = '⚠️ Введите email и пароль'; 
+    status.textContent = '️ Введите email и пароль'; 
     status.className = 'form-status error'; 
     return; 
   }
@@ -2513,7 +2494,7 @@ function adminLogin() {
       }, 500);
     })
     .catch(function(error) {
-      var msg = '❌ Ошибка входа';
+      var msg = ' Ошибка входа';
       if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') 
         msg = 'Неверный email или пароль';
       status.textContent = msg; 
@@ -2554,7 +2535,6 @@ function navigateTo(pageId) {
 }
 function goBack() { navigateTo('homePage'); }
 
-// === INITIALIZATION ===
 var loginScreen = document.getElementById('loginScreen');
 var loginForm = document.getElementById('loginForm');
 var nameInput = document.getElementById('nameInput');
@@ -2629,7 +2609,6 @@ logoutBtn.addEventListener('click', function() {
   isAdminLoggedIn = false;
 });
 
-// === CONTACT FORM ===
 var contactForm = document.getElementById('contactForm');
 var formSubmitBtn = document.getElementById('submitBtn');
 var formStatus = document.getElementById('formStatus');
@@ -2644,7 +2623,7 @@ if (contactForm) {
     formSubmitBtn.innerHTML = '<span>ОТПРАВКА...</span>'; 
     formStatus.textContent = ''; 
     formStatus.className = 'form-status';
-    var message = '📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n👤 <b>Имя:</b> ' + name + '\n <b>Контакт:</b> ' + contact + '\n💬 <b>Сообщение:</b>\n' + messageText + '\n <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
+    var message = '📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n👤 <b>Имя:</b> ' + name + '\n <b>Контакт:</b> ' + contact + '\n💬 <b>Сообщение:</b>\n' + messageText + '\n⏰ <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
     var telegramURL = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
     fetch(telegramURL, { 
       method: 'POST', 
@@ -2673,7 +2652,6 @@ if (contactForm) {
   });
 }
 
-// === SUPPORT COPY ===
 var CARD_NUMBER = '2204311007219604';
 var copyTimeout = null;
 function copyCardNumber() {
