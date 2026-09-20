@@ -142,14 +142,11 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   text-transform: uppercase;
   transition: all 0.3s ease;
   box-shadow: 0 4px 20px rgba(0, 240, 255, 0.3);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 240, 255, 0.4); }
 .btn-primary:active { transform: translateY(0); }
-.btn-primary:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-}
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
 .btn-primary-gold {
   width: 100%;
@@ -166,14 +163,11 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   text-transform: uppercase;
   transition: all 0.3s ease;
   box-shadow: 0 4px 20px rgba(255, 204, 0, 0.3);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .btn-primary-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 204, 0, 0.5); }
 .btn-primary-gold:active { transform: translateY(0); }
-.btn-primary-gold:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-}
+.btn-primary-gold:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
 .btn-ghost {
   padding: 12px 24px;
@@ -304,10 +298,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   line-height: 1.5;
 }
 
-.hero-slogan .live-text {
-  display: inline;
-  white-space: nowrap;
-}
+.hero-slogan .live-text { display: inline; white-space: nowrap; }
 
 .hero-slogan .typing-cursor {
   display: inline-block;
@@ -325,32 +316,252 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   51%, 100% { opacity: 0; }
 }
 
-.hero-slogan .highlight {
-  color: var(--accent-cyan);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.hero-slogan .highlight-gold {
-  color: var(--accent-gold);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.hero-slogan.fade-out {
-  opacity: 0;
-  transform: translateY(-8px);
-}
-
-.hero-slogan.fade-in {
-  opacity: 1;
-  transform: translateY(0);
-}
+.hero-slogan .highlight { color: var(--accent-cyan); font-weight: 600; white-space: nowrap; }
+.hero-slogan .highlight-gold { color: var(--accent-gold); font-weight: 600; white-space: nowrap; }
+.hero-slogan.fade-out { opacity: 0; transform: translateY(-8px); }
+.hero-slogan.fade-in { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 600px) {
   .hero-slogan .live-text { white-space: normal; }
   .hero-slogan { font-size: 0.95rem; line-height: 1.6; }
 }
+
+/* === КАРТОЧКИ ВЫБОРА НА СТРАНИЦЕ СВЯЗИ === */
+.contact-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .contact-choice-grid { grid-template-columns: 1fr; }
+}
+
+.contact-choice-card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 28px 20px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  text-align: center;
+}
+
+.contact-choice-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.contact-choice-card.gold::before {
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-magenta));
+}
+
+.contact-choice-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 12px 32px rgba(0, 240, 255, 0.15);
+}
+
+.contact-choice-card.gold:hover {
+  border-color: var(--accent-gold);
+  box-shadow: 0 12px 32px rgba(255, 204, 0, 0.15);
+}
+
+.contact-choice-card:hover::before { opacity: 1; }
+
+.contact-choice-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(157, 0, 255, 0.15));
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  transition: all 0.3s;
+}
+
+.contact-choice-card.gold .contact-choice-icon {
+  background: linear-gradient(135deg, rgba(255, 204, 0, 0.15), rgba(255, 0, 170, 0.15));
+  border: 1px solid rgba(255, 204, 0, 0.3);
+}
+
+.contact-choice-card:hover .contact-choice-icon { transform: scale(1.1); }
+
+.contact-choice-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.contact-choice-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* === КОНТЕЙНЕР ФОРМ === */
+.contact-form-wrapper {
+  display: none;
+  animation: slideIn 0.4s ease;
+}
+
+.contact-form-wrapper.active { display: block; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.back-to-choice-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 20px;
+}
+
+.back-to-choice-btn:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: rgba(0, 240, 255, 0.05);
+  transform: translateX(-3px);
+}
+
+/* === ФОРМА ТЕКСТА ПЕСНИ === */
+.lyrics-form-container {
+  padding: 32px 24px;
+  background: linear-gradient(135deg, rgba(255, 204, 0, 0.06), rgba(157, 0, 255, 0.06));
+  border: 1px solid rgba(255, 204, 0, 0.25);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.lyrics-form-container::before {
+  content: '🎵';
+  position: absolute;
+  top: -20px;
+  right: -10px;
+  font-size: 8rem;
+  opacity: 0.06;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+.lyrics-form-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.lyrics-form-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+}
+
+.lyrics-form-subtitle strong { color: var(--accent-gold); }
+
+/* === ЧЕКБОКС СОГЛАСИЯ === */
+.checkbox-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.checkbox-wrapper:hover {
+  border-color: var(--accent-gold);
+  background: rgba(255, 204, 0, 0.03);
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 2px solid var(--glass-border);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  position: relative;
+  margin-top: 2px;
+  transition: all 0.2s;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, var(--accent-gold), #ff9500);
+  border-color: var(--accent-gold);
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.checkbox-wrapper input[type="checkbox"]:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
+}
+
+.checkbox-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label strong { color: var(--text-primary); }
 
 .subscriber-releases { margin-bottom: 40px; }
 .subscriber-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -548,7 +759,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 }
 .track-duration { font-size: 0.85rem; color: var(--text-secondary); font-family: 'Orbitron', monospace; flex-shrink: 0; margin-top: 4px; }
 .track-actions { display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; }
-.track-download-btn, .track-info-btn {
+.track-download-btn, .track-info-btn, .track-test-btn {
   width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--glass-border);
   background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
 }
@@ -557,6 +768,9 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 .track-download-btn svg { width: 16px; height: 16px; fill: currentColor; }
 .track-info-btn { color: var(--accent-gold); font-size: 1.1rem; }
 .track-info-btn:hover { border-color: var(--accent-gold); background: rgba(255, 204, 0, 0.1); }
+.track-test-btn { color: var(--success); }
+.track-test-btn:hover { border-color: var(--success); background: rgba(0, 255, 157, 0.1); }
+.track-test-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
 .sticky-player {
   position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(150%);
@@ -658,7 +872,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 .discussion-send-btn svg { width: 18px; height: 18px; fill: #000; }
 
 .form-group { margin-bottom: 16px; }
-.form-label { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+.form-label { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
 .form-input, .form-textarea, .form-select {
   width: 100%; padding: 14px 16px; border: 1px solid var(--glass-border); border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.03); color: var(--text-primary); font-family: 'Inter'; font-size: 0.95rem;
@@ -674,263 +888,11 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   background-position: right 16px center;
   padding-right: 40px;
 }
-.form-select option {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-}
+.form-select option { background: var(--bg-secondary); color: var(--text-primary); }
 
 .form-status { margin-top: 12px; text-align: center; font-size: 0.85rem; min-height: 20px; }
 .form-status.success { color: var(--success); }
 .form-status.error { color: var(--error); }
-
-/* === КАРТОЧКИ ВЫБОРА НА СТРАНИЦЕ СВЯЗИ === */
-.contact-choice-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: 8px;
-}
-
-@media (max-width: 480px) {
-  .contact-choice-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.contact-choice-card {
-  position: relative;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  padding: 28px 20px;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  text-align: center;
-}
-
-.contact-choice-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.contact-choice-card.gold::before {
-  background: linear-gradient(90deg, var(--accent-gold), var(--accent-magenta));
-}
-
-.contact-choice-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent-cyan);
-  box-shadow: 0 12px 32px rgba(0, 240, 255, 0.15);
-}
-
-.contact-choice-card.gold:hover {
-  border-color: var(--accent-gold);
-  box-shadow: 0 12px 32px rgba(255, 204, 0, 0.15);
-}
-
-.contact-choice-card:hover::before {
-  opacity: 1;
-}
-
-.contact-choice-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  margin: 0 auto 16px;
-  background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(157, 0, 255, 0.15));
-  border: 1px solid rgba(0, 240, 255, 0.3);
-  transition: all 0.3s;
-}
-
-.contact-choice-card.gold .contact-choice-icon {
-  background: linear-gradient(135deg, rgba(255, 204, 0, 0.15), rgba(255, 0, 170, 0.15));
-  border: 1px solid rgba(255, 204, 0, 0.3);
-}
-
-.contact-choice-card:hover .contact-choice-icon {
-  transform: scale(1.1);
-}
-
-.contact-choice-title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-  color: var(--text-primary);
-}
-
-.contact-choice-desc {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  line-height: 1.4;
-}
-
-/* === КОНТЕЙНЕР ФОРМ === */
-.contact-form-wrapper {
-  display: none;
-  animation: slideIn 0.4s ease;
-}
-
-.contact-form-wrapper.active {
-  display: block;
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.back-to-choice-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border: 1px solid var(--glass-border);
-  border-radius: 50px;
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-bottom: 20px;
-}
-
-.back-to-choice-btn:hover {
-  border-color: var(--accent-cyan);
-  color: var(--accent-cyan);
-  background: rgba(0, 240, 255, 0.05);
-  transform: translateX(-3px);
-}
-
-/* === ФОРМА ТЕКСТА ПЕСНИ === */
-.lyrics-form-container {
-  padding: 32px 24px;
-  background: linear-gradient(135deg, rgba(255, 204, 0, 0.06), rgba(157, 0, 255, 0.06));
-  border: 1px solid rgba(255, 204, 0, 0.25);
-  border-radius: var(--radius-lg);
-  position: relative;
-  overflow: hidden;
-}
-
-.lyrics-form-container::before {
-  content: '🎵';
-  position: absolute;
-  top: -20px;
-  right: -10px;
-  font-size: 8rem;
-  opacity: 0.06;
-  transform: rotate(-15deg);
-  pointer-events: none;
-}
-
-.lyrics-form-title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--accent-gold);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  position: relative;
-  z-index: 1;
-}
-
-.lyrics-form-subtitle {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  margin-bottom: 24px;
-  line-height: 1.5;
-  position: relative;
-  z-index: 1;
-}
-
-.lyrics-form-subtitle strong {
-  color: var(--accent-gold);
-}
-
-/* === ЧЕКБОКС СОГЛАСИЯ === */
-.checkbox-wrapper {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-sm);
-  margin-bottom: 20px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.checkbox-wrapper:hover {
-  border-color: var(--accent-gold);
-  background: rgba(255, 204, 0, 0.03);
-}
-
-.checkbox-wrapper input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
-  border: 2px solid var(--glass-border);
-  border-radius: 6px;
-  background: rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  position: relative;
-  margin-top: 2px;
-  transition: all 0.2s;
-}
-
-.checkbox-wrapper input[type="checkbox"]:checked {
-  background: linear-gradient(135deg, var(--accent-gold), #ff9500);
-  border-color: var(--accent-gold);
-}
-
-.checkbox-wrapper input[type="checkbox"]:checked::after {
-  content: '✓';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #000;
-  font-size: 14px;
-  font-weight: 900;
-}
-
-.checkbox-wrapper input[type="checkbox"]:focus {
-  outline: none;
-  border-color: var(--accent-gold);
-  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
-}
-
-.checkbox-label {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  cursor: pointer;
-  user-select: none;
-}
-
-.checkbox-label strong {
-  color: var(--text-primary);
-}
 
 .maintenance-screen {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
@@ -943,6 +905,112 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 .maintenance-title { font-family: 'Orbitron'; font-size: 1.8rem; font-weight: 900; color: var(--accent-gold); margin-bottom: 16px; }
 .maintenance-subtitle { color: var(--text-secondary); max-width: 400px; margin-bottom: 30px; }
+
+/* === ADMIN DASHBOARD & SECTIONS === */
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+@media (max-width: 480px) { .admin-grid { grid-template-columns: 1fr; } }
+
+.admin-tile {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+.admin-tile:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 12px 32px rgba(0, 240, 255, 0.15);
+}
+.admin-tile.gold:hover {
+  border-color: var(--accent-gold);
+  box-shadow: 0 12px 32px rgba(255, 204, 0, 0.15);
+}
+.admin-tile-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(157, 0, 255, 0.15));
+  border: 1px solid rgba(0, 240, 255, 0.3);
+}
+.admin-tile.gold .admin-tile-icon {
+  background: linear-gradient(135deg, rgba(255, 204, 0, 0.15), rgba(255, 0, 170, 0.15));
+  border: 1px solid rgba(255, 204, 0, 0.3);
+}
+.admin-tile-title { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; }
+.admin-tile-desc { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4; }
+
+.section-control-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.section-control-info { flex: 1; min-width: 200px; }
+.section-control-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.section-control-status { font-size: 0.75rem; color: var(--text-secondary); }
+.section-control-status.enabled { color: var(--success); }
+.section-control-status.disabled { color: var(--error); }
+
+.toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 28px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.toggle-switch.active { background: var(--success); }
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+.toggle-switch.active::after { transform: translateX(22px); }
+
+.section-reason-select {
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.admin-sub-view { display: none; animation: fadeIn 0.3s ease; }
+.admin-sub-view.active { display: block; }
 
 @media (min-width: 768px) {
   .bento-grid { grid-template-columns: repeat(3, 1fr); }
@@ -997,27 +1065,51 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   </div>
 </div>
 
+<!-- Section Blocked Modal -->
+<div class="modal-overlay" id="sectionBlockedModal">
+  <div class="modal-content" style="text-align:center;">
+    <button class="btn-text" onclick="closeSectionBlockedModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
+    <div style="font-size:3rem;margin-bottom:16px;">🚧</div>
+    <div class="modal-header" style="color:var(--accent-gold);">РАЗДЕЛ ВРЕМЕННО НЕДОСТУПЕН</div>
+    <p id="sectionBlockedReason" style="color:var(--text-secondary);margin-bottom:24px;line-height:1.6;">Причина не указана.</p>
+    <button class="btn-primary" onclick="closeSectionBlockedModal()">ПОНЯТНО</button>
+  </div>
+</div>
+
 <!-- License Modal -->
 <div class="modal-overlay" id="licenseModal">
   <div class="modal-content">
     <button class="btn-text" id="licenseCloseBtn" onclick="closeLicenseModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
     <div class="modal-header">📜 СОГЛАШЕНИЕ</div>
     <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7;margin-bottom:20px;max-height:55vh;overflow-y:auto;padding-right:8px;">
-      <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;"> 1. Авторство и концепция</h4>
-      <p style="margin-bottom:8px;">Все идеи и концепции принадлежат полностью автору. Тексты песен создаются автором при вспомогательном участии искусственного интеллекта. Правообладателем всего контента является автор проекта EVGENII AI.</p>
+      <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">🎵 1. Авторство и концепция</h4>
+      <p style="margin-bottom:8px;">Все идеи и концепции принадлежат полностью автору. Тексты песен создаются автором при вспомогательном участии искусственного интеллекта, доля которого варьируется в зависимости от конкретного произведения — от ≈20% (подбор рифм, синонимов, шлифовка отдельных строк) до ≈50% (совместная проработка отдельных фрагментов). При этом автор осуществляет общее творческое руководство, отбор, редактуру и финальное утверждение текста. Вокал и аранжировка генерируются AI на основе авторских указаний. Правообладателем всего контента является автор проекта EVGENII AI.</p>
+      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">⚖️ Правовая основа: ГК РФ ст. 1228, 1229, 1255, 1259.</div>
+
       <h4 style="color:var(--success);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">✅ 2. Разрешено</h4>
       <ul style="margin-bottom:8px;padding-left:20px;">
         <li style="margin-bottom:4px;">Прослушивание всех треков онлайн</li>
-        <li style="margin-bottom:4px;">Скачивание для личного некоммерческого использования</li>
+        <li style="margin-bottom:4px;">Скачивание для <strong style="color:var(--text-primary);">личного некоммерческого</strong> использования</li>
         <li style="margin-bottom:4px;">Делиться ссылками на треки в соцсетях</li>
-        <li style="margin-bottom:4px;">Отправка своих текстов песен для рассмотрения</li>
+        <li style="margin-bottom:4px;">Участие в обсуждениях и сообществах</li>
       </ul>
+      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">⚖️ Правовая основа: ГК РФ ст. 1273.</div>
+
       <h4 style="color:var(--error);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">🚫 3. Запрещено</h4>
       <ul style="margin-bottom:8px;padding-left:20px;">
-        <li style="margin-bottom:4px;">Коммерческое использование без разрешения</li>
+        <li style="margin-bottom:4px;">Коммерческое использование без письменного разрешения</li>
         <li style="margin-bottom:4px;">Загрузка на стриминговые платформы от своего имени</li>
-        <li style="margin-bottom:4px;">Использование треков для обучения AI-моделей</li>
+        <li style="margin-bottom:4px;">Использование треков для обучения сторонних AI-моделей</li>
+        <li style="margin-bottom:4px;">Присвоение авторства текстов или идей</li>
       </ul>
+      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;">📌 Правовая основа: ГК РФ ст. 1270, 1301, КоАП РФ ст. 7.12, УК РФ ст. 146.</div>
+
+      <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">⚠️ 4. Ответственность</h4>
+      <p style="margin-bottom:8px;">Проект EVGENII AI носит исключительно развлекательный характер и является некоммерческим творческим проектом. Весь контент предоставляется «как есть», без каких-либо гарантий. Автор и правообладатель не несёт ответственности за возможные проблемы, убытки или последствия, возникшие в результате использования сайта, прослушивания контента или взаимодействия с сервисами проекта, за исключением случаев, прямо предусмотренных действующим законодательством.</p>
+      <div style="background:rgba(255,179,71,0.06);border-left:3px solid var(--accent-gold);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.75rem;font-style:italic;color:rgba(255,179,71,0.85);margin-bottom:16px;"> Правовая основа: ГК РФ ст. 15, 401.</div>
+
+      <h4 style="color:var(--accent-cyan);margin:16px 0 8px;font-family:'Orbitron';font-size:0.85rem;">💬 5. Обратная связь</h4>
+      <p>По вопросам лицензирования, сотрудничества или коммерческого использования — пишите через раздел «Связь» на сайте.</p>
     </div>
     <div class="glass-panel" style="padding:14px;border-radius:12px;margin-bottom:16px;cursor:pointer;display:flex;align-items:center;gap:12px;" id="licenseCheckboxWrapper" onclick="toggleLicenseCheckbox()">
       <div style="width:20px;height:20px;border-radius:6px;border:2px solid var(--glass-border);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" id="licenseCheckbox">
@@ -1069,7 +1161,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
       <div class="release-hero-content">
         <div class="release-hero-cover" id="heroCover">
           <span class="release-hero-badge">NEW RELEASE</span>
-          <div class="release-hero-cover-placeholder">🎵</div>
+          <div class="release-hero-cover-placeholder"></div>
         </div>
         <div class="release-hero-info">
           <h2>★ ПРЕМЬЕРА</h2>
@@ -1149,61 +1241,162 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <div class="header-brand">⚙️ АДМИН-ПАНЕЛЬ</div>
   </header>
 
+  <!-- Admin Login -->
   <div id="adminLoginSection" class="glass-panel" style="padding:32px;max-width:400px;margin:0 auto;">
     <h3 style="text-align:center;margin-bottom:24px;color:var(--accent-cyan);">🔐 АВТОРИЗАЦИЯ</h3>
     <div class="form-group">
-      <label class="form-label">Email администратора</label>
+      <label class="form-label">📧 Email администратора</label>
       <input type="email" class="form-input" id="adminEmailInput" placeholder="admin@example.com" autocomplete="off">
     </div>
     <div class="form-group">
-      <label class="form-label">Пароль</label>
+      <label class="form-label">🔑 Пароль</label>
       <input type="password" class="form-input" id="adminPasswordInput" placeholder="Введите пароль" autocomplete="off">
     </div>
-    <button class="btn-primary" onclick="adminLogin()" style="width:100%;margin-top:8px;">ВОЙТИ</button>
+    <button class="btn-primary" onclick="adminLogin()" style="width:100%;margin-top:8px;">
+      <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      ВОЙТИ
+    </button>
     <div class="form-status" id="adminLoginStatus"></div>
   </div>
 
-  <div id="adminContent" style="display:none;">
-    <div class="glass-panel" style="padding:24px;margin-bottom:24px;">
-      <h3 style="color:var(--accent-gold);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;"> ТЕХНИЧЕСКИЕ РАБОТЫ</h3>
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;background:rgba(0,0,0,0.2);border-radius:12px;border:1px solid var(--glass-border);">
-        <div>
-          <div style="font-weight:600;font-size:0.95rem;"> Для всего сайта</div>
-          <div style="font-size:0.8rem;color:var(--text-secondary);">Закрыть сайт для пользователей</div>
-        </div>
-        <div class="glass-panel" id="siteMaintenanceSwitch" onclick="toggleSiteMaintenance()" style="width:50px;height:28px;border-radius:14px;position:relative;cursor:pointer;transition:all 0.3s;background:rgba(255,255,255,0.1);">
-          <div style="width:22px;height:22px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:all 0.3s;box-shadow:0 2px 4px rgba(0,0,0,0.3);" id="maintenanceSwitchKnob"></div>
-        </div>
+  <!-- Admin Dashboard -->
+  <div id="adminDashboard" class="admin-sub-view">
+    <div class="section-title">📊 УПРАВЛЕНИЕ ПРОЕКТОМ</div>
+    <div class="admin-grid">
+      <div class="admin-tile gold" onclick="showAdminSubView('adminMusicView')">
+        <div class="admin-tile-icon">🎵</div>
+        <div class="admin-tile-title">УПРАВЛЕНИЕ МУЗЫКОЙ</div>
+        <div class="admin-tile-desc">Добавление, редактирование и тестирование треков</div>
       </div>
+      <div class="admin-tile" onclick="showAdminSubView('adminSectionsView')">
+        <div class="admin-tile-icon">🌐</div>
+        <div class="admin-tile-title">УПРАВЛЕНИЕ РАЗДЕЛАМИ</div>
+        <div class="admin-tile-desc">Включение/отключение страниц и указание причин</div>
+      </div>
+      <div class="admin-tile" onclick="showAdminSubView('adminChatView')">
+        <div class="admin-tile-icon">💬</div>
+        <div class="admin-tile-title">МОДЕРАЦИЯ ЧАТА</div>
+        <div class="admin-tile-desc">Просмотр и удаление сообщений обсуждений</div>
+      </div>
+      <div class="admin-tile" onclick="showAdminSubView('adminSettingsView')">
+        <div class="admin-tile-icon">⚙️</div>
+        <div class="admin-tile-title">ГЛОБАЛЬНЫЕ НАСТРОЙКИ</div>
+        <div class="admin-tile-desc">Режим технических работ для всего сайта</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Music View -->
+  <div id="adminMusicView" class="admin-sub-view">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+      <button class="btn-ghost" onclick="showAdminSubView('adminDashboard')" style="padding:8px 16px;">← Назад</button>
+      <h3 style="color:var(--accent-cyan);font-size:0.9rem;letter-spacing:2px;margin:0;">🎵 УПРАВЛЕНИЕ МУЗЫКОЙ</h3>
     </div>
 
     <div class="glass-panel" style="padding:24px;margin-bottom:24px;">
-      <h3 style="color:var(--accent-cyan);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;">🎵 УПРАВЛЕНИЕ РЕЛИЗАМИ</h3>
+      <h4 style="color:var(--text-primary);margin-bottom:16px;font-size:0.9rem;display:flex;align-items:center;gap:8px;">
+        <span style="color:var(--accent-cyan);">➕</span> Добавить / Редактировать трек
+      </h4>
       <div style="display:flex;flex-direction:column;gap:12px;">
-        <input type="text" id="adminTrackTitle" class="form-input" placeholder="Название трека *">
-        <input type="text" id="adminTrackSubtitle" class="form-input" placeholder="Подзаголовок (по умолчанию: EVGENII AI)">
-        <input type="text" id="adminTrackFile" class="form-input" placeholder="Путь к файлу (MP3) *">
-        <input type="text" id="adminTrackDuration" class="form-input" placeholder="Длительность (например: 3:45) *">
-        <input type="text" id="adminTrackCover" class="form-input" placeholder="Путь к обложке (URL)">
-        <textarea id="adminTrackDescription" class="form-textarea" placeholder="Краткое описание или история создания трека..." style="min-height: 80px;"></textarea>
-        
-        <div class="form-group" style="margin-bottom: 0;">
-          <label class="form-label">Тип релиза *</label>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">🎵 Название трека *</label>
+          <input type="text" id="adminTrackTitle" class="form-input" placeholder="Например: Ночной город">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">👤 Подзаголовок / Автор</label>
+          <input type="text" id="adminTrackSubtitle" class="form-input" placeholder="По умолчанию: EVGENII AI">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">🔗 Путь к файлу (MP3) *</label>
+          <input type="text" id="adminTrackFile" class="form-input" placeholder="https://.../track.mp3">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">⏱️ Длительность *</label>
+            <input type="text" id="adminTrackDuration" class="form-input" placeholder="3:45">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">🖼️ Путь к обложке (URL)</label>
+            <input type="text" id="adminTrackCover" class="form-input" placeholder="https://.../cover.jpg">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">📝 Описание или история создания</label>
+          <textarea id="adminTrackDescription" class="form-textarea" placeholder="Расскажите, как создавался этот трек..." style="min-height: 80px;"></textarea>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">🏷️ Тип релиза *</label>
           <select id="adminTrackType" class="form-select">
-            <option value="main">🎵 Основной проект EVGENII AI</option>
-            <option value="subscriber"> Релиз от подписчика</option>
+            <option value="main">🌟 Основной проект EVGENII AI</option>
+            <option value="subscriber">👥 Релиз от подписчика</option>
           </select>
         </div>
         
-        <button class="btn-primary" id="submitTrackBtn" onclick="addNewRelease()">🚀 ОПУБЛИКОВАТЬ</button>
-        <button class="btn-ghost" id="cancelEditBtn" onclick="cancelEditTrack()" style="display:none;width:100%;">❌ ОТМЕНИТЬ РЕДАКТИРОВАНИЕ</button>
+        <button class="btn-primary" id="submitTrackBtn" onclick="addNewRelease()">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          ОПУБЛИКОВАТЬ
+        </button>
+        <button class="btn-ghost" id="cancelEditBtn" onclick="cancelEditTrack()" style="display:none;width:100%;justify-content:center;">
+          ✕ ОТМЕНИТЬ РЕДАКТИРОВАНИЕ
+        </button>
         <div class="form-status" id="adminTrackStatus"></div>
       </div>
     </div>
 
     <div class="glass-panel" style="padding:24px;">
-      <h3 style="color:var(--error);margin-bottom:16px;font-size:0.9rem;letter-spacing:2px;">📋 СПИСОК ТРЕКОВ</h3>
-      <div id="adminTracksList" style="display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto;"></div>
+      <h4 style="color:var(--text-primary);margin-bottom:16px;font-size:0.9rem;display:flex;align-items:center;gap:8px;">
+        <span style="color:var(--error);">📋</span> Список треков
+      </h4>
+      <div id="adminTracksList" style="display:flex;flex-direction:column;gap:8px;max-height:500px;overflow-y:auto;"></div>
+    </div>
+  </div>
+
+  <!-- Admin Sections View -->
+  <div id="adminSectionsView" class="admin-sub-view">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+      <button class="btn-ghost" onclick="showAdminSubView('adminDashboard')" style="padding:8px 16px;">← Назад</button>
+      <h3 style="color:var(--accent-cyan);font-size:0.9rem;letter-spacing:2px;margin:0;">🌐 УПРАВЛЕНИЕ РАЗДЕЛАМИ</h3>
+    </div>
+    <div class="glass-panel" style="padding:24px;">
+      <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:20px;">
+        Отключите раздел, чтобы скрыть его от пользователей. При попытке входа они увидят уведомление с указанной причиной.
+      </p>
+      <div id="adminSectionsList" style="display:flex;flex-direction:column;gap:12px;">
+        <!-- Sections will be rendered here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Chat View -->
+  <div id="adminChatView" class="admin-sub-view">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+      <button class="btn-ghost" onclick="showAdminSubView('adminDashboard')" style="padding:8px 16px;">← Назад</button>
+      <h3 style="color:var(--accent-cyan);font-size:0.9rem;letter-spacing:2px;margin:0;">💬 МОДЕРАЦИЯ ЧАТА</h3>
+    </div>
+    <div class="glass-panel" style="padding:24px;">
+      <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:20px;">Последние сообщения из общего чата. (Функция удаления в разработке)</p>
+      <div id="adminChatList" style="max-height:400px;overflow-y:auto;">
+        <div style="text-align:center;color:var(--text-secondary);padding:20px;">Загрузка...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Settings View -->
+  <div id="adminSettingsView" class="admin-sub-view">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+      <button class="btn-ghost" onclick="showAdminSubView('adminDashboard')" style="padding:8px 16px;">← Назад</button>
+      <h3 style="color:var(--accent-cyan);font-size:0.9rem;letter-spacing:2px;margin:0;">⚙️ ГЛОБАЛЬНЫЕ НАСТРОЙКИ</h3>
+    </div>
+    <div class="glass-panel" style="padding:24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div>
+          <div style="font-weight:600;font-size:0.95rem;">🚧 Глобальные технические работы</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Полная блокировка сайта для всех, кроме админа</div>
+        </div>
+        <div class="toggle-switch" id="siteMaintenanceSwitch" onclick="toggleSiteMaintenance()">
+          <div id="maintenanceSwitchKnob"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1251,14 +1444,13 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
   </div>
 </div>
 
-<!-- Contact Page (ПЕРЕДЕЛАННАЯ) -->
+<!-- Contact Page -->
 <div class="page" id="contactPage">
   <header class="main-header glass-panel" style="margin-bottom:24px;">
     <button class="btn-ghost" onclick="goBack()" style="padding:8px 16px;">← Назад</button>
     <div class="header-brand">СВЯЗЬ</div>
   </header>
 
-  <!-- Общее информационное сообщение -->
   <div style="background:rgba(0,240,255,0.05);border-left:3px solid var(--accent-cyan);padding:14px 18px;border-radius:0 12px 12px 0;margin-bottom:24px;font-size:0.85rem;color:var(--text-secondary);display:flex;align-items:flex-start;gap:10px;">
     <span style="font-size:1.2rem;">📡</span>
     <div>
@@ -1267,7 +1459,6 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     </div>
   </div>
 
-  <!-- КАРТОЧКИ ВЫБОРА (по умолчанию видны) -->
   <div id="contactChoice" class="contact-choice-grid">
     <div class="contact-choice-card" onclick="showContactForm('message')">
       <div class="contact-choice-icon">✉️</div>
@@ -1282,38 +1473,32 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     </div>
   </div>
 
-  <!-- ФОРМА 1: НАПИСАТЬ АВТОРУ -->
   <div id="contactFormMessage" class="contact-form-wrapper">
-    <button class="back-to-choice-btn" onclick="hideContactForms()">
-      ← Назад к выбору
-    </button>
+    <button class="back-to-choice-btn" onclick="hideContactForms()">← Назад к выбору</button>
     <div class="glass-panel" style="padding:24px;">
       <h3 style="text-align:center;margin-bottom:8px;font-family:'Orbitron';letter-spacing:2px;font-size:1.1rem;">✉️ НАПИСАТЬ АВТОРУ</h3>
       <p style="text-align:center;color:var(--text-secondary);font-size:0.85rem;margin-bottom:24px;">Задайте вопрос или оставьте предложение</p>
       <form id="contactForm">
         <div class="form-group">
-          <label class="form-label">Ваше имя</label>
+          <label class="form-label">👤 Ваше имя *</label>
           <input type="text" class="form-input" name="name" placeholder="Как к вам обращаться?" required maxlength="50">
         </div>
         <div class="form-group">
-          <label class="form-label">Email или Telegram</label>
-          <input type="text" class="form-input" name="contact" placeholder="Для обратной связи" required maxlength="100">
+          <label class="form-label">📞 Контакт для связи <span style="color:var(--text-secondary);font-weight:400;text-transform:none;letter-spacing:0;">(необязательно, но желательно)</span></label>
+          <input type="text" class="form-input" name="contact" placeholder="Email, телефон или ник в Telegram / VK / Instagram" maxlength="150">
         </div>
         <div class="form-group">
-          <label class="form-label">Сообщение</label>
+          <label class="form-label">💬 Сообщение *</label>
           <textarea class="form-textarea" name="message" placeholder="Напишите ваш вопрос или предложение..." required maxlength="1000"></textarea>
         </div>
-        <button type="submit" class="btn-primary" id="submitBtn"><span> ОТПРАВИТЬ СООБЩЕНИЕ</span></button>
+        <button type="submit" class="btn-primary" id="submitBtn"><span>📨 ОТПРАВИТЬ СООБЩЕНИЕ</span></button>
         <div class="form-status" id="formStatus"></div>
       </form>
     </div>
   </div>
 
-  <!-- ФОРМА 2: ОТПРАВИТЬ ТЕКСТ ПЕСНИ -->
   <div id="contactFormLyrics" class="contact-form-wrapper">
-    <button class="back-to-choice-btn" onclick="hideContactForms()">
-      ← Назад к выбору
-    </button>
+    <button class="back-to-choice-btn" onclick="hideContactForms()">← Назад к выбору</button>
     <div class="lyrics-form-container">
       <div class="lyrics-form-title">
         <span style="font-size:1.5rem;">🎤</span>
@@ -1326,17 +1511,19 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
       
       <form id="lyricsForm">
         <div class="form-group">
-          <label class="form-label">Ваше имя / псевдоним *</label>
+          <label class="form-label">👤 Ваше имя / псевдоним *</label>
           <input type="text" class="form-input" id="lyricsAuthor" placeholder="Как вас зовут?" required maxlength="50">
         </div>
-        
         <div class="form-group">
-          <label class="form-label">Название песни *</label>
+          <label class="form-label">📞 Контакт для связи <span style="color:var(--text-secondary);font-weight:400;text-transform:none;letter-spacing:0;">(необязательно, но желательно)</span></label>
+          <input type="text" class="form-input" id="lyricsContact" placeholder="Email, телефон или ник в соцсети" maxlength="150">
+        </div>
+        <div class="form-group">
+          <label class="form-label">🎵 Название песни *</label>
           <input type="text" class="form-input" id="lyricsTitle" placeholder="Например: Ночной город" required maxlength="100">
         </div>
-        
         <div class="form-group">
-          <label class="form-label">Жанр / стиль исполнения</label>
+          <label class="form-label">🎭 Жанр / стиль исполнения</label>
           <select class="form-select" id="lyricsGenre">
             <option value="">Выберите жанр (необязательно)</option>
             <option value="Поп">Поп</option>
@@ -1349,36 +1536,31 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
             <option value="Другое">Другое</option>
           </select>
         </div>
-        
         <div class="form-group">
-          <label class="form-label">Текст песни *</label>
-          <textarea class="form-textarea" id="lyricsText" placeholder="Вставьте текст вашей песни здесь...&#10;&#10;Куплет 1:&#10;...&#10;&#10;Припев:&#10;...&#10;&#10;Куплет 2:&#10;..." required maxlength="5000" style="min-height: 200px; font-family: 'Inter', monospace; line-height: 1.6;"></textarea>
+          <label class="form-label">📝 Текст песни *</label>
+          <textarea class="form-textarea" id="lyricsText" placeholder="Вставьте текст вашей песни здесь..." required maxlength="5000" style="min-height: 200px; font-family: 'Inter', monospace; line-height: 1.6;"></textarea>
           <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:6px;text-align:right;">
             <span id="lyricsCharCount">0</span> / 5000 символов
           </div>
         </div>
-        
         <div class="form-group">
-          <label class="form-label">Комментарий (необязательно)</label>
+          <label class="form-label">💬 Комментарий (необязательно)</label>
           <textarea class="form-textarea" id="lyricsComment" placeholder="Расскажите о вдохновении, настроении или особенностях текста..." maxlength="500" style="min-height: 80px;"></textarea>
         </div>
         
-        <!-- УСЛОВИЯ И СОГЛАСИЕ -->
         <div style="background:rgba(255,204,0,0.06);border:1px solid rgba(255,204,0,0.2);border-radius:12px;padding:16px;margin-bottom:16px;position:relative;z-index:1;">
-          <div style="font-size:0.8rem;color:var(--accent-gold);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">📋 Условия передачи текста</div>
+          <div style="font-size:0.8rem;color:var(--accent-gold);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">⚖️ Условия передачи текста</div>
           <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;margin-bottom:14px;">
             Отправляя текст песни, вы подтверждаете, что являетесь его автором или имеете все необходимые права на его использование. 
             Вы предоставляете проекту <strong style="color:var(--text-primary);">EVGENII AI</strong> неисключительное право на рассмотрение, 
             адаптацию и создание музыкального произведения на основе вашего текста. 
-            <strong style="color:var(--text-primary);">Все права на финальный музыкальный трек</strong> (включая аранжировку, вокал, запись и распространение) 
-            принадлежат автору проекта EVGENII AI. В случае использования вашего текста вы будете указаны как <strong style="color:var(--accent-gold);">автор слов</strong> в описании трека.
+            <strong style="color:var(--text-primary);">Все права на финальный музыкальный трек</strong> принадлежат автору проекта EVGENII AI. 
+            В случае использования вашего текста вы будете указаны как <strong style="color:var(--accent-gold);">автор слов</strong> в описании трека.
           </div>
-          
           <label class="checkbox-wrapper" style="margin-bottom:0;">
             <input type="checkbox" id="lyricsAgreement" required>
             <span class="checkbox-label">
-              <strong>Я ознакомился(ась) и принимаю условия передачи текста.</strong> 
-              Я подтверждаю, что являюсь автором отправляемого текста и согласен(на) с условиями, описанными выше.
+              <strong>Я ознакомился(ась) и принимаю условия передачи текста.</strong>
             </span>
           </label>
         </div>
@@ -1497,16 +1679,19 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <button class="btn-text" onclick="closeDownloadModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
     <div class="modal-header">СКАЧИВАНИЕ ТРЕКА</div>
     <div class="glass-panel" style="padding:24px;margin-bottom:20px;">
-      <div id="modalCover" style="width:120px;height:120px;border-radius:16px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden;"></div>
+      <div id="modalCover" style="width:120px;height:120px;border-radius:16px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden;">🎵</div>
       <div id="modalTitle" style="font-size:1.3rem;font-weight:700;margin-bottom:4px;">Название</div>
       <div id="modalArtist" style="font-family:'Orbitron';font-size:0.8rem;color:var(--text-secondary);letter-spacing:2px;margin-bottom:8px;">EVGENII AI</div>
       <div id="modalDuration" style="font-family:'Orbitron';color:var(--accent-cyan);">0:00</div>
     </div>
     <div style="background:rgba(255,51,102,0.08);border:1px solid rgba(255,51,102,0.2);border-radius:12px;padding:16px;margin-bottom:20px;text-align:left;font-size:0.85rem;color:var(--text-secondary);">
-      <strong style="color:var(--error);display:block;margin-bottom:4px;">⚠ Внимание!</strong>
+      <strong style="color:var(--error);display:block;margin-bottom:4px;">⚠️ Внимание!</strong>
       Скачивание происходит не сразу. Пожалуйста, подождите несколько секунд.
     </div>
-    <button class="btn-primary" id="modalDownloadBtn" onclick="startDownload()">СКАЧАТЬ ТРЕК</button>
+    <button class="btn-primary" id="modalDownloadBtn" onclick="startDownload()">
+      <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      СКАЧАТЬ ТРЕК
+    </button>
   </div>
 </div>
 
@@ -1516,7 +1701,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
     <button class="btn-text" onclick="closeTrackInfoModal()" style="position:absolute;top:16px;right:16px;font-size:1.2rem;">✕</button>
     <div class="modal-header">ИСТОРИЯ СОЗДАНИЯ</div>
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
-      <div id="modalInfoCover" style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);display:flex;align-items:center;justify-content:center;font-size:1.5rem;overflow:hidden;flex-shrink:0;"></div>
+      <div id="modalInfoCover" style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#1a1a2e,#2a1a3a);display:flex;align-items:center;justify-content:center;font-size:1.5rem;overflow:hidden;flex-shrink:0;">🎵</div>
       <div>
         <div id="modalInfoTitle" style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">Название</div>
         <div id="modalInfoArtist" style="font-family:'Orbitron';font-size:0.75rem;color:var(--text-secondary);letter-spacing:1px;">EVGENII AI</div>
@@ -1556,6 +1741,101 @@ var TELEGRAM_CHAT_ID = '5129595944';
 var isAdminLoggedIn = false;
 var licenseForceMode = false;
 var licenseCheckboxChecked = false;
+
+// === SECTIONS MANAGEMENT ===
+var sectionsData = {};
+var sectionsUnsubscribe = null;
+
+function loadSectionsSettings() {
+  if (!db) return;
+  if (sectionsUnsubscribe) sectionsUnsubscribe();
+  sectionsUnsubscribe = db.collection('sections').onSnapshot(function(snapshot) {
+    sectionsData = {};
+    snapshot.forEach(function(doc) { 
+      sectionsData[doc.id] = doc.data(); 
+    });
+    renderAdminSectionsList();
+  }, function(error) { console.error('Ошибка загрузки настроек разделов:', error); });
+}
+
+function renderAdminSectionsList() {
+  var list = document.getElementById('adminSectionsList');
+  if (!list) return;
+  
+  var defaultSections = [
+    { id: 'tracksPage', title: '🎵 Все треки', defaultReason: 'Раздел в разработке' },
+    { id: 'discussionsPage', title: '💬 Обсуждения', defaultReason: 'Технические работы' },
+    { id: 'communityPage', title: '🌐 Сообщества', defaultReason: 'Скоро открытие' },
+    { id: 'contactPage', title: '✉️ Связь', defaultReason: 'Временная недоступность' },
+    { id: 'supportPage', title: '💜 Поддержать', defaultReason: 'Технические работы' },
+    { id: 'aboutPage', title: 'ℹ️ О проекте', defaultReason: 'Обновление информации' }
+  ];
+
+  list.innerHTML = defaultSections.map(function(sec) {
+    var data = sectionsData[sec.id] || { enabled: true, reason: sec.defaultReason };
+    var isEnabled = data.enabled !== false;
+    
+    return '<div class="section-control-item">' +
+      '<div class="section-control-info">' +
+        '<div class="section-control-title">' + sec.title + '</div>' +
+        '<div class="section-control-status ' + (isEnabled ? 'enabled' : 'disabled') + '">' + 
+          (isEnabled ? '✅ Раздел доступен' : '❌ Заблокирован: ' + escapeHtml(data.reason || 'Причина не указана')) + 
+        '</div>' +
+        (!isEnabled ? '<select class="section-reason-select" onchange="updateSectionReason(\'' + sec.id + '\', this.value)">' +
+          '<option value="Технические работы"' + (data.reason === 'Технические работы' ? ' selected' : '') + '>Технические работы</option>' +
+          '<option value="Скоро открытие"' + (data.reason === 'Скоро открытие' ? ' selected' : '') + '>Скоро открытие</option>' +
+          '<option value="Раздел в разработке"' + (data.reason === 'Раздел в разработке' ? ' selected' : '') + '>Раздел в разработке</option>' +
+          '<option value="Временная недоступность"' + (data.reason === 'Временная недоступность' ? ' selected' : '') + '>Временная недоступность</option>' +
+          '<option value="Обновление информации"' + (data.reason === 'Обновление информации' ? ' selected' : '') + '>Обновление информации</option>' +
+        '</select>' : '') +
+      '</div>' +
+      '<div class="toggle-switch ' + (isEnabled ? 'active' : '') + '" onclick="toggleSection(\'' + sec.id + '\', ' + (!isEnabled) + ')"></div>' +
+    '</div>';
+  }).join('');
+}
+
+function toggleSection(sectionId, newState) {
+  if (!db) return;
+  var currentData = sectionsData[sectionId] || { reason: 'Технические работы' };
+  db.collection('sections').doc(sectionId).set({
+    enabled: newState,
+    reason: currentData.reason || 'Технические работы'
+  }, { merge: true }).catch(function(error) {
+    console.error('Ошибка обновления раздела:', error);
+    alert('Ошибка: ' + error.message);
+  });
+}
+
+function updateSectionReason(sectionId, newReason) {
+  if (!db) return;
+  var currentData = sectionsData[sectionId] || { enabled: true };
+  db.collection('sections').doc(sectionId).set({
+    enabled: currentData.enabled !== false,
+    reason: newReason
+  }, { merge: true });
+}
+
+function isSectionEnabled(pageId) {
+  if (!sectionsData[pageId]) return true; // По умолчанию включено
+  return sectionsData[pageId].enabled !== false;
+}
+
+function getSectionReason(pageId) {
+  if (!sectionsData[pageId] || !sectionsData[pageId].reason) return 'Раздел временно недоступен.';
+  return sectionsData[pageId].reason;
+}
+
+function showSectionBlockedModal(pageId) {
+  var reason = getSectionReason(pageId);
+  document.getElementById('sectionBlockedReason').textContent = reason;
+  document.getElementById('sectionBlockedModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSectionBlockedModal() {
+  document.getElementById('sectionBlockedModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
 
 // === ЖИВОЙ ТЕКСТ В БАННЕРЕ ===
 var livePhrases = [
@@ -1611,33 +1891,24 @@ function showPhrase(index) {
 
 // === ПЕРЕКЛЮЧЕНИЕ ФОРМ НА СТРАНИЦЕ СВЯЗИ ===
 function showContactForm(type) {
-  // Скрываем карточки выбора
   document.getElementById('contactChoice').style.display = 'none';
-  
-  // Скрываем все формы
   document.getElementById('contactFormMessage').classList.remove('active');
   document.getElementById('contactFormLyrics').classList.remove('active');
   
-  // Показываем нужную форму
   if (type === 'message') {
     document.getElementById('contactFormMessage').classList.add('active');
   } else if (type === 'lyrics') {
     document.getElementById('contactFormLyrics').classList.add('active');
   }
   
-  // Прокрутка к форме
   window.scrollTo({ top: 200, behavior: 'smooth' });
 }
 
 function hideContactForms() {
-  // Скрываем все формы
   document.getElementById('contactFormMessage').classList.remove('active');
   document.getElementById('contactFormLyrics').classList.remove('active');
-  
-  // Показываем карточки выбора
   document.getElementById('contactChoice').style.display = 'grid';
   
-  // Очищаем статусы
   var formStatus = document.getElementById('formStatus');
   var lyricsFormStatus = document.getElementById('lyricsFormStatus');
   if (formStatus) { formStatus.textContent = ''; formStatus.className = 'form-status'; }
@@ -1671,7 +1942,7 @@ function openLicenseModal(force) {
     checkbox.style.background = 'transparent';
     checkbox.style.borderColor = 'var(--glass-border)';
     icon.style.opacity = '0';
-    agreeBtn.disabled = true;8
+    agreeBtn.disabled = true;
   }
   closeBtn.style.display = force ? 'none' : 'flex';
   document.getElementById('licenseModal').classList.add('active');
@@ -1733,11 +2004,9 @@ function updateMaintenanceUI() {
   var knob = document.getElementById('maintenanceSwitchKnob');
   if (siteSwitch) {
     if (siteMaintenance) {
-      siteSwitch.style.background = 'var(--accent-gold)';
-      knob.style.left = '25px';
+      siteSwitch.classList.add('active');
     } else {
-      siteSwitch.style.background = 'rgba(255,255,255,0.1)';
-      knob.style.left = '3px';
+      siteSwitch.classList.remove('active');
     }
   }
   var siteScreen = document.getElementById('siteMaintenanceScreen');
@@ -1782,13 +2051,11 @@ function maintenanceAdminLogin() {
         var savedName = localStorage.getItem('evgenii_user') || 'Админ';
         showMainScreen(savedName);
         navigateTo('adminPage');
-        document.getElementById('adminLoginSection').style.display = 'none';
-        document.getElementById('adminContent').style.display = 'block';
       }, 500);
     })
     .catch(function(error) {
       var msg = '❌ Ошибка входа';
-      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') msg = '❌ Неверный email или пароль';
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') msg = 'Неверный email или пароль';
       else if (error.code === 'auth/too-many-requests') msg = '❌ Слишком много попыток. Попробуйте позже';
       status.textContent = msg; status.className = 'form-status error';
     });
@@ -1875,9 +2142,9 @@ function editTrack(trackId) {
     document.getElementById('adminTrackType').value = track.type || 'main';
 
     var submitBtn = document.getElementById('submitTrackBtn');
-    submitBtn.textContent = ' СОХРАНИТЬ ИЗМЕНЕНИЯ';
+    submitBtn.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg> СОХРАНИТЬ ИЗМЕНЕНИЯ';
     submitBtn.onclick = function() { updateTrack(trackId); };
-    document.getElementById('cancelEditBtn').style.display = 'block';
+    document.getElementById('cancelEditBtn').style.display = 'flex';
     document.getElementById('adminTrackTitle').scrollIntoView({ behavior: 'smooth', block: 'center' });
     
     var status = document.getElementById('adminTrackStatus');
@@ -1897,7 +2164,7 @@ function cancelEditTrack() {
     document.getElementById('adminTrackType').value = 'main';
     
     var submitBtn = document.getElementById('submitTrackBtn');
-    submitBtn.textContent = '🚀 ОПУБЛИКОВАТЬ';
+    submitBtn.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> ОПУБЛИКОВАТЬ';
     submitBtn.onclick = addNewRelease;
     document.getElementById('cancelEditBtn').style.display = 'none';
     document.getElementById('adminTrackStatus').textContent = '';
@@ -1914,7 +2181,7 @@ function updateTrack(trackId) {
     var status = document.getElementById('adminTrackStatus');
 
     if (!title || !file || !duration) { 
-      status.textContent = '️ Заполните обязательные поля!'; 
+      status.textContent = '⚠️ Заполните обязательные поля!'; 
       status.className = 'form-status error'; 
       return; 
     }
@@ -1969,9 +2236,9 @@ function renderAdminTracksList() {
         
         var typeBadge = '';
         if (track.type === 'subscriber') {
-          typeBadge = ' <span style="color:var(--accent-gold);font-size:0.7rem;background:rgba(255,204,0,0.1);padding:2px 6px;border-radius:4px;">👥 ПОДПИСЧИК</span>';
+          typeBadge = ' <span style="color:var(--accent-gold);font-size:0.7rem;background:rgba(255,204,0,0.1);padding:2px 6px;border-radius:4px;">ПОДПИСЧИК</span>';
         } else {
-          typeBadge = ' <span style="color:var(--accent-cyan);font-size:0.7rem;background:rgba(0,240,255,0.1);padding:2px 6px;border-radius:4px;">🎵 ОСНОВНОЙ</span>';
+          typeBadge = ' <span style="color:var(--accent-cyan);font-size:0.7rem;background:rgba(0,240,255,0.1);padding:2px 6px;border-radius:4px;">ОСНОВНОЙ</span>';
         }
         
         return '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(0,0,0,0.2);border-radius:8px;border:1px solid var(--glass-border);">' +
@@ -1979,9 +2246,10 @@ function renderAdminTracksList() {
               '<div style="font-weight:600;font-size:0.9rem;margin-bottom:4px;">' + escapeHtml(track.title) + isNew + typeBadge + hasDesc + '</div>' +
               '<div style="font-size:0.75rem;color:var(--text-secondary);">' + escapeHtml(track.subtitle || 'EVGENII AI') + ' · ' + track.duration + '</div>' +
             '</div>' +
-            '<div style="display:flex;gap:5px;">' +
-            '<button class="btn-ghost" style="padding:6px 10px;font-size:0.75rem;" onclick="editTrack(\'' + track.id + '\')">✏️</button>' +
-            '<button class="btn-ghost danger" style="padding:6px 10px;font-size:0.75rem;" onclick="deleteTrack(\'' + track.id + '\')">🗑️</button>' +
+            '<div style="display:flex;gap:6px;">' +
+            '<button class="track-test-btn" onclick="event.stopPropagation(); playTrackById(\'' + track.id + '\')" title="Тест воспроизведения">▶️</button>' +
+            '<button class="btn-ghost" style="padding:6px 10px;font-size:0.75rem;" onclick="editTrack(\'' + track.id + '\')" title="Редактировать">✏️</button>' +
+            '<button class="btn-ghost danger" style="padding:6px 10px;font-size:0.75rem;" onclick="deleteTrack(\'' + track.id + '\')" title="Удалить">🗑️</button>' +
             '</div></div>';
     }).join('');
 }
@@ -2043,7 +2311,7 @@ function renderSubscriberReleases() {
         if (i < subscriberReleases.length) {
             var track = subscriberReleases[i];
             var coverHtml = track.cover 
-                ? '<img src="' + track.cover + '" onerror="this.parentElement.innerHTML=\'\'">'
+                ? '<img src="' + track.cover + '" onerror="this.parentElement.innerHTML=\'🎵\'">'
                 : '🎵';
             
             html += '<div class="subscriber-card" onclick="playTrackById(\'' + track.id + '\')">' +
@@ -2089,7 +2357,7 @@ function renderAllTracksList() {
         
         var coverHtml = track.cover 
           ? '<img src="' + track.cover + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">' 
-          : '';
+          : '🎵';
         
         var descPreview = getDescriptionPreview(track.description, 80);
         var descHtml = '';
@@ -2100,7 +2368,7 @@ function renderAllTracksList() {
           }
         }
         
-        var subscriberBadge = track.type === 'subscriber' ? '<div class="track-subscriber-badge">👥 ОТ ПОДПИСЧИКА</div>' : '';
+        var subscriberBadge = track.type === 'subscriber' ? '<div class="track-subscriber-badge">ОТ ПОДПИСЧИКА</div>' : '';
         
         el.innerHTML = 
           '<div class="track-cover" onclick="playTrackById(\'' + track.id + '\')">' + coverHtml + '</div>' +
@@ -2113,7 +2381,7 @@ function renderAllTracksList() {
           '<div class="track-duration">' + track.duration + '</div>' +
           '<div class="track-actions">' +
             '<button class="track-info-btn" onclick="event.stopPropagation(); openTrackInfoModalById(\'' + track.id + '\')" title="Полная история трека">ℹ️</button>' +
-            '<button class="track-download-btn" onclick="event.stopPropagation();openDownloadModalById(\'' + track.id + '\')">' +
+            '<button class="track-download-btn" onclick="event.stopPropagation();openDownloadModalById(\'' + track.id + '\')" title="Скачать">' +
               '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>' +
             '</button>' +
           '</div>';
@@ -2193,7 +2461,7 @@ function playTrack(track, index) {
   }).catch(function(error) { 
     if (error.name !== 'AbortError') {
       console.error("Ошибка аудио:", error);
-      alert("️ Не удалось воспроизвести трек!\n\nПричина: " + error.message + "\n\nПроверьте, что ссылка на файл является ПРЯМОЙ ссылкой на .mp3");
+      alert("⚠️ Не удалось воспроизвести трек!\n\nПричина: " + error.message + "\n\nПроверьте, что ссылка на файл является ПРЯМОЙ ссылкой на .mp3");
     }
     setPlayingState(false);
   });
@@ -2344,7 +2612,7 @@ function openDownloadModal(track) {
   downloadTrack = track;
   var mc = document.getElementById('modalCover');
   if (track.cover) { 
-    mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'🎵\'">'; 
+    mc.innerHTML = '<img src="' + track.cover + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'\'">'; 
   } else { 
     mc.textContent = '🎵'; 
   }
@@ -2352,7 +2620,7 @@ function openDownloadModal(track) {
   document.getElementById('modalArtist').textContent = track.subtitle || 'EVGENII AI';
   document.getElementById('modalDuration').textContent = track.duration;
   var b = document.getElementById('modalDownloadBtn'); 
-  b.textContent = 'СКАЧАТЬ ТРЕК'; 
+  b.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> СКАЧАТЬ ТРЕК'; 
   b.disabled = false;
   document.getElementById('downloadModal').classList.add('active'); 
   document.body.style.overflow = 'hidden';
@@ -2365,7 +2633,7 @@ function closeDownloadModal() {
 function startDownload() {
   if (!downloadTrack) return;
   var b = document.getElementById('modalDownloadBtn'); 
-  b.textContent = 'ЗАГРУЗКА...'; 
+  b.innerHTML = '⏳ ЗАГРУЗКА...'; 
   b.disabled = true;
   var l = document.createElement('a'); 
   l.href = downloadTrack.file; 
@@ -2375,7 +2643,7 @@ function startDownload() {
   setTimeout(function() { 
     l.click(); 
     document.body.removeChild(l); 
-    b.textContent = 'ТРЕК ЗАГРУЖЕН'; 
+    b.innerHTML = '✅ ТРЕК ЗАГРУЖЕН'; 
     setTimeout(function() { closeDownloadModal(); }, 1500); 
   }, 1500);
 }
@@ -2421,7 +2689,7 @@ function updateAttachLabel() {
     toggle.disabled = false; 
     toggle.parentElement.style.opacity = '1'; 
   } else { 
-    label.textContent = ' Сначала включи любой трек'; 
+    label.textContent = '🎵 Сначала включи любой трек'; 
     toggle.disabled = true; 
     toggle.checked = false; 
     toggle.parentElement.style.opacity = '0.5'; 
@@ -2437,11 +2705,34 @@ function loadDiscussions() {
     discussionsData = [];
     snapshot.forEach(function(doc) { discussionsData.push({ id: doc.id, ...doc.data() }); });
     renderDiscussions();
+    renderAdminChatList(); // Обновляем и в админке
   }, function(error) { 
     console.error(error); 
     list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:40px 20px;">Ошибка загрузки</div>'; 
   });
 }
+
+function renderAdminChatList() {
+  var list = document.getElementById('adminChatList');
+  if (!list) return;
+  if (discussionsData.length === 0) { 
+    list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:20px;">Сообщений пока нет</div>'; 
+    return; 
+  }
+  var reversed = discussionsData.slice().reverse();
+  list.innerHTML = reversed.map(function(d) {
+    var time = formatDiscussionTime(d.createdAt);
+    return '<div style="padding:12px;background:rgba(0,0,0,0.2);border-radius:8px;border:1px solid var(--glass-border);margin-bottom:8px;">' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:4px;">' +
+        '<span style="font-weight:600;font-size:0.85rem;color:var(--accent-cyan);">' + escapeHtml(d.userName) + '</span>' +
+        '<span style="font-size:0.7rem;color:var(--text-secondary);">' + time + '</span>' +
+      '</div>' +
+      (d.trackTitle ? '<div style="font-size:0.7rem;color:var(--accent-gold);margin-bottom:4px;">🎵 ' + escapeHtml(d.trackTitle) + '</div>' : '') +
+      '<div style="font-size:0.85rem;color:var(--text-secondary);">' + escapeHtml(d.text) + '</div>' +
+    '</div>';
+  }).join('');
+}
+
 function renderDiscussions() {
   var list = document.getElementById('discussionsList');
   var count = document.getElementById('discussionsCount');
@@ -2517,14 +2808,31 @@ document.getElementById('discussionInput').addEventListener('keydown', function(
   } 
 });
 
+// === ADMIN NAVIGATION ===
 function showAdminLogin() { 
   navigateTo('adminPage'); 
   document.getElementById('adminLoginSection').style.display = 'block'; 
-  document.getElementById('adminContent').style.display = 'none'; 
+  document.getElementById('adminDashboard').classList.remove('active');
+  document.getElementById('adminMusicView').classList.remove('active');
+  document.getElementById('adminSectionsView').classList.remove('active');
+  document.getElementById('adminChatView').classList.remove('active');
+  document.getElementById('adminSettingsView').classList.remove('active');
   document.getElementById('adminEmailInput').value = ''; 
   document.getElementById('adminPasswordInput').value = ''; 
   document.getElementById('adminLoginStatus').textContent = ''; 
 }
+
+function showAdminSubView(viewId) {
+  var views = ['adminDashboard', 'adminMusicView', 'adminSectionsView', 'adminChatView', 'adminSettingsView'];
+  views.forEach(function(v) {
+    var el = document.getElementById(v);
+    if (el) el.classList.remove('active');
+  });
+  var target = document.getElementById(viewId);
+  if (target) target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
 function adminLogin() {
   var email = document.getElementById('adminEmailInput').value.trim();
   var password = document.getElementById('adminPasswordInput').value;
@@ -2543,12 +2851,12 @@ function adminLogin() {
       status.className = 'form-status success';
       setTimeout(function() { 
         document.getElementById('adminLoginSection').style.display = 'none'; 
-        document.getElementById('adminContent').style.display = 'block'; 
+        showAdminSubView('adminDashboard');
         updateMaintenanceUI(); 
       }, 500);
     })
     .catch(function(error) {
-      var msg = ' Ошибка входа';
+      var msg = '❌ Ошибка входа';
       if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') 
         msg = 'Неверный email или пароль';
       status.textContent = msg; 
@@ -2577,6 +2885,14 @@ function escapeHtml(text) {
 
 var currentPage = 'homePage';
 function navigateTo(pageId) {
+  // Проверка доступности раздела (кроме homePage, adminPage и diary.html)
+  if (pageId !== 'homePage' && pageId !== 'adminPage' && !pageId.endsWith('.html')) {
+    if (!isSectionEnabled(pageId)) {
+      showSectionBlockedModal(pageId);
+      return;
+    }
+  }
+
   if (currentPage === pageId) return;
   var ce = document.getElementById(currentPage); 
   var ne = document.getElementById(pageId);
@@ -2586,6 +2902,7 @@ function navigateTo(pageId) {
   currentPage = pageId;
   if (pageId === 'discussionsPage') loadDiscussions();
   if (pageId === 'adminPage' && !isAdminLoggedIn) showAdminLogin();
+  else if (pageId === 'adminPage' && isAdminLoggedIn) showAdminSubView('adminDashboard');
 }
 function goBack() { navigateTo('homePage'); }
 
@@ -2609,6 +2926,7 @@ if (savedName) {
 }
 
 loadMaintenanceSettings();
+loadSectionsSettings(); // Загружаем настройки разделов при старте
 
 loginForm.addEventListener('submit', function(e) {
   e.preventDefault();
@@ -2656,6 +2974,10 @@ logoutBtn.addEventListener('click', function() {
     maintenanceUnsubscribe(); 
     maintenanceUnsubscribe = null; 
   }
+  if (sectionsUnsubscribe) {
+    sectionsUnsubscribe();
+    sectionsUnsubscribe = null;
+  }
   if (liveInterval) { 
     clearInterval(liveInterval); 
     liveInterval = null; 
@@ -2672,13 +2994,17 @@ if (contactForm) {
     e.preventDefault();
     var formData = new FormData(this);
     var name = formData.get('name'); 
-    var contact = formData.get('contact'); 
+    var contact = formData.get('contact') || 'Не указан'; 
     var messageText = formData.get('message');
     formSubmitBtn.disabled = true; 
     formSubmitBtn.innerHTML = '<span>📨 ОТПРАВКА...</span>'; 
     formStatus.textContent = ''; 
     formStatus.className = 'form-status';
-    var message = ' <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n <b>Имя:</b> ' + name + '\n📧 <b>Контакт:</b> ' + contact + '\n💬 <b>Сообщение:</b>\n' + messageText + '\n⏰ <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
+    var message = '📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n' +
+                  '👤 <b>Имя:</b> ' + name + '\n' +
+                  '📞 <b>Контакт:</b> ' + contact + '\n' +
+                  '💬 <b>Сообщение:</b>\n' + messageText + '\n' +
+                  '⏰ <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
     var telegramURL = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
     fetch(telegramURL, { 
       method: 'POST', 
@@ -2688,7 +3014,7 @@ if (contactForm) {
     .then(function(response) { return response.json(); })
     .then(function(data) {
       if (data.ok) { 
-        formStatus.textContent = '✅ Сообщение отправлено! Я отвечу вам скоро.'; 
+        formStatus.textContent = '✅ Сообщение отправлено! Мы рассмотрим его и свяжемся с вами.'; 
         formStatus.className = 'form-status success'; 
         contactForm.reset(); 
       } else { 
@@ -2715,14 +3041,12 @@ var lyricsTextEl = document.getElementById('lyricsText');
 var lyricsCharCount = document.getElementById('lyricsCharCount');
 var lyricsAgreement = document.getElementById('lyricsAgreement');
 
-// Счётчик символов
 if (lyricsTextEl && lyricsCharCount) {
   lyricsTextEl.addEventListener('input', function() {
     lyricsCharCount.textContent = this.value.length;
   });
 }
 
-// Активация кнопки при установке галочки
 if (lyricsAgreement && submitLyricsBtn) {
   lyricsAgreement.addEventListener('change', function() {
     submitLyricsBtn.disabled = !this.checked;
@@ -2733,7 +3057,6 @@ if (lyricsForm) {
   lyricsForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // Проверка согласия
     if (!lyricsAgreement.checked) {
       lyricsFormStatus.textContent = '⚠️ Необходимо принять условия передачи текста';
       lyricsFormStatus.className = 'form-status error';
@@ -2741,6 +3064,7 @@ if (lyricsForm) {
     }
     
     var author = document.getElementById('lyricsAuthor').value.trim();
+    var contact = document.getElementById('lyricsContact').value.trim() || 'Не указан';
     var title = document.getElementById('lyricsTitle').value.trim();
     var genre = document.getElementById('lyricsGenre').value;
     var text = lyricsTextEl.value.trim();
@@ -2753,7 +3077,7 @@ if (lyricsForm) {
     }
     
     submitLyricsBtn.disabled = true;
-    submitLyricsBtn.innerHTML = '<span> ОТПРАВКА...</span>';
+    submitLyricsBtn.innerHTML = '<span>🎵 ОТПРАВКА...</span>';
     lyricsFormStatus.textContent = '';
     lyricsFormStatus.className = 'form-status';
     
@@ -2762,6 +3086,7 @@ if (lyricsForm) {
     
     var message = '🎤 <b>НОВЫЙ ТЕКСТ ПЕСНИ ОТ ПОДПИСЧИКА</b>\n\n' +
                   '👤 <b>Автор:</b> ' + escapeHtml(author) + '\n' +
+                  '📞 <b>Контакт для связи:</b> ' + escapeHtml(contact) + '\n' +
                   '🎵 <b>Название:</b> ' + escapeHtml(title) +
                   genreText + '\n\n' +
                   '📝 <b>Текст песни:</b>\n' +
