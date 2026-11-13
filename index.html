@@ -90,7 +90,7 @@ display: none;
 position: relative;
 z-index: 1;
 min-height: 100vh;
-padding: 20px 16px 140px;
+padding: 20px 16px 40px;
 max-width: 900px;
 margin: 0 auto;
 animation: fadeIn 0.4s ease;
@@ -499,9 +499,10 @@ user-select: none;
 }
 .checkbox-label strong { color: var(--text-primary); }
 .subscriber-releases { margin-bottom: 40px; }
-.subscriber-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-@media (max-width: 480px) { .subscriber-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
-.subscriber-card {
+.latest-releases { margin-bottom: 40px; }
+.subscriber-grid, .latest-releases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (max-width: 480px) { .subscriber-grid, .latest-releases-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+.subscriber-card, .latest-release-card {
 position: relative; background: var(--glass-bg); backdrop-filter: blur(20px);
 border: 1px solid var(--glass-border); border-radius: var(--radius-md);
 padding: 16px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden;
@@ -510,25 +511,39 @@ padding: 16px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1
 content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
 background: linear-gradient(90deg, var(--accent-gold), var(--accent-magenta)); opacity: 0; transition: opacity 0.3s;
 }
+.latest-release-card::before {
+content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple)); opacity: 0; transition: opacity 0.3s;
+}
 .subscriber-card:hover { transform: translateY(-3px); border-color: var(--accent-gold); box-shadow: 0 8px 24px rgba(255, 204, 0, 0.15); }
 .subscriber-card:hover::before { opacity: 1; }
+.latest-release-card:hover { transform: translateY(-3px); border-color: var(--accent-cyan); box-shadow: 0 8px 24px rgba(0, 240, 255, 0.15); }
+.latest-release-card:hover::before { opacity: 1; }
 .subscriber-card-empty {
 display: flex; align-items: center; justify-content: center; height: 120px;
 color: var(--text-secondary); font-size: 0.85rem; text-align: center;
 border: 1px dashed var(--glass-border); border-radius: var(--radius-md);
 }
-.subscriber-cover {
+.subscriber-cover, .latest-release-cover {
 width: 100%; aspect-ratio: 1; border-radius: 12px; overflow: hidden; margin-bottom: 12px;
 background: linear-gradient(135deg, #1a1a2e, #2a1a3a); display: flex; align-items: center; justify-content: center; font-size: 2rem; position: relative;
 }
-.subscriber-cover img { width: 100%; height: 100%; object-fit: cover; }
+.subscriber-cover img, .latest-release-cover img { width: 100%; height: 100%; object-fit: cover; }
 .subscriber-badge {
 position: absolute; top: 8px; right: 8px; background: linear-gradient(135deg, var(--accent-gold), #ff9500);
 color: #000; font-size: 0.6rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; letter-spacing: 1px;
 }
-.subscriber-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.subscriber-artist { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; }
-.subscriber-desc {
+.latest-release-number {
+position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+color: #000; font-size: 0.7rem; font-weight: 800; width: 24px; height: 24px; border-radius: 8px;
+display: flex; align-items: center; justify-content: center;
+font-family: 'Orbitron', sans-serif;
+box-shadow: 0 2px 8px rgba(0, 240, 255, 0.4);
+z-index: 2;
+}
+.subscriber-title, .latest-release-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.subscriber-artist, .latest-release-artist { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; }
+.subscriber-desc, .latest-release-desc {
 font-size: 0.7rem; color: var(--text-secondary); line-height: 1.4;
 display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
@@ -928,7 +943,7 @@ outline: none;
 .admin-sub-view.active { display: block; }
 @media (min-width: 768px) {
 .bento-grid { grid-template-columns: repeat(3, 1fr); }
-.page { padding: 40px 24px 140px; }
+.page { padding: 40px 24px 40px; }
 }
 @media (max-width: 380px) {
 .card-number { font-size: 1.1rem; letter-spacing: 2px; }
@@ -944,6 +959,110 @@ font-weight: 700; font-size: 0.85rem; box-shadow: 0 10px 30px rgba(0, 255, 157, 
 opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 5000;
 }
 .copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.site-footer {
+text-align: center;
+padding: 32px 24px;
+margin-top: 40px;
+background: linear-gradient(135deg, rgba(0, 240, 255, 0.03), rgba(157, 0, 255, 0.03));
+border: 1px solid var(--glass-border);
+border-radius: var(--radius-md);
+backdrop-filter: blur(20px);
+color: var(--text-secondary);
+font-size: 0.8rem;
+line-height: 1.8;
+position: relative;
+overflow: hidden;
+}
+.site-footer::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 2px;
+background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-gold));
+opacity: 0.6;
+}
+.site-footer strong {
+color: var(--accent-cyan);
+font-family: 'Orbitron', sans-serif;
+letter-spacing: 1px;
+text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+.site-footer .footer-warning {
+display: block;
+margin-top: 12px;
+font-size: 0.7rem;
+color: rgba(255, 255, 255, 0.4);
+font-style: italic;
+max-width: 600px;
+margin-left: auto;
+margin-right: auto;
+padding: 8px 12px;
+background: rgba(255, 51, 102, 0.05);
+border-left: 2px solid rgba(255, 51, 102, 0.3);
+border-radius: 0 8px 8px 0;
+}
+.footer-divider {
+height: 1px;
+background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+margin: 20px 0;
+}
+.footer-buttons {
+display: flex;
+gap: 12px;
+justify-content: center;
+flex-wrap: wrap;
+margin-top: 24px;
+}
+.btn-logout {
+padding: 12px 28px;
+border: 1px solid rgba(255, 51, 102, 0.4);
+border-radius: 50px;
+background: linear-gradient(135deg, rgba(255, 51, 102, 0.1), rgba(255, 0, 170, 0.05));
+color: var(--error);
+font-size: 0.85rem;
+font-weight: 700;
+font-family: 'Orbitron', sans-serif;
+letter-spacing: 2px;
+cursor: pointer;
+transition: all 0.3s ease;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+text-transform: uppercase;
+}
+.btn-logout:hover {
+background: linear-gradient(135deg, rgba(255, 51, 102, 0.2), rgba(255, 0, 170, 0.1));
+border-color: var(--error);
+box-shadow: 0 4px 20px rgba(255, 51, 102, 0.3);
+transform: translateY(-2px);
+}
+.btn-logout:active { transform: translateY(0); }
+.btn-logout svg { width: 16px; height: 16px; fill: currentColor; }
+.btn-admin {
+padding: 12px 28px;
+border: 1px solid var(--glass-border);
+border-radius: 50px;
+background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+color: var(--text-secondary);
+font-size: 0.85rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+}
+.btn-admin:hover {
+border-color: var(--accent-cyan);
+color: var(--accent-cyan);
+background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(157, 0, 255, 0.05));
+box-shadow: 0 4px 20px rgba(0, 240, 255, 0.2);
+transform: translateY(-2px);
+}
+.btn-admin:active { transform: translateY(0); }
+.btn-admin svg { width: 16px; height: 16px; fill: currentColor; }
 </style>
 </head>
 <body>
@@ -1074,6 +1193,15 @@ opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.175, 0.885
 </div>
 </div>
 </section>
+<section class="section latest-releases">
+<h2 class="section-title">🎧 ПОСЛЕДНИЕ РЕЛИЗЫ</h2>
+<div class="latest-releases-grid" id="latestReleasesGrid">
+<div class="subscriber-card-empty">Загрузка...</div>
+<div class="subscriber-card-empty">Загрузка...</div>
+<div class="subscriber-card-empty">Загрузка...</div>
+<div class="subscriber-card-empty">Загрузка...</div>
+</div>
+</section>
 <section class="section subscriber-releases">
 <h2 class="section-title"> РЕЛИЗЫ ОТ ПОДПИСЧИКОВ</h2>
 <div class="subscriber-grid" id="subscriberGrid">
@@ -1117,10 +1245,22 @@ opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.175, 0.885
 </div>
 </div>
 </section>
-<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:40px;">
-<button class="btn-ghost danger" id="logoutBtn">ВЫЙТИ</button>
-<button class="btn-text" onclick="showAdminLogin()" style="margin-top:8px;">⚙️ Админ</button>
+<footer class="site-footer">
+<div style="margin-bottom: 8px;">© 2026 <strong>EVGENII AI</strong>. Все права защищены.</div>
+<div style="margin-bottom: 12px;">Автор текста, концепции и аранжировки: проект <strong>EVGENII AI</strong></div>
+<span class="footer-warning">⚠️ Несанкционированное копирование, распространение, использование в коммерческих целях или удаление авторских тегов запрещено.</span>
+<div class="footer-divider"></div>
+<div class="footer-buttons">
+<button class="btn-logout" id="logoutBtn">
+<svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+ВЫЙТИ
+</button>
+<button class="btn-admin" onclick="showAdminLogin()">
+<svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+Админ
+</button>
 </div>
+</footer>
 </div>
 <div class="page" id="adminPage">
 <header class="main-header glass-panel" style="margin-bottom:24px;">
@@ -1182,7 +1322,7 @@ opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.175, 0.885
 <div class="form-group" style="margin-bottom:0;"><label class="form-label">👤 Подзаголовок / Автор</label><input type="text" id="adminTrackSubtitle" class="form-input" placeholder="По умолчанию: EVGENII AI"></div>
 <div class="form-group" style="margin-bottom:0;"><label class="form-label">🔗 Путь к файлу (MP3) *</label><input type="text" id="adminTrackFile" class="form-input" placeholder="https://.../track.mp3"></div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-<div class="form-group" style="margin-bottom:0;"><label class="form-label">️ Длительность *</label><input type="text" id="adminTrackDuration" class="form-input" placeholder="3:45"></div>
+<div class="form-group" style="margin-bottom:0;"><label class="form-label">⏱️ Длительность *</label><input type="text" id="adminTrackDuration" class="form-input" placeholder="3:45"></div>
 <div class="form-group" style="margin-bottom:0;"><label class="form-label">🖼️ Путь к обложке (URL)</label><input type="text" id="adminTrackCover" class="form-input" placeholder="https://.../cover.jpg"></div>
 </div>
 <div class="form-group" style="margin-bottom:0;"><label class="form-label">📝 Описание или история создания</label><textarea id="adminTrackDescription" class="form-textarea" placeholder="Расскажите, как создавался этот трек..." style="min-height: 80px;"></textarea></div>
@@ -1227,7 +1367,7 @@ opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.175, 0.885
 <div id="adminSettingsView" class="admin-sub-view">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
 <button class="btn-ghost" onclick="showAdminSubView('adminDashboard')" style="padding:8px 16px;">← Назад</button>
-<h3 style="color:var(--accent-cyan);font-size:0.9rem;letter-spacing:2px;margin:0;">️ ГЛОБАЛЬНЫЕ НАСТРОЙКИ</h3>
+<h3 style="color:var(--accent-cyan);font-size:0.9rem;letter-spacing:2px;margin:0;">⚙️ ГЛОБАЛЬНЫЕ НАСТРОЙКИ</h3>
 </div>
 <div class="glass-panel" style="padding:24px;">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
@@ -1276,7 +1416,7 @@ opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.175, 0.885
 <div class="header-brand">СВЯЗЬ</div>
 </header>
 <div style="background:rgba(0,240,255,0.05);border-left:3px solid var(--accent-cyan);padding:14px 18px;border-radius:0 12px 12px 0;margin-bottom:24px;font-size:0.85rem;color:var(--text-secondary);display:flex;align-items:flex-start;gap:10px;">
-<span style="font-size:1.2rem;"></span>
+<span style="font-size:1.2rem;">📡</span>
 <div>
 <strong style="color:var(--accent-cyan);display:block;margin-bottom:4px;">Важно</strong>
 Все сообщения отправляются напрямую в Telegram. Для корректной работы включите <strong style="color:var(--accent-cyan);">VPN</strong>.
@@ -1321,7 +1461,7 @@ opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.175, 0.885
 <button class="back-to-choice-btn" onclick="hideContactForms()">← Назад к выбору</button>
 <div class="lyrics-form-container">
 <div class="lyrics-form-title">
-<span style="font-size:1.5rem;"></span>
+<span style="font-size:1.5rem;">🎤</span>
 ОТПРАВИТЬ СВОЙ ТЕКСТ ПЕСНИ
 </div>
 <p class="lyrics-form-subtitle">
@@ -1518,7 +1658,7 @@ var defaultSections = [
 { id: 'discussionsPage', title: '💬 Обсуждения', defaultReason: 'Технические работы' },
 { id: 'communityPage', title: '🌐 Сообщества', defaultReason: 'Скоро открытие' },
 { id: 'contactPage', title: '✉️ Связь', defaultReason: 'Временная недоступность' },
-{ id: 'supportPage', title: ' Поддержать', defaultReason: 'Технические работы' },
+{ id: 'supportPage', title: '💜 Поддержать', defaultReason: 'Технические работы' },
 { id: 'aboutPage', title: 'ℹ️ О проекте', defaultReason: 'Обновление информации' }
 ];
 list.innerHTML = defaultSections.map(function(sec) {
@@ -1739,7 +1879,7 @@ snapshot.forEach(function(doc) {
 var data = doc.data(); if (!data.type) data.type = 'main';
 tracksData.push({ id: doc.id, ...data });
 });
-renderNewRelease(); renderSubscriberReleases(); renderAllTracksList(); renderAdminTracksList(); updateAttachLabel();
+renderNewRelease(); renderLatestReleases(); renderSubscriberReleases(); renderAllTracksList(); renderAdminTracksList(); updateAttachLabel();
 }, function(error) { console.error('Ошибка загрузки треков:', error); });
 }
 function addNewRelease() {
@@ -1838,6 +1978,32 @@ hero.innerHTML = '<div class="release-hero-content"><div class="release-hero-cov
 (latestTrack.description ? '<p class="release-hero-description">' + escapeHtml(latestTrack.description) + '</p>' : '') +
 '<div class="release-hero-actions"><button class="btn-hero-play" onclick="event.stopPropagation(); playTrackById(\'' + latestTrack.id + '\')"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>СЛУШАТЬ СЕЙЧАС</button>' +
 '<button class="btn-hero-secondary" onclick="event.stopPropagation(); openTrackInfoModalById(\'' + latestTrack.id + '\')">ℹ️ История создания</button></div></div></div>';
+}
+function renderLatestReleases() {
+var grid = document.getElementById('latestReleasesGrid');
+if (!grid) return;
+var mainReleases = tracksData.filter(function(t) { return t.type !== 'subscriber'; });
+var latestTracks = mainReleases.slice(1, 5);
+if (latestTracks.length === 0) {
+grid.innerHTML = '<div class="subscriber-card-empty" style="grid-column: span 2;">Скоро здесь появятся предыдущие релизы</div>';
+return;
+}
+var html = '';
+for (var i = 0; i < 4; i++) {
+if (i < latestTracks.length) {
+var track = latestTracks[i];
+var coverHtml = track.cover ? '<img src="' + track.cover + '" onerror="this.parentElement.innerHTML=\'🎵\'">' : '🎵';
+html += '<div class="latest-release-card" onclick="playTrackById(\'' + track.id + '\')">' +
+'<div class="latest-release-cover"><span class="latest-release-number">' + (i + 1) + '</span>' + coverHtml + '</div>' +
+'<div class="latest-release-title">' + escapeHtml(track.title) + '</div>' +
+'<div class="latest-release-artist">' + escapeHtml(track.subtitle || 'EVGENII AI') + ' · ' + track.duration + '</div>' +
+(track.description ? '<div class="latest-release-desc">' + escapeHtml(track.description) + '</div>' : '') +
+'</div>';
+} else {
+html += '<div class="subscriber-card-empty">Скоро новый релиз</div>';
+}
+}
+grid.innerHTML = html;
 }
 function renderSubscriberReleases() {
 var grid = document.getElementById('subscriberGrid'); if (!grid) return;
@@ -2094,8 +2260,8 @@ function updateAttachLabel() {
 var label = document.getElementById('discussionAttachText'); var toggle = document.getElementById('discussionAttachToggle');
 if (!label || !toggle) return;
 var current = getCurrentPlayingTrack();
-if (current) { label.textContent = ' Прикрепить: ' + current.title; toggle.disabled = false; toggle.parentElement.style.opacity = '1'; }
-else { label.textContent = ' Сначала включи любой трек'; toggle.disabled = true; toggle.checked = false; toggle.parentElement.style.opacity = '0.5'; }
+if (current) { label.textContent = '🎵 Прикрепить: ' + current.title; toggle.disabled = false; toggle.parentElement.style.opacity = '1'; }
+else { label.textContent = '🎵 Сначала включи любой трек'; toggle.disabled = true; toggle.checked = false; toggle.parentElement.style.opacity = '0.5'; }
 }
 function loadDiscussions() {
 if (!db) return; var list = document.getElementById('discussionsList'); if (!list) return;
@@ -2188,7 +2354,7 @@ updateMaintenanceUI();
 }, 500);
 })
 .catch(function(error) {
-var msg = ' Ошибка входа';
+var msg = '❌ Ошибка входа';
 if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') msg = 'Неверный email или пароль';
 status.textContent = msg; status.className = 'form-status error';
 });
@@ -2270,7 +2436,7 @@ e.preventDefault();
 var formData = new FormData(this);
 var name = formData.get('name'); var contact = formData.get('contact') || 'Не указан'; var messageText = formData.get('message');
 formSubmitBtn.disabled = true; formSubmitBtn.innerHTML = '<span>📨 ОТПРАВКА...</span>'; formStatus.textContent = ''; formStatus.className = 'form-status';
-var message = ' <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n👤 <b>Имя:</b> ' + name + '\n📞 <b>Контакт:</b> ' + contact + '\n💬 <b>Сообщение:</b>\n' + messageText + '\n⏰ <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
+var message = '📩 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n👤 <b>Имя:</b> ' + name + '\n📞 <b>Контакт:</b> ' + contact + '\n💬 <b>Сообщение:</b>\n' + messageText + '\n⏰ <b>Время:</b> ' + new Date().toLocaleString('ru-RU');
 var telegramURL = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
 fetch(telegramURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) })
 .then(function(response) { return response.json(); })
